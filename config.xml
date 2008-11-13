@@ -1,0 +1,15 @@
+<?xml version="1.0" standalone="yes">
+
+<config>
+	<dirs>
+		<data>data/</data>
+		<pixmaps>$datadir/pixmaps/</pixmaps>
+	</dirs>
+
+	<damagetable>data/damagetable.xml</damagetable>
+	<units>data/units.xml</units>
+
+	<game>
+		<map>bla.aws</map>
+	</game>
+</config>

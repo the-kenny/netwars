@@ -1,0 +1,459 @@
+<?xml version="1.0" ?>
+<!--  Values are from http://advancewarsnet.com/?g=awds&a=articles/awds/Damage%20Chart.htm -->
+<damagetable>
+	<unit name ="infantry">
+		<enemy name="infantry" damage="55" />
+		<enemy name="mech" damage="45" />
+		<enemy name="tank" damage="5" />
+		<enemy name="md-tank" damage="1" />
+		<enemy name="neotank" damage="1" />
+		<enemy name="megatank" damage="1" />
+		<enemy name="recon" damage="12" />
+		<enemy name="anti-air" damage="5" />
+		<enemy name="missiles" damage="25" />
+		<enemy name="artillery" damage="15" />
+		<enemy name="rockets" damage="25" />
+		<enemy name="piperunner" damage="5" />
+		<enemy name="apc" damage="14" />
+		<enemy name="oozium" damage="20" />
+
+		<enemy name="t-copter" damage="30" />
+		<enemy name="b-copter" damage="7" />
+
+		<enemy name="segment_pipe" damage="1"  />
+	</unit>
+
+	<unit name ="mech">
+		<enemy name="infantry" damage="-1" alt_damage="65" />
+		<enemy name="mech" damage="-1" alt_damage="55" />
+		<enemy name="tank" damage="55" alt_damage="6" />
+		<enemy name="md-tank" damage="15" alt_damage="1" />
+		<enemy name="neotank" damage="15" alt_damage="1" />
+		<enemy name="megatank" damage="5" alt_damage="1" />
+		<enemy name="recon" damage="85" alt_damage="18" />
+		<enemy name="anti-air" damage="65" alt_damage="6" />
+		<enemy name="missiles" damage="85" alt_damage="35" />
+		<enemy name="artillery" damage="70" alt_damage="32" />
+		<enemy name="rockets" damage="85" alt_damage="35" />
+		<enemy name="piperunner" damage="55" alt_damage="6" />
+		<enemy name="apc" damage="75" alt_damage="20" />
+		<enemy name="oozium" damage="30" alt_damage="20" />
+
+		<enemy name="t-copter" damage="35" alt_damage="35" />
+		<enemy name="b-copter" damage="9" alt_damage="9" />
+
+		<enemy name="segment_pipe" damage="15" alt_damage="1" />
+	</unit>
+
+	<unit name ="tank">
+		<enemy name="infantry" damage="-1" alt_damage="75" />
+		<enemy name="mech" damage="-1" alt_damage="70" />
+		<enemy name="tank" damage="55" alt_damage="6" />
+		<enemy name="md-tank" damage="15" alt_damage="1" />
+		<enemy name="neotank" damage="15" alt_damage="1" />
+		<enemy name="megatank" damage="10" alt_damage="1" />
+		<enemy name="recon" damage="85" alt_damage="40" />
+		<enemy name="anti-air" damage="65" alt_damage="6" />
+		<enemy name="missiles" damage="85" alt_damage="30" />
+		<enemy name="artillery" damage="70" alt_damage="45" />
+		<enemy name="rockets" damage="85" alt_damage="55" />
+		<enemy name="piperunner" damage="55" alt_damage="6" />
+		<enemy name="apc" damage="75" alt_damage="45" />
+		<enemy name="oozium" damage="20" alt_damage="20" />
+
+		<enemy name="battleship" damage="1" />
+		<enemy name="lander" damage="10" />
+		<enemy name="b-boat" damage="10" />
+		<enemy name="cruiser" damage="5" />
+		<enemy name="submarine" damage="1" />
+		<enemy name="carrier" damage="1" />
+
+		<enemy name="t-copter" damage="40" alt_damage="40" />
+		<enemy name="b-copter" damage="10" alt_damage="10" />
+
+		<enemy name="segment_pipe" damage="15" alt_damage="1" />
+	</unit>
+
+	<unit name ="md-tank">
+		<enemy name="infantry" damage="-1" alt_damage="105" />
+		<enemy name="mech" damage="-1" alt_damage="95" />
+		<enemy name="tank" damage="85" alt_damage="8" />
+		<enemy name="md-tank" damage="55" alt_damage="1" />
+		<enemy name="neotank" damage="45" alt_damage="1" />
+		<enemy name="megatank" damage="25" alt_damage="1" />
+		<enemy name="recon" damage="105" alt_damage="45" />
+		<enemy name="anti-air" damage="105" alt_damage="7" />
+		<enemy name="missiles" damage="105" alt_damage="35" />
+		<enemy name="artillery" damage="105" alt_damage="45" />
+		<enemy name="rockets" damage="105" alt_damage="55" />
+		<enemy name="piperunner" damage="85" alt_damage="8" />
+		<enemy name="apc" damage="105" alt_damage="45" />
+		<enemy name="oozium" damage="30" alt_damage="20" />
+
+		<enemy name="battleship" damage="10" />
+		<enemy name="lander" damage="35" />
+		<enemy name="b-boat" damage="35" />
+		<enemy name="cruiser" damage="30" />
+		<enemy name="submarine" damage="10" />
+		<enemy name="carrier" damage="10" />
+
+		<enemy name="t-copter" damage="45" alt_damage="45" />
+		<enemy name="b-copter" damage="12" alt_damage="12" />
+
+		<enemy name="segment_pipe" damage="55" alt_damage="1" />
+	</unit>
+
+	<unit name ="neotank">
+		<enemy name="infantry" damage="-1" alt_damage="125" />
+		<enemy name="mech" damage="-1" alt_damage="115" />
+		<enemy name="tank" damage="75" alt_damage="10" />
+		<enemy name="md-tank" damage="75" alt_damage="1" />
+		<enemy name="neotank" damage="55" alt_damage="1" />
+		<enemy name="megatank" damage="35" alt_damage="1" />
+		<enemy name="recon" damage="125" alt_damage="65" />
+		<enemy name="anti-air" damage="115" alt_damage="17" />
+		<enemy name="missiles" damage="125" alt_damage="55" />
+		<enemy name="artillery" damage="115" alt_damage="65" />
+		<enemy name="rockets" damage="125" alt_damage="75" />
+		<enemy name="piperunner" damage="105" alt_damage="10" />
+		<enemy name="apc" damage="125" alt_damage="65" />
+		<enemy name="oozium" damage="35" alt_damage="20" />
+
+		<enemy name="battleship" damage="15" />
+
+		<enemy name="t-copter" damage="55" alt_damage="55" />
+		<enemy name="b-copter" damage="22" alt_damage="22" />
+
+		<enemy name="segment_pipe" damage="75" alt_damage="1" />
+	</unit>
+
+	<unit name ="megatank">
+		<enemy name="infantry" damage="-1" alt_damage="135" />
+		<enemy name="mech" damage="-1" alt_damage="125" />
+		<enemy name="tank" damage="180" alt_damage="10" />
+		<enemy name="md-tank" damage="125" alt_damage="1" />
+		<enemy name="neotank" damage="115" alt_damage="1" />
+		<enemy name="megatank" damage="65" alt_damage="1" />
+		<enemy name="recon" damage="195" alt_damage="65" />
+		<enemy name="anti-air" damage="195" alt_damage="17" />
+		<enemy name="missiles" damage="195" alt_damage="55" />
+		<enemy name="artillery" damage="195" alt_damage="65" />
+		<enemy name="rockets" damage="195" alt_damage="75" />
+		<enemy name="piperunner" damage="180" alt_damage="10" />
+		<enemy name="apc" damage="195" alt_damage="65" />
+		<enemy name="oozium" damage="45" alt_damage="30" />
+
+		<enemy name="battleship" damage="45" />
+		<enemy name="lander" damage="75" />
+		<enemy name="b-boat" damage="105" />
+		<enemy name="cruiser" damage="65" />
+		<enemy name="submarine" damage="45" />
+		<enemy name="carrier" damage="45" />
+
+		<enemy name="t-copter" damage="55" alt_damage="55" />
+		<enemy name="b-copter" damage="22" alt_damage="22" />
+
+		<enemy name="segment_pipe" damage="125" alt_damage="1" />
+	</unit>
+
+	<unit name ="recon">
+		<enemy name="infantry" damage="70" />
+		<enemy name="mech" damage="65" />
+		<enemy name="tank" damage="6" />
+		<enemy name="md-tank" damage="1" />
+		<enemy name="neotank" damage="1" />
+		<enemy name="megatank" damage="1" />
+		<enemy name="recon" damage="35" />
+		<enemy name="anti-air" damage="4" />
+		<enemy name="missiles" damage="28" />
+		<enemy name="artillery" damage="45" />
+		<enemy name="rockets" damage="55" />
+		<enemy name="piperunner" damage="6" />
+		<enemy name="apc" damage="45" />
+		<enemy name="oozium" damage="20" />
+
+		<enemy name="t-copter" damage="35" />
+		<enemy name="b-copter" damage="10" />
+
+		<enemy name="segment_pipe" damage="1" />
+	</unit>
+
+	<unit name ="anti-air">
+		<enemy name="infantry" damage="105" />
+		<enemy name="mech" damage="105" />
+		<enemy name="tank" damage="25" />
+		<enemy name="md-tank" damage="10" />
+		<enemy name="neotank" damage="5" />
+		<enemy name="megatank" damage="1" />
+		<enemy name="recon" damage="60" />
+		<enemy name="anti-air" damage="45" />
+		<enemy name="missiles" damage="55" />
+		<enemy name="artillery" damage="50" />
+		<enemy name="rockets" damage="55" />
+		<enemy name="piperunner" damage="25" />
+		<enemy name="apc" damage="50" />
+		<enemy name="oozium" damage="30" />
+
+		<enemy name="t-copter" damage="105" />
+		<enemy name="b-copter" damage="105" />
+		<enemy name="stealth" damage="75" />
+		<enemy name="fighter" damage="65" />
+		<enemy name="bomber" damage="75" />
+		<enemy name="b-bomb" damage="120" />
+
+		<enemy name="segment_pipe" damage="10" />
+	</unit>
+
+	<unit name ="missiles">
+		<enemy name="t-copter" damage="115" />
+		<enemy name="b-copter" damage="115" />
+		<enemy name="stealth" damage="100" />
+		<enemy name="fighter" damage="100" />
+		<enemy name="bomber" damage="100" />
+		<enemy name="b-bomb" damage="120" />
+	</unit>
+
+	<unit name ="artillery">
+		<enemy name="infantry" damage="90" />
+		<enemy name="mech" damage="85" />
+		<enemy name="tank" damage="70" />
+		<enemy name="md-tank" damage="45" />
+		<enemy name="neotank" damage="40" />
+		<enemy name="megatank" damage="15" />
+		<enemy name="recon" damage="80" />
+		<enemy name="anti-air" damage="75" />
+		<enemy name="missiles" damage="80" />
+		<enemy name="artillery" damage="75" />
+		<enemy name="rockets" damage="80" />
+		<enemy name="piperunner" damage="70" />
+		<enemy name="apc" damage="70" />
+		<enemy name="oozium" damage="5" />
+
+		<enemy name="battleship" damage="40" />
+		<enemy name="lander" damage="55" />
+		<enemy name="b-boat" damage="55" />
+		<enemy name="cruiser" damage="50" />
+		<enemy name="submarine" damage="60" />
+		<enemy name="carrier" damage="45" />
+
+		<enemy name="segment_pipe" damage="45" />
+	</unit>
+
+	<unit name ="rockets">
+		<enemy name="infantry" damage="95" />
+		<enemy name="mech" damage="90" />
+		<enemy name="tank" damage="80" />
+		<enemy name="md-tank" damage="55" />
+		<enemy name="neotank" damage="50" />
+		<enemy name="megatank" damage="25" />
+		<enemy name="recon" damage="90" />
+		<enemy name="anti-air" damage="85" />
+		<enemy name="missiles" damage="90" />
+		<enemy name="artillery" damage="80" />
+		<enemy name="rockets" damage="85" />
+		<enemy name="piperunner" damage="80" />
+		<enemy name="apc" damage="80" />
+		<enemy name="oozium" damage="15" />
+
+		<enemy name="battleship" damage="55" />
+		<enemy name="lander" damage="60" />
+		<enemy name="b-boat" damage="60" />
+		<enemy name="cruiser" damage="60" />
+		<enemy name="submarine" damage="85" />
+		<enemy name="carrier" damage="60" />
+
+		<enemy name="segment_pipe" damage="55" />
+	</unit>
+
+	<unit name ="piperunner">
+		<enemy name="infantry" damage="95" />
+		<enemy name="mech" damage="90" />
+		<enemy name="tank" damage="80" />
+		<enemy name="md-tank" damage="55" />
+		<enemy name="neotank" damage="50" />
+		<enemy name="megatank" damage="25" />
+		<enemy name="recon" damage="90" />
+		<enemy name="anti-air" damage="85" />
+		<enemy name="missiles" damage="90" />
+		<enemy name="artillery" damage="80" />
+		<enemy name="rockets" damage="85" />
+		<enemy name="piperunner" damage="80" />
+		<enemy name="apc" damage="80" />
+		<enemy name="oozium" damage="15" />
+
+		<enemy name="battleship" damage="55" />
+		<enemy name="lander" damage="60" />
+		<enemy name="b-boat" damage="60" />
+		<enemy name="cruiser" damage="60" />
+		<enemy name="submarine" damage="85" />
+		<enemy name="carrier" damage="60" />
+
+		<enemy name="t-copter" damage="105" />
+		<enemy name="b-copter" damage="105" />
+		<enemy name="stealth" damage="75" />
+		<enemy name="fighter" damage="65" />
+		<enemy name="bomber" damage="75" />
+		<enemy name="b-bomb" damage="120" />
+
+		<enemy name="segment_pipe" damage="55" />
+	</unit>
+
+	<unit name ="cruiser">
+		<enemy name="battleship" damage="5" />
+		<enemy name="lander" damage="25" />
+		<enemy name="b-boat" damage="25" />
+		<enemy name="cruiser" damage="25" />
+		<enemy name="submarine" damage="90" />
+		<enemy name="carrier" damage="5" />
+
+		<enemy name="t-copter" alt_damage="105" />
+		<enemy name="b-copter" alt_damage="105" />
+		<enemy name="stealth" alt_damage="100" />
+		<enemy name="fighter" alt_damage="85" />
+		<enemy name="bomber" alt_damage="100" />
+		<enemy name="b-bomb" alt_damage="120" />
+	</unit>
+
+	<unit name ="submarine">
+		<enemy name="battleship" damage="65" />
+		<enemy name="lander" damage="95" />
+		<enemy name="b-boat" damage="95" />
+		<enemy name="cruiser" damage="25" />
+		<enemy name="submarine" damage="55" />
+		<enemy name="carrier" damage="75" />
+	</unit>
+
+	<unit name ="carrier">
+		<enemy name="submarine" damage="90" />
+
+		<enemy name="t-copter" damage="115" />
+		<enemy name="b-copter" damage="115" />
+		<enemy name="stealth" damage="100" />
+		<enemy name="fighter" damage="100" />
+		<enemy name="bomber" damage="100" />
+		<enemy name="b-bomb" damage="120" />
+	</unit>
+
+	<unit name ="battleship">
+		<enemy name="infantry" damage="95" />
+		<enemy name="mech" damage="90" />
+		<enemy name="tank" damage="80" />
+		<enemy name="md-tank" damage="55" />
+		<enemy name="neotank" damage="50" />
+		<enemy name="megatank" damage="25" />
+		<enemy name="recon" damage="90" />
+		<enemy name="anti-air" damage="85" />
+		<enemy name="missiles" damage="90" />
+		<enemy name="artillery" damage="80" />
+		<enemy name="rockets" damage="85" />
+		<enemy name="piperunner" damage="80" />
+		<enemy name="apc" damage="80" />
+		<enemy name="oozium" damage="20" />
+
+		<enemy name="battleship" damage="50" />
+		<enemy name="lander" damage="95" />
+		<enemy name="b-boat" damage="95" />
+		<enemy name="cruiser" damage="95" />
+		<enemy name="submarine" damage="95" />
+		<enemy name="carrier" damage="60" />
+
+		<enemy name="segment_pipe" damage="55" />
+	</unit>
+
+	<unit name ="b-copter">
+		<enemy name="infantry" damage="-1" alt_damage="75" />
+		<enemy name="mech" damage="-1" alt_damage="75" />
+		<enemy name="tank" damage="55" alt_damage="6" />
+		<enemy name="md-tank" damage="25" alt_damage="1" />
+		<enemy name="neotank" damage="20" alt_damage="1" />
+		<enemy name="megatank" damage="10" alt_damage="1" />
+		<enemy name="recon" damage="55" alt_damage="30" />
+		<enemy name="anti-air" damage="25" alt_damage="6" />
+		<enemy name="missiles" damage="65" alt_damage="35" />
+		<enemy name="artillery" damage="65" alt_damage="25" />
+		<enemy name="rockets" damage="65" alt_damage="35" />
+		<enemy name="piperunner" damage="55" alt_damage="6" />
+		<enemy name="apc" damage="60" alt_damage="20" />
+		<enemy name="oozium" damage="25" alt_damage="20" />
+
+		<enemy name="battleship" damage="25" />
+		<enemy name="lander" damage="25" />
+		<enemy name="b-boat" damage="25" />
+		<enemy name="cruiser" damage="25" />
+		<enemy name="submarine" damage="25" />
+		<enemy name="carrier" damage="25" />
+
+		<enemy name="t-copter" alt_damage="95" />
+		<enemy name="b-copter" alt_damage="65" />
+
+		<enemy name="segment_pipe" damage="25" alt_damage="1" />
+	</unit>
+
+	<unit name ="stealth">
+		<enemy name="infantry" damage="90" />
+		<enemy name="mech" damage="90" />
+		<enemy name="tank" damage="75" />
+		<enemy name="md-tank" damage="70" />
+		<enemy name="neotank" damage="60" />
+		<enemy name="megatank" damage="15" />
+		<enemy name="recon" damage="85" />
+		<enemy name="anti-air" damage="75" />
+		<enemy name="missiles" damage="85" />
+		<enemy name="artillery" damage="75" />
+		<enemy name="rockets" damage="85" />
+		<enemy name="piperunner" damage="80" />
+		<enemy name="apc" damage="85" />
+		<enemy name="oozium" damage="30" />
+
+		<enemy name="battleship" damage="45" />
+		<enemy name="lander" damage="65" />
+		<enemy name="b-boat" damage="65" />
+		<enemy name="cruiser" damage="35" />
+		<enemy name="submarine" damage="55" />
+		<enemy name="carrier" damage="45" />
+
+		<enemy name="t-copter" damage="95" />
+		<enemy name="b-copter" damage="85" />
+		<enemy name="stealth" damage="55" />
+		<enemy name="fighter" damage="45" />
+		<enemy name="bomber" damage="70" />
+		<enemy name="b-bomb" damage="120" />
+
+		<enemy name="segment_pipe" damage="25" />
+	</unit>
+
+	<unit name ="fighter">
+		<enemy name="t-copter" damage="120" />
+		<enemy name="b-copter" damage="120" />
+		<enemy name="stealth" damage="85" />
+		<enemy name="fighter" damage="55" />
+		<enemy name="bomber" damage="100" />
+		<enemy name="b-bomb" damage="120" />
+	</unit>
+
+	<unit name ="bomber">
+		<enemy name="infantry" damage="110" />
+		<enemy name="mech" damage="110" />
+		<enemy name="tank" damage="105" />
+		<enemy name="md-tank" damage="95" />
+		<enemy name="neotank" damage="90" />
+		<enemy name="megatank" damage="35" />
+		<enemy name="recon" damage="105" />
+		<enemy name="anti-air" damage="95" />
+		<enemy name="missiles" damage="105" />
+		<enemy name="artillery" damage="105" />
+		<enemy name="rockets" damage="105" />
+		<enemy name="piperunner" damage="105" />
+		<enemy name="apc" damage="105" />
+		<enemy name="oozium" damage="35" />
+
+		<enemy name="battleship" damage="75" />
+		<enemy name="lander" damage="95" />
+		<enemy name="b-boat" damage="95" />
+		<enemy name="cruiser" damage="50" />
+		<enemy name="submarine" damage="95" />
+		<enemy name="carrier" damage="75" />
+
+		<enemy name="segment_pipe" damage="95" />
+	</unit>
+</damagetable>
