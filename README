@@ -1,0 +1,10 @@
+Netwars
+
+
+Netwars is an Advance Wars clone for "real" PCs. It is advanced, but not playable.
+
+Most of the code was written almost a year in the past, and I'm not the best C++-Developer of the world.
+The layout of the source tree and much of the code in it is just crap.
+I think it should be refactored, but I don't have the motivation for it. Maybe in the future ;)
+
+

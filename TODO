@@ -1,0 +1,7 @@
+Organization:
+	1. Find a new build system and get rid of Code::Blocks
+	2. Refactor the source tree
+
+Real coding:
+	1. Rewrite the GUI (It's just crap)
+	2. Hack something into it! (Better pathfinding would be nice) 
