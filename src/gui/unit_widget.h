@@ -3,7 +3,7 @@
 
 #include <gtkmm.h>
 
-#include "../units/units.h"
+#include "game/units/units.h"
 
 namespace aw
 {

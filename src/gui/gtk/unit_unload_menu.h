@@ -1,7 +1,7 @@
 #ifndef AW_GTK_GUI_UNIT_UNLOAD_MENU_H
 	#define AW_GTK_GUI_UNIT_UNLOAD_MENU_H
 
-#include "units/unit_base.h"
+#include "game/units/unit_base.h"
 
 #include <gtkmm/window.h>
 

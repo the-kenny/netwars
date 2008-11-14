@@ -16,19 +16,19 @@ namespace aw
 			{
 				public:
 					unit_action_menu();
-					virtual actions run();
+ 					virtual units::actions run();
 
-					void add_action(actions a);
+					void add_action(units::actions a);
 
 				private:
-					void on_button_click(actions a)
+					void on_button_click(units::actions a)
 					{
 						m_return_value = a;
 						m_return = true;
 					}
 
 					bool m_return;
-					volatile actions m_return_value;
+					volatile units::actions m_return_value;
 
 					Gtk::VBox *m_vbox;
 			};

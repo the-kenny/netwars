@@ -4,6 +4,8 @@
 #include <gtkmm/window.h>
 #include <gtkmm/box.h>
 
+#include "game/units/actions.h"
+
 namespace aw
 {
 	namespace gui
@@ -11,22 +13,20 @@ namespace aw
 		class unit_action_menu
 		{
 			public:
-				enum actions { ATTACK, LAUNCH, EXPLODE, WAIT, CAPTURE, LOAD, UNLOAD, HIDE, APPEAR, JOIN, SUPPLY, REPAIR, CANCEL };
-
 				unit_action_menu();
 
-				virtual actions run() = 0;
-				virtual void add_action(actions a) = 0;
+				virtual units::actions run() = 0;
+				virtual void add_action(units::actions a) = 0;
 
 			private:
-				void on_button_click(actions a)
+				void on_button_click(units::actions a)
 				{
 					m_return_value = a;
 					m_return = true;
 				}
 
 				bool m_return;
-				volatile actions m_return_value;
+				volatile units::actions m_return_value;
 		};
 	}
 }

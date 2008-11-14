@@ -2,12 +2,12 @@
 #include "game_dialog.h"
 
 #include <boost/bind.hpp>
-#include "../map_loader/map_loader.h"
-#include "../config.h"
-#include "../game.h"
-#include "../coord.h"
+#include "game/map_loader/map_loader.h"
+#include "game/config.h"
+#include "game/game.h"
+#include "game/coord.h"
 
-#include "gui_fabric.h"
+#include "gui/gui_fabric.h"
 
 #include <gtkmm.h>
 

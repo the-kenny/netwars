@@ -5,7 +5,7 @@
 
 #include "unit_unload_menu.h"
 #include "unit_widget.h"
-#include "units/unit_loader.h"
+#include "game/units/unit_loader.h"
 
 
 using namespace aw::gui::gtk;

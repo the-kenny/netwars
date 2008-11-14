@@ -5,8 +5,8 @@
 
 #include <boost/signals.hpp>
 
-#include "units/unit_base.h"
-#include "player.h"
+#include "game/units/unit_base.h"
+#include "game/player.h"
 
 #include "constants.h"
 

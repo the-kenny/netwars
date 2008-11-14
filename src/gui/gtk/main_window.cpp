@@ -1,13 +1,17 @@
 #include "main_window.h"
-#include "game_dialog.h"
+
+#include "gui/game_dialog.h"
 
 #include <boost/bind.hpp>
-#include "map_loader/map_loader.h"
-#include "config.h"
-#include "game.h"
-#include "coord.h"
-
 #include <gtkmm.h>
+
+
+#include "game/map_loader/map_loader.h"
+#include "game/config.h"
+#include "game/game.h"
+#include "game/coord.h"
+
+
 
 using namespace aw::gui::gtk;
 

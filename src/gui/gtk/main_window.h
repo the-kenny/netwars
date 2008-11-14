@@ -3,12 +3,13 @@
 
 #include <gtkmm/window.h>
 
-#include "game_controller.h"
-#include "graphics/display.h"
-#include "units/unit_base.h"
-#include "terrain.h"
-
+#include "gui/display.h"
 #include "gui/main_window.h"
+
+#include "game/game_controller.h"
+#include "game/units/unit_base.h"
+#include "game/terrain.h"
+
 
 namespace aw
 {

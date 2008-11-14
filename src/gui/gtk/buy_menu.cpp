@@ -5,12 +5,12 @@
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
 
-#include "game_mechanics/prices.h"
-#include "units/unit_loader.h"
-#include "units/unit_base.h"
+#include "game/game_mechanics/prices.h"
+#include "game/units/unit_loader.h"
+#include "game/units/unit_base.h"
 
-#include "graphics/sprites.h"
-#include "graphics/paths.h"
+#include "gui/sprites.h"
+#include "gui/paths.h"
 
 using namespace aw;
 using namespace aw::gui::gtk;

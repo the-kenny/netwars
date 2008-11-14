@@ -7,8 +7,8 @@
 
 #include "gui/buy_menu.h"
 
-#include "units/unit_base.h"
-#include "player.h"
+#include "game/units/unit_base.h"
+#include "game/player.h"
 
 
 
