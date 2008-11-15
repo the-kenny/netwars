@@ -12,7 +12,7 @@ VERSION='0.0.1'
 APPNAME='netwars'
 
 # these variables are mandatory ('/' are converted automatically)
-srcdir = 'src'
+srcdir = '.'
 blddir = 'build'
 
 def init():

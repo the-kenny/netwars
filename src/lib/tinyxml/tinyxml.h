@@ -38,6 +38,8 @@ distribution.
 #include <string.h>
 #include <assert.h>
 
+#include <typeinfo>
+
 // Help out windows:
 #if defined( _DEBUG ) && !defined( DEBUG )
 #define DEBUG

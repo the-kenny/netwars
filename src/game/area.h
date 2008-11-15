@@ -1,6 +1,7 @@
 #ifndef AREA_H
 #define AREA_H
 
+#include <algorithm>
 #include <set>
 #include <boost/foreach.hpp>
 

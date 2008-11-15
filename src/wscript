@@ -9,11 +9,13 @@ def set_options(opt):
 	pass
 
 def configure(conf):
-	conf.check_cfg(package='gtkmm-2.4', uselib_store='GTKMM')
+	boost_flags = '-lboost_filesystem -lboost_system -lboost_signals'
+
+	conf.check_cfg(package='gtkmm-2.4', args='--cflags --libs', uselib_store='GTKMM')
 	conf.check_cfg(package='cairomm-1.0', args='--cflags --libs', uselib_store='CAIROMM')
 	conf.check_cfg(package='libglademm-2.4', args='--cflags --libs', uselib_store='GLADEMM')
-	conf.env['CXXFLAGS_NETWARS'] = '-I/usr/local/include'
-
+	conf.env['CXXFLAGS_NETWARS'] = '-I/usr/local/include -Wall'
+	conf.env['LINKFLAGS'] = boost_flags
 	conf.sub_config('lib')
 
 	return
@@ -24,16 +26,16 @@ def build(bld):
 	netwars = bld.new_task_gen('cxx', 'staticlib')
 	netwars.target = 'netwars'
 	netwars.uselib_local = 'tinyxml'
-	netwars.uselib = 'GTKMM CAIROMM GLADEMM BOOST'
+	netwars.uselib = 'GTKMM CAIROMM GLADEMM'
 	netwars.includes = '. lib'
 	netwars.defines = 'TIXML_USE_TICPP=1 TIXML_USE_STL=1'
 	netwars.find_sources_in_dirs('game game/game_mechanics game/map_loader game/units')
 
 	gui = bld.new_task_gen('cxx', 'program')
 	gui.target = 'netwars'
-	gui.uselib_local = 'netwars'
-	gui.uselib = 'GTKMM CAIROMM GLADEMM BOOST'
+	gui.uselib_local = 'netwars tinyxml'
+	gui.uselib = 'GTKMM CAIROMM GLADEMM'
 	gui.includes = '. lib'
 	gui.defines = 'TIXML_USE_TICPP=1 TIXML_USE_STL=1'
-	gui.find_sources_in_dirs('gui gui/gtk')
+	gui.find_sources_in_dirs('. gui gui/gtk')
 
