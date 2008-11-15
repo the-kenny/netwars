@@ -10,7 +10,7 @@
 
 using namespace aw::gui::gtk;
 
-unit_unload_menu::unit_unload_menu()
+unit_unload_menu::unit_unload_menu(const std::list<unit::ptr> &units)
 : Gtk::Window(Gtk::WINDOW_POPUP), m_return(false), m_return_value(-1)
 {
 	Gtk::Settings::get_default()->property_gtk_button_images() = true; //To show the units in the buttons
@@ -18,6 +18,8 @@ unit_unload_menu::unit_unload_menu()
 	this->set_modal(true);
 	this->set_position(Gtk::WIN_POS_MOUSE);
 	this->set_type_hint(Gdk::WINDOW_TYPE_HINT_MENU);
+	
+	this->set_units(units);
 }
 
 int unit_unload_menu::run()
@@ -53,7 +55,7 @@ void unit_unload_menu::on_button_click(int a)
 	m_return = true;
 }
 
-void unit_unload_menu::set_units(const std::vector<unit::ptr> &vec)
+void unit_unload_menu::set_units(const std::list<unit::ptr> &vec)
 {
 	Gtk::VBox *v = Gtk::manage(new Gtk::VBox);
 	v->set_spacing(1);

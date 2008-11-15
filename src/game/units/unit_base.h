@@ -24,6 +24,8 @@ namespace aw
 			friend class aw::unit_loader; //ugly
 
 			typedef std::string types;
+			const static unit::types TYPE_NONE;
+			
 			enum colors { UNDEF, RED, BLUE, GREEN, YELLOW, BLACK };
 			enum extras { LIVE, LOW_AMMO, LOW_FUEL, HIDDEN, LOADED, CAPTURE, MINUS };
 			enum environments { GROUND, AIR, WATER };

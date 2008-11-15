@@ -16,11 +16,11 @@ namespace aw
 			class unit_unload_menu: public Gtk::Window, public aw::gui::unit_unload_menu
 			{
 				public:
-					unit_unload_menu();
+					unit_unload_menu(const std::list<unit::ptr> &);
 					int run();
 					void on_button_click(int a);
 
-					virtual void set_units(const std::vector<unit::ptr> &vec);
+					virtual void set_units(const std::list<unit::ptr> &vec);
 
 				private:
 					volatile bool m_return;

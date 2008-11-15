@@ -11,6 +11,7 @@ namespace aw
 {
 	namespace gui
 	{
+		/*
 		aw::gui::buy_menu *create_buy_menu()
 		{
 			aw::gui::buy_menu *ret = NULL;
@@ -24,7 +25,7 @@ namespace aw
 
 			return ret;
 		}
-
+		*/
 		aw::gui::game_dialog *create_game_dialog()
 		{
 			aw::gui::game_dialog *ret = NULL;
@@ -52,7 +53,7 @@ namespace aw
 
 			return ret;
 		}
-
+/*
 		aw::gui::unit_action_menu *create_unit_action_menu()
 		{
 			aw::gui::unit_action_menu *ret = NULL;
@@ -80,7 +81,7 @@ namespace aw
 
 			return ret;
 		}
-
+*/
 		aw::gui::unit_widget *create_unit_widget()
 		{
 //			switch(aw::gui::get_gui_type())
@@ -92,5 +93,6 @@ namespace aw
 //				}
 //			}
 		}
+		
 	}
 }

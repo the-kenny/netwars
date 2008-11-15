@@ -13,7 +13,7 @@ namespace aw
 		class unit_action_menu
 		{
 			public:
-				unit_action_menu();
+				unit_action_menu(const std::list<units::actions>& actions);
 
 				virtual units::actions run() = 0;
 				virtual void add_action(units::actions a) = 0;

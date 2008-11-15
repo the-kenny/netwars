@@ -41,8 +41,6 @@ namespace aw
 			class buy_menu: public Gtk::Window, public aw::gui::buy_menu
 			{
 				public:
-					typedef boost::signal<void (unit::types)> signal_buy_t;
-
 					class model_columns: public Gtk::TreeModelColumnRecord
 					{
 						public:
@@ -55,17 +53,16 @@ namespace aw
 							Gtk::TreeModelColumn<unit::colors> color;
 					};
 
-					buy_menu();
-
-//					virtual void add_unit(const unit::ptr &u);
-					virtual response_t run();
-					virtual void set_workshop(unit::workshops w);
+					buy_menu(unit::workshops shop, const player::ptr &player);
+					virtual unit::types run();
 
 				private:
 					void row_click_callback(Gtk::TreeModel::Row r);
 					bool select_callback(const Glib::RefPtr<Gtk::TreeModel>& model, const Gtk::TreeModel::Path& path, bool);
 					virtual void buy(unit::types t);
 					void cancel();
+					
+					void refresh();
 
 					Gtk::Label *m_funds_label;
 

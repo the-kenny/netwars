@@ -16,21 +16,28 @@ namespace aw
 		class main_window
 		{
 			public:
-				main_window();
-
-				virtual void init_game();
-				virtual void start_new_game();
+				typedef boost::signal<void ()> general_signal_t;
+				
+				virtual void start_new_game(const aw::game::ptr &game);
 				virtual void quit_game();
-
+				
+				virtual void connect_game_controller(const game_controller::ptr &ptr);
+				
+				virtual void lock() = 0;
+				virtual void unlock() = 0;
+				
+				general_signal_t& signal_new_game() { return m_signal_new_game; }
+				general_signal_t& signal_end_turn() { return m_signal_end_turn; }
+				
 			protected:
-				virtual void on_end_turn();
-				virtual void on_player_defeat(player::ptr looser, player::ptr attacker, game_mechanics::defeat_type type);
-				virtual void on_game_finish(player::ptr winner);
-
 				typedef aw::display::map_widget map_widget;
 				map_widget::ptr m_map_widget;
-
-				aw::game_controller::ptr m_game_controller;
+				
+				general_signal_t m_signal_new_game;
+				general_signal_t m_signal_end_turn;
+				
+				void trigger_new_game() { m_signal_new_game(); } //UGLY
+				void trigger_end_turn()  { m_signal_end_turn(); }
 		};
 	}
 }

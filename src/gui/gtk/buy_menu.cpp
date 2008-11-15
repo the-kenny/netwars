@@ -87,7 +87,8 @@ buy_menu::model_columns::model_columns()
 	this->add(color);
 }
 
-buy_menu::buy_menu()
+buy_menu::buy_menu(unit::workshops shop, const player::ptr &p)
+: gui::buy_menu(shop, p)
 {
 	this->set_title("Buy Menu");
 	this->set_deletable(false);
@@ -130,49 +131,11 @@ buy_menu::buy_menu()
 	m_unit_view->get_selection()->unselect_all();
 
 	this->add(*root_vbox);
-
-//	m_unit_view = Gtk::manage(new unit_view);
-//	m_funds_label = Gtk::manage(new Gtk::Label());
-//	Gtk::Button *cancel_button = Gtk::manage(new Gtk::Button("Cancel"));
-//
-//	cancel_button->signal_clicked().connect(sigc::bind(sigc::mem_fun(*this, &Gtk::Dialog::response), Gtk::RESPONSE_CANCEL));
-//
-//	this->set_title("Buy Menu");
-//
-//	m_buy_button.set_label("Buy!");
-//	m_buy_button.set_sensitive(false);
-//
-//	m_unit_view->on_selection_changed().connect(boost::bind(&buy_menu::row_click_callback, this, _1));
-//
-//
-//	unit_cellrenderer *cell = new unit_cellrenderer;
-//	int col_count = m_unit_view->append_column("Unit", *cell);
-//
-//	Gtk::TreeViewColumn *c = m_unit_view->get_column(col_count-1);
-//	if(c)
-//	{
-//		c->add_attribute(cell->property_type(), m_columns.type);
-//		c->add_attribute(cell->property_color(), m_columns.color);
-//	}
-//
-//	m_unit_view->append_column("Name", m_columns.name);
-//	m_unit_view->append_column("Price", m_columns.price);
-//
-//	m_list = Gtk::ListStore::create(m_columns);
-//
-//	m_unit_view->set_model(m_list);
-//
-//	m_unit_view->get_selection()->set_select_function(sigc::mem_fun(*this, &buy_menu::select_callback));
-//	m_unit_view->get_selection()->unselect_all();
-//
-//	this->get_vbox()->pack_start(*m_funds_label);
-//	this->get_vbox()->pack_start(*m_unit_view);
-//	this->get_action_area()->pack_start(m_buy_button);
-//	this->get_action_area()->pack_start(*cancel_button);
-
+	
+	this->refresh();
 }
 
-aw::gui::response_t buy_menu::run()
+aw::unit::types buy_menu::run()
 {
 	m_return = false;
 
@@ -187,12 +150,12 @@ aw::gui::response_t buy_menu::run()
 
 	this->hide();
 
-	return aw::gui::OK;
+	return m_unit;
 }
 
-void buy_menu::set_workshop(unit::workshops w)
+void buy_menu::refresh()
 {
-	aw::gui::buy_menu::set_workshop(w);
+	aw::unit::workshops w = m_workshop;
 
 	m_list->clear();
 

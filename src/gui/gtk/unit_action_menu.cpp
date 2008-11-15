@@ -1,12 +1,14 @@
 #include "unit_action_menu.h"
 
 #include <gtkmm/button.h>
+#include <boost/foreach.hpp>
+
 
 using namespace aw::gui::gtk;
 
 //Initialize the variables
-unit_action_menu::unit_action_menu()
-: Gtk::Window(Gtk::WINDOW_POPUP), m_return(false), m_return_value(units::CANCEL)
+unit_action_menu::unit_action_menu(const std::list<units::actions>& actions)
+: gui::unit_action_menu(actions), Gtk::Window(Gtk::WINDOW_POPUP), m_return(false), m_return_value(units::CANCEL)
 {
 	m_vbox = Gtk::manage(new Gtk::VBox);
 	m_vbox->set_spacing(1);
@@ -20,6 +22,9 @@ unit_action_menu::unit_action_menu()
 	this->set_modal(true);
 	this->set_position(Gtk::WIN_POS_MOUSE);
 	this->set_type_hint(Gdk::WINDOW_TYPE_HINT_MENU);
+	
+	BOOST_FOREACH(units::actions a, actions)
+		this->add_action(a);
 }
 
 aw::units::actions unit_action_menu::run()

@@ -47,4 +47,5 @@ def build(bld):
 	gui.includes = '. lib'
 	gui.defines = 'TIXML_USE_TICPP=1 TIXML_USE_STL=1'
 	gui.find_sources_in_dirs('. gui gui/gtk')
+	gui.install_path = '..'
 

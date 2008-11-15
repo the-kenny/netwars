@@ -22,15 +22,11 @@ namespace aw
 				public:
 					main_window();
 
-					virtual void init_game();
-					virtual void start_new_game();
+					virtual void start_new_game(const aw::game::ptr &ptr);
 					virtual void quit_game();
-
-				protected:
-//					virtual void on_end_turn();
-//					virtual void on_player_defeat(player::ptr looser, player::ptr attacker, game_mechanics::defeat_type type);
-//					virtual void on_game_finish(player::ptr winner);
-
+					
+					virtual void lock() { this->set_sensitive(false); }
+					virtual void unlock() { this->set_sensitive(true); }
 
 				private:
 					void generate_menu();

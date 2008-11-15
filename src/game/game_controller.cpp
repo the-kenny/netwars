@@ -168,12 +168,9 @@ void game_controller::on_unit_click(const coord &pos, int key)
 
 					if(t->can_load(m_game->get_unit(m_selection)->type()))
 					{
-						//NOTE: Ersetzen
-						gui::unit_action_menu *menu = gui::create_unit_action_menu();
-
-						menu->add_action(units::LOAD);
-
-						int ret = menu->run();
+						std::list<units::actions> action;
+						action.push_back(units::LOAD);
+						units::actions ret = m_unit_action_menu_callback(action);
 
 						if(ret == units::LOAD)
 						{
@@ -198,12 +195,10 @@ void game_controller::on_unit_click(const coord &pos, int key)
 					//if(m_game->get_unit(pos)->life() < m_game->get_unit(pos)->max_life())
 					if(m_game->get_unit(m_selection)->get_hp() < m_game->get_unit(m_selection)->max_hp() || unit->get_hp() < unit->max_hp())
 					{
-						//NOTE: Ersetzen
-						gui::unit_action_menu *m = gui::create_unit_action_menu();
-						m->add_action(units::JOIN);
-
-						units::actions ret = m->run();
-
+						std::list<units::actions> action;
+						action.push_back(units::JOIN);
+						units::actions ret = m_unit_action_menu_callback(action);
+						
 						if(ret == units::JOIN)
 						{
 							m_game->join_units(m_selection, pos, *m_path);
@@ -218,11 +213,9 @@ void game_controller::on_unit_click(const coord &pos, int key)
 			{
 				if(m_game->get_unit(m_selection)->can_run_over()) //Oozium can overrun oppotiste units
 				{
-					//NOTE: Ersetzen
-					gui::unit_action_menu *m = gui::create_unit_action_menu();
-					m->add_action(units::ATTACK);
-
-					units::actions ret = m->run();
+					std::list<units::actions> action;
+					action.push_back(units::ATTACK);
+					units::actions ret = m_unit_action_menu_callback(action);
 
 					if(ret == units::ATTACK)
 					{
@@ -317,12 +310,18 @@ void game_controller::on_building_click(const coord &pos, int key)
 				}
 
 //NOTE: Ersetzen
+/*
 				gui::buy_menu *d = gui::create_buy_menu();
 				d->set_player(m_game->get_active_player());
 				d->set_workshop(shop);
 
 				d->on_buy_signal().connect(boost::bind(&game::buy_unit, m_game, pos, _1));
 				d->run();
+*/
+
+				unit::types unit = m_unit_buy_menu_callback(shop, m_game->get_active_player());
+				if(unit != unit::TYPE_NONE)
+					m_game->buy_unit(pos, unit);
 			}
 		}
 		else if(m_gamestate == ATTACKING)
@@ -444,7 +443,6 @@ void game_controller::on_free_click(const coord &pos, int key)
 	}
 }
 
-//NOTE: Ersetzen
 units::actions game_controller::show_actions(const coord &pos)
 {
 	unit::ptr unit = m_game->get_unit(pos);
@@ -522,6 +520,41 @@ units::actions game_controller::show_actions(const coord &pos)
 	bool can_repair = game_mechanics::can_repair(m_game->get_map(), pos, m_game->get_active_player()->get_funds());
 
 //NOTE: Ersetzen
+
+	std::list<units::actions> actions;
+	
+	
+
+	if(can_attack)
+		actions.push_back(units::ATTACK);
+	if(can_launch)
+		actions.push_back(units::LAUNCH);
+	if(can_capture)
+		actions.push_back(units::CAPTURE);
+	if(can_unload)
+		actions.push_back(units::UNLOAD);
+	if(can_explode)
+		actions.push_back(units::EXPLODE);
+
+	if(can_repair)
+		actions.push_back(units::REPAIR);
+	else if(can_supply)
+		actions.push_back(units::SUPPLY);
+
+
+	if(unit->can_hide())
+	{
+		if(unit->is_hidden())
+			actions.push_back(units::APPEAR);
+		else
+			actions.push_back(units::HIDE);
+	}
+
+	actions.push_back(units::WAIT);
+	
+	return m_unit_action_menu_callback(actions);
+	
+	/*
 	gui::unit_action_menu *menu = gui::create_unit_action_menu();
 
 	if(can_attack)
@@ -552,9 +585,9 @@ units::actions game_controller::show_actions(const coord &pos)
 	menu->add_action(units::WAIT);
 
 	return menu->run();
+	*/
 }
 
-//NOTE: Ersetzen
 void game_controller::process_action(units::actions action, const coord &pos)
 {
 	unit::ptr unit = m_game->get_unit(pos);
@@ -598,8 +631,8 @@ void game_controller::process_action(units::actions action, const coord &pos)
 	{
 		transporter::ptr transport_unit = boost::dynamic_pointer_cast<transporter>(m_game->get_unit(pos));
 
-		std::vector<unit::ptr> unloadable_units;
-		std::vector<std::size_t> unloadable_unit_indices;
+		std::list<unit::ptr> unloadable_units;
+		std::vector<std::size_t> unloadable_unit_indices(5);
 
 		typedef std::pair<std::size_t, unit::ptr> pair_t;
 		BOOST_FOREACH(pair_t p, game_mechanics::get_unloadable_units(m_game->get_map(), pos))
@@ -609,10 +642,14 @@ void game_controller::process_action(units::actions action, const coord &pos)
 		}
 
 //NOTE: Ersetzen
+	/*
 		gui::unit_unload_menu *um = gui::create_unload_menu();
 		um->set_units(unloadable_units);
 		int ret = um->run();
-
+	*/
+	
+		int ret = m_unit_unload_menu_callback(unloadable_units);
+	
 		m_highlighted_area.clear();
 
 		if(ret != -1)

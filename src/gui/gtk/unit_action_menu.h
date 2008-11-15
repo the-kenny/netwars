@@ -15,7 +15,7 @@ namespace aw
 			class unit_action_menu: public Gtk::Window, public aw::gui::unit_action_menu
 			{
 				public:
-					unit_action_menu();
+					unit_action_menu(const std::list<units::actions>& actions);
  					virtual units::actions run();
 
 					void add_action(units::actions a);

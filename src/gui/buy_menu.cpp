@@ -15,19 +15,15 @@
 using namespace aw;
 using namespace aw::gui;
 
-void buy_menu::set_player(const player::ptr &p)
+buy_menu::buy_menu(unit::workshops shop, const player::ptr &p)
 {
+	m_workshop = shop;
 	m_funds = p->get_funds();
 	m_color = p->get_unit_color();
 }
 
-void buy_menu::set_workshop(unit::workshops w)
-{
-	m_workshop = w;
-}
-
 void buy_menu::buy(unit::types t)
 {
-	m_on_buy_signal(t);
+	m_unit = t;
 }
 

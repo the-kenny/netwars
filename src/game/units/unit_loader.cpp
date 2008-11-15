@@ -7,7 +7,12 @@
 
 #include "game/coord.h"
 
+#include "unit_base.h"
+
 using namespace aw;
+
+//TODO: 
+const unit::types unit::TYPE_NONE = "";
 
 namespace
 {

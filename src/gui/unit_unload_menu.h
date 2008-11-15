@@ -11,10 +11,11 @@ namespace aw
 	{
 		class unit_unload_menu
 		{
-			public:
-				virtual int run() = 0;
+			public:				
+				//Return type: the position of the selected unit in the list of loaded units
+				virtual int run() = 0; 
 
-				virtual void set_units(const std::vector<unit::ptr> &vec) = 0;
+				virtual void set_units(const std::list<unit::ptr> &vec) = 0;
 		};
 	}
 }

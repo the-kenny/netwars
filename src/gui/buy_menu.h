@@ -7,6 +7,7 @@
 
 #include "game/units/unit_base.h"
 #include "game/player.h"
+#include "game/units/actions.h"
 
 #include "constants.h"
 
@@ -17,15 +18,8 @@ namespace aw
 		class buy_menu
 		{
 			public:
-				typedef boost::signal<void (unit::types)> signal_buy_t;
-
-//				virtual void add_unit(const unit::ptr &u) = 0;
-				void set_player(const player::ptr &p);
-				virtual void set_workshop(unit::workshops w);
-
-				signal_buy_t &on_buy_signal() { return m_on_buy_signal; }
-
-				virtual response_t run() = 0;
+				buy_menu(unit::workshops shop, const player::ptr &player);
+				virtual unit::types run() = 0;
 
 			protected:
 				virtual void buy(unit::types t);
@@ -33,11 +27,8 @@ namespace aw
 				int m_funds;
 				unit::colors m_color;
 				unit::workshops m_workshop;
-
-				signal_buy_t m_on_buy_signal;
-
-			private:
-
+				
+				unit::types m_unit;
 		};
 	}
 }

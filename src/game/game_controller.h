@@ -8,7 +8,10 @@
 #include "scene.h"
 #include "units/actions.h"
 
+#include <list>
+
 #include <boost/signals.hpp>
+#include <boost/utility.hpp>
 
 /*
 Bewegen
@@ -78,7 +81,13 @@ namespace aw
 	{
 		public:
 			typedef boost::shared_ptr<game_controller> ptr;
+			
 			typedef boost::signal<void (const scene::ptr&)> scene_changed_t;
+			
+			//Menu-Callbacks
+			typedef boost::signal<units::actions (const std::list<units::actions>&)> unit_action_menu_callback_t;
+			typedef boost::signal<unit::types (unit::workshops, const player::ptr&)> unit_buy_menu_callback_t;
+			typedef boost::signal<int (const std::list<unit::ptr> &)> unit_unload_menu_callback_t;
 
 			enum gamestate { IDLE, DISPLAYING, MOVING, ATTACKING, UNLOADING, REPAIRING };
 
@@ -91,7 +100,12 @@ namespace aw
 			void mouse_hover_changed(const coord &pos);
 
 			scene_changed_t &signal_scene_change() { return m_signal_scene_changed; }
-
+			
+			//Callback access methods
+			unit_action_menu_callback_t &signal_show_unit_action_menu() { return m_unit_action_menu_callback; }
+			unit_buy_menu_callback_t &signal_show_buy_menu() { return m_unit_buy_menu_callback; }
+			unit_unload_menu_callback_t &signal_show_unload_menu() { return m_unit_unload_menu_callback; }
+			
 		private:
 			void on_unit_click(const coord &pos, int key);
 			void on_building_click(const coord &pos, int key);
@@ -112,6 +126,10 @@ namespace aw
 			area m_highlighted_area;
 
 			game::ptr m_game;
+			
+			unit_action_menu_callback_t m_unit_action_menu_callback;
+			unit_buy_menu_callback_t m_unit_buy_menu_callback;
+			unit_unload_menu_callback_t m_unit_unload_menu_callback;
 	};
 }
 
