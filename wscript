@@ -4,9 +4,6 @@
 import sys, os
 import Utils, Options
 
-import preproc
-preproc.go_absolute = 1
-
 # the following two variables are used by the target "waf dist"
 VERSION='0.0.1'
 APPNAME='netwars'

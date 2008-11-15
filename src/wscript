@@ -9,13 +9,22 @@ def set_options(opt):
 	pass
 
 def configure(conf):
-	boost_flags = '-lboost_filesystem -lboost_system -lboost_signals'
+	windows = sys.platform.startswith('win')
 
+	boost_flags = ' -lboost_filesystem -lboost_system -lboost_signals'
+
+	conf.check_cfg(atleast_pkgconfig_version='0.0.0')
 	conf.check_cfg(package='gtkmm-2.4', args='--cflags --libs', uselib_store='GTKMM')
 	conf.check_cfg(package='cairomm-1.0', args='--cflags --libs', uselib_store='CAIROMM')
 	conf.check_cfg(package='libglademm-2.4', args='--cflags --libs', uselib_store='GLADEMM')
-	conf.env['CXXFLAGS_NETWARS'] = '-I/usr/local/include -Wall'
-	conf.env['LINKFLAGS'] = boost_flags
+	
+	if windows:
+		conf.env['CXXFLAGS'] = '-IC:\MinGW\local\include -Wall'
+		conf.env['LINKFLAGS'] = '-LC:\MinGW\local\lib'
+	else:
+		conf.env['CXXFLAGS'] = '-I/usr/local/include -Wall'
+		
+	conf.env['LINKFLAGS'] += boost_flags
 	conf.sub_config('lib')
 
 	return
