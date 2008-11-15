@@ -19,12 +19,12 @@ def configure(conf):
 	conf.check_cfg(package='libglademm-2.4', args='--cflags --libs', uselib_store='GLADEMM')
 	
 	if windows:
-		conf.env['CXXFLAGS'] = '-IC:\MinGW\local\include -Wall'
-		conf.env['LINKFLAGS'] = '-LC:\MinGW\local\lib'
+		conf.env.append_value('CXXFLAGS', '-IC:\MinGW\local\include -Wall')
+		conf.env.append_value('LINKFLAGS', '-LC:\MinGW\local\lib')
 	else:
-		conf.env['CXXFLAGS'] = '-I/usr/local/include -Wall'
+		conf.env.append_value('CXXFLAGS', '-I/usr/local/include -Wall')
 		
-	conf.env['LINKFLAGS'] += boost_flags
+	conf.env.append_value('LINKFLAGS', boost_flags)
 	conf.sub_config('lib')
 
 	return
