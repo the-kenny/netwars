@@ -5,19 +5,18 @@
 import sys, os
 import Utils, Options
 
+def set_options(opt):
+	pass
+
 def configure(conf):
-	#conf.check_cfg(package='gtkmm-2.4', atleast_version='2.4', uselib_store='GTKMM')
-	#conf.check_cfg(package='libglademm-2.4', atleast_version='2.4', uselib_store='GLADEMM')
-	pkgconf = conf.create_pkgconfig_configurator()
-	
-	conf.env['CXXFLAGS'] = '-IC:\MinGW\local\include'
+	conf.sub_config('game')
+	#conf.sub_config('gui')
+	conf.sub_config('lib')
 	return
 	
 def build(bld):
-	obj = bld.new_task_gen('cxx', 'program')
-	obj.target = 'netwars'
-	obj.uselib = 'GTKMM GLADEMM'
-	obj.defines = 'TIXML_USE_STL=1 TIXML_USE_TICPP=1'
+	bld.add_subdirs('game')
+	#bld.add_subdirs('gui')
+	conf.add_subdirs('lib')
 
-	obj.find_sources_in_dirs('. game_mechanics  graphics gui gui/gtk map_loader  tinyxml units')
 
