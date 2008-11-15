@@ -2,6 +2,7 @@
 	#define AW_DISPLAY_H
 
 #include <gtkmm.h>
+#include <cairomm/cairomm.h>
 #include <boost/signals.hpp>
 
 #include "game/scene.h"
