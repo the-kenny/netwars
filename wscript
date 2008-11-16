@@ -17,6 +17,7 @@ def init():
 
 def set_options(opt):
 	opt.tool_options('g++')
+	opt.sub_options('src')
 	return
 
 def configure(conf):
