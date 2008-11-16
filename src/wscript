@@ -13,7 +13,7 @@ def set_options(opt):
 def configure(conf):
 	windows = sys.platform.startswith('win')
 	conf.env['GUI'] = Options.options.gui
-	conf.env['BOOST'] = ' -lboost_filesystem -lboost_system -lboost_signals-s'
+	conf.env['BOOST'] = ' -lboost_filesystem -lboost_system -lboost_signals'
 	
 	if conf.env['GUI'] == 'GTK':
 		conf.check_cfg(atleast_pkgconfig_version='0.0.0')
