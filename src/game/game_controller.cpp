@@ -2,9 +2,6 @@
 
 #include "map_loader/map_loader.h"
 
-#include "gui/buy_menu.h"
-#include "gui/gui_fabric.h"
-
 #include "game_mechanics/fire_range.h"
 #include "game_mechanics/damage_calc.h"
 #include "game_mechanics/attack_utilities.h"

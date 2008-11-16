@@ -41,8 +41,6 @@ void main_window::quit_game()
 	m_menu_manager->get_action("/menubar/game_menu/end_turn")->set_sensitive(false);
 }
 
-
-
 void main_window::generate_menu()
 {
 	Glib::RefPtr<Gtk::ActionGroup> action_group = Gtk::ActionGroup::create();
@@ -67,7 +65,6 @@ void main_window::generate_menu()
 	"			<separator />"
 	"			<menuitem action='quit'/>"
 	"		</menu>"
-
 	"		<menu action='game_menu'>"
 	"			<menuitem action='end_turn'/>"
 	"		</menu>"

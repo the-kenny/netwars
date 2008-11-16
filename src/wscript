@@ -30,6 +30,7 @@ def configure(conf):
 		conf.env.append_value('CXXFLAGS', '-I/usr/local/include -Wall')
 		
 	conf.env.append_value('LINKFLAGS', boost_flags)
+		
 	conf.sub_config('lib')
 
 	return
@@ -40,11 +41,9 @@ def build(bld):
 	netwars = bld.new_task_gen('cxx', 'staticlib')
 	netwars.target = 'netwars'
 	netwars.uselib_local = 'tinyxml'
-	netwars.uselib = 'GTKMM CAIROMM GLADEMM'
 	netwars.includes = '. lib'
 	netwars.defines = 'TIXML_USE_TICPP=1 TIXML_USE_STL=1'
 	netwars.find_sources_in_dirs('game game/game_mechanics game/map_loader game/units')
-
 
 	if Options.options.gui == 'GTK':
 		gui = bld.new_task_gen('cxx', 'program')
@@ -52,7 +51,7 @@ def build(bld):
 		gui.uselib_local = 'netwars tinyxml'
 		gui.uselib = 'GTKMM CAIROMM GLADEMM'
 		gui.includes = '. lib'
-		gui.defines = 'TIXML_USE_TICPP=1 TIXML_USE_STL=1'
+		gui.defines = 'TIXML_USE_TICPP=1 TIXML_USE_STL=1 GUI_GTK=1'
 		gui.find_sources_in_dirs('. gui gui/gtk')
 		gui.install_path = '..'
 

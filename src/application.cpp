@@ -1,15 +1,9 @@
 #include "application.h"
 
-#include "gui/gtk/buy_menu.h"
-#include "gui/gtk/unit_action_menu.h"
-#include "gui/gtk/unit_unload_menu.h"
-
-#include "gui/game_dialog.h"
 #include "gui/gui_fabric.h"
+#include "gui/game_dialog.h"
 
 #include "game/game_controller.h"
-
-
 
 #include <gtkmm.h>
 #include <boost/bind.hpp>
@@ -25,22 +19,28 @@ application::application()
 
 int application::run(int &argc, char** &argv)
 {
-	try
-	{
-		Gtk::Main kit(argc, argv);
-		
-		m_main_window = new gui::gtk::main_window;
-		m_main_window->signal_new_game().connect(boost::bind(&application::start_new_game, this));
-		m_main_window->signal_end_turn().connect(boost::bind(&application::end_turn, this));
-		m_main_window->signal_end_turn().connect(boost::bind(&application::on_end_turn, this));
+	
+		try
+		{
+			#ifdef GUI_GTK
+				Gtk::Main kit(argc, argv);
+			#endif
+			
+			m_main_window = gui::create_main_window();
+			m_main_window->signal_new_game().connect(boost::bind(&application::start_new_game, this));
+			m_main_window->signal_end_turn().connect(boost::bind(&application::end_turn, this));
+			m_main_window->signal_end_turn().connect(boost::bind(&application::on_end_turn, this));
 
-		Gtk::Main::run(*dynamic_cast<gui::gtk::main_window*>(m_main_window));
-	}
-	catch(const std::exception &e)
-	{
-		std::cerr << "Uncaught Exception: " << e.what() << std::endl;
-		std::cin.get();
-	}
+			#ifdef GUI_GTK
+				Gtk::Main::run(*dynamic_cast<gui::gtk::main_window*>(m_main_window));
+			#endif
+		}
+		catch(const std::exception &e)
+		{
+			std::cerr << "Uncaught Exception: " << e.what() << std::endl;
+			std::cin.get();
+		}
+	
 	
 	return 0;
 }
@@ -49,30 +49,30 @@ int application::run(int &argc, char** &argv)
 
 unit::types application::show_buy_menu(unit::workshops shop, const player::ptr &player)
 {
-	m_main_window->lock();
-	gui::buy_menu *menu = new gui::gtk::buy_menu(shop, player);
+	m_main_window->lock_game();
+	gui::buy_menu *menu = gui::create_buy_menu(shop, player);
 	unit::types ret = menu->run();
-	m_main_window->unlock();
+	m_main_window->unlock_game();
 	
 	return ret;
 }
 
 units::actions application::show_unit_action_menu(const std::list<units::actions>& actions)
 {
-	m_main_window->lock();
-	gui::unit_action_menu *menu = new gui::gtk::unit_action_menu(actions);
+	m_main_window->lock_game();
+	gui::unit_action_menu *menu = gui::create_unit_action_menu(actions);
 	units::actions ret = menu->run();
-	m_main_window->unlock();
+	m_main_window->unlock_game();
 	
 	return ret;
 }
 
 int application::show_unit_unload_menu(const std::list<unit::ptr>& units)
 {
-	m_main_window->lock();
-	gui::unit_unload_menu *menu = new gui::gtk::unit_unload_menu(units);
+	m_main_window->lock_game();
+	gui::unit_unload_menu *menu = gui::create_unload_menu(units);
 	int ret = menu->run();
-	m_main_window->unlock();
+	m_main_window->unlock_game();
 	
 	return ret;
 }
@@ -130,6 +130,6 @@ void application::on_player_defeat(player::ptr looser, player::ptr attacker, gam
 void application::on_game_finish(player::ptr winner)
 {
 	std::cout << "Game has ended! The " << winner->get_color_string() << " player has won!" << std::endl;
-	m_main_window->lock();
+	m_main_window->lock_game();
 }
 
