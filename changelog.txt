@@ -68,11 +68,7 @@
 	+ Spieler können besiegt werden
 	+ Spieler der nicht-teilnehmenden Gebäude werden neutral gemacht
 
-
-
 ==== Laaange Pause ====
-
-
 
 04.07.08
 	+ Piperunner können nun auch auf Dummy-Units stehen
@@ -81,3 +77,9 @@
 08.07.08
 	* Benzinverbrauch beim Bewegen eines Transporters korrigiert
 	* Benzinverbrauch beim Vereinen von Einheiten korrigiert
+
+	==== Laaange Pause ====
+	
+16.11.08
+	+ Big refactoring
+	+ Introducing the new build system 'waf'

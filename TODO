@@ -1,7 +1,7 @@
 Organization:
-	1. Find a new build system and get rid of Code::Blocks
-	2. Refactor the source tree
+	Nothing! :D
 
 Real coding:
-	1. Rewrite the GUI (It's just crap)
-	2. Hack something into it! (Better pathfinding would be nice) 
+	- Put units.xml and damagetable.xml into an sqlite database
+	- Rewrite the GUI (I hate GUI-Development....)
+	- Hack something into it! (Better pathfinding would be nice) 

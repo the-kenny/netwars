@@ -1,11 +1,11 @@
-Netwars
+Netwars is an Advance Wars clone for the PC platform. It is advanced, but not playable yet.
 
+Most of the code was written almost a year in the past, when I was not very experienced and just learning C++, so don't  expect very beautiful code ;)
+It depends on boost, gtkmm and libglademm, you should have them if you want to compile this game.
+A map for testing (bla.aws) is included. You can create your own maps with the Advance Wars Map Editor (http://advancewarsnet.com/designmaps/editor.php)
 
-Netwars is an Advance Wars clone for "real" PCs. It is advanced, but not playable.
+If you are interested in this project, please drop me an email at thekenny123@gmail.com.
 
-Most of the code was written almost a year in the past, and I'm not the best C++-Developer of the world.
-The layout of the source tree and much of the code in it is just crap.
-I think it should be refactored, but I don't have the motivation for it. Maybe in the future ;)
 
 PS:
-Much in this repo is german and much is english, sorry for that. 
+Much comments in the source (and the entire changelog) are in german. Sorry for that. 

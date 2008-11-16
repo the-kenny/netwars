@@ -1,10 +1,10 @@
 Pathfinding:
 	You will see that the pathfinding is much different to the original. You can't set "waypoints" where the unit should go along. 
-	This will definitely  fixed.
-
+	This will be fixed.
+	
 Unit-Joining
 	Maybe transport-units can't join (needs to be checked)
 	Maybe units shouldn't be allowed to move after joining (needs to be checked)
 	
 Damage-Calculation
-	The damage is propably wrong rounded
+	The damage is propably wrong rounded (needs to be checked)
