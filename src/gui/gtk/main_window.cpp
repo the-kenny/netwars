@@ -1,9 +1,12 @@
 #include "main_window.h"
 
 #include "gui/game_dialog.h"
+#include "gui/gtk/map_widget.h"
 
 #include <boost/bind.hpp>
 #include <gtkmm.h>
+#include <libglademm.h>
+
 
 
 #include "game/map_loader/map_loader.h"
@@ -16,14 +19,14 @@ using namespace aw::gui::gtk;
 
 main_window::main_window()
 {
-	m_map_widget = map_widget::ptr(new map_widget);
+	m_map_widget = map_widget::ptr(new gtk::map_widget);
 
 	Gtk::VBox *v = Gtk::manage(new Gtk::VBox);
 
 	this->generate_menu();
 
 	v->pack_start(*m_menu_manager->get_widget("/menubar"), Gtk::PACK_SHRINK);
-	v->pack_start(*m_map_widget);
+	v->pack_start(*boost::dynamic_pointer_cast<gui::gtk::map_widget>(m_map_widget));
 
 	this->add(*v);
 	this->show_all();

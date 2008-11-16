@@ -5,7 +5,10 @@
 
 #include "game/game_controller.h"
 
+#ifdef GUI_GTK
 #include <gtkmm.h>
+#endif
+
 #include <boost/bind.hpp>
 #include <boost/signals.hpp>
 

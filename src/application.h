@@ -1,8 +1,10 @@
 #ifndef AW_APPLICATION_H
 	#define AW_APPLICATION_H
 	
+#ifdef GUI_GTK
 #include "gui/main_window.h"	
 #include "gui/gtk/main_window.h"
+#endif
 
 #include "game/units/unit_base.h"
 #include "game/player.h"

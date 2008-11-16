@@ -2,8 +2,9 @@
 # encoding: utf-8
 # Thomas Nagy, 2006 (ita)
 
+from logging import fatal, error
 import sys, os
-import Utils, Options
+import Utils, Options, Configure
 
 def set_options(opt):
 	opt.add_option('--gui', type='string', default='GTK', help='Choose the GUI [GTK|COCOA]', dest='gui')
@@ -21,8 +22,9 @@ def configure(conf):
 		conf.check_cfg(package='cairomm-1.0', args='--cflags --libs', uselib_store='CAIROMM')
 		conf.check_cfg(package='libglademm-2.4', args='--cflags --libs', uselib_store='GLADEMM')
 	elif Options.options.gui == 'COCOA' and not sys.platform.startswith('darwin'):
-		fatal('Cocoa gui is only available under OS X')	
-	
+		raise Configure.ConfigurationError('Cocoa gui is only available under OS X')	
+		return 0
+		
 	if windows:
 		conf.env.append_value('CXXFLAGS', '-IC:\MinGW\local\include -Wall')
 		conf.env.append_value('LINKFLAGS', '-LC:\MinGW\local\lib')
@@ -32,8 +34,6 @@ def configure(conf):
 	conf.env.append_value('LINKFLAGS', boost_flags)
 		
 	conf.sub_config('lib')
-
-	return
 	
 def build(bld):
 	bld.add_subdirs('lib')

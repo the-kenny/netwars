@@ -1,9 +1,10 @@
 #ifndef AW_GTK_MAIN_WINDOW_H
 	#define AW_GTK_MAIN_WINDOW_H
 
-#include <gtkmm/window.h>
+#include <gtkmm.h>
 
-#include "gui/display.h"
+
+#include "gui/map_widget.h"
 #include "gui/main_window.h"
 
 #include "game/game_controller.h"
@@ -25,8 +26,8 @@ namespace aw
 					virtual void start_new_game(const aw::game::ptr &ptr);
 					virtual void quit_game();
 					
-					virtual void lock_game() { m_map_widget->set_sensitive(false); }
-					virtual void unlock_game() { m_map_widget->set_sensitive(true); }
+					virtual void lock_game() { m_map_widget->disable(); }
+					virtual void unlock_game() { m_map_widget->enable(); }
 
 				private:
 					void generate_menu();

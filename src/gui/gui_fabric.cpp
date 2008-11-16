@@ -1,11 +1,13 @@
 #include "gui_fabric.h"
 
+#ifdef GUI_GTK
 #include "gtk/buy_menu.h"
 #include "gtk/game_dialog.h"
 #include "gtk/main_window.h"
 #include "gtk/unit_action_menu.h"
 #include "gtk/unit_unload_menu.h"
 #include "gtk/unit_widget.h"
+#endif
 
 namespace aw
 {

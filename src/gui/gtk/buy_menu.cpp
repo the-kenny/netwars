@@ -31,7 +31,7 @@ namespace
 			virtual void render_vfunc(const Glib::RefPtr<Gdk::Drawable> &window, Gtk::Widget &, const Gdk::Rectangle &, const Gdk::Rectangle &cell_area, const Gdk::Rectangle &/*expose_area*/, Gtk::CellRendererState /*flags*/)
 			{
 				Cairo::RefPtr<Cairo::Context> cr = window->create_cairo_context();
-				Cairo::RefPtr<Cairo::ImageSurface> ptr(aw::sprite().get_sprite(display::get_path(m_property_type.get_value(), m_property_color.get_value())));
+				Cairo::RefPtr<Cairo::ImageSurface> ptr(aw::sprite().get_sprite(gui::get_path(m_property_type.get_value(), m_property_color.get_value())));
 
 				const int begin_x = cell_area.get_x()+(cell_area.get_width()/2)-ptr->get_width()/2;
 				const int begin_y = cell_area.get_y()+(cell_area.get_height()/2)-ptr->get_height()/2;

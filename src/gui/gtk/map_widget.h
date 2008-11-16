@@ -6,7 +6,7 @@
 #include <boost/signals.hpp>
 
 #include "game/scene.h"
-#include "gui/display.h"
+#include "gui/map_widget.h"
 
 namespace aw
 {
@@ -14,16 +14,18 @@ namespace aw
 	{
 		namespace gtk
 		{			
-			class map_widget: public gui::map_widget, public Gtk::DrawingArea
+			class map_widget: public aw::gui::map_widget, public Gtk::DrawingArea
 			{
 				public:
 					map_widget();
 
 					virtual void write_to_png(const std::string &filename);
+					virtual void queue_draw();
+					
+					virtual void disable();
+					virtual void enable();
 
 				private:
-					virtual void queue_draw();
-
 					//Callbacks
 					virtual bool on_expose_event(GdkEventExpose* event);
 					virtual bool on_button_press_event(GdkEventButton* event);
@@ -39,3 +41,4 @@ namespace aw
 	}
 }
 
+#endif

@@ -6,7 +6,7 @@
 
 namespace aw
 {
-	namespace display
+	namespace gui
 	{
 		std::string get_path(terrain::types type, terrain::directions direction, terrain::extras extra = terrain::NONE);
 		std::string get_path(unit::types type, unit::colors color);

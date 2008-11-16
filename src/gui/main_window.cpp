@@ -10,7 +10,7 @@
 #include "game/coord.h"
 #include "game/units/unit_base.h"
 
-#include "display.h"
+#include "map_widget.h"
 
 #include "gui/gui_fabric.h"
 

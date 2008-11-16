@@ -3,7 +3,7 @@
 
 #include <gtkmm/window.h>
 
-#include "gui/display.h"
+#include "gui/map_widget.h"
 
 #include "game/game_controller.h"
 #include "game/units/unit_base.h"
@@ -30,7 +30,7 @@ namespace aw
 				general_signal_t& signal_end_turn() { return m_signal_end_turn; }
 				
 			protected:
-				typedef aw::display::map_widget map_widget;
+				typedef aw::gui::map_widget map_widget;
 				map_widget::ptr m_map_widget;
 				
 				general_signal_t m_signal_new_game;

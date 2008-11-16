@@ -18,23 +18,23 @@ bool unit_widget::on_expose_event(GdkEventExpose *event)
 
 	if(m_unit)
 	{
-		this->draw(cr, aw::display::get_path(m_unit->type(), m_unit->color()));
+		this->draw(cr, aw::gui::get_path(m_unit->type(), m_unit->color()));
 
 		int life = m_unit->get_hp();
 		if(life < 10 && life > 0)
-			this->draw(cr, aw::display::get_path(unit::LIVE, life));
+			this->draw(cr, aw::gui::get_path(unit::LIVE, life));
 
 		if(m_unit->low_ammo())
-			this->draw(cr, aw::display::get_path(unit::LOW_AMMO));
+			this->draw(cr, aw::gui::get_path(unit::LOW_AMMO));
 
 		if(m_unit->low_fuel())
-			this->draw(cr, aw::display::get_path(unit::LOW_FUEL));
+			this->draw(cr, aw::gui::get_path(unit::LOW_FUEL));
 
 		if(m_unit->is_hidden())
-			this->draw(cr, aw::display::get_path(unit::HIDDEN));
+			this->draw(cr, aw::gui::get_path(unit::HIDDEN));
 
 		if(m_unit->is_transporter() && boost::dynamic_pointer_cast<transporter>(m_unit)->loaded_units_count() > 0)
-			this->draw(cr, aw::display::get_path(unit::LOADED));
+			this->draw(cr, aw::gui::get_path(unit::LOADED));
 	}
 
 	return ret;
