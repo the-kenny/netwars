@@ -25,8 +25,8 @@ namespace aw
 					virtual void start_new_game(const aw::game::ptr &ptr);
 					virtual void quit_game();
 					
-					virtual void lock() { this->set_sensitive(false); }
-					virtual void unlock() { this->set_sensitive(true); }
+					virtual void lock_game() { m_map_widget->set_sensitive(false); }
+					virtual void unlock_game() { m_map_widget->set_sensitive(true); }
 
 				private:
 					void generate_menu();

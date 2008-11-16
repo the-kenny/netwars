@@ -27,9 +27,7 @@ namespace aw
 			
 			//------------- Callbacks -------------
 			void end_turn();
-			
-			
-			
+
 			void on_end_turn();
 			void on_player_defeat(player::ptr looser, player::ptr attacker, game_mechanics::defeat_type type);
 			void on_game_finish(player::ptr winner);

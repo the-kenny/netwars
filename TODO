@@ -2,6 +2,7 @@ Organization:
 	Nothing! :D
 
 Real coding:
+	- Port the gui to another toolkit
 	- Put units.xml and damagetable.xml into an sqlite database
 	- Rewrite the GUI (I hate GUI-Development....)
 	- Hack something into it! (Better pathfinding would be nice) 

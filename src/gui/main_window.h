@@ -23,8 +23,8 @@ namespace aw
 				
 				virtual void connect_game_controller(const game_controller::ptr &ptr);
 				
-				virtual void lock() = 0;
-				virtual void unlock() = 0;
+				virtual void lock_game() = 0;
+				virtual void unlock_game() = 0;
 				
 				general_signal_t& signal_new_game() { return m_signal_new_game; }
 				general_signal_t& signal_end_turn() { return m_signal_end_turn; }
