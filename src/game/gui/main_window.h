@@ -1,9 +1,7 @@
 #ifndef AW_MAIN_WINDOW_H
 	#define AW_MAIN_WINDOW_H
 
-#include <gtkmm/window.h>
-
-#include "gui/map_widget.h"
+#include "map_widget.h"
 
 #include "game/game_controller.h"
 #include "game/units/unit_base.h"

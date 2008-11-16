@@ -12,6 +12,7 @@ def build(bld):
 	obj = bld.new_task_gen('cxx', 'staticlib')
 	obj.target = 'tinyxml'
 	obj.defines = 'TIXML_USE_STL=1 TIXML_USE_TICPP=1'
-
 	obj.find_sources_in_dirs('tinyxml')
+	obj.install_path = None
+
 

@@ -1,10 +1,8 @@
 #ifndef AW_UNIT_ACTIONS_MENU_H
 	#define AW_UNIT_ACTIONS_MENU_H
 
-#include <gtkmm/window.h>
-#include <gtkmm/box.h>
-
 #include "game/units/actions.h"
+#include <list>
 
 namespace aw
 {

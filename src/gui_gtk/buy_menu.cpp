@@ -10,7 +10,7 @@
 #include "game/units/unit_base.h"
 
 #include "sprites.h"
-#include "gui/paths.h"
+#include "game/gui/paths.h"
 
 using namespace aw;
 using namespace aw::gui::gtk;

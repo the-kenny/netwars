@@ -1,0 +1,24 @@
+#! /usr/bin/env python
+# encoding: utf-8
+# Thomas Nagy, 2006 (ita)
+
+from logging import fatal, error
+import sys, os
+import Utils, Options, Configure
+
+def set_options(opt):
+	pass
+
+def configure(conf):
+	pass
+					
+def build(bld):
+	gui = bld.new_task_gen('cxx', 'program')
+	gui.target = 'netwars'
+	gui.uselib_local = 'netwars tinyxml'
+	gui.uselib = 'GTKMM CAIROMM GLADEMM'
+	gui.includes = '. .. ../lib'
+	gui.defines = 'TIXML_USE_TICPP=1 TIXML_USE_STL=1 GUI_GTK=1'
+	gui.find_sources_in_dirs('.')
+	gui.install_path = '..'
+

@@ -1,6 +1,6 @@
 #include "unit_widget.h"
-#include "gui/sprites.h"
-#include "gui/paths.h"
+#include "sprites.h"
+#include "game/gui/paths.h"
 
 
 using namespace aw::gui::gtk;

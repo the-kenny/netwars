@@ -5,7 +5,7 @@
 
 #include <gtkmm/window.h>
 
-#include "gui/unit_unload_menu.h"
+#include "game/gui/unit_unload_menu.h"
 
 namespace aw
 {

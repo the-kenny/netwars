@@ -1,8 +1,6 @@
 #ifndef AW_GAME_DIALOG_H
 	#define AW_GAME_DIALOG_H
-
-#include <gtkmm.h>
-
+	
 #include "constants.h"
 
 namespace aw

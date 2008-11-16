@@ -1,16 +1,7 @@
 #include "buy_menu.h"
 
-#include <vector>
-#include <boost/foreach.hpp>
-#include <boost/bind.hpp>
-#include <boost/lexical_cast.hpp>
-
-#include "game/game_mechanics/prices.h"
-#include "game/units/unit_loader.h"
 #include "game/units/unit_base.h"
 
-#include "gui/sprites.h"
-#include "gui/paths.h"
 
 using namespace aw;
 using namespace aw::gui;

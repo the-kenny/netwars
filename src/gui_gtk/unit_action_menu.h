@@ -4,7 +4,7 @@
 #include <gtkmm/window.h>
 #include <gtkmm/box.h>
 
-#include "gui/unit_action_menu.h"
+#include "game/gui/unit_action_menu.h"
 
 namespace aw
 {

@@ -1,13 +1,17 @@
 #include "application.h"
 
-#include "gui/gui_fabric.h"
-#include "gui/game_dialog.h"
+#include "game/gui/game_dialog.h"
+
+#include "buy_menu.h"
+#include "game_dialog.h"
+#include "main_window.h"
+#include "unit_action_menu.h"
+#include "unit_unload_menu.h"
+#include "unit_widget.h"
 
 #include "game/game_controller.h"
 
-#ifdef GUI_GTK
 #include <gtkmm.h>
-#endif
 
 #include <boost/bind.hpp>
 #include <boost/signals.hpp>
@@ -25,18 +29,14 @@ int application::run(int &argc, char** &argv)
 	
 		try
 		{
-			#ifdef GUI_GTK
-				Gtk::Main kit(argc, argv);
-			#endif
+			Gtk::Main kit(argc, argv);
 			
-			m_main_window = gui::create_main_window();
+			m_main_window = new gui::gtk::main_window();
 			m_main_window->signal_new_game().connect(boost::bind(&application::start_new_game, this));
 			m_main_window->signal_end_turn().connect(boost::bind(&application::end_turn, this));
 			m_main_window->signal_end_turn().connect(boost::bind(&application::on_end_turn, this));
 
-			#ifdef GUI_GTK
-				Gtk::Main::run(*dynamic_cast<gui::gtk::main_window*>(m_main_window));
-			#endif
+			Gtk::Main::run(*dynamic_cast<gui::gtk::main_window*>(m_main_window));
 		}
 		catch(const std::exception &e)
 		{
@@ -53,7 +53,7 @@ int application::run(int &argc, char** &argv)
 unit::types application::show_buy_menu(unit::workshops shop, const player::ptr &player)
 {
 	m_main_window->lock_game();
-	gui::buy_menu *menu = gui::create_buy_menu(shop, player);
+	gui::buy_menu *menu = new gui::gtk::buy_menu(shop, player);
 	unit::types ret = menu->run();
 	m_main_window->unlock_game();
 	
@@ -63,7 +63,7 @@ unit::types application::show_buy_menu(unit::workshops shop, const player::ptr &
 units::actions application::show_unit_action_menu(const std::list<units::actions>& actions)
 {
 	m_main_window->lock_game();
-	gui::unit_action_menu *menu = gui::create_unit_action_menu(actions);
+	gui::unit_action_menu *menu = new gui::gtk::unit_action_menu(actions);
 	units::actions ret = menu->run();
 	m_main_window->unlock_game();
 	
@@ -73,7 +73,7 @@ units::actions application::show_unit_action_menu(const std::list<units::actions
 int application::show_unit_unload_menu(const std::list<unit::ptr>& units)
 {
 	m_main_window->lock_game();
-	gui::unit_unload_menu *menu = gui::create_unload_menu(units);
+	gui::unit_unload_menu *menu = new gui::gtk::unit_unload_menu(units);
 	int ret = menu->run();
 	m_main_window->unlock_game();
 	
@@ -90,7 +90,7 @@ void application::end_turn()
 
 void application::start_new_game()
 {
-	gui::game_dialog *g = gui::create_game_dialog();
+	gui::game_dialog *g = new gui::gtk::new_game_dialog();
 	int response = g->run();
 
 	if(response == gui::OK)

@@ -1,20 +1,8 @@
 #include "main_window.h"
-#include "game_dialog.h"
-
-#include "gtk/buy_menu.h"
 
 #include <boost/bind.hpp>
-#include "game/map_loader/map_loader.h"
-#include "game/config.h"
 #include "game/game.h"
-#include "game/coord.h"
-#include "game/units/unit_base.h"
 
-#include "map_widget.h"
-
-#include "gui/gui_fabric.h"
-
-#include <gtkmm.h>
 
 using namespace aw;
 using namespace aw::gui;

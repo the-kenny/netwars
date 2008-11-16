@@ -6,7 +6,7 @@
 #include <boost/signals.hpp>
 
 #include "game/scene.h"
-#include "gui/map_widget.h"
+#include "game/gui/map_widget.h"
 
 namespace aw
 {

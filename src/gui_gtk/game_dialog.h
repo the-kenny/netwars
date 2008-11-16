@@ -3,7 +3,7 @@
 
 #include <gtkmm.h>
 
-#include "gui/game_dialog.h"
+#include "game/gui/game_dialog.h"
 
 namespace aw
 {

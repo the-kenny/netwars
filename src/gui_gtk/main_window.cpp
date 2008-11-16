@@ -1,13 +1,11 @@
 #include "main_window.h"
 
-#include "gui/game_dialog.h"
-#include "gui/gtk/map_widget.h"
+#include "game/gui/game_dialog.h"
+#include "map_widget.h"
 
 #include <boost/bind.hpp>
 #include <gtkmm.h>
 #include <libglademm.h>
-
-
 
 #include "game/map_loader/map_loader.h"
 #include "game/config.h"

@@ -3,8 +3,6 @@
 
 #include "game/units/unit_base.h"
 
-#include <gtkmm/window.h>
-
 namespace aw
 {
 	namespace gui

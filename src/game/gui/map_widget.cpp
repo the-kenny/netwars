@@ -1,13 +1,9 @@
 #include "map_widget.h"
 
-#include "game/units/units.h"
-
-#include "game/config.h"
-#include "gui/sprites.h"
-#include "gui/paths.h"
-
 #include <boost/shared_ptr.hpp>
 #include <boost/foreach.hpp>
+
+#include "game/scene.h"
 
 namespace aw
 {

@@ -4,7 +4,7 @@
 #include <gtkmm.h>
 
 #include "game/units/units.h"
-#include "gui/unit_widget.h"
+#include "game/gui/unit_widget.h"
 
 namespace aw
 {

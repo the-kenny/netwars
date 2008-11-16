@@ -1,8 +1,6 @@
 #ifndef AW_UNIT_WIDGET_H
 	#define AW_UNIT_WIDGET_H
 
-#include <gtkmm.h>
-
 #include "game/units/units.h"
 
 namespace aw

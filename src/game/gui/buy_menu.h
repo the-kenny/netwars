@@ -1,8 +1,6 @@
 #ifndef AW_BUY_MENU_H
 	#define AW_BUY_MENU_H
 
-#include <gtkmm.h>
-
 #include <boost/signals.hpp>
 
 #include "game/units/unit_base.h"

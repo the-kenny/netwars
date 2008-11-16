@@ -12,18 +12,16 @@ def set_options(opt):
 
 def configure(conf):
 	windows = sys.platform.startswith('win')
-
-	boost_flags = ' -lboost_filesystem -lboost_system -lboost_signals'
-
-	conf.check_cfg(atleast_pkgconfig_version='0.0.0')
-
-	if Options.options.gui == 'GTK':
+	conf.env['GUI'] = Options.options.gui
+	conf.env['BOOST'] = ' -lboost_filesystem -lboost_system -lboost_signals-s'
+	
+	if conf.env['GUI'] == 'GTK':
+		conf.check_cfg(atleast_pkgconfig_version='0.0.0')
 		conf.check_cfg(package='gtkmm-2.4', args='--cflags --libs', uselib_store='GTKMM')
 		conf.check_cfg(package='cairomm-1.0', args='--cflags --libs', uselib_store='CAIROMM')
 		conf.check_cfg(package='libglademm-2.4', args='--cflags --libs', uselib_store='GLADEMM')
-	elif Options.options.gui == 'COCOA' and not sys.platform.startswith('darwin'):
+	elif conf.env['GUI'] == 'COCOA' and not sys.platform.startswith('darwin'):
 		raise Configure.ConfigurationError('Cocoa gui is only available under OS X')	
-		return 0
 		
 	if windows:
 		conf.env.append_value('CXXFLAGS', '-IC:\MinGW\local\include -Wall')
@@ -31,9 +29,12 @@ def configure(conf):
 	else:
 		conf.env.append_value('CXXFLAGS', '-I/usr/local/include -Wall')
 		
-	conf.env.append_value('LINKFLAGS', boost_flags)
-		
+	conf.env.append_value('LINKFLAGS', conf.env['BOOST'])
+	
 	conf.sub_config('lib')
+	
+	if conf.env['GUI'] == 'GTK':
+		conf.sub_config('gui_gtk')
 	
 def build(bld):
 	bld.add_subdirs('lib')
@@ -43,15 +44,8 @@ def build(bld):
 	netwars.uselib_local = 'tinyxml'
 	netwars.includes = '. lib'
 	netwars.defines = 'TIXML_USE_TICPP=1 TIXML_USE_STL=1'
-	netwars.find_sources_in_dirs('game game/game_mechanics game/map_loader game/units')
-
-	if Options.options.gui == 'GTK':
-		gui = bld.new_task_gen('cxx', 'program')
-		gui.target = 'netwars'
-		gui.uselib_local = 'netwars tinyxml'
-		gui.uselib = 'GTKMM CAIROMM GLADEMM'
-		gui.includes = '. lib'
-		gui.defines = 'TIXML_USE_TICPP=1 TIXML_USE_STL=1 GUI_GTK=1'
-		gui.find_sources_in_dirs('. gui gui/gtk')
-		gui.install_path = '..'
+	netwars.find_sources_in_dirs('game game/game_mechanics game/map_loader game/units game/gui')
+	
+	if bld.env['GUI'] == 'GTK':
+		bld.add_subdirs('gui_gtk')
 

@@ -4,7 +4,7 @@
 
 #include "game/config.h"
 #include "sprites.h"
-#include "gui/paths.h"
+#include "game/gui/paths.h"
 
 #include <boost/shared_ptr.hpp>
 #include <boost/foreach.hpp>

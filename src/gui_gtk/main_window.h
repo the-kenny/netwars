@@ -4,8 +4,8 @@
 #include <gtkmm.h>
 
 
-#include "gui/map_widget.h"
-#include "gui/main_window.h"
+#include "game/gui/map_widget.h"
+#include "game/gui/main_window.h"
 
 #include "game/game_controller.h"
 #include "game/units/unit_base.h"

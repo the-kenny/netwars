@@ -5,7 +5,7 @@
 #include <boost/signals.hpp>
 #include <libglademm/xml.h>
 
-#include "gui/buy_menu.h"
+#include "game/gui/buy_menu.h"
 
 #include "game/units/unit_base.h"
 #include "game/player.h"
