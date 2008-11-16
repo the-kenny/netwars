@@ -9,7 +9,7 @@
 #include "game/units/unit_loader.h"
 #include "game/units/unit_base.h"
 
-#include "gui/sprites.h"
+#include "sprites.h"
 #include "gui/paths.h"
 
 using namespace aw;
