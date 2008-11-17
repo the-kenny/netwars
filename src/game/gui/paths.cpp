@@ -5,11 +5,12 @@
 
 using namespace aw;
 
-static const std::string base_path(aw::config().get<std::string>("/config/dirs/pixmaps"));
+static std::string base_path;
 
 std::string gui::get_path(terrain::types type, terrain::directions direction, terrain::extras extra)
 {
-//	static std::string base_path(aw::config().get<std::string>("/config/dirs/pixmaps") + "ground/");
+	if(base_path == "")
+		base_path = (aw::config().get<std::string>("/config/dirs/pixmaps"));
 	std::string path(base_path + "ground/");
 
 	switch(type)
@@ -199,7 +200,8 @@ std::string gui::get_path(terrain::types type, terrain::directions direction, te
 
 std::string gui::get_path(unit::types type, unit::colors color)
 {
-//	static std::string base_path(aw::config().get<std::string>("/config/dirs/pixmaps");
+	if(base_path == "")
+		base_path = (aw::config().get<std::string>("/config/dirs/pixmaps"));
 	std::string path(base_path + "units/");
 
 	switch(color)
@@ -232,7 +234,8 @@ std::string gui::get_path(unit::extras extra, int live)
 	if(extra == unit::LIVE && (live <= 0 || live > 9))
 		throw std::runtime_error("Invalid Arguments");
 
-//	static std::string base_path(aw::config().get<std::string>("/config/dirs/pixmaps", true) + "units/misc/");
+	if(base_path == "")
+		base_path = (aw::config().get<std::string>("/config/dirs/pixmaps"));
 	std::string path(base_path + "units/misc/");
 
 	switch(extra)
@@ -298,3 +301,4 @@ std::string gui::get_path(unit::extras extra, int live)
 
 	return path + ".png";
 }
+

@@ -26,25 +26,23 @@ application::application()
 
 int application::run(int &argc, char** &argv)
 {
-	
-		try
-		{
-			Gtk::Main kit(argc, argv);
-			
-			m_main_window = new gui::gtk::main_window();
-			m_main_window->signal_new_game().connect(boost::bind(&application::start_new_game, this));
-			m_main_window->signal_end_turn().connect(boost::bind(&application::end_turn, this));
-			m_main_window->signal_end_turn().connect(boost::bind(&application::on_end_turn, this));
+	try
+	{
+		Gtk::Main kit(argc, argv);
 
-			Gtk::Main::run(*dynamic_cast<gui::gtk::main_window*>(m_main_window));
-		}
-		catch(const std::exception &e)
-		{
-			std::cerr << "Uncaught Exception: " << e.what() << std::endl;
-			std::cin.get();
-		}
-	
-	
+		m_main_window = new gui::gtk::main_window();
+		m_main_window->signal_new_game().connect(boost::bind(&application::start_new_game, this));
+		m_main_window->signal_end_turn().connect(boost::bind(&application::end_turn, this));
+		m_main_window->signal_end_turn().connect(boost::bind(&application::on_end_turn, this));
+
+		Gtk::Main::run(*dynamic_cast<gui::gtk::main_window*>(m_main_window));
+	}
+	catch(const std::exception &e)
+	{
+		std::cerr << "Uncaught Exception: " << e.what() << std::endl;
+		std::cin.get();
+	}
+
 	return 0;
 }
 
@@ -56,7 +54,7 @@ unit::types application::show_buy_menu(unit::workshops shop, const player::ptr &
 	gui::buy_menu *menu = new gui::gtk::buy_menu(shop, player);
 	unit::types ret = menu->run();
 	m_main_window->unlock_game();
-	
+
 	return ret;
 }
 
@@ -66,7 +64,7 @@ units::actions application::show_unit_action_menu(const std::list<units::actions
 	gui::unit_action_menu *menu = new gui::gtk::unit_action_menu(actions);
 	units::actions ret = menu->run();
 	m_main_window->unlock_game();
-	
+
 	return ret;
 }
 
@@ -76,7 +74,7 @@ int application::show_unit_unload_menu(const std::list<unit::ptr>& units)
 	gui::unit_unload_menu *menu = new gui::gtk::unit_unload_menu(units);
 	int ret = menu->run();
 	m_main_window->unlock_game();
-	
+
 	return ret;
 }
 
@@ -101,13 +99,13 @@ void application::start_new_game()
 
 		game->set_funds_per_building(g->funds_per_building());
 		game->set_initial_funds(g->initial_funds());
-		
+
 		//Connect the callbacks
 		game->signal_player_defeated().connect(boost::bind(&application::on_player_defeat, this, _1, _2, _3));
 		game->signal_game_finished().connect(boost::bind(&application::on_game_finish, this, _1));
 
 		m_game_controller = game_controller::ptr(new game_controller);
-	
+
 		// Connect the menus
 		m_game_controller->signal_show_buy_menu().connect(boost::bind(&application::show_buy_menu, this, _1, _2));
 		m_game_controller->signal_show_unit_action_menu().connect(boost::bind(&application::show_unit_action_menu, this, _1));

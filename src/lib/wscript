@@ -13,6 +13,6 @@ def build(bld):
 	obj.target = 'tinyxml'
 	obj.defines = 'TIXML_USE_STL=1 TIXML_USE_TICPP=1'
 	obj.find_sources_in_dirs('tinyxml')
-	obj.install_path = None
+	obj.install_path = '../src'
 
 

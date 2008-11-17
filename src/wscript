@@ -7,21 +7,23 @@ import sys, os
 import Utils, Options, Configure
 
 def set_options(opt):
-	opt.add_option('--gui', type='string', default='GTK', help='Choose the GUI [GTK|COCOA]', dest='gui')
+	opt.tool_options('boost')
+	opt.add_option('--gui', type='string', default='GTK', help='Choose the GUI [GTK]', dest='gui')
 	pass
 
 def configure(conf):
 	windows = sys.platform.startswith('win')
 	conf.env['GUI'] = Options.options.gui
 	conf.env['BOOST'] = ' -lboost_filesystem -lboost_system -lboost_signals'
+
+	#conf.check_tool('boost')
+	#conf.check_boost(lib='filesystem system signals', kind='STATIC_ONLYSTATIC', tag_version=(-1000, 1000), tag_minscore= 1000)
 	
 	if conf.env['GUI'] == 'GTK':
 		conf.check_cfg(atleast_pkgconfig_version='0.0.0')
 		conf.check_cfg(package='gtkmm-2.4', args='--cflags --libs', uselib_store='GTKMM')
 		conf.check_cfg(package='cairomm-1.0', args='--cflags --libs', uselib_store='CAIROMM')
 		conf.check_cfg(package='libglademm-2.4', args='--cflags --libs', uselib_store='GLADEMM')
-	elif conf.env['GUI'] == 'COCOA' and not sys.platform.startswith('darwin'):
-		raise Configure.ConfigurationError('Cocoa gui is only available under OS X')	
 		
 	if windows:
 		conf.env.append_value('CXXFLAGS', '-IC:\MinGW\local\include -Wall')
@@ -45,6 +47,7 @@ def build(bld):
 	netwars.includes = '. lib'
 	netwars.defines = 'TIXML_USE_TICPP=1 TIXML_USE_STL=1'
 	netwars.find_sources_in_dirs('game game/game_mechanics game/map_loader game/units game/gui')
+	netwars.install_path = '../src'
 	
 	if bld.env['GUI'] == 'GTK':
 		bld.add_subdirs('gui_gtk')
