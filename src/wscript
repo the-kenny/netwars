@@ -8,16 +8,16 @@ import Utils, Options, Configure
 
 def set_options(opt):
 	opt.tool_options('boost')
-	opt.add_option('--gui', type='string', default='GTK', help='Choose the GUI [GTK]', dest='gui')
+	opt.add_option('--gui', type='string', default='ONLY_LIB', help='Choose the GUI [NO|GTK]. Default is NO', dest='gui')
 	pass
 
 def configure(conf):
 	windows = sys.platform.startswith('win')
 	conf.env['GUI'] = Options.options.gui
-	conf.env['BOOST'] = ' -lboost_filesystem -lboost_system -lboost_signals'
+	#conf.env['BOOST'] = ' -lboost_filesystem -lboost_system -lboost_signals'
 
-	#conf.check_tool('boost')
-	#conf.check_boost(lib='filesystem system signals', kind='STATIC_ONLYSTATIC', tag_version=(-1000, 1000), tag_minscore= 1000)
+	conf.check_tool('boost')
+	conf.check_boost(lib='filesystem system signals', kind='STATIC_ONLYSTATIC')
 	
 	if conf.env['GUI'] == 'GTK':
 		conf.check_cfg(atleast_pkgconfig_version='0.0.0')
@@ -31,8 +31,6 @@ def configure(conf):
 	else:
 		conf.env.append_value('CXXFLAGS', '-I/usr/local/include -Wall')
 		
-	conf.env.append_value('LINKFLAGS', conf.env['BOOST'])
-	
 	conf.sub_config('lib')
 	
 	if conf.env['GUI'] == 'GTK':
@@ -44,6 +42,7 @@ def build(bld):
 	netwars = bld.new_task_gen('cxx', 'staticlib')
 	netwars.target = 'netwars'
 	netwars.uselib_local = 'tinyxml'
+	netwars.uselib = 'BOOST'
 	netwars.includes = '. lib'
 	netwars.defines = 'TIXML_USE_TICPP=1 TIXML_USE_STL=1'
 	netwars.find_sources_in_dirs('game game/game_mechanics game/map_loader game/units game/gui')

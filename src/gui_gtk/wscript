@@ -16,7 +16,7 @@ def build(bld):
 	gui = bld.new_task_gen('cxx', 'program')
 	gui.target = 'netwars'
 	gui.uselib_local = 'netwars tinyxml'
-	gui.uselib = 'GTKMM CAIROMM GLADEMM'
+	gui.uselib = 'GTKMM CAIROMM GLADEMM BOOST'
 	gui.includes = '. .. ../lib'
 	gui.defines = 'TIXML_USE_TICPP=1 TIXML_USE_STL=1 GUI_GTK=1'
 	gui.find_sources_in_dirs('.')
