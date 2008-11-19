@@ -2,10 +2,10 @@
 
 <config>
 	<dirs>
-		<data>data/</data>
+		<data>data</data>
 		<pixmaps>$datadir/pixmaps/</pixmaps>
 	</dirs>
 
-	<damagetable>data/damagetable.xml</damagetable>
-	<units>data/units.xml</units>
+	<damagetable>$datadir/damagetable.xml</damagetable>
+	<units>$datadir/units.xml</units>
 </config>
