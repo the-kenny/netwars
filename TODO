@@ -2,7 +2,7 @@ Organization:
 	Nothing! :D
 
 Real coding:
-	- Port the gui to another toolkit
+	- Port the gtk guito another toolkit
 	- Put units.xml and damagetable.xml into an sqlite database
-	- Rewrite the GUI (I hate GUI-Development....)
+	- Make a Cocoa gui
 	- Hack something into it! (Better pathfinding would be nice) 
