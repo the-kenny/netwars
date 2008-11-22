@@ -20,6 +20,8 @@ namespace aw
 				virtual ~buy_menu() {}
 				virtual unit::types run() = 0;
 
+				virtual ~buy_menu() {}
+
 			protected:
 				virtual void buy(unit::types t);
 

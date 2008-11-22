@@ -30,13 +30,13 @@ namespace
 		return s;
 	}
 
-	static std::string damagetable(load_damagetable());
+	std::string damagetable = "";
 }
 
 int attack_utilities::get_damage_percent(unit::types att, unit::types vic, bool alt_fire)
 {
-//	if(damagetable.empty())
-//		load_damagetable();
+	if(damagetable.empty())
+		load_damagetable();
 
 	ticpp::Document xml;
 	xml.Parse(damagetable);
@@ -103,8 +103,8 @@ int attack_utilities::get_damage_percent(unit::types att, unit::types vic, bool 
 
 bool attack_utilities::can_attack(const unit::ptr &attacker, const unit::ptr &victim)
 {
-//	if(damagetable.empty())
-//		load_damagetable();
+	if(damagetable.empty())
+		load_damagetable();
 
 	assert(attacker != NULL);
 	assert(victim != NULL);

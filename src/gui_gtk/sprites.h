@@ -16,6 +16,7 @@ namespace aw
 	{
 		typedef Cairo::RefPtr<Cairo::ImageSurface> ptr;
 
+		//TODO: Use hashmap instead of map
 		class sprite_manager: public utility::singleton<sprite_manager>
 		{
 			public:

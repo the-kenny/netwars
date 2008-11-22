@@ -3,6 +3,7 @@
 
 #include <string>
 #include <map>
+#include <iostream>
 
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string/replace.hpp>
@@ -15,17 +16,6 @@ namespace aw
 	class config: public utility::singleton<config>
 	{
 		public:
-			config(const std::string &conf = "config.xml") 
-			{ 
-				try
-				{
-					load(conf);
-				}
-				catch(...) 
-				{
-				}
-			}
-			
 			void load(const std::string &conf) { m_xml_reader.load(conf); }
 
 			template<typename T>
@@ -74,7 +64,7 @@ namespace aw
 			std::map<std::string, std::string> m_cmd_arguments;
 	};
 
-	inline aw::config &config() { return config::instance(); }
+	inline aw::config &config() { std::cout << "Bla" << std::endl; return config::instance(); }
 }
 
 #endif

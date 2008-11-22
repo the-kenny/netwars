@@ -17,6 +17,8 @@ namespace aw
 				virtual ~main_window() {}
 
 				typedef boost::signal<void ()> general_signal_t;
+
+				virtual ~main_window() {}
 				
 				virtual void start_new_game(const aw::game::ptr &game);
 				virtual void quit_game();
