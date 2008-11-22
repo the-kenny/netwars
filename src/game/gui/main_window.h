@@ -14,6 +14,8 @@ namespace aw
 		class main_window
 		{
 			public:
+				virtual ~main_window() {}
+
 				typedef boost::signal<void ()> general_signal_t;
 				
 				virtual void start_new_game(const aw::game::ptr &game);

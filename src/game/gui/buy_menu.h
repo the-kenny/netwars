@@ -17,6 +17,7 @@ namespace aw
 		{
 			public:
 				buy_menu(unit::workshops shop, const player::ptr &player);
+				virtual ~buy_menu() {}
 				virtual unit::types run() = 0;
 
 			protected:

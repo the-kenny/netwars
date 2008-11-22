@@ -22,6 +22,7 @@ namespace aw
 				typedef boost::shared_ptr<map_widget> ptr;
 
 				map_widget();
+				virtual ~map_widget() {}
 				void display(const scene::ptr &p);
 				void reset();
 

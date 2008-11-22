@@ -8,7 +8,7 @@ import Utils, Options, Configure
 
 def set_options(opt):
 	opt.tool_options('boost')
-	opt.add_option('--gui', type='string', default='ONLY_LIB', help='Choose the GUI [NO|GTK]. Default is NO', dest='gui')
+	opt.add_option('--gui', type='string', default='NO', help='Choose the GUI [NO|GTK]. Default is NO', dest='gui')
 	pass
 
 def configure(conf):

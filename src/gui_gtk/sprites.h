@@ -4,7 +4,7 @@
 #include <cairomm/cairomm.h>
 #include <map>
 
-#include <iostream>
+#include <map>
 
 #include <boost/filesystem.hpp>
 
@@ -14,7 +14,6 @@ namespace aw
 {
 	namespace sprites
 	{
-		//TODO: Make abstract
 		typedef Cairo::RefPtr<Cairo::ImageSurface> ptr;
 
 		class sprite_manager: public utility::singleton<sprite_manager>
@@ -32,7 +31,6 @@ namespace aw
 						if(!boost::filesystem::exists(filename))
 							throw std::runtime_error("File not found: " + filename);
 
-//						std::cout << "Lade in den Cache: " << filename << std::endl;
 						sprites::ptr p = Cairo::ImageSurface::create_from_png(filename);
 						m_sprites[filename] = p;
 						return p;
