@@ -621,38 +621,5 @@ namespace aw
 				}
 			}
 		}
-		
-		bool is_connectable(terrain::types lhs, terrain::types rhs)
-		{
-			switch(lhs)
-			{
-				case terrain::STREET:
-					if(rhs == terrain::STREET || rhs == terrain::BRIDGE)
-					return true;
-				break;
-				case terrain::PIPE:
-				case terrain::SEGMENT_PIPE:
-					if(rhs == terrain::PIPE || rhs == terrain::SEGMENT_PIPE || rhs == terrain::WRECKAGE || rhs == terrain::BASE)
-					return true;
-				break;
-				case terrain::WRECKAGE:
-					if(rhs == terrain::PIPE || rhs == terrain::SEGMENT_PIPE)
-					return true;
-				break;
-				case terrain::BRIDGE:
-					if(rhs == terrain::BRIDGE || (terrain::is_ground(rhs) && rhs != terrain::RIVER))
-					return true;
-				break;
-				case terrain::RIVER:
-					if(rhs == terrain::RIVER || rhs == terrain::BRIDGE)
-					return true;
-				break;
-
-				default:
-					break;
-			}
-
-			return false;
-		}
 	}
 }

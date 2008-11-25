@@ -157,10 +157,10 @@
 					<string>{{304, 375}, {520, 360}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{304, 375}, {520, 360}}</string>
-					<integer value="1"/>
+					<integer value="1" id="9"/>
 					<string>{196, 240}</string>
 					<string>{{202, 428}, {480, 270}}</string>
-					<integer value="1"/>
+					<reference ref="9"/>
 					<string>{520, 360}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>

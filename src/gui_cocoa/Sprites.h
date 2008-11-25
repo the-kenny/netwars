@@ -11,7 +11,7 @@
 
 
 @interface Sprites : NSObject {
-	NSDictionary* cache;
+	NSMutableDictionary* cache;
 }
 
 -(NSImage*)getSprite:(NSString*)filename;

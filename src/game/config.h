@@ -64,7 +64,7 @@ namespace aw
 			std::map<std::string, std::string> m_cmd_arguments;
 	};
 
-	inline aw::config &config() { std::cout << "Bla" << std::endl; return config::instance(); }
+	inline aw::config &config() {  return config::instance(); }
 }
 
 #endif

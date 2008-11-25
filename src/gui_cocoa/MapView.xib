@@ -90,6 +90,10 @@
 					<string>-3.IBPluginDependency</string>
 					<string>1.IBEditorWindowLastContentRect</string>
 					<string>1.IBPluginDependency</string>
+					<string>1.IBViewIntegration.shadowBlurRadius</string>
+					<string>1.IBViewIntegration.shadowColor</string>
+					<string>1.IBViewIntegration.shadowOffsetHeight</string>
+					<string>1.IBViewIntegration.shadowOffsetWidth</string>
 					<string>1.WindowOrigin</string>
 					<string>1.editorWindowContentRectSynchronizationRect</string>
 				</object>
@@ -100,6 +104,13 @@
 					<string>com.apple.InterfaceBuilderKit</string>
 					<string>{{394, 149}, {480, 320}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<real value="1.200000e+01"/>
+					<object class="NSColor">
+						<int key="NSColorSpace">3</int>
+						<bytes key="NSWhite">MAA</bytes>
+					</object>
+					<real value="1.000000e+01"/>
+					<real value="1.000000e+01"/>
 					<string>{628, 654}</string>
 					<string>{{217, 442}, {480, 272}}</string>
 				</object>

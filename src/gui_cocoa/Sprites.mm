@@ -17,7 +17,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Sprites)
 -(Sprites*)init {
 	self = [super init];
 	
-	cache = [NSDictionary dictionary];
+	cache = [NSMutableDictionary dictionary];
 	
 	return self;
 }
@@ -28,7 +28,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Sprites)
 		return (NSImage*)value;
 	} else {
 		NSImage* image = [[NSImage alloc] initWithContentsOfFile:filename];
-		[cache insertValue:image inPropertyWithKey:filename];
+		[cache setObject:image forKey:filename];
 		
 		return image;
 	}

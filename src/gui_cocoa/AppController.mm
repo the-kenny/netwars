@@ -18,23 +18,21 @@
 @implementation AppController
 
 - (void)awakeFromNib {
-	NSLog(@"awakeFromNib");
+	NSLog(@"AppController.awakeFromNib");
 		
 	//Ugly ugly hack to locate config.xml and $datadir in the resource dir of an appbundle
 	NSBundle *main = [NSBundle mainBundle];
 	aw::config().load(std::string([[main pathForResource:@"config" ofType:@"xml"] UTF8String]));
 	aw::config().set("/config/dirs/data", std::string([main.resourcePath UTF8String]) + "/" + aw::config::instance().get<std::string>("/config/dirs/data", false));
 	
-	gameController = aw::game_controller::ptr(new aw::game_controller);
-	//cocoaMapWidget = CocoaMapWidget::ptr(new CocoaMapWidget(mapView));
-	gameController->signal_scene_change().connect(boost::bind(&aw::gui::map_widget::display, cocoaMapWidget, _1));
+	 gameController = aw::game_controller::ptr(new aw::game_controller);
+	 gameController->signal_scene_change().connect(boost::bind(&aw::gui::map_widget::display, cocoaMapWidget, _1));
 	
-	mainWindowController = [[NSWindowController alloc] initWithWindowNibName:@"MainWindow"];
+	mainWindowController = [[MainWindowController alloc] initWithWindowNibName:@"MainWindow"];
 	[[mainWindowController window] makeMainWindow];
 	[[mainWindowController window] makeKeyAndOrderFront:self];
-	 
-		
-	[[NSNotificationCenter defaultCenter] 
+	
+	 [[NSNotificationCenter defaultCenter] 
 	 addObserver:self 
 	 selector:@selector(mouseDown:) 
 	 name: @"mouseClickOnMap" 
@@ -51,6 +49,7 @@
 	 selector:@selector(mouseMoved:) 
 	 name: @"mouseMoveOnMap" 
 	 object:mapView];
+	 
 }
 
 - (void)mouseDown:(NSNotification*)notification {

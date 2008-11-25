@@ -7,7 +7,9 @@
 	NSTrackingArea* trackingArea;
 	
 	aw::scene::ptr currentScene;
+	
 	NSImage* background;
+	NSImage* maskImage;
 }
 
 @property(readwrite) aw::scene::ptr scene;

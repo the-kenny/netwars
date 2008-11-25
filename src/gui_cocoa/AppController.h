@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MapView.h"
+#import "MainWindowController.h"
 
 #import "game/game.h"
 #import "game/game_controller.h"
