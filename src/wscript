@@ -1,6 +1,5 @@
 #! /usr/bin/env python
 # encoding: utf-8
-# Thomas Nagy, 2006 (ita)
 
 from logging import fatal, error
 import sys, os
@@ -17,7 +16,7 @@ def configure(conf):
 	#conf.env['BOOST'] = ' -lboost_filesystem -lboost_system -lboost_signals'
 
 	conf.check_tool('boost')
-	conf.check_boost(lib='filesystem system signals', kind='STATIC_ONLYSTATIC')
+	conf.check_boost(lib='signals filesystem system', kind='STATIC_BOTH')
 	
 	if conf.env['GUI'] == 'GTK':
 		conf.check_cfg(atleast_pkgconfig_version='0.0.0')
@@ -41,8 +40,8 @@ def build(bld):
 
 	netwars = bld.new_task_gen('cxx', 'staticlib')
 	netwars.target = 'netwars'
+	netwars.uselib = 'BOOST_FILESYSTEM BOOST_SIGNALS BOOST_SYSTEM'
 	netwars.uselib_local = 'tinyxml'
-	netwars.uselib = 'BOOST'
 	netwars.includes = '. lib'
 	netwars.defines = 'TIXML_USE_TICPP=1 TIXML_USE_STL=1'
 	netwars.find_sources_in_dirs('game game/game_mechanics game/map_loader game/units game/gui')
