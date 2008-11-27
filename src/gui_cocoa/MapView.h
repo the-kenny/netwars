@@ -3,6 +3,10 @@
 #include "game/scene.h"
 #include "game/gui/map_widget.h"
 
+extern NSString* mouseMovedNotification;
+extern NSString* leftMouseClickNotification;
+extern NSString* rightMouseClickNotification;
+
 @interface MapView : NSView {
 	NSTrackingArea* trackingArea;
 	
@@ -10,13 +14,14 @@
 	
 	NSImage* background;
 	NSImage* maskImage;
+	
+	bool isEnabled;
 }
 
+@property(readwrite) bool isEnabled;
 @property(readwrite) aw::scene::ptr scene;
 
 - (void)queueDraw;
-- (void)disable;
-- (void)enable;
 @end
 
 class CocoaMapWidget: public aw::gui::map_widget {

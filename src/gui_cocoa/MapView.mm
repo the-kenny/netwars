@@ -11,20 +11,27 @@ using namespace aw::gui;
 
 #include <iostream>
 
+NSString* mouseMovedNotification = @"mouseMoveOnMap";
+NSString* leftMouseClickNotification = @"mouseClickOnMap";
+NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
+
 @implementation MapView
 
 @synthesize scene = currentScene;
+@synthesize isEnabled = isEnabled;
 
 - (void)awakeFromNib {
 	NSLog(@"MapView.awakeFromNib");
 	trackingArea = [[NSTrackingArea alloc] initWithRect:NSMakeRect(0.0, 0.0, 480.0, 320.0) 
-											options:NSTrackingMouseMoved|NSTrackingActiveInActiveApp 
-											owner:self userInfo:nil];
+												options:NSTrackingMouseMoved|NSTrackingActiveInActiveApp
+												  owner:self userInfo:nil];
 	[self addTrackingArea:trackingArea];
 	
 	currentScene = aw::scene::ptr(new aw::scene);
 	unit::ptr p(new unit("tank", unit::RED));
 	currentScene->set_unit(3, 5, p);
+	
+	self.isEnabled = false;
 	
 	background = [[NSImage alloc] initByReferencingFile:[[NSBundle mainBundle] pathForResource:@"background" ofType:@"png" inDirectory:@"data"]];
 	
@@ -43,49 +50,62 @@ using namespace aw::gui;
 	return YES;
 }
 
-- (void)mouseDown:(NSEvent *)theEvent {
-	NSPoint point = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-	point.x /= 16;
-	point.y /= 16;
-	//point.y = abs(point.y-19);
+#pragma mark "Event Handling"
 
-	[[NSNotificationCenter defaultCenter] 
-	 postNotificationName:@"mouseClickOnMap" object:self
-	 userInfo: [NSDictionary dictionaryWithObject:[Coordinate coordinateWithPoint:point] forKey:@"Position"]];
+- (void)mouseDown:(NSEvent *)theEvent {
+	if(isEnabled) {
+		NSPoint point = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+		point.x = static_cast<int>(point.x/16);
+		point.y = static_cast<int>(point.y/16);
+		//point.y = abs(point.y-19);
+		
+		[[NSNotificationCenter defaultCenter] 
+		 postNotificationName:leftMouseClickNotification
+		 object:self
+		 userInfo: [NSDictionary dictionaryWithObject:[Coordinate coordinateWithPoint:point] forKey:@"Position"]];
+	}
 }
 
 - (void)rightMouseDown:(NSEvent *)theEvent {
-	NSPoint point = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-	point.x /= 16;
-	point.y /= 16;
-	//point.y = abs(point.y-19);
-	
-	[[NSNotificationCenter defaultCenter] 
-	 postNotificationName:@"rightMouseClickOnMap" object:self
-	 userInfo: [NSDictionary dictionaryWithObject:[Coordinate coordinateWithPoint:point] forKey:@"Position"]];
+	if(isEnabled) {
+		NSPoint point = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+		point.x = static_cast<int>(point.x/16);
+		point.y = static_cast<int>(point.y/16);
+		//point.y = abs(point.y-19);
+		
+		[[NSNotificationCenter defaultCenter] 
+		 postNotificationName:rightMouseClickNotification
+		 object:self
+		 userInfo: [NSDictionary dictionaryWithObject:[Coordinate coordinateWithPoint:point] forKey:@"Position"]];
+	}
 }
 
 - (void)mouseMoved:(NSEvent *)theEvent {	
-	NSPoint actualPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-	
-	static int old_x;               
-	static int old_y; 
-	
-	int x = (actualPoint.x+theEvent.deltaX)/16;
-	int y = (actualPoint.y+theEvent.deltaY)/16;
-	
-	//y = abs(y-19);
+	if(isEnabled) {
+		NSPoint actualPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
 		
-	if((x != old_x || y != old_y) && (x < 30 && y < 20))
-	{
-		 [[NSNotificationCenter defaultCenter] 
-		 postNotificationName:@"mouseMoveOnMap" object:self
-		  userInfo: [NSDictionary dictionaryWithObject:[Coordinate coordinateWithCoordinates:x y:y] forKey:@"Position"]];
+		static int old_x;               
+		static int old_y; 
 		
-		old_x = x;
-		old_y = y;
+		int x = static_cast<int>((actualPoint.x+theEvent.deltaX)/16);
+		int y = static_cast<int>((actualPoint.y+theEvent.deltaY)/16);
+		
+		//y = abs(y-19);
+		
+		if((x != old_x || y != old_y) && (x < 30 && y < 20))
+		{
+			[[NSNotificationCenter defaultCenter] 
+			 postNotificationName:mouseMovedNotification
+			 object:self
+			 userInfo: [NSDictionary dictionaryWithObject:[Coordinate coordinateWithCoordinates:x y:y] forKey:@"Position"]];
+			
+			old_x = x;
+			old_y = y;
+		}
 	}
 }
+
+#pragma mark "Drawing"
 
 - (void)draw:(NSString*)path at:(NSPoint)pos {
 	NSImage* sprite = [[Sprites sharedSprites] getSprite:path];
@@ -98,10 +118,10 @@ using namespace aw::gui;
 - (void)drawRect:(NSRect)rect { 
 	NSLog(@"drawRect");
 	[super drawRect:rect];
-		
+	
 	[background drawAtPoint:NSMakePoint(0, 0) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 	
-
+	
 	for(int x = 0; x < 30; x++)
 	{
 		for(int y = 0; y < 20; y++)
@@ -528,8 +548,8 @@ using namespace aw::gui;
 					
 					[mask lockFocus];
 					[NSGraphicsContext saveGraphicsState];
-						[[NSColor colorWithDeviceRed:0.0 green:0.0 blue:0.0 alpha:1.0] setFill];
-						NSRectFillUsingOperation(NSMakeRect(0.0, 0.0, mask.size.width, mask.size.height), NSCompositeSourceIn);
+					[[NSColor colorWithDeviceRed:0.0 green:0.0 blue:0.0 alpha:1.0] setFill];
+					NSRectFillUsingOperation(NSMakeRect(0.0, 0.0, mask.size.width, mask.size.height), NSCompositeSourceIn);
 					[NSGraphicsContext restoreGraphicsState];
 					[mask unlockFocus];
 					
@@ -537,6 +557,13 @@ using namespace aw::gui;
 				}
 			}
 		}
+	}
+	
+	if(!isEnabled) {
+		static NSColor* color = [NSColor colorWithDeviceRed:0.6 green:0.6 blue:0.6 alpha:0.5]; 
+		[color setFill];
+		//TODO: Magic numbers are bad!
+		NSRectFillUsingOperation(NSMakeRect(0, 0, 480, 320), NSCompositeSourceOver);
 	}
 	
 } 
@@ -555,6 +582,8 @@ using namespace aw::gui;
 }
 
 @end
+
+#pragma mark "Glue code"
 
 void CocoaMapWidget::queue_draw() {
 	//mapView.scene = m_scene;

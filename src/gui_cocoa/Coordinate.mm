@@ -22,11 +22,11 @@
 	return self;
 }
 +(Coordinate*)coordinateWithCoordinates:(int)x y:(int)y {
-	return [[Coordinate alloc] initWithCoordinates:x y:y];
+	return [[[Coordinate alloc] autorelease] initWithCoordinates:x y:y];
 }
 
 +(Coordinate*)coordinateWithPoint:(NSPoint)p {
-	return [[Coordinate alloc] initWithPoint:p];
+	return [[[Coordinate alloc] autorelease] initWithPoint:p];
 }
 
 @synthesize coord;

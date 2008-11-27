@@ -23,4 +23,6 @@
 	aw::game_controller::ptr gameController;
 }
 
+- (void)startNewGame;
+
 @end

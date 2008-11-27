@@ -34,37 +34,39 @@
 	
 	 [[NSNotificationCenter defaultCenter] 
 	 addObserver:self 
-	 selector:@selector(mouseDown:) 
-	 name: @"mouseClickOnMap" 
-	 object:mapView];
+	 selector:@selector(mouseClickOnMap:) 
+	 name: leftMouseClickNotification
+	 object:nil];
 	
 	[[NSNotificationCenter defaultCenter] 
 	 addObserver:self 
-	 selector:@selector(rightMouseDown:) 
-	 name: @"rightMouseClickOnMap" 
-	 object:mapView];
+	 selector:@selector(rightMouseClickOnMap:) 
+	 name: rightMouseClickNotification
+	 object:nil];
 	
 	[[NSNotificationCenter defaultCenter] 
 	 addObserver:self 
-	 selector:@selector(mouseMoved:) 
-	 name: @"mouseMoveOnMap" 
-	 object:mapView];
+	 selector:@selector(mouseMovedOnMap:) 
+	 name: mouseMovedNotification
+	 object:nil];
 	 
 }
 
-- (void)mouseDown:(NSNotification*)notification {
+#pragma mark "Event Handling"
+
+- (void)mouseClickOnMap:(NSNotification*)notification {
 	Coordinate* coord = [notification.userInfo objectForKey:@"Position"];
 			
 	gameController->click(coord.coord, 1);
 }
 
-- (void)rightMouseDown:(NSNotification*)notification {
+- (void)rightMouseClickOnMap:(NSNotification*)notification {
 	Coordinate* coord = [notification.userInfo objectForKey:@"Position"];
 	 	
 	gameController->click(coord.coord, 2);
 }
 
-- (void)mouseMoved:(NSNotification*)notification {
+- (void)mouseMovedOnMap:(NSNotification*)notification {
 	NSLog(@"mouseMoved");
 	Coordinate* coord = [notification.userInfo objectForKey:@"Position"];
 
@@ -72,5 +74,11 @@
 	std::cout << coord.coord.x << " " << coord.coord.y << std::endl;
 	
 	gameController->mouse_hover_changed(coord.coord);
+}
+
+#pragma mark "Game related stuff"
+
+- (void)startNewGame {
+	
 }
 @end
