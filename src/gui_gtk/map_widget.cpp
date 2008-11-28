@@ -20,7 +20,7 @@ namespace aw
 				this->set_size_request(480, 320);
 				this->set_events(Gdk::BUTTON_PRESS_MASK | Gdk::POINTER_MOTION_MASK);
 
-				m_background = Cairo::ImageSurface::create_from_png(aw::config().get<std::string>("/config/dirs/data") + "background.png");
+				m_background = Cairo::ImageSurface::create_from_png(aw::config().get<std::string>("/config/dirs/data") + "/background.png");
 			}
 
 			void map_widget::write_to_png(const std::string &filename)

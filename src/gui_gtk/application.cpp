@@ -40,7 +40,6 @@ int application::run(int &argc, char** &argv)
 	catch(const std::exception &e)
 	{
 		std::cerr << "Uncaught Exception: " << e.what() << std::endl;
-		std::cin.get();
 	}
 
 	return 0;
