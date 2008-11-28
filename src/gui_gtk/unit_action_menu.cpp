@@ -8,7 +8,7 @@ using namespace aw::gui::gtk;
 
 //Initialize the variables
 unit_action_menu::unit_action_menu(const std::list<units::actions>& actions)
-: gui::unit_action_menu(actions), Gtk::Window(Gtk::WINDOW_POPUP), m_return(false), m_return_value(units::CANCEL)
+: Gtk::Window(Gtk::WINDOW_POPUP), gui::unit_action_menu(actions), m_return(false), m_return_value(units::CANCEL)
 {
 	m_vbox = Gtk::manage(new Gtk::VBox);
 	m_vbox->set_spacing(1);
