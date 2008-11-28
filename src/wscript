@@ -8,11 +8,14 @@ import Utils, Options, Configure
 def set_options(opt):
 	opt.tool_options('boost')
 	opt.add_option('--gui', type='string', default='NO', help='Choose the GUI [NO|GTK]. Default is NO', dest='gui')
+	opt.add_option('--debug', action='store_true', default='false', help='Debug build?', dest='debug')
 	pass
 
 def configure(conf):
 	windows = sys.platform.startswith('win')
 	conf.env['GUI'] = Options.options.gui
+	conf.env['DEBUG'] = Options.options.debug
+
 	#conf.env['BOOST'] = ' -lboost_filesystem -lboost_system -lboost_signals'
 
 	conf.check_tool('boost')
@@ -23,7 +26,11 @@ def configure(conf):
 		conf.check_cfg(package='gtkmm-2.4', args='--cflags --libs', uselib_store='GTKMM')
 		conf.check_cfg(package='cairomm-1.0', args='--cflags --libs', uselib_store='CAIROMM')
 		conf.check_cfg(package='libglademm-2.4', args='--cflags --libs', uselib_store='GLADEMM')
-		
+
+	if conf.env['DEBUG']:
+		conf.env.append_value('CXXFLAGS', '-g')
+		conf.env.append_value('LINKFLAGS', '-g')
+
 	if windows:
 		conf.env.append_value('CXXFLAGS', '-IC:\MinGW\local\include -Wall')
 		conf.env.append_value('LINKFLAGS', '-LC:\MinGW\local\lib')
@@ -34,7 +41,7 @@ def configure(conf):
 	
 	if conf.env['GUI'] == 'GTK':
 		conf.sub_config('gui_gtk')
-	
+
 def build(bld):
 	bld.add_subdirs('lib')
 
