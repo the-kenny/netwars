@@ -30,7 +30,7 @@ namespace aw
 				inline coord get_origin() const { return m_start; }
 
 				//const std::vector &get_possibilities(const unit_t::ptr &unit);
-				const area_type &get_coordinates();
+				const area_type &get_coordinates() const;
 				int get_rest_mp(int x, int y) const;
 
 				void reset()

@@ -38,7 +38,7 @@ namespace aw
 		}
 
 		//verschachtelte Templates und typedefs machen probleme
-		const traverse::area_type &traverse::get_coordinates()
+		const traverse::area_type &traverse::get_coordinates() const
 		{
 			return m_coords;
 		}

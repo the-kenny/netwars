@@ -30,25 +30,17 @@ namespace aw
 				int get_fuel_costs() const { return m_fuel_costs; }
 				int get_length() const { return m_path.num_fields(); }
 
-				//Maybe set_start() should also check for a position in the actual path like set_end()
-//				inline void set_start(const coord &start) { m_start = start; m_recalculate = true; }
-//
-//				void set_end(const coord &end);
-
 				void reset();
 
 				void print(std::ostream &o) const;
 
 				void calculate(const map::ptr &map, const traverse::ptr &t, const coord &start, const coord &end);
 
-				//void recalculate(const map::ptr &map, const traverse::ptr &t);
-
 			private:
 				void calculate(const map::ptr &map, const traverse::ptr &t, const coord &start, const coord &end, const unit::ptr &unit, int fuel = -1);
 
 				bool move(int x, int y, int end_x, int end_y, int dir, int rest_movement_range, int rest_gas, bool left, bool right, const unit::ptr &u);
 				void append(int x, int y);
-				void append(const path &o);
 
 				void recalculate_costs(const unit::ptr &u);
 				void remove_doubles();

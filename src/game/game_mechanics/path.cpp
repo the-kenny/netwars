@@ -6,7 +6,7 @@ namespace aw
 	namespace game_mechanics
 	{
 		path::path(const coord &start, const coord &end)
-		: m_recalculate(true), m_start(start), m_end(end), m_fuel_costs(-1)
+		:  m_start(start), m_end(end), m_fuel_costs(-1)
 		{
 		}
 
@@ -52,9 +52,6 @@ namespace aw
 		//IMPORTANT: m_end is in m_path, m_start NOT!
 		void path::calculate(const map::ptr &map, const traverse::ptr &t, const coord &start, const coord &end, const unit::ptr &unit, int fuel)
 		{
-			if(start == end)
-				return;
-
 			if(m_start == start && m_end == end)
 				return
 
@@ -62,23 +59,25 @@ namespace aw
 			assert(t->get_origin() == start); //The traverse's origin has to be the start of the path
 
 			//the start is the same and the new end is in the path
+			/*
 			if(m_start == start && m_end != end && m_path.contains(end))
 			{
 				//...so we remove all parts of the path which are beyond the new end
 				BOOST_FOREACH(const coord &c, m_path)
 				{
-					if(c != m_end && m_traverse->get_rest_mp(m_end.x, m_end.y) >= m_traverse->get_rest_mp(c.x, c.y))
+					if(c != end && m_traverse->get_rest_mp(end.x, end.y) >= m_traverse->get_rest_mp(c.x, c.y))
 					{
 						this->remove_element(c);
 					}
 				}
 				remove_element(m_end); //...and the end too
+				m_path.insert(end);
 
 				m_start = start;
 				m_end = end;
-				m_path.insert(m_end);
-			}
-			else if(m_start != start || m_path.empty()) //start has changed or empty - recalculate
+		}
+			else*/
+			if(m_start != start || m_path.empty()) //start has changed or empty - recalculate
 			{
 				this->reset();
 
@@ -114,20 +113,26 @@ namespace aw
 			}
 			else //Only the end of the path has changed, partially recalculation
 			{
+				
 				traverse ext_t;
 				ext_t.calculate(map, m_end, unit, unit->movement_range());
 
 				path extended_path; //Hold the extended path (w.o. original)
 				extended_path.calculate(map, traverse::ptr(new traverse(ext_t)), m_end, end, unit, unit->fuel() - this->get_fuel_costs());
 
-				assert(extended_path.end() == end);
 				//Append the path
 				extended_path.m_path.append(m_path);
 				extended_path.m_path.insert(end);
 				extended_path.m_start = m_start;
 				extended_path.recalculate_costs(unit);
+				assert(extended_path.end() == end);
 				
-				*this = extended_path;
+				path new_path;
+				new_path.calculate(map, t, start, end);
+				if(extended_path.get_fuel_costs() <= new_path.get_fuel_costs())
+						*this = extended_path;
+				else
+						*this = new_path;
 			}
 		}
 
@@ -193,7 +198,7 @@ namespace aw
 
 														if(done)
 														{
-																//append(x, y);
+																append(x, y);
 																return true;
 														}
 												}
