@@ -6,7 +6,7 @@ namespace aw
 	namespace game_mechanics
 	{
 		path::path(const coord &start, const coord &end)
-		: m_recalculate(true), m_start(start), m_end(end), m_fuel_costs(0)
+		: m_recalculate(true), m_start(start), m_end(end), m_fuel_costs(-1)
 		{
 		}
 
@@ -20,7 +20,8 @@ namespace aw
 		{
 			m_path.clear();
 			m_fuel_costs = 0;
-			m_recalculate = true;
+			m_start.reset();
+			m_end.reset();
 		}
 
 		void path::print(std::ostream &o) const
@@ -37,20 +38,10 @@ namespace aw
 //				o << '\n';
 //			}
 		
-			o << "Start: " << "(" << m_start.x << "|" << m_start.y << ") End: (" << m_end.x << "|" << m_end.y << ") Fuel costs: " << m_fuel_costs << std::endl;
+			//o << "Start: " << "(" << m_start.x << "|" << m_start.y << ") End: (" << m_end.x << "|" << m_end.y << ") Fuel costs: " << m_fuel_costs << std::endl;
+			BOOST_FOREACH(const coord& c, m_path)
+				std::cout << "(" << c.x << "|" << c.y << ")" << std::endl;
 		}
-
-//		void path::set_end(const coord &end)
-//		{
-//			m_end = end;
-//
-//			if(!m_path.contains(end))
-//				m_path.clear();
-//
-//			m_recalculate = true;
-//		}
-
-
 
 		void path::calculate(const map::ptr &map, const traverse::ptr &t, const coord &start, const coord &end)
 		{
@@ -70,7 +61,7 @@ namespace aw
 			assert(start != end);
 			assert(t->get_origin() == start); //The traverse's origin has to be the start of the path
 
-			//the start is the same
+			//the start is the same and the new end is in the path
 			if(m_start == start && m_end != end && m_path.contains(end))
 			{
 				//...so we remove all parts of the path which are beyond the new end
@@ -83,10 +74,9 @@ namespace aw
 				}
 				remove_element(m_end); //...and the end too
 
+				m_start = start;
 				m_end = end;
 				m_path.insert(m_end);
-
-				this->print(std::cout);
 			}
 			else if(m_start != start || m_path.empty()) //start has changed or empty - recalculate
 			{
@@ -103,7 +93,6 @@ namespace aw
 
 				const int mp = unit->movement_range();
 				const int gas = (fuel != -1) ? fuel : unit->fuel();
-//				terrain::types  tind = m_map->get_terrain(x, y)->type();
 
 				//d = direction, 0=north, 1=east, 2=south, 3=west, this sends probes in all 4 directions
 				bool done = false;
@@ -119,8 +108,6 @@ namespace aw
 
 				if(!done)
 					this->reset();
-				else
-					m_recalculate = false;
 
 				m_start = start;
 				m_end = end;
@@ -136,125 +123,100 @@ namespace aw
 				assert(extended_path.end() == end);
 				//Append the path
 				extended_path.m_path.append(m_path);
-				extended_path.m_path.insert(m_end);
+				extended_path.m_path.insert(end);
 				extended_path.m_start = m_start;
-				//extended_path.m_fuel_costs += m_fuel_costs;
-				std::cout << "Old costs: " << extended_path.m_fuel_costs << std::endl;
 				extended_path.recalculate_costs(unit);
-				std::cout << "New costs: " << extended_path.m_fuel_costs << std::endl;
 				
-				extended_path.print(std::cout);
-
-				path new_path;
-				new_path.calculate(map, t, start, end);
-
-				int extended_costs = extended_path.get_fuel_costs();
-				int new_costs = new_path.get_fuel_costs();
-
-				std::cout << "==========" << "\n Extended: " << extended_costs << '\n'
-							 << "New Path: " << new_costs << std::endl;
-
-				if(extended_costs <= new_costs)
-					*this = extended_path;
-				else
-					*this = new_path;
+				*this = extended_path;
 			}
 		}
 
-//		void path::recalculate(const map::ptr &map, const traverse::ptr &t)
-//		{
-//			if(m_recalculate)
-//				this->calculate(map, t);
-//		}
 
-//		bool path::move(int x, int y, int end_x, int end_y, int dir, int rest_movement_range, int rest_gas, bool left, bool right, const unit::ptr &u, terrain::types previous_terrain)
 		bool path::move(int x, int y, int end_x, int end_y, int dir, int rest_movement_range, int rest_gas, bool left, bool right, const unit::ptr &u)
 		{
-			if(m_map->on_map(x, y))
-			{
-				const int move_costs = m_map->get_terrain(x, y)->movement_costs(u->get_move_type());
-
-				if(move_costs != -1)
+				if(m_map->on_map(x, y))
 				{
-					rest_movement_range -= move_costs;
-					rest_gas -= move_costs;
-				}
-				else
-				{
-					//impassible
-					return false;
-				}
+						const int move_costs = m_map->get_terrain(x, y)->movement_costs(u->get_move_type());
 
-				if(rest_gas < 0 || rest_movement_range < 0)
-					return false;
-
-//				terrain::types current_terrain = m_map->get_terrain(x, y)->type();
-
-				if(can_pass(m_map, coord(x, y), u))
-				{
-					if(x == end_x && y == end_y)
-					{
-						if(rest_movement_range == m_traverse->get_rest_mp(x, y))  // Hält immer den kleinstmöglichen mp-Vebrauch
+						if(move_costs != -1)
 						{
-							m_fuel_costs = u->fuel() - rest_gas;
-							append(x, y);
-							return true;
+								rest_movement_range -= move_costs;
+								rest_gas -= move_costs;
 						}
-					}
-
-					//Wenn noch nicht gecheckt, oder weg mit weniger verbrauch gefunden.
-					if(m_traverse->get_rest_mp(x, y) == -1 || m_traverse->get_rest_mp(x, y) <= rest_movement_range)
-					{
-						for(int i= -1; i < 2; i++)
+						else
 						{
-							bool done = false;
-							//Verstehe ich selber nicht so ganz :D
-							if(!((left == true && i == -1) || (right == true && i == 1)))
-							{
-								switch((dir+i)%4)
+								//impassible
+								return false;
+						}
+
+						if(rest_gas < 0 || rest_movement_range < 0)
+								return false;
+
+						if(can_pass(m_map, coord(x, y), u))
+						{
+								if(x == end_x && y == end_y)
 								{
-									case -1:
-									case 3:
-									//0=north, 1=east, 2=south, 3=west
-										done = move(x-1, y, end_x, end_y, 3, rest_movement_range, rest_gas, i==-1, i==1, u/*, current_terrain*/);
-										break;
-									case 0:
-										done = move(x, y-1, end_x, end_y, 0, rest_movement_range, rest_gas, i==-1, i==1, u/*, current_terrain*/);
-										break;
-									case 1:
-										done = move(x+1, y, end_x, end_y, 1, rest_movement_range, rest_gas, i==-1, i==1, u/*, current_terrain*/);
-										break;
-									case 2:
-										done = move(x, y+1, end_x, end_y, 2, rest_movement_range, rest_gas, i==-1, i==1, u/*, current_terrain*/);
-										break;
+										if(rest_movement_range == m_traverse->get_rest_mp(x, y))  // Hält immer den kleinstmöglichen mp-Vebrauch
+										{
+												m_fuel_costs = u->fuel() - rest_gas;
+												append(x, y);
+												return true;
+										}
 								}
 
-								if(done)
+								//Wenn noch nicht gecheckt, oder weg mit weniger verbrauch gefunden.
+								if(m_traverse->get_rest_mp(x, y) == -1 || m_traverse->get_rest_mp(x, y) <= rest_movement_range)
 								{
-									//append(x, y);
-									return true;
-								}
-							}
-						}
-					}
-				} // bool can:overdrive()
-			} // bool on_map()
+										for(int i= -1; i < 2; i++)
+										{
+												bool done = false;
+												//Verstehe ich selber nicht so ganz :D
+												if(!((left == true && i == -1) || (right == true && i == 1)))
+												{
+														switch((dir+i)%4)
+														{
+																case -1:
+																case 3:
+																		//0=north, 1=east, 2=south, 3=west
+																		done = move(x-1, y, end_x, end_y, 3, rest_movement_range, rest_gas, i==-1, i==1, u/*, current_terrain*/);
+																		break;
+																case 0:
+																		done = move(x, y-1, end_x, end_y, 0, rest_movement_range, rest_gas, i==-1, i==1, u/*, current_terrain*/);
+																		break;
+																case 1:
+																		done = move(x+1, y, end_x, end_y, 1, rest_movement_range, rest_gas, i==-1, i==1, u/*, current_terrain*/);
+																		break;
+																case 2:
+																		done = move(x, y+1, end_x, end_y, 2, rest_movement_range, rest_gas, i==-1, i==1, u/*, current_terrain*/);
+																		break;
+														}
 
-			return false;
+														if(done)
+														{
+																//append(x, y);
+																return true;
+														}
+												}
+										}
+								}
+						} // bool can:overdrive()
+				} // bool on_map()
+
+				return false;
 		}
 
 		void path::append(int x, int y)
 		{
-			m_path.push_back(coord(x, y));
+				m_path.push_back(coord(x, y));
 		}
 
 		void path::recalculate_costs(const unit::ptr &u)
 		{
-			m_fuel_costs = 0;
-			BOOST_FOREACH(const coord &c, m_path)
-			{
-				m_fuel_costs += m_map->get_terrain(c.x, c.y)->movement_costs(u->get_move_type());
-			}
+				m_fuel_costs = 0;
+				BOOST_FOREACH(const coord &c, m_path)
+				{
+						m_fuel_costs += m_map->get_terrain(c.x, c.y)->movement_costs(u->get_move_type());
+				}
 		}
 	}
 }
