@@ -60,6 +60,11 @@ namespace aw
 				return m_coords.size();
 			}
 
+			void append(const area& o)
+			{
+				*this += o;
+			}
+
 			area &operator+=(const area &o)
 			{
 				BOOST_FOREACH(const value_type &c, o)

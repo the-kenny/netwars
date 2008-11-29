@@ -25,17 +25,19 @@ namespace aw
 
 		void path::print(std::ostream &o) const
 		{
-			for(int y = 0; y < 20; y++)
-			{
-				for(int x = 0; x < 30; x++)
-				{
-					if(m_path.contains(coord(x, y)))
-						o << '1';
-					else
-						o << '0';
-				}
-				o << '\n';
-			}
+//			for(int y = 0; y < 20; y++)
+//			{
+//				for(int x = 0; x < 30; x++)
+//				{
+//					if(m_path.contains(coord(x, y)))
+//						o << '1';
+//					else
+//						o << '0';
+//				}
+//				o << '\n';
+//			}
+		
+			o << "Start: " << "(" << m_start.x << "|" << m_start.y << ") End: (" << m_end.x << "|" << m_end.y << ") Fuel costs: " << m_fuel_costs << std::endl;
 		}
 
 //		void path::set_end(const coord &end)
@@ -56,41 +58,37 @@ namespace aw
 			this->calculate(map, t, start, end, u);
 		}
 
+		//IMPORTANT: m_end is in m_path, m_start NOT!
 		void path::calculate(const map::ptr &map, const traverse::ptr &t, const coord &start, const coord &end, const unit::ptr &unit, int fuel)
 		{
 			if(start == end)
-			{
 				return;
-			}
 
-			assert(start);
-			assert(end);
+			if(m_start == start && m_end == end)
+				return
+
 			assert(start != end);
-
-			assert(t->get_origin() == start);
-
-			//NOTE: Optimizations should start here (partially recalculation)
+			assert(t->get_origin() == start); //The traverse's origin has to be the start of the path
 
 			//the start is the same
-
 			if(m_start == start && m_end != end && m_path.contains(end))
 			{
-				path_t p(m_path);
-				int costs = m_fuel_costs;
-
+				//...so we remove all parts of the path which are beyond the new end
 				BOOST_FOREACH(const coord &c, m_path)
 				{
-					if(m_traverse->get_rest_mp(m_end.x, m_end.y) >= m_traverse->get_rest_mp(c.x, c.y))
+					if(c != m_end && m_traverse->get_rest_mp(m_end.x, m_end.y) >= m_traverse->get_rest_mp(c.x, c.y))
 					{
 						this->remove_element(c);
 					}
 				}
+				remove_element(m_end); //...and the end too
 
 				m_end = end;
-				m_fuel_costs = costs;
-				m_path = p;
+				m_path.insert(m_end);
+
+				this->print(std::cout);
 			}
-			else// if(m_start != start || m_path.empty()) //start has changed - recalculate
+			else if(m_start != start || m_path.empty()) //start has changed or empty - recalculate
 			{
 				this->reset();
 
@@ -127,32 +125,40 @@ namespace aw
 				m_start = start;
 				m_end = end;
 			}
-//			else
-//			{
-//				traverse ext_t;
-//				ext_t.calculate(map, m_end, unit, unit->movement_range());
-//
-//				path extended_path; //Hold the extended path (w.o. original)
-//				extended_path.calculate(map, traverse::ptr(new traverse(ext_t)), m_end, end, unit, unit->fuel() - this->get_fuel_costs());
-//
-//				path full_extended_path(*this);
-//				full_extended_path.append(extended_path);
-//
-//				path new_path;
-//				new_path.calculate(map, t, start, end);
-//
-//				//int extended_costs = this->get_fuel_costs() + extended_path.get_fuel_costs() - ext_t.get_rest_mp(end.x, end.y);
-//				int extended_costs = full_extended_path.get_fuel_costs();
-//				int new_costs = new_path.get_fuel_costs();
-//
-//				std::cout << "==========" << "\n Extended: " << extended_costs << '\n'
-//							 << "New Path: " << new_costs << std::endl;
-//
-//				if(extended_costs <= new_costs)
-//					*this = full_extended_path;
-//				else
-//					*this = new_path;
-//			}
+			else //Only the end of the path has changed, partially recalculation
+			{
+				traverse ext_t;
+				ext_t.calculate(map, m_end, unit, unit->movement_range());
+
+				path extended_path; //Hold the extended path (w.o. original)
+				extended_path.calculate(map, traverse::ptr(new traverse(ext_t)), m_end, end, unit, unit->fuel() - this->get_fuel_costs());
+
+				assert(extended_path.end() == end);
+				//Append the path
+				extended_path.m_path.append(m_path);
+				extended_path.m_path.insert(m_end);
+				extended_path.m_start = m_start;
+				//extended_path.m_fuel_costs += m_fuel_costs;
+				std::cout << "Old costs: " << extended_path.m_fuel_costs << std::endl;
+				extended_path.recalculate_costs(unit);
+				std::cout << "New costs: " << extended_path.m_fuel_costs << std::endl;
+				
+				extended_path.print(std::cout);
+
+				path new_path;
+				new_path.calculate(map, t, start, end);
+
+				int extended_costs = extended_path.get_fuel_costs();
+				int new_costs = new_path.get_fuel_costs();
+
+				std::cout << "==========" << "\n Extended: " << extended_costs << '\n'
+							 << "New Path: " << new_costs << std::endl;
+
+				if(extended_costs <= new_costs)
+					*this = extended_path;
+				else
+					*this = new_path;
+			}
 		}
 
 //		void path::recalculate(const map::ptr &map, const traverse::ptr &t)
@@ -225,7 +231,7 @@ namespace aw
 
 								if(done)
 								{
-									append(x, y);
+									//append(x, y);
 									return true;
 								}
 							}
@@ -242,14 +248,6 @@ namespace aw
 			m_path.push_back(coord(x, y));
 		}
 
-		void path::append(const path &o)
-		{
-			m_path += o.m_path;
-			m_fuel_costs += o.m_fuel_costs;
-			this->remove_doubles();
-			this->recalculate_costs(m_map->get_unit(m_start.x, m_start.y));
-		}
-
 		void path::recalculate_costs(const unit::ptr &u)
 		{
 			m_fuel_costs = 0;
@@ -257,21 +255,6 @@ namespace aw
 			{
 				m_fuel_costs += m_map->get_terrain(c.x, c.y)->movement_costs(u->get_move_type());
 			}
-		}
-
-		void path::remove_doubles()
-		{
-			path_t found;
-
-			BOOST_FOREACH(const coord &c, m_path)
-			{
-				if(!found.contains(c))
-					found.insert(c);
-				else
-					std::clog << "Double-Item found: " << c << std::endl;
-			}
-
-			m_path = found;
 		}
 	}
 }
