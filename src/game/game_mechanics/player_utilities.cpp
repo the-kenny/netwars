@@ -13,8 +13,8 @@ game_mechanics::defeat_type game_mechanics::beaten(const map::ptr &map, const pl
 	{
 		for(int y = 0; y < map->height(); y++)
 		{
-			const unit::ptr u = map->get_unit(x, y);
-			const terrain::ptr t = map->get_terrain(x, y);
+			const unit::ptr u = map->get_unit(coord(x, y));
+			const terrain::ptr t = map->get_terrain(coord(x, y));
 
 			if(u && player->his_unit(u))
 				has_units = true;
@@ -46,7 +46,7 @@ bool game_mechanics::participates(const map::ptr &map, player::colors c)
 	{
 		for(int y = 0; y < map->height(); y++)
 		{
-			terrain::ptr t = map->get_terrain(x, y);
+			terrain::ptr t = map->get_terrain(coord(x, y));
 			if(t && t->is_building() && player.his_building(t))
 			{
 				if(t->type() == terrain::HEADQUARTER)
@@ -55,7 +55,7 @@ bool game_mechanics::participates(const map::ptr &map, player::colors c)
 					has_base = true;
 			}
 
-			const unit::ptr u = map->get_unit(x, y);
+			const unit::ptr u = map->get_unit(coord(x, y));
 			if(u && player.his_unit(u))
 				has_units = true;
 		}

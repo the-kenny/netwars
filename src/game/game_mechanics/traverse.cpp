@@ -9,7 +9,7 @@ namespace aw
 	{
 		void traverse::calculate(const map::ptr &map, const coord &origin)
 		{
-			this->calculate(map, origin, map->get_unit(origin.x, origin.y));
+			this->calculate(map, origin, map->get_unit(origin));
 		}
 
 		void traverse::calculate(const map::ptr &map, const coord &origin, const unit::ptr &u, int range)
@@ -43,9 +43,9 @@ namespace aw
 			return m_coords;
 		}
 
-		int traverse::get_rest_mp(int x, int y) const
+		int traverse::get_rest_mp(const coord& c) const
 		{
-			std::map<coord, int>::const_iterator it = m_move_range_left.find(coord(x, y));
+			std::map<coord, int>::const_iterator it = m_move_range_left.find(c);
 			if(it != m_move_range_left.end())
 				return it->second;
 			else
@@ -70,9 +70,9 @@ namespace aw
 //		void traverse::move(int x, int y, int dir, int rest_movement_range, int rest_gas, bool left, bool right, unit::ptr u, terrain::types previous_terrain)
 		void traverse::move(int x, int y, int dir, int rest_movement_range, int rest_gas, bool left, bool right, const unit::ptr &u)
 		{
-			if(m_map->on_map(x, y))
+			if(m_map->on_map(coord(x, y)))
 			{
-				const int move_costs = m_map->get_terrain(x, y)->movement_costs(u->get_move_type());
+				const int move_costs = m_map->get_terrain(coord(x, y))->movement_costs(u->get_move_type());
 
 				if(move_costs != -1)
 				{

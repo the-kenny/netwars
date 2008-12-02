@@ -30,40 +30,40 @@ map::map(const boost::multi_array<terrain::ptr, 2> &terrain, const boost::multi_
 	}
 }
 
-void map::add_unit(unsigned int x, unsigned int y, const unit::ptr &u)
+void map::add_unit(const coord& c, const unit::ptr &u)
 {
-	if(m_units[x][y])
+	if(m_units[c.x][c.y])
 		throw std::runtime_error("Cant add unit, there is already one.");
 
-	m_units[x][y] = u;
+	m_units[c.x][c.y] = u;
 }
 
-void map::delete_unit(unsigned int x, unsigned int y)
+void map::delete_unit(const coord& c)
 {
-	m_units[x][y].reset();
+	m_units[c.x][c.y].reset();
 }
 
-unit::ptr map::detach_unit(unsigned int x, unsigned int y)
+unit::ptr map::detach_unit(const coord& c)
 {
-	unit::ptr p = m_units[x][y];
-	m_units[x][y].reset();
+	unit::ptr p = m_units[c.x][c.y];
+	m_units[c.x][c.y].reset();
 	return p;
 }
 
-void map::move_unit(unsigned int from_x, unsigned int from_y, unsigned int to_x, unsigned int to_y)
+void map::move_unit(const coord& from, const coord& to)
 {
-	if(!m_units[from_x][from_y] || m_units[to_x][to_y])
+	if(!m_units[from.x][from.y] || m_units[to.x][to.y])
 		throw std::runtime_error("[map::move_unit] Kein Unit zu bewegen bzw. Zielposition bereits belegt");
 
-	m_units[to_x][to_y] = m_units[from_x][from_y];
-	m_units[from_x][from_y].reset();
+	m_units[to.x][to.y] = m_units[from.x][from.y];
+	m_units[from.x][from.y].reset();
 }
 
-void map::change_building_color(unsigned int x, unsigned int y, const player::ptr &player)
+void map::change_building_color(const coord& c, const player::ptr &player)
 {
-	terrain::ptr p = m_terrain[x][y];
+	terrain::ptr p = m_terrain[c.x][c.y];
 
-	if(!on_map(x, y))
+	if(!on_map(c))
 		throw std::runtime_error("[map::change_building_color] Gegebene Koordinaten sind nicht auf der Karte.");
 
 	if(!p->is_building())
@@ -75,68 +75,6 @@ void map::change_building_color(unsigned int x, unsigned int y, const player::pt
 	std::clog << "[map::change_building_color] Übernehme Gebäude" << std::endl;
 	p->extra(player->get_building_color());
 }
-
-//	unsigned int map::get_player_count()
-//	{
-//		unsigned int buildings = 0;
-//		unsigned int units = 0;
-//
-//		std::set<terrain::extras> terrain;
-//		std::set<unit::colors> unit;
-//
-//		for(int x = 0; x < 30; x++)
-//		{
-//			for(int y = 0; y < 20; y++)
-//			{
-//				if(terrain::is_building(m_terrain[x][y]->type()) && m_terrain[x][y]->extra() != terrain::WHITE)
-//				{
-//					if(terrain.insert(m_terrain[x][y]->extra()).second)
-//						++buildings;
-//				}
-//
-//				if(m_units[x][y])
-//				{
-//					if(unit.insert(m_units[x][y]->color()).second)
-//						++units;
-//				}
-//			}
-//		}
-//
-//		return std::max(units, buildings);
-//	}
-
-//	bool map::participates(player::colors color)
-//	{
-//		player p(color);
-//
-//		for(int x = 0; x < 30; x++)
-//		{
-//			for(int y = 0; y < 20; y++)
-//			{
-//				if((terrain::is_building(m_terrain[x][y]->type()) && m_terrain[x][y]->extra() != terrain::WHITE && p.his_building((m_terrain[x][y]))) || (m_units[x][y] && p.his_unit(m_units[x][y])))
-//					return true;
-//			}
-//		}
-//
-//		return false;
-//	}
-
-//display::scene::ptr map::scene()
-//{
-//	aw::display::scene::ptr s(new aw::display::scene);
-//
-//	for(int x = 0; x < 30; x++)
-//		for(int y = 0; y < 20; y++)
-//			{
-////					s->terrain_type(x, y, m_terrain[x][y]->type());
-////					s->terrain_extra(x, y, m_terrain[x][y]->extra());
-//
-//				s->set_terrain(x, y, m_terrain[x][y]);
-//				s->set_unit(x, y, m_units[x][y]);
-//			}
-//
-//	return s;
-//}
 
 unsigned int map::num_buildings(player::colors c)
 {

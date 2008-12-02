@@ -13,7 +13,7 @@ namespace aw
 		void path::remove_element(const coord &c)
 		{
 			m_path.erase(c);
-			m_fuel_costs -= m_map->get_terrain(c.x, c.y)->movement_costs(m_map->get_unit(m_start.x, m_start.y)->get_move_type());
+			m_fuel_costs -= m_map->get_terrain(c)->movement_costs(m_map->get_unit(m_start)->get_move_type());
 		}
 
 		void path::reset()
@@ -45,7 +45,7 @@ namespace aw
 
 		void path::calculate(const map::ptr &map, const traverse::ptr &t, const coord &start, const coord &end)
 		{
-			const unit::ptr &u = map->get_unit(start.x, start.y);
+			const unit::ptr &u = map->get_unit(start);
 			this->calculate(map, t, start, end, u);
 		}
 
@@ -139,9 +139,9 @@ namespace aw
 
 		bool path::move(int x, int y, int end_x, int end_y, int dir, int rest_movement_range, int rest_gas, bool left, bool right, const unit::ptr &u)
 		{
-				if(m_map->on_map(x, y))
+				if(m_map->on_map(coord(x, y)))
 				{
-						const int move_costs = m_map->get_terrain(x, y)->movement_costs(u->get_move_type());
+						const int move_costs = m_map->get_terrain(coord(x, y))->movement_costs(u->get_move_type());
 
 						if(move_costs != -1)
 						{
@@ -161,7 +161,7 @@ namespace aw
 						{
 								if(x == end_x && y == end_y)
 								{
-										if(rest_movement_range == m_traverse->get_rest_mp(x, y))  // Hält immer den kleinstmöglichen mp-Vebrauch
+										if(rest_movement_range == m_traverse->get_rest_mp(coord(x, y)))  // Hält immer den kleinstmöglichen mp-Vebrauch
 										{
 												m_fuel_costs = u->fuel() - rest_gas;
 												append(x, y);
@@ -170,7 +170,7 @@ namespace aw
 								}
 
 								//Wenn noch nicht gecheckt, oder weg mit weniger verbrauch gefunden.
-								if(m_traverse->get_rest_mp(x, y) == -1 || m_traverse->get_rest_mp(x, y) <= rest_movement_range)
+								if(m_traverse->get_rest_mp(coord(x, y)) == -1 || m_traverse->get_rest_mp(coord(x, y)) <= rest_movement_range)
 								{
 										for(int i= -1; i < 2; i++)
 										{
@@ -220,7 +220,7 @@ namespace aw
 				m_fuel_costs = 0;
 				BOOST_FOREACH(const coord &c, m_path)
 				{
-						m_fuel_costs += m_map->get_terrain(c.x, c.y)->movement_costs(u->get_move_type());
+						m_fuel_costs += m_map->get_terrain(c)->movement_costs(u->get_move_type());
 				}
 		}
 	}

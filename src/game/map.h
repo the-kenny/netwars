@@ -4,6 +4,7 @@
 #include "units/units.h"
 #include "terrain.h"
 #include "player.h"
+#include "coord.h"
 
 #include <boost/multi_array.hpp>
 #include <boost/shared_ptr.hpp>
@@ -22,15 +23,15 @@ namespace aw
 			map();
 			map(const boost::multi_array<terrain::ptr, 2> &terrain, const boost::multi_array<unit::ptr, 2> &units);
 
-			const unit::ptr &get_unit(unsigned int x, unsigned int y) const { return m_units[x][y]; }
-			const terrain::ptr &get_terrain(unsigned int x, unsigned int y) const { return m_terrain[x][y]; }
+			const unit::ptr &get_unit(const coord& c) const { return m_units[c.x][c.y]; }
+			const terrain::ptr &get_terrain(const coord& c) const { return m_terrain[c.x][c.y]; }
 
-			void add_unit(unsigned int x, unsigned int y, const unit::ptr &u);
-			void delete_unit(unsigned int x, unsigned int y);
-			unit::ptr detach_unit(unsigned int x, unsigned int y);
+			void add_unit(const coord& c, const unit::ptr &u);
+			void delete_unit(const coord& c);
+			unit::ptr detach_unit(const coord& c);
 
-			void move_unit(unsigned int from_x, unsigned int from_y, unsigned int to_x, unsigned int to_y);
-			void change_building_color(unsigned int x, unsigned int y, const player::ptr &player);
+			void move_unit(const coord& from, const coord& to);
+			void change_building_color(const coord& c, const player::ptr &player);
 
 //			unsigned int get_player_count(); //Haesslich implentiert
 //			bool participates(player::colors color); //Nun im namespace game_mechanics::participates()
@@ -41,9 +42,9 @@ namespace aw
 			int width() const { return 30; }
 			int height() const { return 20; }
 
-			bool on_map(int x, int y) const
+			bool on_map(const coord& c) const
 			{
-				return (x < 30 && x > -1 && y < 20 && y > -1);
+				return (c.x < 30 && c.x > -1 && c.y < 20 && c.y > -1);
 			}
 
 //			display::scene::ptr scene();

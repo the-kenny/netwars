@@ -9,7 +9,7 @@ using namespace aw;
 
 bool game_mechanics::can_unload(const map::ptr &map, const coord &transporter_c)
 {
-	transporter::ptr t = boost::dynamic_pointer_cast<transporter>(map->get_unit(transporter_c.x, transporter_c.y));
+	transporter::ptr t = boost::dynamic_pointer_cast<transporter>(map->get_unit(transporter_c));
 	assert(t != NULL);
 
 	if(!t->can_unload())
@@ -26,7 +26,7 @@ bool game_mechanics::can_unload(const map::ptr &map, const coord &transporter_c)
 
 bool game_mechanics::can_unload(const map::ptr &map, const coord &transporter_c, int index)
 {
-	transporter::ptr t = boost::dynamic_pointer_cast<transporter>(map->get_unit(transporter_c.x, transporter_c.y));
+	transporter::ptr t = boost::dynamic_pointer_cast<transporter>(map->get_unit(transporter_c));
 	assert(t != NULL);
 
 	if(!t->can_unload())
@@ -40,7 +40,7 @@ bool game_mechanics::can_unload(const map::ptr &map, const coord &transporter_c,
 
 area game_mechanics::get_unload_coordinates(const map::ptr &map, const coord &transporter_c, int index)
 {
-	transporter::ptr t = boost::dynamic_pointer_cast<transporter>(map->get_unit(transporter_c.x, transporter_c.y));
+	transporter::ptr t = boost::dynamic_pointer_cast<transporter>(map->get_unit(transporter_c));
 	assert(t != NULL);
 	assert(t->can_unload() == true);
 
@@ -54,7 +54,7 @@ area game_mechanics::get_unload_coordinates(const map::ptr &map, const coord &tr
 
 	BOOST_FOREACH(const coord &c, a)
 	{
-		if(map->on_map(c.x, c.y) && map->get_unit(c.x, c.y) != NULL)
+		if(map->on_map(c) && map->get_unit(c) != NULL)
 			a.erase(c);
 	}
 
@@ -63,7 +63,7 @@ area game_mechanics::get_unload_coordinates(const map::ptr &map, const coord &tr
 
 const std::vector<std::size_t> game_mechanics::get_unloadable_indices(const map::ptr &map, const coord &transporter_c)
 {
-	transporter::ptr t = boost::dynamic_pointer_cast<transporter>(map->get_unit(transporter_c.x, transporter_c.y));
+	transporter::ptr t = boost::dynamic_pointer_cast<transporter>(map->get_unit(transporter_c));
 	assert(t != NULL);
 	assert(t->can_unload() == true);
 
@@ -80,7 +80,7 @@ const std::vector<std::size_t> game_mechanics::get_unloadable_indices(const map:
 
 const std::vector<std::pair<std::size_t, unit::ptr> > game_mechanics::get_unloadable_units(const map::ptr &map, const coord &transporter_c)
 {
-	transporter::ptr t = boost::dynamic_pointer_cast<transporter>(map->get_unit(transporter_c.x, transporter_c.y));
+	transporter::ptr t = boost::dynamic_pointer_cast<transporter>(map->get_unit(transporter_c));
 	assert(t != NULL);
 	assert(t->can_unload() == true);
 

@@ -23,8 +23,8 @@ namespace aw
 				for(int x = 0; x < 30; x++)
 					for(int y = 0; y < 20; y++)
 					{
-						this->set_terrain(x, y, map->get_terrain(x, y));
-						this->set_unit(x, y, map->get_unit(x, y));
+						this->set_terrain(x, y, map->get_terrain(coord(x, y)));
+						this->set_unit(x, y, map->get_unit(coord(x, y)));
 					}
 			}
 

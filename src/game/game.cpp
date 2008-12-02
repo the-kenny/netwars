@@ -22,10 +22,10 @@ void game::begin_unit_move(const coord &from, const coord &to)
 	//Move dummy-unit aside
 	if(this->get_unit(to) && this->get_unit(to)->is_dummy())
 	{
-		m_removed_dummy_units.insert(std::make_pair(to, this->get_map()->detach_unit(to.x, to.y)));
+		m_removed_dummy_units.insert(std::make_pair(to, this->get_map()->detach_unit(to)));
 	}
 
-	m_map->move_unit(from.x, from.y, to.x, to.y);
+	m_map->move_unit(from, to);
 
 	m_active_move.from = from;
 	m_active_move.to = to;
@@ -42,12 +42,12 @@ void game::complete_unit_move(const game_mechanics::path &path)
 	assert(path.start() == from);
 	assert(path.end() == to);
 
-	unit::ptr unit = m_map->get_unit(to.x, to.y);
+	unit::ptr unit = m_map->get_unit(to);
 	assert(unit != NULL);
 	assert(unit->moved() == false);
 	unit->move(path.get_fuel_costs());
 
-	const terrain::ptr terr = m_map->get_terrain(from.x, from.y);
+	const terrain::ptr terr = m_map->get_terrain(from);
 	if(terr->is_building())
 	{
 		building::ptr b = boost::dynamic_pointer_cast<building>(terr);
@@ -58,7 +58,7 @@ void game::complete_unit_move(const game_mechanics::path &path)
 	std::map<coord, dummy_unit::ptr>::iterator it = m_removed_dummy_units.find(from);
 	if(it != m_removed_dummy_units.end())
 	{
-		this->get_map()->add_unit(from.x, from.y, it->second);
+		this->get_map()->add_unit(from, it->second);
 	}
 
 	m_active_move.reset();
@@ -68,13 +68,13 @@ void game::cancel_unit_move()
 {
 	assert(m_active_move.active == true);
 
-	m_map->move_unit(m_active_move.to.x, m_active_move.to.y, m_active_move.from.x, m_active_move.from.y);
+	m_map->move_unit(m_active_move.to, m_active_move.from);
 
 	//Place dummy-units back
 	std::map<coord, dummy_unit::ptr>::iterator it = m_removed_dummy_units.find(m_active_move.to);
 	if(it != m_removed_dummy_units.end())
 	{
-		this->get_map()->add_unit(m_active_move.to.x, m_active_move.to.y, it->second);
+		this->get_map()->add_unit(m_active_move.to, it->second);
 		m_removed_dummy_units.erase(it);
 	}
 
@@ -84,8 +84,8 @@ void game::cancel_unit_move()
 
 void game::attack_unit(const coord &attacker_c, const coord &victim_c)
 {
-	const unit::ptr attacker = m_map->get_unit(attacker_c.x, attacker_c.y);
-	const unit::ptr victim = m_map->get_unit(victim_c.x, victim_c.y);
+	const unit::ptr attacker = m_map->get_unit(attacker_c);
+	const unit::ptr victim = m_map->get_unit(victim_c);
 
 	assert(attacker != NULL);
 	assert(victim != NULL);
@@ -102,8 +102,8 @@ void game::attack_unit(const coord &attacker_c, const coord &victim_c)
 
 		if(victim->get_hp() - damage*10 <= 0)
 		{
-			m_map->delete_unit(victim_c.x, victim_c.y);
-			m_map->get_terrain(victim_c.x, victim_c.y)->type(terrain::WRECKAGE);
+			m_map->delete_unit(victim_c);
+			m_map->get_terrain(victim_c)->type(terrain::WRECKAGE);
 		}
 		else
 		{
@@ -113,12 +113,12 @@ void game::attack_unit(const coord &attacker_c, const coord &victim_c)
 	else
 	{
 		if(calc.get_unit1_life() <= 0)
-			m_map->delete_unit(attacker_c.x, attacker_c.y);
+			m_map->delete_unit(attacker_c);
 		else
 			attacker->apply_damage(calc.get_attacker_damage());
 
 		if(calc.get_unit2_life() <= 0)
-			m_map->delete_unit(victim_c.x, victim_c.y);
+			m_map->delete_unit(victim_c);
 		else
 			victim->apply_damage(calc.get_victim_damage());
 	}
@@ -128,7 +128,7 @@ void game::attack_unit(const coord &attacker_c, const coord &victim_c)
 
 void game::explode(const coord &unit_c)
 {
-	unit::ptr bomb = m_map->get_unit(unit_c.x, unit_c.y);
+	unit::ptr bomb = m_map->get_unit(unit_c);
 	assert(bomb != NULL);
 	assert(bomb->can_explode() == true);
 
@@ -138,34 +138,34 @@ void game::explode(const coord &unit_c)
 	BOOST_FOREACH(const game_mechanics::explosion_damage::value_type &p, damage)
 	{
 		const coord &c = p.first;
-		if(m_map->get_unit(c.x, c.y))
+		if(m_map->get_unit(c))
 		{
-			m_map->get_unit(c.x, c.y)->set_hp_as_float(p.second);
+			m_map->get_unit(c)->set_hp_as_float(p.second);
 		}
 	}
 
-	m_map->delete_unit(unit_c.x, unit_c.y);
+	m_map->delete_unit(unit_c);
 
 	this->check_for_defeat();
 }
 
 void game::knock_down(const coord &att_c, const coord &target_c)
 {
-	unit::ptr att = m_map->get_unit(att_c.x, att_c.y);
-	unit::ptr vic = m_map->get_unit(target_c.x, target_c.y);
+	unit::ptr att = m_map->get_unit(att_c);
+	unit::ptr vic = m_map->get_unit(target_c);
 
 	assert(att != NULL);
 	assert(vic != NULL);
 	assert(att->can_run_over() == true);
 
-	m_map->delete_unit(target_c.x,  target_c.y);
+	m_map->delete_unit(target_c);
 
 	this->check_for_defeat();
 }
 
 void game::launch_silo(const coord &silo_c, const coord &target_c)
 {
-	silo::ptr s = boost::dynamic_pointer_cast<silo>(m_map->get_terrain(silo_c.x, silo_c.y));
+	silo::ptr s = boost::dynamic_pointer_cast<silo>(m_map->get_terrain(silo_c));
 
 	assert(s != NULL);
 	assert(!s->has_fired());
@@ -176,9 +176,9 @@ void game::launch_silo(const coord &silo_c, const coord &target_c)
 	BOOST_FOREACH(const game_mechanics::explosion_damage::value_type &p, damage)
 	{
 		const coord &c = p.first;
-		if(m_map->get_unit(c.x, c.y))
+		if(m_map->get_unit(c))
 		{
-			m_map->get_unit(c.x, c.y)->set_hp_as_float(p.second);
+			m_map->get_unit(c)->set_hp_as_float(p.second);
 		}
 	}
 
@@ -189,8 +189,8 @@ void game::launch_silo(const coord &silo_c, const coord &target_c)
 
 void game::capture_building(const coord &unit_c)
 {
-	const unit::ptr unit = m_map->get_unit(unit_c.x, unit_c.y);
-	const terrain::ptr terr = m_map->get_terrain(unit_c.x, unit_c.y);
+	const unit::ptr unit = m_map->get_unit(unit_c);
+	const terrain::ptr terr = m_map->get_terrain(unit_c);
 
 	assert(unit != NULL);
 	assert(unit->can_capture() == true);
@@ -276,8 +276,8 @@ void game::repair_unit(const coord &repair_unit, const coord &to)
 //Takes care of the unit-movement
 void game::load_unit(const coord &transporter_c, const coord &load_c, const game_mechanics::path &path)
 {
-	transporter::ptr t = boost::dynamic_pointer_cast<transporter>(m_map->get_unit(transporter_c.x, transporter_c.y));
-	unit::ptr load = m_map->get_unit(load_c.x, load_c.y);
+	transporter::ptr t = boost::dynamic_pointer_cast<transporter>(m_map->get_unit(transporter_c));
+	unit::ptr load = m_map->get_unit(load_c);
 
 	assert(t != NULL);
 	assert(load != NULL);
@@ -290,25 +290,25 @@ void game::load_unit(const coord &transporter_c, const coord &load_c, const game
 	assert(load->moved() == false);
 	load->move(path.get_fuel_costs()-1);
 
-	t->load_unit(m_map->detach_unit(load_c.x, load_c.y));
+	t->load_unit(m_map->detach_unit(load_c));
 }
 
 void game::unload_unit(const coord &transporter_c, const game_mechanics::path &path, const coord &to, std::size_t index)
 {
-	assert(m_map->get_unit(to.x, to.y) == NULL);
+	assert(m_map->get_unit(to) == NULL);
 
-	transporter::ptr t = boost::dynamic_pointer_cast<transporter>(m_map->get_unit(transporter_c.x, transporter_c.y));
-	const terrain::ptr terr = m_map->get_terrain(to.x, to.y);
+	transporter::ptr t = boost::dynamic_pointer_cast<transporter>(m_map->get_unit(transporter_c));
+	const terrain::ptr terr = m_map->get_terrain(to);
 
 	assert(t != NULL);
 	assert(t->can_unload() == true);
 	assert(terr->can_pass(t->get_unit(index)->move_type()) == true);
 
 	unit::ptr u = t->unload(index);
-	assert(m_map->get_terrain(to.x, to.y)->can_pass(u->move_type()));
+	assert(m_map->get_terrain(to)->can_pass(u->move_type()));
 
 
-	m_map->add_unit(to.x, to.y, u);
+	m_map->add_unit(to, u);
 	u->set_moved();
 
 	if(m_active_move.active)
@@ -320,7 +320,7 @@ void game::unload_unit(const coord &transporter_c, const game_mechanics::path &p
 
 void game::hide_unit(const coord &unit_c)
 {
-	unit::ptr unit = m_map->get_unit(unit_c.x, unit_c.y);
+	unit::ptr unit = m_map->get_unit(unit_c);
 	assert(unit != NULL);
 	assert(unit->can_hide() == true);
 
@@ -329,7 +329,7 @@ void game::hide_unit(const coord &unit_c)
 
 void game::appear_unit(const coord &unit_c)
 {
-	unit::ptr unit = m_map->get_unit(unit_c.x, unit_c.y);
+	unit::ptr unit = m_map->get_unit(unit_c);
 	assert(unit != NULL);
 	assert(unit->can_hide() == true);
 
@@ -341,17 +341,17 @@ void game::buy_unit(const coord &pos, unit::types type)
 	int price = game_mechanics::price<unit>(type);
 	int funds = m_players.get_active_player()->get_funds();
 
-	assert(!m_map->get_unit(pos.x, pos.y));
+	assert(!m_map->get_unit(pos));
 	assert(price <= funds);
 
 	this->get_active_player()->subtract_funds(price);
-	m_map->add_unit(pos.x, pos.y, aw::units::create(type, this->get_active_player()->get_unit_color()));
-	m_map->get_unit(pos.x, pos.y)->set_moved(true);
+	m_map->add_unit(pos, aw::units::create(type, this->get_active_player()->get_unit_color()));
+	m_map->get_unit(pos)->set_moved(true);
 
 
 	BOOST_FOREACH(const player::ptr &p, m_players.get_players())
 	{
-		if(p->his_unit(m_map->get_unit(pos.x, pos.y)))
+		if(p->his_unit(m_map->get_unit(pos)))
 		{
 			p->has_units(true);
 			break;
@@ -374,7 +374,7 @@ void game::join_units(const coord &from, const coord &to, const game_mechanics::
 	unit1->move(path.get_fuel_costs());
 	unit2->join(*unit2);
 
-	m_map->delete_unit(from.x, from.y);
+	m_map->delete_unit(from);
 }
 
 void game::load_map(const std::string &file)
@@ -438,8 +438,9 @@ void game::start_game()
 	{
 		for(int y = 0; y < m_map->height(); y++)
 		{
-			const unit::ptr &u = m_map->get_unit(x, y);
-			terrain::ptr t = m_map->get_terrain(x, y);
+			coord c(x, y);
+			const unit::ptr &u = m_map->get_unit(c);
+			terrain::ptr t = m_map->get_terrain(c);
 
 			bool anyones_building = false;
 			bool anyones_unit = false;
@@ -461,7 +462,7 @@ void game::start_game()
 			if(u && !u->is_dummy() && !anyones_unit) //There is a unit but the player of it doesn't participates
 			{
 				std::clog << "[game::start_game] Player of the unit at (" << x << "|" << y << ") doesn't participates the game. Deleting unit" << std::endl;
-				m_map->delete_unit(x, y);
+				m_map->delete_unit(c);
 			}
 
 			if(t && t->is_building() && t->extra() != terrain::WHITE && !anyones_building) //t is a building, isn't neutral and the player of it doesn't participates
@@ -479,18 +480,19 @@ void game::start_turn()
 	{
 		for(int y = 0; y < 20; y++)
 		{
-			unit::ptr u = m_map->get_unit(x, y);
-			terrain::ptr t = m_map->get_terrain(x, y);
+			coord c(x, y);
+			unit::ptr u = m_map->get_unit(c);
+			terrain::ptr t = m_map->get_terrain(c);
 
 			if(u && u->color() == this->get_active_player()->get_unit_color())
 			{
 				u->begin_turn();
 
 				if(u->remove())
-					m_map->delete_unit(x, y);
+					m_map->delete_unit(c);
 
-				if(game_mechanics::can_supply(this->get_map(), coord(x, y)))
-					this->supply_units(coord(x, y));
+				if(game_mechanics::can_supply(this->get_map(), c))
+					this->supply_units(c);
 			}
 
 			if(t && t->is_building() && t->extra() == this->get_active_player()->get_building_color())
@@ -498,8 +500,8 @@ void game::start_turn()
 				building::ptr b = boost::dynamic_pointer_cast<building>(t);
 				assert(b != NULL);
 
-				if(m_map->get_unit(x, y) && b->can_supply() && b->can_supply(u->get_environment()))
-					this->supply_unit_from_building(coord(x, y));
+				if(m_map->get_unit(c) && b->can_supply() && b->can_supply(u->get_environment()))
+					this->supply_unit_from_building(c);
 			}
 		}
 	}
@@ -552,11 +554,12 @@ void game::check_for_defeat()
 				{
 					for(int y = 0; y < m_map->height(); y++)
 					{
-						const unit::ptr &u = this->get_map()->get_unit(x, y);
-						const terrain::ptr &t = this->get_map()->get_terrain(x, y);
+						coord c(x, y);
+						const unit::ptr &u = this->get_map()->get_unit(c);
+						const terrain::ptr &t = this->get_map()->get_terrain(c);
 
 						if(u != NULL && p->his_unit(u))
-							m_map->delete_unit(x, y);
+							m_map->delete_unit(c);
 
 						//We assume that the active player has defeated the player
 						if(t != NULL && t->is_building() && p->his_building(t))
@@ -572,7 +575,8 @@ void game::check_for_defeat()
 				{
 					for(int y = 0; y < m_map->height(); y++)
 					{
-						const terrain::ptr &t = this->get_map()->get_terrain(x, y);
+						coord c(x, y);
+						const terrain::ptr &t = this->get_map()->get_terrain(c);
 
 						if(t != NULL && t->is_building() && p->his_building(t))
 						{

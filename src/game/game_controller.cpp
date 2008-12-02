@@ -75,7 +75,7 @@ void game_controller::mouse_hover_changed(const coord &pos)
 				m_path->reset();
 				this->update_display();
 			}
-			else if((pos.x != m_selection.x || pos.y != m_selection.y) && m_traverse->get_rest_mp(pos.x, pos.y) != -1)
+			else if((pos.x != m_selection.x || pos.y != m_selection.y) && m_traverse->get_rest_mp(pos) != -1)
 			{
 				m_path->calculate(m_game->get_map(), m_traverse, m_selection, pos);
 				this->update_display();
@@ -457,7 +457,7 @@ units::actions game_controller::show_actions(const coord &pos)
 	else
 	{
 		game_mechanics::fire_range f;
-		f.calculate(m_game->get_map(), pos.x, pos.y);
+		f.calculate(m_game->get_map(), pos);
 
 		BOOST_FOREACH(const coord &c, f.get_victims(m_game->get_map(), m_game->get_active_player()))
 		{
@@ -606,7 +606,7 @@ void game_controller::process_action(units::actions action, const coord &pos)
 		m_selection = pos;
 
 		game_mechanics::fire_range f;
-		f.calculate(m_game->get_map(), pos.x, pos.y);
+		f.calculate(m_game->get_map(), pos);
 		m_highlighted_area.assign(f.get_victims(m_game->get_map(), m_game->get_active_player()));
 	}
 	else if(action == units::CAPTURE)

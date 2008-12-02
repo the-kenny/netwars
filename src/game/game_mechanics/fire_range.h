@@ -14,7 +14,7 @@ namespace aw
 		class fire_range
 		{
 			public:
-				void calculate(const map::ptr &map, int x, int y);
+				void calculate(const map::ptr &map, const coord& c);
 
 				void print(std::ostream &o);
 				const area &get_coordinates() const { return m_coordinates; }
@@ -24,7 +24,7 @@ namespace aw
 				area m_coordinates;
 				area  m_opposite_coords;
 
-				coord m_attacking_unit;
+				coord m_attacking_unit_c;
 		};
 
 		class fire_range_preview

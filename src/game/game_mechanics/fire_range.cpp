@@ -8,24 +8,25 @@
 using namespace aw;
 using namespace aw::game_mechanics;
 
-void fire_range::calculate(const map::ptr &map, int x, int y)
+void fire_range::calculate(const map::ptr &map, const coord& attacking_unit_c)
 {
 	m_coordinates.clear();
 
-	m_attacking_unit.assign(x, y);
+	m_attacking_unit_c = attacking_unit_c;
 
-	const unit::ptr u = map->get_unit(x, y);
+	const unit::ptr u = map->get_unit(m_attacking_unit_c);
 	int fire_range = u->get_attack_range();
+	int x = m_attacking_unit_c.x, y = m_attacking_unit_c.y;
 
 	if(fire_range == 1)
 	{
-		if(map->on_map(x+1, y))
+		if(map->on_map(coord(x+1, y)))
 			m_coordinates.push_back(coord(x+1, y));
-		if(map->on_map(x-1, y))
+		if(map->on_map(coord(x-1, y)))
 			m_coordinates.push_back(coord(x-1, y));
-		if(map->on_map(x, y-1))
+		if(map->on_map(coord(x, y-1)))
 			m_coordinates.push_back(coord(x, y-1));
-		if(map->on_map(x, y+1))
+		if(map->on_map(coord(x, y+1)))
 			m_coordinates.push_back(coord(x, y+1));
 	}
 	else
@@ -44,7 +45,7 @@ void fire_range::calculate(const map::ptr &map, int x, int y)
 				{
 					coord c(x2+x, y2+y);
 
-					if(map->on_map(c.x, c.y))
+					if(map->on_map(c))
 						m_coordinates.push_back(c);
 				}
 			}
@@ -77,21 +78,16 @@ const area &fire_range::get_victims(const map::ptr &map, const player::ptr &/*pl
 {
 	m_opposite_coords.clear();
 
-	const int att_x = m_attacking_unit.x;
-	const int att_y = m_attacking_unit.y;
-	unit::ptr attacker = map->get_unit(att_x, att_y);
+	unit::ptr attacker = map->get_unit(m_attacking_unit_c);
 
-	assert(map->on_map(att_x, att_y));
+	assert(map->on_map(m_attacking_unit_c));
 	assert(attacker != NULL);
 
 	BOOST_FOREACH(const coord &c, m_coordinates)
 	{
-		int def_x = c.x;
-		int def_y = c.y;
-
-		if(map->on_map(def_x, def_y))
+		if(map->on_map(c))
 		{
-			unit::ptr victim = map->get_unit(def_x, def_y);
+			unit::ptr victim = map->get_unit(c);
 
 			if(victim && attack_utilities::can_attack(attacker, victim))
 			{
@@ -105,7 +101,7 @@ const area &fire_range::get_victims(const map::ptr &map, const player::ptr &/*pl
 
 void fire_range_preview::calculate(const map::ptr &map, int x, int y)
 {
-	const unit::ptr &u(map->get_unit(x, y));
+	const unit::ptr &u(map->get_unit(coord(x, y)));
 
 	if(!u)
 		throw std::runtime_error("No unit at " + boost::lexical_cast<std::string>(x) + "|" + boost::lexical_cast<std::string>(y));
@@ -126,7 +122,7 @@ void fire_range_preview::calculate(const map::ptr &map, int x, int y)
 
 		BOOST_FOREACH(const area::value_type &t, tr.get_coordinates())
 		{
-			if(map->on_map(t.x, t.y) && !map->get_unit(t.x, t.y))
+			if(map->on_map(t) && !map->get_unit(t))
 			{
 				temp_coords.push_back(coord(t.x+1, t.y));
 				temp_coords.push_back(coord(t.x-1, t.y));
@@ -140,7 +136,7 @@ void fire_range_preview::calculate(const map::ptr &map, int x, int y)
 	else
 	{
 		fire_range f;
-		f.calculate(map, x, y);
+		f.calculate(map, coord(x, y));
 
 		m_area.assign(f.get_coordinates());
 	}

@@ -26,12 +26,12 @@ namespace aw
 				void calculate(const map::ptr &map, const coord &origin);
 				void calculate(const map::ptr &map, const coord &origin, const unit::ptr &u, int range = -1);
 
-				inline bool in_range(const coord &pos) const { return this->get_rest_mp(pos.x, pos.y) != -1; }
+				inline bool in_range(const coord &pos) const { return this->get_rest_mp(pos) != -1; }
 				inline coord get_origin() const { return m_start; }
 
 				//const std::vector &get_possibilities(const unit_t::ptr &unit);
 				const area_type &get_coordinates() const;
-				int get_rest_mp(int x, int y) const;
+				int get_rest_mp(const coord& c) const;
 
 				void reset()
 				{

@@ -49,11 +49,11 @@ namespace aw
 			void buy_unit(const coord &pos, unit::types type);
 
 			void join_units(const coord &from, const coord &to, const game_mechanics::path &path); //calls complete_unit_move()
-			inline unit::ptr get_unit(const coord &c) { return m_map->get_unit(c.x, c.y); }
-			inline terrain::ptr get_terrain(const coord &c) { return m_map->get_terrain(c.x, c.y); }
+			inline unit::ptr get_unit(const coord &c) { return m_map->get_unit(c); }
+			inline terrain::ptr get_terrain(const coord &c) { return m_map->get_terrain(c); }
 
 			inline map::ptr get_map() const { return m_map; }
-			inline bool on_map(const coord &pos) const { return m_map->on_map(pos.x, pos.y); }
+			inline bool on_map(const coord &pos) const { return m_map->on_map(pos); }
 
 			inline player::ptr get_active_player() { return m_players.get_active_player(); }
 

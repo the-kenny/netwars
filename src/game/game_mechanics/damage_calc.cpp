@@ -15,17 +15,17 @@ using namespace aw::game_mechanics;
 //TODO: Rewrite damage calculation to get the damage as float
 void damage_calc::calculate(const map::ptr &map, coord att, coord def)
 {
-	if(!map->on_map(att.x, att.y) || !map->on_map(def.x, def.y))
+	if(!map->on_map(att) || !map->on_map(def))
 		throw std::runtime_error("Übergebene Koordinaten nicht im bereich der Karte");
 
-	unit::ptr unit1 = map->get_unit(att.x, att.y);
-	const terrain::ptr terrain1 = map->get_terrain(att.x, att.y);
+	unit::ptr unit1 = map->get_unit(att);
+	const terrain::ptr terrain1 = map->get_terrain(att);
 
 	const float terrain1_defense = terrain1->defense_value();
 	const float hp1 = unit1->get_hp();
 
-	unit::ptr unit2 = map->get_unit(def.x, def.y);
-	const terrain::ptr terrain2 = map->get_terrain(def.x, def.y);
+	unit::ptr unit2 = map->get_unit(def);
+	const terrain::ptr terrain2 = map->get_terrain(def);
 
 	const float terrain2_defense = terrain2->defense_value();
 	const float hp2 = unit2->get_hp();
@@ -86,7 +86,7 @@ void damage_calc::calculate(const map::ptr &map, coord att, coord def)
 	else
 	{
 		fire_range f;
-		f.calculate(map, def.x, def.y);
+		f.calculate(map, def);
 
 		//Check if Unit is in range for Counterattack
 		if(f.get_coordinates().contains(att))
