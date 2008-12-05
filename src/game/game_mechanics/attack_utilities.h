@@ -1,8 +1,8 @@
 #ifndef AW_ATTACK_UTILITIES_H
 	#define AW_ATTACK_UTILITIES_H
 
-#include "../config.h"
-#include "../units/unit_base.h"
+#include "game/config.h"
+#include "game//units/unit_base.h"
 
 namespace aw
 {

@@ -2,8 +2,8 @@
 	#define AW_MAP_LOADER_H
 
 #include <boost/multi_array.hpp>
-#include "../units/unit_base.h"
-#include "../terrain.h"
+#include "game/units/unit_base.h"
+#include "game/terrain.h"
 
 namespace aw
 {

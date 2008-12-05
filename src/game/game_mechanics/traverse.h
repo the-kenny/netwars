@@ -1,9 +1,9 @@
 #ifndef AW_TRAVERSE_H
 	#define AW_TRAVERSE_H
 
-#include "../map.h"
-#include "../units/unit_base.h"
-#include "../terrain.h"
+#include "game/map.h"
+#include "game/units/unit_base.h"
+#include "game/terrain.h"
 #include "game/coord.h"
 #include "game/area.h"
 

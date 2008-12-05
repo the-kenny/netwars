@@ -1,8 +1,8 @@
 #ifndef AW_PLAYER_UTILITIES_H
 	#define AW_PLAYER_UTILITIES_H
 
-#include "../map.h"
-#include "../player.h"
+#include "game/map.h"
+#include "game/player.h"
 
 namespace aw
 {

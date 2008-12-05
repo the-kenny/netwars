@@ -4,8 +4,8 @@
 #include "unit_base.h"
 #include "transporter.h"
 
-#include "../utility.h"
-#include "../terrain.h"
+#include "game/utility.h"
+#include "game/terrain.h"
 
 #include <boost/shared_ptr.hpp>
 

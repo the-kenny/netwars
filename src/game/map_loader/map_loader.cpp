@@ -6,7 +6,7 @@
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 
-#include "../units/unit_loader.h"
+#include "game/units/unit_loader.h"
 
 namespace aw
 {

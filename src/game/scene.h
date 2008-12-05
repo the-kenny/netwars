@@ -4,11 +4,11 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/multi_array.hpp>
 
-#include "game/area.h"
-#include "game/coord.h"
-#include "game/terrain.h"
-#include "game/units/unit_base.h"
-#include "game/map.h"
+#include "area.h"
+#include "coord.h"
+#include "terrain.h"
+#include "units/unit_base.h"
+#include "map.h"
 
 namespace aw
 {

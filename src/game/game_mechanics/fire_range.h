@@ -2,9 +2,9 @@
 	#define AW_FIRE_RANGE_H
 
 
-#include "../coord.h"
-#include "../area.h"
-#include "../map.h"
+#include "game/coord.h"
+#include "game/area.h"
+#include "game/map.h"
 
 
 namespace aw

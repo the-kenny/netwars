@@ -1,9 +1,9 @@
 #ifndef AW_EXPLOSION_DAMAGE_H
 	#define AW_EXPLOSION_DAMAGE_H
 
-#include "../coord.h"
-#include "../area.h"
-#include "../map.h"
+#include "game/coord.h"
+#include "game/area.h"
+#include "game/map.h"
 
 #include <map>
 
