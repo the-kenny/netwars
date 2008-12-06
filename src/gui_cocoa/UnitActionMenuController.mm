@@ -47,7 +47,7 @@
 }
 
 - (void)dealloc {
-	[vboxView dealloc];
+	//[vboxView dealloc];
 	[super dealloc];
 }
 

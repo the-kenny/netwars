@@ -9,7 +9,7 @@
 #import "AppController.h"
 #import "MapView.h"
 #import "Coordinate.h"
-#import "UnitActionMenuController.h"
+#import "CocoaActionMenu.h"
 
 #include "game/config.h"
 #include "game/units/actions.h"
@@ -65,18 +65,7 @@
 
 - (void)rightMouseClickOnMap:(NSNotification*)notification {
 	Coordinate* coord = [notification.userInfo objectForKey:@"Position"];
-	 	
-	std::list<aw::units::actions> list;
-	list.push_back(aw::units::WAIT);
-
-	
-	//UnitActionMenuController* controller = [[UnitActionMenuController alloc] initWithActions:list];
-	UnitActionMenuController* controller = [[UnitActionMenuController alloc] init];
-	BOOST_FOREACH(const aw::units::actions a, list)
-		[controller addAction:a];
-	
-	std::cout << [controller run:[Coordinate coordinateWithPoint:[NSEvent mouseLocation]]] << std::endl;
-	//gameController->click(coord.coord, 2);
+	gameController->click(coord.coord, 2);
 }
 
 - (void)mouseMovedOnMap:(NSNotification*)notification {
@@ -106,6 +95,7 @@
 	
 	gameController = aw::game_controller::ptr(new aw::game_controller);
 	gameController->signal_scene_change().connect(boost::bind(&aw::gui::map_widget::display, cocoaMapWidget, _1));
+	gameController->signal_show_unit_action_menu().connect(boost::bind(&CocoaActionMenu::showActionMenu, _1));
 	
 	[mapView setIsEnabled:YES];
 	

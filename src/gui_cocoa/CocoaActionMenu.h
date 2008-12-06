@@ -15,6 +15,9 @@ public:
 	CocoaActionMenu();
 	~CocoaActionMenu();
 	
+	//Callback-method
+	static aw::units::actions showActionMenu(const std::list<aw::units::actions>& actions);
+	
 	virtual aw::units::actions run();
 	virtual void add_action(aw::units::actions a);
 	
