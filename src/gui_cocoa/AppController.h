@@ -22,9 +22,14 @@
 	
 	CocoaMapWidget::ptr cocoaMapWidget;
 	aw::game_controller::ptr gameController;
+	
+	bool gameActive;
 }
+
+@property(readwrite) bool gameActive;
 
 
 - (IBAction)startNewGame:(id)sender;
+- (IBAction)endTurn:(id)sender;
 
 @end

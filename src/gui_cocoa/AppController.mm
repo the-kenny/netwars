@@ -22,6 +22,8 @@
 
 @implementation AppController
 
+@synthesize gameActive;
+
 - (void)awakeFromNib {
 	NSLog(@"AppController.awakeFromNib");
 		
@@ -54,6 +56,8 @@
 	 selector:@selector(mouseMovedOnMap:) 
 	 name: mouseMovedNotification
 	 object:nil];
+	
+	[self setGameActive:NO];
 }
 
 #pragma mark "Event Handling"
@@ -98,8 +102,13 @@
 	gameController->signal_show_unload_menu().connect(boost::bind(&CocoaUnloadMenu::showUnloadMenu, _1));
 	
 	[mapView setIsEnabled:YES];
+	[self setGameActive:YES];
 	
 	gameController->start_game(game);
-	
+}
+
+- (IBAction)endTurn:(id)sender {
+	gameController->end_turn();
+	gameController->start_turn();
 }
 @end
