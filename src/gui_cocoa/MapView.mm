@@ -5,6 +5,7 @@
 #include "game/gui/paths.h"
 #include "game/terrain.h"
 #include "game/gui/map_widget.h"
+#include "game/config.h"
 
 using namespace aw;
 using namespace aw::gui;
@@ -119,7 +120,7 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 	NSImage* sprite = [[Sprites sharedSprites] getSprite:path];
 	
 	[sprite setFlipped:YES];
-	[sprite drawAtPoint:NSMakePoint(pos.x*16, pos.y*16) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+	[sprite drawAtPoint:NSMakePoint(pos.x*16+(16-sprite.size.width), pos.y*16+(16-sprite.size.height)) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 	[sprite setFlipped:NO];
 }
 
@@ -538,7 +539,7 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 							[self draw:[NSString stringWithCString:get_path(terrain::BEACH, terrain::LDR).c_str()] at:NSMakePoint(x, y)]; //Bucht mit Strand
 					}
 				}
-				else if(type != terrain::WATER)
+				else
 				{
 					[self draw:[NSString stringWithCString:get_path(currentScene->get_terrain(x, y)->type(), terrain::UNDEF, extra).c_str()] at:NSMakePoint(x, y)];
 				}
@@ -566,6 +567,51 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 				}
 			}
 		}		
+		
+		for(int x = 0; x < 30; x++)
+		{   
+			for(int y = 0; y < 20; y++)
+			{   
+				const unit::ptr &u = currentScene->get_unit(x, y); 
+				if(u && !u->is_dummy())
+				{   
+					int life = u->get_hp();
+					if(life < 10 && life > 0)
+						[self draw:[NSString stringWithCString:get_path(unit::LIVE, life).c_str()] at:NSMakePoint(x, y)];
+					
+					if(u->low_ammo())
+						[self draw:[NSString stringWithCString:get_path(unit::LOW_AMMO).c_str()] at:NSMakePoint(x, y)];
+					
+					if(u->low_fuel())
+						[self draw:[NSString stringWithCString:get_path(unit::LOW_FUEL).c_str()] at:NSMakePoint(x, y)];
+					
+					if(u->is_hidden())
+						[self draw:[NSString stringWithCString:get_path(unit::HIDDEN).c_str()] at:NSMakePoint(x, y)];
+					
+					if(u->is_transporter() && boost::dynamic_pointer_cast<transporter>(u)->loaded_units_count() > 0)
+						[self draw:[NSString stringWithCString:get_path(unit::LOADED).c_str()] at:NSMakePoint(x, y)];
+					
+					if(u->can_capture())
+					{   
+						const terrain::ptr &t(currentScene->get_terrain(x, y));
+						
+						if(t->is_building() && boost::dynamic_pointer_cast<building>(t)->capture_points() < 20) 
+						{   
+							[self draw:[NSString stringWithCString:get_path(unit::CAPTURE).c_str()] at:NSMakePoint(x, y)];
+						}   
+					}   
+				}   
+				
+				static const NSString* range = [[NSString stringWithCString:(aw::config().get<std::string>("/config/dirs/pixmaps") + "/misc/range.png").c_str()] retain];
+				static const NSString* path = [[NSString stringWithCString:(aw::config().get<std::string>("/config/dirs/pixmaps") + "/misc/path.png").c_str()] retain];
+				
+				if(currentScene->highlighted(x, y)) 
+					[self draw:range at:NSMakePoint(x, y)];
+				
+				if(currentScene->path(x, y)) 
+					[self draw:path at:NSMakePoint(x, y)];
+			}   
+		} 
 	}
 	
 	if(!isEnabled) {
