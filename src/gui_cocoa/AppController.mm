@@ -59,20 +59,18 @@
 
 - (void)mouseClickOnMap:(NSNotification*)notification {
 	Coordinate* coord = [notification.userInfo objectForKey:@"Position"];
-			
 	gameController->click(coord.coord, 1);
 }
 
 - (void)rightMouseClickOnMap:(NSNotification*)notification {
 	Coordinate* coord = [notification.userInfo objectForKey:@"Position"];
-	gameController->click(coord.coord, 2);
+	//NSLog(@"rightMouseClockOnMap: (%i|%i)", coord.coord.x, coord.coord.y);
+	gameController->click(coord.coord, 3);
 }
 
 - (void)mouseMovedOnMap:(NSNotification*)notification {
 	Coordinate* coord = [notification.userInfo objectForKey:@"Position"];
-	
-	NSLog(@"mouseMoved: (%i|%i)", coord.coord.x, coord.coord.y);
-	
+	//NSLog(@"mouseMoved: (%i|%i)", coord.coord.x, coord.coord.y);
 	gameController->mouse_hover_changed(coord.coord);
 }
 
