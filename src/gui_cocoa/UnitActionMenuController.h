@@ -1,0 +1,18 @@
+#import <Cocoa/Cocoa.h>
+#import "VBoxView.h"
+#import "Coordinate.h"
+
+#include <list>
+
+#include "game/units/actions.h"
+
+@interface UnitActionMenuController : NSWindowController {
+	VBoxView* vboxView;
+	
+	aw::units::actions returnAction;
+}
+
+- (UnitActionMenuController*)initWithActions:(std::list<aw::units::actions>)actions;
+- (aw::units::actions)run:(Coordinate*)c;
+
+@end

@@ -9,13 +9,14 @@
 #import <Cocoa/Cocoa.h>
 #import "MapView.h"
 #import "MainWindowController.h"
+#import "CocoaMapWidget.h"
 
 #import "game/game.h"
 #import "game/game_controller.h"
 
 @interface AppController : NSObject {
-	NSWindowController *mainWindowController;
-    NSViewController* mapViewController;
+	MainWindowController *mainWindowController;
+    //NSViewController* mapViewController;
 	
 	MapView* mapView;
 	
@@ -23,6 +24,7 @@
 	aw::game_controller::ptr gameController;
 }
 
-- (void)startNewGame;
+
+- (IBAction)startNewGame:(id)sender;
 
 @end

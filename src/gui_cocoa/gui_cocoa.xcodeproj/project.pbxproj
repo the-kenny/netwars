@@ -11,6 +11,11 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.mm */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		8E1A5ECA0EDEC28F0089B499 /* bla.aws in Resources */ = {isa = PBXBuildFile; fileRef = 8E1A5EC90EDEC28F0089B499 /* bla.aws */; };
+		8E1A5F450EDEED910089B499 /* CocoaMainWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A5F440EDEED910089B499 /* CocoaMainWindow.mm */; };
+		8E1A5F8C0EDEEE050089B499 /* CocoaMapWidget.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A5F8B0EDEEE050089B499 /* CocoaMapWidget.mm */; };
+		8E1A624D0EDF662A0089B499 /* GameDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E1A624C0EDF662A0089B499 /* GameDialog.xib */; };
+		8E1A62850EE033D70089B499 /* UnitActionMenuController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A62840EE033D70089B499 /* UnitActionMenuController.mm */; };
 		8E26C4C90ED488A700704923 /* MapView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E26C4C80ED488A700704923 /* MapView.mm */; };
 		8E26C5210ED48F2D00704923 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E26C5200ED48F2D00704923 /* AppController.mm */; };
 		8E26CA590ED6066A00704923 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 8E26C8FD0ED6066A00704923 /* config.xml */; };
@@ -20,6 +25,7 @@
 		8E26D0FF0ED8614E00704923 /* MapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E26D0FE0ED8614E00704923 /* MapView.xib */; };
 		8E26D12C0ED864BE00704923 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E26D12B0ED864BE00704923 /* MainWindow.xib */; };
 		8E26D18C0ED868E200704923 /* MainWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E26D18A0ED868E200704923 /* MainWindowController.mm */; };
+		8E5D18EB0EE07D640087E028 /* VBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5D18E90EE07D640087E028 /* VBoxView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +38,14 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* gui_cocoa_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gui_cocoa_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8E1A5EC90EDEC28F0089B499 /* bla.aws */ = {isa = PBXFileReference; lastKnownFileType = file; name = bla.aws; path = ../../bla.aws; sourceTree = SOURCE_ROOT; };
+		8E1A5F430EDEED910089B499 /* CocoaMainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaMainWindow.h; sourceTree = "<group>"; };
+		8E1A5F440EDEED910089B499 /* CocoaMainWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaMainWindow.mm; sourceTree = "<group>"; };
+		8E1A5F8A0EDEEE050089B499 /* CocoaMapWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaMapWidget.h; sourceTree = "<group>"; };
+		8E1A5F8B0EDEEE050089B499 /* CocoaMapWidget.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaMapWidget.mm; sourceTree = "<group>"; };
+		8E1A624C0EDF662A0089B499 /* GameDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameDialog.xib; sourceTree = "<group>"; };
+		8E1A62830EE033D70089B499 /* UnitActionMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitActionMenuController.h; sourceTree = "<group>"; };
+		8E1A62840EE033D70089B499 /* UnitActionMenuController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UnitActionMenuController.mm; sourceTree = "<group>"; };
 		8E26C35A0ED4864000704923 /* gui_cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gui_cocoa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E26C4C70ED488A700704923 /* MapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapView.h; sourceTree = "<group>"; };
 		8E26C4C80ED488A700704923 /* MapView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MapView.mm; sourceTree = "<group>"; };
@@ -48,6 +62,8 @@
 		8E26D12B0ED864BE00704923 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		8E26D18A0ED868E200704923 /* MainWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MainWindowController.mm; sourceTree = "<group>"; };
 		8E26D18B0ED868E200704923 /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
+		8E5D18E90EE07D640087E028 /* VBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBoxView.m; sourceTree = "<group>"; };
+		8E5D18EA0EE07D640087E028 /* VBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBoxView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +121,8 @@
 		29B97314FDCFA39411CA2CEA /* gui_cocoa */ = {
 			isa = PBXGroup;
 			children = (
+				8E5D18E60EE07D550087E028 /* Helper Code */,
+				8E1A5F400EDEED6F0089B499 /* Glue Code */,
 				8E8C40C80EDC6B01006F1C7D /* Controllers */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -127,6 +145,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8E1A624C0EDF662A0089B499 /* GameDialog.xib */,
+				8E1A5EC90EDEC28F0089B499 /* bla.aws */,
 				8E26D12B0ED864BE00704923 /* MainWindow.xib */,
 				8E26D0FE0ED8614E00704923 /* MapView.xib */,
 				8E26C8FD0ED6066A00704923 /* config.xml */,
@@ -147,9 +167,31 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8E1A5F400EDEED6F0089B499 /* Glue Code */ = {
+			isa = PBXGroup;
+			children = (
+				8E1A5F430EDEED910089B499 /* CocoaMainWindow.h */,
+				8E1A5F440EDEED910089B499 /* CocoaMainWindow.mm */,
+				8E1A5F8A0EDEEE050089B499 /* CocoaMapWidget.h */,
+				8E1A5F8B0EDEEE050089B499 /* CocoaMapWidget.mm */,
+			);
+			name = "Glue Code";
+			sourceTree = "<group>";
+		};
+		8E5D18E60EE07D550087E028 /* Helper Code */ = {
+			isa = PBXGroup;
+			children = (
+				8E5D18EA0EE07D640087E028 /* VBoxView.h */,
+				8E5D18E90EE07D640087E028 /* VBoxView.m */,
+			);
+			name = "Helper Code";
+			sourceTree = "<group>";
+		};
 		8E8C40C80EDC6B01006F1C7D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8E1A62830EE033D70089B499 /* UnitActionMenuController.h */,
+				8E1A62840EE033D70089B499 /* UnitActionMenuController.mm */,
 				8E26C51F0ED48F2D00704923 /* AppController.h */,
 				8E26C5200ED48F2D00704923 /* AppController.mm */,
 				8E26D18B0ED868E200704923 /* MainWindowController.h */,
@@ -207,6 +249,8 @@
 				8E26CA5A0ED6066A00704923 /* data in Resources */,
 				8E26D0FF0ED8614E00704923 /* MapView.xib in Resources */,
 				8E26D12C0ED864BE00704923 /* MainWindow.xib in Resources */,
+				8E1A5ECA0EDEC28F0089B499 /* bla.aws in Resources */,
+				8E1A624D0EDF662A0089B499 /* GameDialog.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,6 +267,10 @@
 				8E26CE860ED8304500704923 /* Coordinate.mm in Sources */,
 				8E26CF9A0ED851F300704923 /* Sprites.mm in Sources */,
 				8E26D18C0ED868E200704923 /* MainWindowController.mm in Sources */,
+				8E1A5F450EDEED910089B499 /* CocoaMainWindow.mm in Sources */,
+				8E1A5F8C0EDEEE050089B499 /* CocoaMapWidget.mm in Sources */,
+				8E1A62850EE033D70089B499 /* UnitActionMenuController.mm in Sources */,
+				8E5D18EB0EE07D640087E028 /* VBoxView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

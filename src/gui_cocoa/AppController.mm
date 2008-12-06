@@ -9,10 +9,14 @@
 #import "AppController.h"
 #import "MapView.h"
 #import "Coordinate.h"
+#import "UnitActionMenuController.h"
 
-#import "game/config.h"
+#include "game/config.h"
+#include "game/units/actions.h"
 
-#import <string>
+
+#include <string>
+#include <list>
 #include <boost/bind.hpp>
 
 @implementation AppController
@@ -25,8 +29,8 @@
 	aw::config().load(std::string([[main pathForResource:@"config" ofType:@"xml"] UTF8String]));
 	aw::config().set("/config/dirs/data", std::string([main.resourcePath UTF8String]) + "/" + aw::config::instance().get<std::string>("/config/dirs/data", false));
 	
-	 gameController = aw::game_controller::ptr(new aw::game_controller);
-	 gameController->signal_scene_change().connect(boost::bind(&aw::gui::map_widget::display, cocoaMapWidget, _1));
+	 //gameController = aw::game_controller::ptr(new aw::game_controller);
+	 //gameController->signal_scene_change().connect(boost::bind(&aw::gui::map_widget::display, cocoaMapWidget, _1));
 	
 	mainWindowController = [[MainWindowController alloc] initWithWindowNibName:@"MainWindow"];
 	[[mainWindowController window] makeMainWindow];
@@ -49,7 +53,6 @@
 	 selector:@selector(mouseMovedOnMap:) 
 	 name: mouseMovedNotification
 	 object:nil];
-	 
 }
 
 #pragma mark "Event Handling"
@@ -63,22 +66,44 @@
 - (void)rightMouseClickOnMap:(NSNotification*)notification {
 	Coordinate* coord = [notification.userInfo objectForKey:@"Position"];
 	 	
-	gameController->click(coord.coord, 2);
+	std::list<aw::units::actions> list;
+	list.push_back(aw::units::WAIT);
+	UnitActionMenuController* controller = [[UnitActionMenuController alloc] initWithActions:list];
+	std::cout << [controller run:[Coordinate coordinateWithPoint:[NSEvent mouseLocation]]] << std::endl;
+	//gameController->click(coord.coord, 2);
 }
 
 - (void)mouseMovedOnMap:(NSNotification*)notification {
-	NSLog(@"mouseMoved");
 	Coordinate* coord = [notification.userInfo objectForKey:@"Position"];
-
 	
-	std::cout << coord.coord.x << " " << coord.coord.y << std::endl;
+	NSLog(@"mouseMoved: (%i|%i)", coord.coord.x, coord.coord.y);
 	
 	gameController->mouse_hover_changed(coord.coord);
 }
 
 #pragma mark "Game related stuff"
 
-- (void)startNewGame {
+- (void)initGame {
+	mapView = mainWindowController.mapView;
+	
+	cocoaMapWidget = CocoaMapWidget::ptr(new CocoaMapWidget(mapView));
+}
+
+- (IBAction)startNewGame:(id)sender {
+	[self initGame];
+	
+	aw::game::ptr game(new aw::game);
+	NSString* mapFile = [[NSBundle mainBundle] pathForResource:@"bla" ofType:@"aws"];
+	game->load_map(std::string([mapFile UTF8String]));
+	
+	game->set_funds_per_building(10000);
+	
+	gameController = aw::game_controller::ptr(new aw::game_controller);
+	gameController->signal_scene_change().connect(boost::bind(&aw::gui::map_widget::display, cocoaMapWidget, _1));
+	
+	[mapView setIsEnabled:YES];
+	
+	gameController->start_game(game);
 	
 }
 @end

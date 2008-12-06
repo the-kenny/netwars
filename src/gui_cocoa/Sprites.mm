@@ -17,18 +17,25 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Sprites)
 -(Sprites*)init {
 	self = [super init];
 	
-	cache = [NSMutableDictionary dictionary];
+	//We allocate it, and we have to deallocate it (see dealloc)
+	cache = [[NSMutableDictionary alloc] init];
 	
 	return self;
 }
 
+-(void)dealloc {
+	[cache dealloc];
+	[super dealloc];
+}
+
 -(NSImage*)getSprite:(NSString*)filename {
-	id value = [cache valueForKey:filename];
+	id value = [cache objectForKey:filename];
 	if(value != nil) {
 		return (NSImage*)value;
 	} else {
 		NSImage* image = [[NSImage alloc] initWithContentsOfFile:filename];
 		[cache setObject:image forKey:filename];
+		[image release];
 		
 		return image;
 	}

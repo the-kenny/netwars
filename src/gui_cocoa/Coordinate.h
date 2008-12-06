@@ -15,6 +15,7 @@
 }
 
 @property(readwrite) aw::coord coord;
+@property(readwrite) NSPoint point;
 
 -(Coordinate*)initWithCoordinates:(int)x y:(int)y;
 -(Coordinate*)initWithPoint:(NSPoint)p;
