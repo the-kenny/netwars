@@ -15,8 +15,6 @@ namespace aw
 				unit_action_menu(const std::list<units::actions>& actions);
 				virtual ~unit_action_menu();
 
-				virtual ~unit_action_menu() {}
-
 				virtual units::actions run() = 0;
 				virtual void add_action(units::actions a) = 0;
 
