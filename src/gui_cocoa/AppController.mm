@@ -10,6 +10,7 @@
 #import "MapView.h"
 #import "Coordinate.h"
 #import "CocoaActionMenu.h"
+#import "CocoaUnloadMenu.h"
 
 #include "game/config.h"
 #include "game/units/actions.h"
@@ -94,6 +95,7 @@
 	gameController = aw::game_controller::ptr(new aw::game_controller);
 	gameController->signal_scene_change().connect(boost::bind(&aw::gui::map_widget::display, cocoaMapWidget, _1));
 	gameController->signal_show_unit_action_menu().connect(boost::bind(&CocoaActionMenu::showActionMenu, _1));
+	gameController->signal_show_unload_menu().connect(boost::bind(&CocoaUnloadMenu::showUnloadMenu, _1));
 	
 	[mapView setIsEnabled:YES];
 	
