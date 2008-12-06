@@ -14,6 +14,7 @@
 	NSMutableDictionary* cache;
 }
 
++(Sprites*)sharedSprites;
 -(NSImage*)getSprite:(NSString*)filename;
 
 @end

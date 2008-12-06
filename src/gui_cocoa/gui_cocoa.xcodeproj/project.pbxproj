@@ -12,6 +12,8 @@
 		8D11072D0486CEB800E47090 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.mm */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		8E0C476A0EEAF337008EFD65 /* CocoaActionMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E0C47690EEAF337008EFD65 /* CocoaActionMenu.mm */; };
+		8E0C4A410EEB16BD008EFD65 /* UnitUnloadMenuController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E0C4A400EEB16BD008EFD65 /* UnitUnloadMenuController.mm */; };
+		8E0C4AD40EEB1C49008EFD65 /* CocoaUnloadMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E0C4AD30EEB1C49008EFD65 /* CocoaUnloadMenu.mm */; };
 		8E1A5ECA0EDEC28F0089B499 /* bla.aws in Resources */ = {isa = PBXBuildFile; fileRef = 8E1A5EC90EDEC28F0089B499 /* bla.aws */; };
 		8E1A5F450EDEED910089B499 /* CocoaMainWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A5F440EDEED910089B499 /* CocoaMainWindow.mm */; };
 		8E1A5F8C0EDEEE050089B499 /* CocoaMapWidget.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A5F8B0EDEEE050089B499 /* CocoaMapWidget.mm */; };
@@ -41,6 +43,10 @@
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E0C47680EEAF337008EFD65 /* CocoaActionMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaActionMenu.h; sourceTree = "<group>"; };
 		8E0C47690EEAF337008EFD65 /* CocoaActionMenu.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaActionMenu.mm; sourceTree = "<group>"; };
+		8E0C4A3F0EEB16BD008EFD65 /* UnitUnloadMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitUnloadMenuController.h; sourceTree = "<group>"; };
+		8E0C4A400EEB16BD008EFD65 /* UnitUnloadMenuController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UnitUnloadMenuController.mm; sourceTree = "<group>"; };
+		8E0C4AD20EEB1C49008EFD65 /* CocoaUnloadMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaUnloadMenu.h; sourceTree = "<group>"; };
+		8E0C4AD30EEB1C49008EFD65 /* CocoaUnloadMenu.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaUnloadMenu.mm; sourceTree = "<group>"; };
 		8E1A5EC90EDEC28F0089B499 /* bla.aws */ = {isa = PBXFileReference; lastKnownFileType = file; name = bla.aws; path = ../../bla.aws; sourceTree = SOURCE_ROOT; };
 		8E1A5F430EDEED910089B499 /* CocoaMainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaMainWindow.h; sourceTree = "<group>"; };
 		8E1A5F440EDEED910089B499 /* CocoaMainWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaMainWindow.mm; sourceTree = "<group>"; };
@@ -84,7 +90,6 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				8E26CFB50ED8546800704923 /* SynthesizeSingleton.h */,
 				8E26CF980ED851F300704923 /* Sprites.h */,
 				8E26CF990ED851F300704923 /* Sprites.mm */,
 				8E26C4C70ED488A700704923 /* MapView.h */,
@@ -126,8 +131,8 @@
 			children = (
 				8E5D18E60EE07D550087E028 /* Helper Code */,
 				8E1A5F400EDEED6F0089B499 /* Glue Code */,
-				8E8C40C80EDC6B01006F1C7D /* Controllers */,
 				080E96DDFE201D6D7F000001 /* Classes */,
+				8E8C40C80EDC6B01006F1C7D /* Controllers */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -179,6 +184,8 @@
 				8E1A5F8B0EDEEE050089B499 /* CocoaMapWidget.mm */,
 				8E0C47680EEAF337008EFD65 /* CocoaActionMenu.h */,
 				8E0C47690EEAF337008EFD65 /* CocoaActionMenu.mm */,
+				8E0C4AD20EEB1C49008EFD65 /* CocoaUnloadMenu.h */,
+				8E0C4AD30EEB1C49008EFD65 /* CocoaUnloadMenu.mm */,
 			);
 			name = "Glue Code";
 			sourceTree = "<group>";
@@ -186,6 +193,7 @@
 		8E5D18E60EE07D550087E028 /* Helper Code */ = {
 			isa = PBXGroup;
 			children = (
+				8E26CFB50ED8546800704923 /* SynthesizeSingleton.h */,
 				8E5D18EA0EE07D640087E028 /* VBoxView.h */,
 				8E5D18E90EE07D640087E028 /* VBoxView.m */,
 			);
@@ -201,6 +209,8 @@
 				8E26C5200ED48F2D00704923 /* AppController.mm */,
 				8E26D18B0ED868E200704923 /* MainWindowController.h */,
 				8E26D18A0ED868E200704923 /* MainWindowController.mm */,
+				8E0C4A3F0EEB16BD008EFD65 /* UnitUnloadMenuController.h */,
+				8E0C4A400EEB16BD008EFD65 /* UnitUnloadMenuController.mm */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -277,6 +287,8 @@
 				8E1A62850EE033D70089B499 /* UnitActionMenuController.mm in Sources */,
 				8E5D18EB0EE07D640087E028 /* VBoxView.m in Sources */,
 				8E0C476A0EEAF337008EFD65 /* CocoaActionMenu.mm in Sources */,
+				8E0C4A410EEB16BD008EFD65 /* UnitUnloadMenuController.mm in Sources */,
+				8E0C4AD40EEB1C49008EFD65 /* CocoaUnloadMenu.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
