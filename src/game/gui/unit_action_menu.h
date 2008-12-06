@@ -3,6 +3,7 @@
 
 #include "game/units/actions.h"
 #include <list>
+#include <string>
 
 namespace aw
 {
@@ -12,10 +13,13 @@ namespace aw
 		{
 			public:
 				unit_action_menu(const std::list<units::actions>& actions);
+				virtual ~unit_action_menu();
 
 				virtual units::actions run() = 0;
 				virtual void add_action(units::actions a) = 0;
 
+				static std::string get_name(units::actions a);
+				
 			private:
 				void on_button_click(units::actions a)
 				{

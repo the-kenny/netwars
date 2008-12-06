@@ -56,53 +56,11 @@ aw::units::actions unit_action_menu::run()
 
 void unit_action_menu::add_action(units::actions a)
 {
-	std::string label("");
+	std::string label(get_name(a));
 
 	using namespace aw::units;
 
 	//enum actions { ATTACK, WAIT, CAPTURE, LOAD, UNLOAD, HIDE, APPEAR, CANCEL };
-	switch(a)
-	{
-		case ATTACK:
-			label = "Attack";
-			break;
-		case EXPLODE:
-			label = "Explode";
-			break;
-		case LAUNCH:
-			label = "Launch";
-			break;
-		case WAIT:
-			label = "Wait";
-			break;
-		case CAPTURE:
-			label = "Capture";
-			break;
-		case LOAD:
-			label = "Load";
-			break;
-		case UNLOAD:
-			label = "Unload";
-			break;
-		case HIDE:
-			label = "Hide";
-			break;
-		case APPEAR:
-			label = "Appear";
-			break;
-		case JOIN:
-			label = "Join";
-			break;
-		case SUPPLY:
-			label = "Supply";
-			break;
-		case REPAIR:
-			label = "Repair";
-			break;
-		case CANCEL:
-//			label = "Cancel";
-			break;
-	}
 
 	Gtk::Button *b = Gtk::manage(new Gtk::Button(label));
 	b->signal_clicked().connect(sigc::bind(sigc::mem_fun(*this, &unit_action_menu::on_button_click), a));
