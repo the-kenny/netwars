@@ -96,6 +96,7 @@ namespace aw
 			void start_turn();
 			void end_turn();
 
+			// 1 = left click, 3 = right click
 			void click(const coord &pos, int key);
 			void mouse_hover_changed(const coord &pos);
 

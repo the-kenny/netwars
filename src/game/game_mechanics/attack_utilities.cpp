@@ -11,7 +11,9 @@ using namespace aw;
 
 namespace
 {
-	std::string load_damagetable()
+	std::string damagetable = "";
+
+	void load_damagetable()
 	{
 		std::string s;
 		std::ifstream f(config().get<std::string>("/config/damagetable").c_str());
@@ -27,10 +29,8 @@ namespace
 		while(std::getline(f, line))
 			s += line;
 
-		return s;
+		damagetable = s;
 	}
-
-	std::string damagetable = "";
 }
 
 int attack_utilities::get_damage_percent(unit::types att, unit::types vic, bool alt_fire)
