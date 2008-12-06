@@ -11,17 +11,20 @@
 - (UnitActionMenuController*)initWithActions:(std::list<aw::units::actions>)actions {
 	self = [super init];
 
-	NSWindow* window = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 80, 20*actions.size()+10) 
+	NSWindow* window = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 80, 24+(24*actions.size()))  //Size for actions.size buttons + the cancel-button
 												   styleMask:NSBorderlessWindowMask  
 													 backing:NSBackingStoreRetained 
 													   defer:NO];
 	self.window = window;
 	
 	vboxView = [[VBoxView alloc] initWithFrame:NSMakeRect(0, 0, 80, actions.size()*20)];
+	[vboxView setSpacing:0];
 	[self.window.contentView addSubview:vboxView];
 
+	NSButton* button = nil;
+	
 	BOOST_FOREACH(aw::units::actions a, actions) {
-		NSButton* button = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 80, 20)];
+		button = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 80, 20)];
 		
 		[button setTitle:[NSString stringWithCString:aw::gui::unit_action_menu::get_name(a).c_str()]];
 		
@@ -33,8 +36,21 @@
 		[button setTarget:self];
 		
 		[vboxView addItem:button];
+		//button = nil;
 	}
-
+	
+	//Cancel-Button
+	button = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 80, 20)];
+	[button setTitle:@"Cancel"];
+	
+	[button setButtonType:NSMomentaryPushInButton];
+	[button setBezelStyle:NSShadowlessSquareBezelStyle];
+	
+	[button setTag:aw::units::CANCEL];
+	[button setAction:@selector(menuItemClicked:)];
+	[button setTarget:self];
+	[vboxView addItem:button];
+	
 	return self;
 }
 
