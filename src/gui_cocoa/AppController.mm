@@ -68,7 +68,13 @@
 	 	
 	std::list<aw::units::actions> list;
 	list.push_back(aw::units::WAIT);
-	UnitActionMenuController* controller = [[UnitActionMenuController alloc] initWithActions:list];
+
+	
+	//UnitActionMenuController* controller = [[UnitActionMenuController alloc] initWithActions:list];
+	UnitActionMenuController* controller = [[UnitActionMenuController alloc] init];
+	BOOST_FOREACH(const aw::units::actions a, list)
+		[controller addAction:a];
+	
 	std::cout << [controller run:[Coordinate coordinateWithPoint:[NSEvent mouseLocation]]] << std::endl;
 	//gameController->click(coord.coord, 2);
 }

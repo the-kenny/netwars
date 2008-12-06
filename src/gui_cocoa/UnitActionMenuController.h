@@ -12,7 +12,10 @@
 	aw::units::actions returnAction;
 }
 
-- (UnitActionMenuController*)initWithActions:(std::list<aw::units::actions>)actions;
+//- (UnitActionMenuController*)initWithActions:(std::list<aw::units::actions>)actions;
+- (UnitActionMenuController*)init;
+
+- (void)addAction:(aw::units::actions)action;
 - (aw::units::actions)run:(Coordinate*)c;
 
 @end
