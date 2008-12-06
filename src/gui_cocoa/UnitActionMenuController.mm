@@ -1,5 +1,6 @@
 #import "UnitActionMenuController.h"
 
+#include "game/gui/unit_action_menu.h"
 
 #include <boost/foreach.hpp>
 
@@ -11,9 +12,9 @@
 	self = [super init];
 
 	NSWindow* window = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 80, 20*actions.size()+10) 
-												   styleMask:NSTexturedBackgroundWindowMask  
+												   styleMask:NSBorderlessWindowMask  
 													 backing:NSBackingStoreRetained 
-													   defer:YES];
+													   defer:NO];
 	self.window = window;
 	
 	vboxView = [[VBoxView alloc] initWithFrame:NSMakeRect(0, 0, 80, actions.size()*20)];
@@ -21,9 +22,13 @@
 
 	BOOST_FOREACH(aw::units::actions a, actions) {
 		NSButton* button = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 80, 20)];
-		[button setButtonType:NSMomentaryLightButton];
-		[button setTag:(NSInteger)a];
 		
+		[button setTitle:[NSString stringWithCString:aw::gui::unit_action_menu::get_name(a).c_str()]];
+		
+		[button setButtonType:NSMomentaryPushInButton];
+		[button setBezelStyle:NSShadowlessSquareBezelStyle];
+		
+		[button setTag:(NSInteger)a];
 		[button setAction:@selector(menuItemClicked:)];
 		[button setTarget:self];
 		
