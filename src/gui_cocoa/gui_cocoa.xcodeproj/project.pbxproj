@@ -60,7 +60,7 @@
 		8E1A624C0EDF662A0089B499 /* GameDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameDialog.xib; sourceTree = "<group>"; };
 		8E1A62830EE033D70089B499 /* UnitActionMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitActionMenuController.h; sourceTree = "<group>"; };
 		8E1A62840EE033D70089B499 /* UnitActionMenuController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UnitActionMenuController.mm; sourceTree = "<group>"; };
-		8E26C35A0ED4864000704923 /* gui_cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gui_cocoa.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E26C35A0ED4864000704923 /* Netwars.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Netwars.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E26C4C70ED488A700704923 /* MapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapView.h; sourceTree = "<group>"; };
 		8E26C4C80ED488A700704923 /* MapView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MapView.mm; sourceTree = "<group>"; };
 		8E26C51F0ED48F2D00704923 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
@@ -130,7 +130,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8E26C35A0ED4864000704923 /* gui_cocoa.app */,
+				8E26C35A0ED4864000704923 /* Netwars.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -233,9 +233,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D1107260486CEB800E47090 /* gui_cocoa */ = {
+		8D1107260486CEB800E47090 /* Netwars */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "gui_cocoa" */;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Netwars" */;
 			buildPhases = (
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
@@ -245,10 +245,10 @@
 			);
 			dependencies = (
 			);
-			name = gui_cocoa;
+			name = Netwars;
 			productInstallPath = "$(HOME)/Applications";
 			productName = gui_cocoa;
-			productReference = 8E26C35A0ED4864000704923 /* gui_cocoa.app */;
+			productReference = 8E26C35A0ED4864000704923 /* Netwars.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -263,7 +263,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D1107260486CEB800E47090 /* gui_cocoa */,
+				8D1107260486CEB800E47090 /* Netwars */,
 			);
 		};
 /* End PBXProject section */
@@ -361,7 +361,7 @@
 					"-lboost_filesystem-mt",
 					"-lnetwars",
 				);
-				PRODUCT_NAME = gui_cocoa;
+				PRODUCT_NAME = Netwars;
 				USER_HEADER_SEARCH_PATHS = "../lib ..";
 			};
 			name = Debug;
@@ -392,7 +392,7 @@
 					"-lboost_filesystem-mt",
 					"-lnetwars",
 				);
-				PRODUCT_NAME = gui_cocoa;
+				PRODUCT_NAME = Netwars;
 				USER_HEADER_SEARCH_PATHS = "../lib ..";
 			};
 			name = Release;
@@ -428,7 +428,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "gui_cocoa" */ = {
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Netwars" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4B08A954540054247B /* Debug */,
