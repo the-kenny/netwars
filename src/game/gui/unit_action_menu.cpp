@@ -45,6 +45,8 @@ std::string unit_action_menu::get_name(units::actions a)
 			return "Repair";
 		case CANCEL:
 			return "Cancel";
+		default:
+			return "Unknown Action";
 	}
 }
 
