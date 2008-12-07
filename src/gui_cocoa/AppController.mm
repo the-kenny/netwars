@@ -11,6 +11,7 @@
 #import "Coordinate.h"
 #import "CocoaActionMenu.h"
 #import "CocoaUnloadMenu.h"
+#import "CocoaBuyMenu.h"
 
 #include "game/config.h"
 #include "game/units/actions.h"
@@ -100,6 +101,7 @@
 	gameController->signal_scene_change().connect(boost::bind(&aw::gui::map_widget::display, cocoaMapWidget, _1));
 	gameController->signal_show_unit_action_menu().connect(boost::bind(&CocoaActionMenu::showActionMenu, _1));
 	gameController->signal_show_unload_menu().connect(boost::bind(&CocoaUnloadMenu::showUnloadMenu, _1));
+	gameController->signal_show_buy_menu().connect(boost::bind(&CocoaBuyMenu::showBuyMenu, _1, _2));
 	
 	[mapView setIsEnabled:YES];
 	[self setGameActive:YES];
