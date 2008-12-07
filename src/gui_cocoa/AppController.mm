@@ -12,6 +12,7 @@
 #import "CocoaActionMenu.h"
 #import "CocoaUnloadMenu.h"
 #import "CocoaBuyMenu.h"
+#import "GameDialogController.h"
 
 #include "game/config.h"
 #include "game/units/actions.h"
@@ -89,24 +90,28 @@
 }
 
 - (IBAction)startNewGame:(id)sender {
-	[self initGame];
+	GameDialogController* gameDialog = [[GameDialogController alloc] init];
 	
-	aw::game::ptr game(new aw::game);
-	NSString* mapFile = [[NSBundle mainBundle] pathForResource:@"bla" ofType:@"aws"];
-	game->load_map(std::string([mapFile UTF8String]));
-	
-	game->set_funds_per_building(10000);
-	
-	gameController = aw::game_controller::ptr(new aw::game_controller);
-	gameController->signal_scene_change().connect(boost::bind(&aw::gui::map_widget::display, cocoaMapWidget, _1));
-	gameController->signal_show_unit_action_menu().connect(boost::bind(&CocoaActionMenu::showActionMenu, _1));
-	gameController->signal_show_unload_menu().connect(boost::bind(&CocoaUnloadMenu::showUnloadMenu, _1));
-	gameController->signal_show_buy_menu().connect(boost::bind(&CocoaBuyMenu::showBuyMenu, _1, _2));
-	
-	[mapView setIsEnabled:YES];
-	[self setGameActive:YES];
-	
-	gameController->start_game(game);
+	if([gameDialog run]) {
+		[self initGame];
+		
+		aw::game::ptr game(new aw::game);
+
+		game->load_map(std::string([gameDialog.mapFile UTF8String]));
+		game->set_funds_per_building(gameDialog.fundsPerBuilding);
+		game->set_initial_funds(gameDialog.initialFunds);
+		
+		gameController = aw::game_controller::ptr(new aw::game_controller);
+		gameController->signal_scene_change().connect(boost::bind(&aw::gui::map_widget::display, cocoaMapWidget, _1));
+		gameController->signal_show_unit_action_menu().connect(boost::bind(&CocoaActionMenu::showActionMenu, _1));
+		gameController->signal_show_unload_menu().connect(boost::bind(&CocoaUnloadMenu::showUnloadMenu, _1));
+		gameController->signal_show_buy_menu().connect(boost::bind(&CocoaBuyMenu::showBuyMenu, _1, _2));
+		
+		[mapView setIsEnabled:YES];
+		[self setGameActive:YES];
+		
+		gameController->start_game(game);
+	}
 }
 
 - (IBAction)endTurn:(id)sender {

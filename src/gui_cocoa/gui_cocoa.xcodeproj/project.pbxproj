@@ -31,6 +31,7 @@
 		8E26D12C0ED864BE00704923 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E26D12B0ED864BE00704923 /* MainWindow.xib */; };
 		8E26D18C0ED868E200704923 /* MainWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E26D18A0ED868E200704923 /* MainWindowController.mm */; };
 		8E39AB100EEC497E000C7932 /* CocoaBuyMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E39AB0F0EEC497E000C7932 /* CocoaBuyMenu.mm */; };
+		8E39AE560EEC7608000C7932 /* GameDialogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E39AE540EEC7608000C7932 /* GameDialogController.mm */; };
 		8E5D18EB0EE07D640087E028 /* VBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5D18E90EE07D640087E028 /* VBoxView.m */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +80,8 @@
 		8E26D18B0ED868E200704923 /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
 		8E39AB0E0EEC497E000C7932 /* CocoaBuyMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaBuyMenu.h; sourceTree = "<group>"; };
 		8E39AB0F0EEC497E000C7932 /* CocoaBuyMenu.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaBuyMenu.mm; sourceTree = "<group>"; };
+		8E39AE540EEC7608000C7932 /* GameDialogController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameDialogController.mm; sourceTree = "<group>"; };
+		8E39AE550EEC7608000C7932 /* GameDialogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameDialogController.h; sourceTree = "<group>"; };
 		8E5D18E90EE07D640087E028 /* VBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBoxView.m; sourceTree = "<group>"; };
 		8E5D18EA0EE07D640087E028 /* VBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBoxView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -187,6 +190,8 @@
 		8E0C4B940EEB3E8D008EFD65 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8E39AE550EEC7608000C7932 /* GameDialogController.h */,
+				8E39AE540EEC7608000C7932 /* GameDialogController.mm */,
 				8E0C4B910EEB3E64008EFD65 /* BuyMenuController.h */,
 				8E0C4B920EEB3E64008EFD65 /* BuyMenuController.mm */,
 				8E1A62830EE033D70089B499 /* UnitActionMenuController.h */,
@@ -305,6 +310,7 @@
 				8E0C4AD40EEB1C49008EFD65 /* CocoaUnloadMenu.mm in Sources */,
 				8E0C4B930EEB3E64008EFD65 /* BuyMenuController.mm in Sources */,
 				8E39AB100EEC497E000C7932 /* CocoaBuyMenu.mm in Sources */,
+				8E39AE560EEC7608000C7932 /* GameDialogController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
