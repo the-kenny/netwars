@@ -16,20 +16,19 @@
 		8E0C4AD40EEB1C49008EFD65 /* CocoaUnloadMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E0C4AD30EEB1C49008EFD65 /* CocoaUnloadMenu.mm */; };
 		8E0C4B8F0EEB3B05008EFD65 /* BuyMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0C4B8E0EEB3B05008EFD65 /* BuyMenu.xib */; };
 		8E0C4B930EEB3E64008EFD65 /* BuyMenuController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E0C4B920EEB3E64008EFD65 /* BuyMenuController.mm */; };
-		8E1A5ECA0EDEC28F0089B499 /* bla.aws in Resources */ = {isa = PBXBuildFile; fileRef = 8E1A5EC90EDEC28F0089B499 /* bla.aws */; };
 		8E1A5F450EDEED910089B499 /* CocoaMainWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A5F440EDEED910089B499 /* CocoaMainWindow.mm */; };
 		8E1A5F8C0EDEEE050089B499 /* CocoaMapWidget.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A5F8B0EDEEE050089B499 /* CocoaMapWidget.mm */; };
 		8E1A624D0EDF662A0089B499 /* GameDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E1A624C0EDF662A0089B499 /* GameDialog.xib */; };
 		8E1A62850EE033D70089B499 /* UnitActionMenuController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A62840EE033D70089B499 /* UnitActionMenuController.mm */; };
 		8E26C4C90ED488A700704923 /* MapView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E26C4C80ED488A700704923 /* MapView.mm */; };
 		8E26C5210ED48F2D00704923 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E26C5200ED48F2D00704923 /* AppController.mm */; };
-		8E26CA590ED6066A00704923 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 8E26C8FD0ED6066A00704923 /* config.xml */; };
-		8E26CA5A0ED6066A00704923 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 8E26C8FE0ED6066A00704923 /* data */; };
 		8E26CE860ED8304500704923 /* Coordinate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E26CE850ED8304500704923 /* Coordinate.mm */; };
 		8E26CF9A0ED851F300704923 /* Sprites.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E26CF990ED851F300704923 /* Sprites.mm */; };
 		8E26D0FF0ED8614E00704923 /* MapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E26D0FE0ED8614E00704923 /* MapView.xib */; };
 		8E26D12C0ED864BE00704923 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E26D12B0ED864BE00704923 /* MainWindow.xib */; };
 		8E26D18C0ED868E200704923 /* MainWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E26D18A0ED868E200704923 /* MainWindowController.mm */; };
+		8E303C970EEC8BFA005FD0B5 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 8E303B3B0EEC8BFA005FD0B5 /* config.xml */; };
+		8E303C980EEC8BFA005FD0B5 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 8E303B3C0EEC8BFA005FD0B5 /* data */; };
 		8E39AB100EEC497E000C7932 /* CocoaBuyMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E39AB0F0EEC497E000C7932 /* CocoaBuyMenu.mm */; };
 		8E39AE560EEC7608000C7932 /* GameDialogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E39AE540EEC7608000C7932 /* GameDialogController.mm */; };
 		8E5D18EB0EE07D640087E028 /* VBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5D18E90EE07D640087E028 /* VBoxView.m */; };
@@ -54,7 +53,6 @@
 		8E0C4B8E0EEB3B05008EFD65 /* BuyMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BuyMenu.xib; sourceTree = "<group>"; };
 		8E0C4B910EEB3E64008EFD65 /* BuyMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyMenuController.h; sourceTree = "<group>"; };
 		8E0C4B920EEB3E64008EFD65 /* BuyMenuController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BuyMenuController.mm; sourceTree = "<group>"; };
-		8E1A5EC90EDEC28F0089B499 /* bla.aws */ = {isa = PBXFileReference; lastKnownFileType = file; name = bla.aws; path = ../../bla.aws; sourceTree = SOURCE_ROOT; };
 		8E1A5F430EDEED910089B499 /* CocoaMainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaMainWindow.h; sourceTree = "<group>"; };
 		8E1A5F440EDEED910089B499 /* CocoaMainWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaMainWindow.mm; sourceTree = "<group>"; };
 		8E1A5F8A0EDEEE050089B499 /* CocoaMapWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaMapWidget.h; sourceTree = "<group>"; };
@@ -67,8 +65,6 @@
 		8E26C4C80ED488A700704923 /* MapView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MapView.mm; sourceTree = "<group>"; };
 		8E26C51F0ED48F2D00704923 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		8E26C5200ED48F2D00704923 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
-		8E26C8FD0ED6066A00704923 /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
-		8E26C8FE0ED6066A00704923 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = data; sourceTree = "<group>"; };
 		8E26CE840ED8304500704923 /* Coordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coordinate.h; sourceTree = "<group>"; };
 		8E26CE850ED8304500704923 /* Coordinate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Coordinate.mm; sourceTree = "<group>"; };
 		8E26CF980ED851F300704923 /* Sprites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sprites.h; sourceTree = "<group>"; };
@@ -78,6 +74,8 @@
 		8E26D12B0ED864BE00704923 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		8E26D18A0ED868E200704923 /* MainWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MainWindowController.mm; sourceTree = "<group>"; };
 		8E26D18B0ED868E200704923 /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
+		8E303B3B0EEC8BFA005FD0B5 /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = SOURCE_ROOT; };
+		8E303B3C0EEC8BFA005FD0B5 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = data; path = ../../data; sourceTree = SOURCE_ROOT; };
 		8E39AB0E0EEC497E000C7932 /* CocoaBuyMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaBuyMenu.h; sourceTree = "<group>"; };
 		8E39AB0F0EEC497E000C7932 /* CocoaBuyMenu.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaBuyMenu.mm; sourceTree = "<group>"; };
 		8E39AE540EEC7608000C7932 /* GameDialogController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameDialogController.mm; sourceTree = "<group>"; };
@@ -164,13 +162,12 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8E303B3B0EEC8BFA005FD0B5 /* config.xml */,
+				8E303B3C0EEC8BFA005FD0B5 /* data */,
 				8E0C4B8E0EEB3B05008EFD65 /* BuyMenu.xib */,
 				8E1A624C0EDF662A0089B499 /* GameDialog.xib */,
-				8E1A5EC90EDEC28F0089B499 /* bla.aws */,
 				8E26D12B0ED864BE00704923 /* MainWindow.xib */,
 				8E26D0FE0ED8614E00704923 /* MapView.xib */,
-				8E26C8FD0ED6066A00704923 /* config.xml */,
-				8E26C8FE0ED6066A00704923 /* data */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
@@ -278,13 +275,12 @@
 			files = (
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
-				8E26CA590ED6066A00704923 /* config.xml in Resources */,
-				8E26CA5A0ED6066A00704923 /* data in Resources */,
 				8E26D0FF0ED8614E00704923 /* MapView.xib in Resources */,
 				8E26D12C0ED864BE00704923 /* MainWindow.xib in Resources */,
-				8E1A5ECA0EDEC28F0089B499 /* bla.aws in Resources */,
 				8E1A624D0EDF662A0089B499 /* GameDialog.xib in Resources */,
 				8E0C4B8F0EEB3B05008EFD65 /* BuyMenu.xib in Resources */,
+				8E303C970EEC8BFA005FD0B5 /* config.xml in Resources */,
+				8E303C980EEC8BFA005FD0B5 /* data in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
