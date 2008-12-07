@@ -108,6 +108,8 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 			 object:self
 			 userInfo:userData];
 			
+			[userData release];
+			
 			old_x = x;
 			old_y = y;
 		}
@@ -563,6 +565,8 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 						[mask unlockFocus];
 						
 						[mask drawAtPoint:NSMakePoint(x*16, y*16) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:0.4];
+						
+						[mask release];
 					}
 				}
 			}
