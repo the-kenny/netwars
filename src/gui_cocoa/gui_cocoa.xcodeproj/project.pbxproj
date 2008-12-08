@@ -29,6 +29,7 @@
 		8E26D18C0ED868E200704923 /* MainWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E26D18A0ED868E200704923 /* MainWindowController.mm */; };
 		8E303C970EEC8BFA005FD0B5 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 8E303B3B0EEC8BFA005FD0B5 /* config.xml */; };
 		8E303C980EEC8BFA005FD0B5 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 8E303B3C0EEC8BFA005FD0B5 /* data */; };
+		8E30FB520EECA46E00D06119 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E30FB510EECA46E00D06119 /* Quartz.framework */; };
 		8E39AB100EEC497E000C7932 /* CocoaBuyMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E39AB0F0EEC497E000C7932 /* CocoaBuyMenu.mm */; };
 		8E39AE560EEC7608000C7932 /* GameDialogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E39AE540EEC7608000C7932 /* GameDialogController.mm */; };
 		8E5D18EB0EE07D640087E028 /* VBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5D18E90EE07D640087E028 /* VBoxView.m */; };
@@ -76,6 +77,7 @@
 		8E26D18B0ED868E200704923 /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
 		8E303B3B0EEC8BFA005FD0B5 /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = SOURCE_ROOT; };
 		8E303B3C0EEC8BFA005FD0B5 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = data; path = ../../data; sourceTree = SOURCE_ROOT; };
+		8E30FB510EECA46E00D06119 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		8E39AB0E0EEC497E000C7932 /* CocoaBuyMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaBuyMenu.h; sourceTree = "<group>"; };
 		8E39AB0F0EEC497E000C7932 /* CocoaBuyMenu.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaBuyMenu.mm; sourceTree = "<group>"; };
 		8E39AE540EEC7608000C7932 /* GameDialogController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameDialogController.mm; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				8E30FB520EECA46E00D06119 /* Quartz.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +115,7 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8E30FB510EECA46E00D06119 /* Quartz.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";

@@ -20,4 +20,6 @@
 - (IBAction)cancel:(id)sender;
 - (IBAction)chooseMap:(id)sender;
 - (IBAction)startGame:(id)sender;
+
+- (void)createMapPreview;
 @end
