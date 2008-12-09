@@ -15,6 +15,8 @@
 	aw::unit::types returnValue;
 }
 
+@property(readonly) int playerFunds;
+
 -(BuyMenuController*)initWithPlayer:(aw::player::ptr)player workshop:(aw::unit::workshops)ws;
 -(aw::unit::types)run;
 
@@ -22,8 +24,3 @@
 -(IBAction)cancelButtonClicked:(NSButton*)button;
 
 @end
-
-#pragma mark Sort Methods
-
-NSInteger priceSort(NSDictionary* d1, NSDictionary* d2, void *context);
-NSInteger nameSort(NSDictionary* d1, NSDictionary* d2, void *context);
