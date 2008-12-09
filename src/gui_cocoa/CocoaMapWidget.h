@@ -8,10 +8,12 @@ public:
 	typedef boost::shared_ptr<CocoaMapWidget> ptr;
 	
 	CocoaMapWidget(MapView* mView) {
-		setView(mView);
+		mapView = mView;
 	}
 	
 	void setView(MapView* mView) {
+		[mView retain];
+		[mapView release];
 		mapView = mView;
 	}
 	

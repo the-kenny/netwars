@@ -24,11 +24,18 @@
 													   defer:NO];
 	self.window = window;
 	
+	[window release];
+	
 	vboxView = [[VBoxView alloc] initWithFrame:NSMakeRect(0, 0, 80, 0)];
 	[vboxView setSpacing:0];
 	[self.window.contentView addSubview:vboxView];
 	
 	return self;
+}
+
+-(void)dealloc {
+	[vboxView release];
+	[super dealloc];
 }
 
 -(void)setUnits:(const std::list<aw::unit::ptr> &)units {
@@ -64,6 +71,8 @@
 	[vboxView setFrame:NSMakeRect(vboxView.frame.origin.x, vboxView.frame.origin.x, vboxView.frame.size.width, vboxView.frame.size.height+24)];
 	
 	[vboxView addItem:button];
+	
+	[button release];
 }
 
 - (int)run:(NSPoint)pos {
@@ -87,6 +96,8 @@
 	[vboxView setFrame:NSMakeRect(vboxView.frame.origin.x, vboxView.frame.origin.x, vboxView.frame.size.width, vboxView.frame.size.height+24)];
 	
 	[vboxView addItem:button];
+	
+	[button release];
 	
 	//Move the window to the mouse
 	[self.window setFrameOrigin:NSMakePoint(pos.x, (pos.y)-(self.window.frame.size.height))];

@@ -23,13 +23,14 @@
 			
 			[dict setValue:[NSString stringWithCString:loaded_unit.internal_name.c_str()] forKey:@"internalName"];
 			[dict setValue:[NSString stringWithCString:loaded_unit.name.c_str()] forKey:@"name"];
-			
 			[dict setValue:[NSNumber numberWithInt:loaded_unit.price] forKey:@"price"];
 			
 			NSString* path = [NSString stringWithCString:aw::gui::get_path(loaded_unit.internal_name, player->get_unit_color()).c_str()];
 			[dict setValue:[[Sprites sharedSprites] getSprite:path] forKey:@"image"];
 			
 			[unitArray addObject:dict];
+			
+			[dict release];
 		}
 	}
 	
@@ -41,7 +42,7 @@
 }
 
 -(void)dealloc {
-	[unitArray dealloc];
+	[unitArray release];
 	[super dealloc];
 }
 

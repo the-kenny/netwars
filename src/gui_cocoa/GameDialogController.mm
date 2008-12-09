@@ -21,6 +21,11 @@
 	return self;
 }
 
+-(void)dealloc {
+	[mapFile release];
+	[super dealloc];
+}
+
 - (bool)run {
 	[self showWindow:self];
 	[[NSApplication sharedApplication] runModalForWindow:self.window];
@@ -204,7 +209,7 @@
 	[previewImage unlockFocus];
 	
 	[mapPreview setImage:previewImage];
-	[mapPreview setNeedsDisplay];
+	[previewImage release];
 
 }
 

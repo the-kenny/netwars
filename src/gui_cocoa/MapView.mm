@@ -44,9 +44,9 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 }
 
 -(void)dealloc {
-	[background dealloc];
-	[maskImage dealloc];
-	[trackingArea dealloc]; 
+	[background release];
+	[maskImage release];
+	[trackingArea release]; 
 	[super dealloc];
 }
 
