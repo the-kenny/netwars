@@ -47,7 +47,7 @@
 	</unit>
 
 	<unit name="MD-Tank" internal_name="md-tank" pixmap="md-tank.png" id="1" hp="10">
-		<fabrication price="1600" factory="base" />
+		<fabrication price="16000" factory="base" />
 		<movement range="5" type="tread" capture_buildings="0" />
 		<fuel level="60" waste="0" remove_without="0" />
 
