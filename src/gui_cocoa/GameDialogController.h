@@ -10,9 +10,9 @@
 	NSString* mapFile;
 }
 
-@property(readwrite) int initialFunds;
-@property(readwrite) int fundsPerBuilding;
-@property(assign) NSString* mapFile;
+@property int initialFunds;
+@property int fundsPerBuilding;
+@property(retain) NSString* mapFile;
 
 -(GameDialogController*)init;
 - (bool)run;
@@ -20,4 +20,6 @@
 - (IBAction)cancel:(id)sender;
 - (IBAction)chooseMap:(id)sender;
 - (IBAction)startGame:(id)sender;
+
+- (void)createMapPreview;
 @end

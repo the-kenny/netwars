@@ -1,11 +1,3 @@
-//
-//  AppController.h
-//  gui_cocoa
-//
-//  Created by Moritz Ulrich on 19.11.08.
-//  Copyright 2008 __MyCompanyName__. All rights reserved.
-//
-
 #import <Cocoa/Cocoa.h>
 #import "MapView.h"
 #import "MainWindowController.h"
