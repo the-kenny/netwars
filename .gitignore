@@ -1,4 +1,5 @@
 *.swp
 build/
-.waf*
+.waf-*
+.lock-wscript
 *.a
