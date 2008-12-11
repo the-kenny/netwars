@@ -26,9 +26,7 @@
 
 @synthesize gameActive;
 
-- (void)awakeFromNib {
-	NSLog(@"AppController.awakeFromNib");
-		
+- (void)awakeFromNib {		
 	//Ugly ugly hack to locate config.xml and $datadir in the resource dir of an appbundle
 	NSBundle *main = [NSBundle mainBundle];
 	aw::config().load(std::string([[main pathForResource:@"config" ofType:@"xml"] UTF8String]));
@@ -41,25 +39,48 @@
 	[[mainWindowController window] makeMainWindow];
 	[[mainWindowController window] makeKeyAndOrderFront:self];
 	
+	mapView = mainWindowController.mapView;
+		
 	 [[NSNotificationCenter defaultCenter] 
 	 addObserver:self 
 	 selector:@selector(mouseClickOnMap:) 
 	 name: leftMouseClickNotification
-	 object:nil];
+	 object:mapView];
 	
 	[[NSNotificationCenter defaultCenter] 
 	 addObserver:self 
 	 selector:@selector(rightMouseClickOnMap:) 
 	 name: rightMouseClickNotification
-	 object:nil];
+	 object:mapView];
 	
 	[[NSNotificationCenter defaultCenter] 
 	 addObserver:self 
 	 selector:@selector(mouseMovedOnMap:) 
 	 name: mouseMovedNotification
-	 object:nil];
+	 object:mapView];
 	
 	[self setGameActive:NO];
+}
+
+- (void)dealloc {
+	[[NSNotificationCenter defaultCenter] 
+	 removeObserver:self 
+	 name: leftMouseClickNotification
+	 object:mapView];
+	
+	[[NSNotificationCenter defaultCenter] 
+	 removeObserver:self 
+	 name: rightMouseClickNotification
+	 object:mapView];
+	
+	[[NSNotificationCenter defaultCenter] 
+	 removeObserver:self 
+	 name: mouseMovedNotification
+	 object:mapView];
+	
+	[mainWindowController release];
+	
+	[super dealloc];
 }
 
 #pragma mark "Event Handling"
@@ -84,8 +105,6 @@
 #pragma mark "Game related stuff"
 
 - (void)initGame {
-	mapView = mainWindowController.mapView;
-	
 	cocoaMapWidget = CocoaMapWidget::ptr(new CocoaMapWidget(mapView));
 }
 
