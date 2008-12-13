@@ -20,6 +20,10 @@ extern NSString* rightMouseClickNotification;
 @property(readwrite) bool isEnabled;
 @property(readwrite) aw::scene::ptr scene;
 
+- (NSPoint)toViewCoordinates:(NSPoint)pos rect:(NSSize)size;
+
+- (void)drawTerrain;
+
 - (void)queueDraw;
 
 - (NSArray*)unitMovements:(aw::scene::ptr&)newScene;
