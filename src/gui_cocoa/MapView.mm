@@ -18,8 +18,18 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 
 @implementation MapView
 
-@synthesize scene = currentScene;
-@synthesize isEnabled = isEnabled;
+@dynamic scene;
+
+- (aw::scene::ptr)scene {
+	return currentScene;
+}
+
+- (void)setScene:(aw::scene::ptr)scene {
+	[self unitMovements:scene];
+	currentScene = scene;
+}
+
+@synthesize isEnabled;
 
 - (void)awakeFromNib {
 	NSLog(@"MapView.awakeFromNib");
@@ -52,6 +62,43 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 
 - (BOOL)isFlipped {
 	return YES;
+}
+
+- (NSArray*)unitMovements:(aw::scene::ptr&)newScene {
+	aw::scene::ptr oldScene = [self scene];
+	
+	NSMutableArray* unitMovements = [NSMutableArray arrayWithCapacity:1];
+	
+	if(newScene && oldScene) {
+		std::map<aw::unit::ptr, aw::coord> oldUnits;
+		typedef std::map<aw::unit::ptr, aw::coord>::iterator iterator;
+		
+		//Cycle through the old scene and collect 
+		for(int x = 0; x < 30; ++x) {
+			for(int y = 0; y < 20; ++y) {
+				const unit::ptr &oldUnit = oldScene->get_unit(x, y);
+				const unit::ptr &newUnit = newScene->get_unit(x, y);
+				
+				if(oldUnit != NULL) {
+					oldUnits.insert(std::make_pair(oldUnit, coord(x, y)));
+				}
+				
+				if(newUnit != NULL) {
+					//Cycle through the old units and search for the new, then add it to the move-list
+					iterator it = oldUnits.find(newUnit);
+					if(it != oldUnits.end() && coord(x, y) != it->second) {
+						NSLog(@"Unit moved from %i|%i to %i|%i", it->second.x, it->second.y, x, y);
+						[unitMovements addObject:[NSDictionary dictionaryWithObjectsAndKeys:
+												  [Coordinate coordinateWithCoordinates:it->second.x y:it->second.y], @"from",
+												  [Coordinate coordinateWithCoordinates:x y:y], @"to", nil]]; 
+	 
+					}
+				}
+			}
+		}
+	}
+	
+	return unitMovements;
 }
 
 #pragma mark "Event Handling"
@@ -630,14 +677,6 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 
 - (void)queueDraw {
 	[self setNeedsDisplay:true];
-}
-
-- (void)disable {
-	
-}
-
-- (void)enable {
-	
 }
 
 @end
