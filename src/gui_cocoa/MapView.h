@@ -21,5 +21,7 @@ extern NSString* rightMouseClickNotification;
 @property(readwrite) aw::scene::ptr scene;
 
 - (void)queueDraw;
+
+- (NSArray*)unitMovements:(aw::scene::ptr&)newScene;
 @end
 
