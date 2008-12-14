@@ -1,6 +1,9 @@
 #import "MapView.h"
 #import "Coordinate.h"
 #import "Sprites.h"
+#import "AnimatableUnit.h"
+
+#import <QuartzCore/QuartzCore.h>
 
 #include "game/gui/paths.h"
 #include "game/terrain.h"
@@ -91,7 +94,6 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 						[unitMovements addObject:[NSDictionary dictionaryWithObjectsAndKeys:
 												  [Coordinate coordinateWithCoordinates:it->second.x y:it->second.y], @"from",
 												  [Coordinate coordinateWithCoordinates:x y:y], @"to", nil]]; 
-	 
 					}
 				}
 			}
@@ -105,10 +107,7 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 
 - (void)mouseDown:(NSEvent *)theEvent {
 	if(isEnabled) {
-		NSPoint point = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-		point.x = static_cast<int>(point.x/16);
-		point.y = static_cast<int>(point.y/16);
-		//point.y = abs(point.y-19);
+		NSPoint point = [self toGameCoordinates:[self convertPoint:[theEvent locationInWindow] fromView:nil]];
 		
 		[[NSNotificationCenter defaultCenter] 
 		 postNotificationName:leftMouseClickNotification
@@ -119,10 +118,7 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 
 - (void)rightMouseDown:(NSEvent *)theEvent {
 	if(isEnabled) {
-		NSPoint point = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-		point.x = static_cast<int>(point.x/16);
-		point.y = static_cast<int>(point.y/16);
-		//point.y = abs(point.y-19);
+		NSPoint point = [self toGameCoordinates:[self convertPoint:[theEvent locationInWindow] fromView:nil]];
 		
 		[[NSNotificationCenter defaultCenter] 
 		 postNotificationName:rightMouseClickNotification
@@ -137,9 +133,11 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 		
 		static int old_x;               
 		static int old_y; 
+
+		NSPoint p = [self toGameCoordinates:actualPoint];
 		
-		int x = static_cast<int>((actualPoint.x+theEvent.deltaX)/16);
-		int y = static_cast<int>((actualPoint.y+theEvent.deltaY)/16);
+		int x = static_cast<int>(p.x);
+		int y = static_cast<int>(p.y);
 		
 		//y = abs(y-19);
 		
@@ -166,13 +164,34 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 #pragma mark "Drawing"
 
 - (NSPoint)toViewCoordinates:(NSPoint)pos rect:(NSSize)size {
-	return NSMakePoint(pos.x*16+(16-size.width), pos.y*16+(16-size.height));
+	//return NSMakePoint(pos.x*16+(16-size.width), pos.y*16+(16-size.height));
+	
+	NSSize viewSize = self.bounds.size;
+	
+	int unflippedX = pos.x*16;
+	int unflippedY = pos.y*16;
+	
+
+	if(![self isFlipped])
+		return NSMakePoint(unflippedX, viewSize.height-unflippedY-16);
+	else
+		return NSMakePoint(unflippedX, unflippedY+(16-size.height));
+}
+
+- (NSPoint)toGameCoordinates:(NSPoint)pos {
+	int x = (pos.x/16);
+	int y = ([self isFlipped]) ? (pos.y/16) : 20-(pos.y/16);
+		
+	return NSMakePoint(x, y);
 }
 
 - (void)draw:(NSString*)path at:(NSPoint)pos {
 	NSImage* sprite = [[Sprites sharedSprites] getSprite:path];
 	
-	[sprite setFlipped:YES];
+	
+	if([self isFlipped])
+		[sprite setFlipped:YES]; //We have to flip the image because the view is flipped
+	
 	[sprite drawAtPoint:[self toViewCoordinates:pos rect:sprite.size] fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 	[sprite setFlipped:NO];
 }
@@ -185,6 +204,8 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 	[self drawTerrain];
 	
 	if(currentScene) {
+		CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
+		
 		for(int x = 0; x < 30; x++)
 		{
 			for(int y = 0; y < 20; y++)
@@ -193,7 +214,32 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 				
 				if(u)
 				{
-					[self draw:[NSString stringWithCString:get_path(u->type(), u->color()).c_str()] at:NSMakePoint(x, y)];
+					//[self draw:[NSString stringWithCString:get_path(u->type(), u->color()).c_str()] at:NSMakePoint(x, y)];
+					
+					CGContextSaveGState(context);
+	
+					[NSGraphicsContext saveGraphicsState];
+
+					CALayer* layer = [CALayer layer];
+					[layer setAnchorPoint:CGPointMake(.0, .0)];
+					NSSize size = NSMakeSize(16, 16);
+					NSPoint p = [self toViewCoordinates:NSMakePoint(x, y) rect:size];
+					CGRect rect;
+					rect.origin = *(CGPoint*)&p;
+					rect.size = *(CGSize*)&size;
+					[layer setFrame:rect];
+					[[self layer] addSublayer:layer];
+					
+					AnimatableUnit* au = [[AnimatableUnit alloc] init];
+					au.unit = u;
+					
+					[layer setDelegate:au];
+					[layer display];
+					
+					[NSGraphicsContext restoreGraphicsState];
+					
+					
+					CGContextRestoreGState(context);
 					
 					if(u->moved())
 					{					 
