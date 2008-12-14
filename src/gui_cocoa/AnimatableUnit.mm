@@ -21,7 +21,7 @@
 		inContext:(CGContextRef)ctx {
 	NSLog(@"drawLayer:inContext:");
 	
-	NSGraphicsContext* nscontext =  [NSGraphicsContext graphicsContextWithGraphicsPort:ctx flipped:YES];
+	NSGraphicsContext* nscontext =  [NSGraphicsContext graphicsContextWithGraphicsPort:ctx flipped:NO];
 
 	[NSGraphicsContext saveGraphicsState];
 	[NSGraphicsContext setCurrentContext:nscontext];
@@ -30,6 +30,24 @@
 	NSImage* sprite = [[Sprites sharedSprites] getSprite:path];
 
 	[sprite drawAtPoint:NSMakePoint(.0, .0) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+	
+	if(unit->moved()) {					 
+		NSImage* mask = [sprite copyWithZone:nil];
+		
+		[mask lockFocus];
+		[NSGraphicsContext saveGraphicsState];
+		[[NSColor colorWithDeviceRed:0.0 green:0.0 blue:0.0 alpha:1.0] setFill];
+		NSRectFillUsingOperation(NSMakeRect(0.0, 0.0, mask.size.width, mask.size.height), NSCompositeSourceIn);
+		[NSGraphicsContext restoreGraphicsState];
+		[mask unlockFocus];
+		
+		[mask drawAtPoint:NSZeroPoint
+				 fromRect:NSZeroRect 
+				operation:NSCompositeSourceOver 
+				 fraction:0.4];
+		
+		[mask release];
+	}
 	
 	[NSGraphicsContext restoreGraphicsState];
 }
