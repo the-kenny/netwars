@@ -21,6 +21,7 @@ extern NSString* rightMouseClickNotification;
 @property(readwrite) aw::scene::ptr scene;
 
 - (NSPoint)toViewCoordinates:(NSPoint)pos rect:(NSSize)size;
+- (NSPoint)toGameCoordinates:(NSPoint)pos;
 
 - (void)drawTerrain;
 
