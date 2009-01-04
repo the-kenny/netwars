@@ -3,3 +3,4 @@ build/
 .waf-*
 .lock-wscript
 *.a
+*.xcodeproj/moritz.*
