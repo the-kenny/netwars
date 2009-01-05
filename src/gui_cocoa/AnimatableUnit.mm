@@ -14,6 +14,25 @@
 @implementation AnimatableUnit
 
 @synthesize unit;
+@dynamic layer;
+
+- (void)setLayer:(CALayer*)l {
+	[layer removeFromSuperlayer];
+	[layer release];
+	
+	layer = l;
+	[layer retain];
+	
+	[layer setDelegate:self];
+}
+
+- (CALayer*)layer {
+	return layer;
+}
+
+- (void)draw {
+	[layer display];
+}
 
 #pragma mark CALayer Delegate
 

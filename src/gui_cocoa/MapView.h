@@ -14,6 +14,9 @@ extern NSString* rightMouseClickNotification;
 	NSImage* background;
 	NSImage* maskImage;
 	
+	NSMutableSet* managedUnits;
+	NSArray* unitMovements;
+	
 	bool isEnabled;
 }
 
@@ -22,6 +25,7 @@ extern NSString* rightMouseClickNotification;
 
 - (NSPoint)toViewCoordinates:(NSPoint)pos rect:(NSSize)size;
 - (NSPoint)toGameCoordinates:(NSPoint)pos;
+- (void)addUnitForDrawing:(aw::unit::ptr)u at:(NSPoint)at;
 
 - (void)drawTerrain;
 
