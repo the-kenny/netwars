@@ -63,8 +63,9 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 	[super dealloc];
 }
 
+//NOTE: There are problems with the CALayer drawing if the view is flipped
 - (BOOL)isFlipped {
-	return YES;
+	return NO;
 }
 
 - (NSArray*)unitMovements:(aw::scene::ptr&)newScene {
@@ -108,7 +109,7 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 - (void)mouseDown:(NSEvent *)theEvent {
 	if(isEnabled) {
 		NSPoint point = [self toGameCoordinates:[self convertPoint:[theEvent locationInWindow] fromView:nil]];
-		
+
 		[[NSNotificationCenter defaultCenter] 
 		 postNotificationName:leftMouseClickNotification
 		 object:self
@@ -119,7 +120,7 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 - (void)rightMouseDown:(NSEvent *)theEvent {
 	if(isEnabled) {
 		NSPoint point = [self toGameCoordinates:[self convertPoint:[theEvent locationInWindow] fromView:nil]];
-		
+
 		[[NSNotificationCenter defaultCenter] 
 		 postNotificationName:rightMouseClickNotification
 		 object:self
