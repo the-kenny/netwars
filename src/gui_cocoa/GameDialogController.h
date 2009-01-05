@@ -21,5 +21,5 @@
 - (IBAction)chooseMap:(id)sender;
 - (IBAction)startGame:(id)sender;
 
-- (void)createMapPreview;
+- (NSImage*)createMapPreview;
 @end
