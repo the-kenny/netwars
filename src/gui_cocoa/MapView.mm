@@ -28,8 +28,22 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 }
 
 - (void)setScene:(aw::scene::ptr)scene {
-	[self unitMovements:scene];
+	[unitMovements release];
+	unitMovements = [self unitMovements:scene];
+	
 	currentScene = scene;
+	
+	for(int x = 0; x < 30; x++) {
+		for(int y = 0; y < 20; y++) {
+			aw::unit::ptr unit = scene->get_unit(x, y);
+			
+			if(unit != NULL && !unit->is_dummy()) {
+				std::cout <<  unit->type() << std::endl;
+				[self addUnitForDrawing:unit at:[self toViewCoordinates:NSMakePoint(x, y) 
+																   rect:NSMakeSize(16, 16)]];
+			}
+		}
+	}
 }
 
 @synthesize isEnabled;
@@ -54,6 +68,8 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 	
 	[NSGraphicsContext restoreGraphicsState];
 	[maskImage unlockFocus];
+	
+	managedUnits = [[NSMutableSet alloc] initWithCapacity:10];
 }
 
 -(void)dealloc {
@@ -67,6 +83,8 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 - (BOOL)isFlipped {
 	return NO;
 }
+
+#pragma mark Unit-Animation Helper Methods
 
 - (NSArray*)unitMovements:(aw::scene::ptr&)newScene {
 	aw::scene::ptr oldScene = [self scene];
@@ -102,6 +120,36 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 	}
 	
 	return unitMovements;
+}
+
+- (void)addUnitForDrawing:(aw::unit::ptr)u at:(NSPoint)at {
+	
+	NSEnumerator* e = [managedUnits objectEnumerator];
+	
+	AnimatableUnit* unit = nil;
+	while(unit = [e nextObject]) {
+		if([unit unit] == u) {
+			NSLog(@"Unit is already in the drawing set");
+			return;
+		}
+	}
+	
+	AnimatableUnit* au = [[AnimatableUnit alloc] init];
+	au.unit = u;
+	
+	CALayer* layer = [CALayer layer];
+	[layer setAnchorPoint:CGPointMake(.0, .0)];
+	NSSize size = NSMakeSize(16, 16);
+	CGRect rect;
+	rect.origin = *(CGPoint*)&at;
+	rect.size = *(CGSize*)&size;
+	[layer setFrame:rect];
+	[[self layer] addSublayer:layer];
+	
+	[layer retain];
+	au.layer = layer;
+	
+	[managedUnits addObject:au];
 }
 
 #pragma mark "Event Handling"
@@ -198,7 +246,7 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 }
 
 - (void)drawRect:(NSRect)rect { 
-	NSLog(@"drawRect");
+	//NSLog(@"drawRect");
 	[super drawRect:rect];
 	
 	//Draw the terrain
@@ -207,6 +255,7 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 	if(currentScene) {
 		CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
 		
+		/*
 		for(int x = 0; x < 30; x++)
 		{
 			for(int y = 0; y < 20; y++)
@@ -261,6 +310,22 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 				}
 			}
 		}		
+		*/
+
+		CGContextSaveGState(context);
+		[NSGraphicsContext saveGraphicsState];
+		
+		NSEnumerator* e = [managedUnits objectEnumerator];
+		AnimatableUnit* au = nil;
+		while(au = [e nextObject]) {
+			NSLog(@"Draw %a", au);
+			[au draw];
+		}
+		
+		[NSGraphicsContext restoreGraphicsState];
+		CGContextRestoreGState(context);
+		
+		
 		
 		for(int x = 0; x < 30; x++)
 		{   

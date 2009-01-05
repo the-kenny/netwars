@@ -5,11 +5,16 @@
 
 
 @interface AnimatableUnit : NSObject {
-	aw::unit::ptr unit;
+	__strong aw::unit::ptr unit;
+	//Coordinate* positionInViewCoordinates;
+	CALayer* layer;
 }
 
-@property(readwrite) aw::unit::ptr unit;
+@property(assign) aw::unit::ptr unit;
+@property(retain) CALayer* layer;
 
 - (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx;
+
+- (void)draw;
 
 @end
