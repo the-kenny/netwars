@@ -34,6 +34,7 @@
 		8E39AE560EEC7608000C7932 /* GameDialogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E39AE540EEC7608000C7932 /* GameDialogController.mm */; };
 		8E3D6A100EF3F7B100F3F839 /* AnimatableUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E3D6A0F0EF3F7B100F3F839 /* AnimatableUnit.mm */; };
 		8E5D18EB0EE07D640087E028 /* VBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5D18E90EE07D640087E028 /* VBoxView.m */; };
+		8E8C41260F13A73400F1E03A /* MapViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E8C41250F13A73400F1E03A /* MapViewController.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,6 +88,8 @@
 		8E3D6A0F0EF3F7B100F3F839 /* AnimatableUnit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AnimatableUnit.mm; sourceTree = "<group>"; };
 		8E5D18E90EE07D640087E028 /* VBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBoxView.m; sourceTree = "<group>"; };
 		8E5D18EA0EE07D640087E028 /* VBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBoxView.h; sourceTree = "<group>"; };
+		8E8C41240F13A73400F1E03A /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		8E8C41250F13A73400F1E03A /* MapViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MapViewController.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +211,8 @@
 				8E26D18A0ED868E200704923 /* MainWindowController.mm */,
 				8E0C4A3F0EEB16BD008EFD65 /* UnitUnloadMenuController.h */,
 				8E0C4A400EEB16BD008EFD65 /* UnitUnloadMenuController.mm */,
+				8E8C41240F13A73400F1E03A /* MapViewController.h */,
+				8E8C41250F13A73400F1E03A /* MapViewController.mm */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -317,6 +322,7 @@
 				8E39AB100EEC497E000C7932 /* CocoaBuyMenu.mm in Sources */,
 				8E39AE560EEC7608000C7932 /* GameDialogController.mm in Sources */,
 				8E3D6A100EF3F7B100F3F839 /* AnimatableUnit.mm in Sources */,
+				8E8C41260F13A73400F1E03A /* MapViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
