@@ -13,7 +13,6 @@
 
 @implementation AnimatableUnit
 
-@synthesize unit;
 @dynamic layer;
 
 - (void)setLayer:(CALayer*)l {
@@ -30,6 +29,16 @@
 	return layer;
 }
 
+@dynamic unit;
+
+- (void)setUnit:(aw::unit::ptr)u {
+	unit = u;
+}
+
+-(aw::unit::ptr)unit {
+	return unit;
+}
+
 - (void)draw {
 	[layer display];
 }
@@ -38,7 +47,7 @@
 
 - (void)drawLayer:(CALayer *)layer 
 		inContext:(CGContextRef)ctx {
-	NSLog(@"drawLayer:inContext:");
+	//NSLog(@"drawLayer:inContext:");
 	
 	NSGraphicsContext* nscontext =  [NSGraphicsContext graphicsContextWithGraphicsPort:ctx flipped:NO];
 

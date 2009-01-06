@@ -38,7 +38,7 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 			aw::unit::ptr unit = scene->get_unit(x, y);
 			
 			if(unit != NULL && !unit->is_dummy()) {
-				std::cout <<  unit->type() << std::endl;
+				//std::cout << "addUnitForDrawing:" << unit->type() << std::endl;
 				[self addUnitForDrawing:unit at:[self toViewCoordinates:NSMakePoint(x, y) 
 																   rect:NSMakeSize(16, 16)]];
 			}
@@ -129,7 +129,7 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 	AnimatableUnit* unit = nil;
 	while(unit = [e nextObject]) {
 		if([unit unit] == u) {
-			NSLog(@"Unit is already in the drawing set");
+			//NSLog(@"Unit is already in the drawing set");
 			return;
 		}
 	}
@@ -318,7 +318,7 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 		NSEnumerator* e = [managedUnits objectEnumerator];
 		AnimatableUnit* au = nil;
 		while(au = [e nextObject]) {
-			NSLog(@"Draw %a", au);
+			//NSLog(@"Draw %a", au);
 			[au draw];
 		}
 		
