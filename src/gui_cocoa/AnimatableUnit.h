@@ -13,7 +13,13 @@
 @property CALayer* layer;
 
 - (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx;
+- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag;
+
+- (void)setPosition:(NSPoint)p;
+- (void)moveTo:(NSPoint)p;
+
 
 - (void)draw;
+- (void)drawSprite:(NSString*)filename;
 
 @end
