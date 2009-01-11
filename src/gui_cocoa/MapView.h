@@ -1,6 +1,10 @@
 #import <Cocoa/Cocoa.h>
 
+#import "AnimatableUnit.h"
+
 #include "game/scene.h"
+
+#include <map>
 
 extern NSString* mouseMovedNotification;
 extern NSString* leftMouseClickNotification;
@@ -15,6 +19,7 @@ extern NSString* rightMouseClickNotification;
 	NSImage* maskImage;
 	
 	NSMutableSet* managedUnits;
+	std::map<aw::unit::ptr, AnimatableUnit*> unitMap;
 	NSArray* unitMovements;
 	
 	bool isEnabled;
@@ -31,6 +36,6 @@ extern NSString* rightMouseClickNotification;
 
 - (void)queueDraw;
 
-- (NSArray*)unitMovements:(aw::scene::ptr&)newScene;
+- (void)processScene:(aw::scene::ptr&)newScene;
 @end
 

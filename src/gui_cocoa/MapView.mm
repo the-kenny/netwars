@@ -1,7 +1,6 @@
 #import "MapView.h"
 #import "Coordinate.h"
 #import "Sprites.h"
-#import "AnimatableUnit.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -9,6 +8,8 @@
 #include "game/terrain.h"
 #include "game/gui/map_widget.h"
 #include "game/config.h"
+
+#include <utility>
 
 using namespace aw;
 using namespace aw::gui;
@@ -28,22 +29,23 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 }
 
 - (void)setScene:(aw::scene::ptr)scene {
-	[unitMovements release];
-	unitMovements = [self unitMovements:scene];
+	//[unitMovements release];
+	[self processScene:scene];
 	
 	currentScene = scene;
-	
-	for(int x = 0; x < 30; x++) {
-		for(int y = 0; y < 20; y++) {
-			aw::unit::ptr unit = scene->get_unit(x, y);
-			
-			if(unit != NULL && !unit->is_dummy()) {
-				//std::cout << "addUnitForDrawing:" << unit->type() << std::endl;
-				[self addUnitForDrawing:unit at:[self toViewCoordinates:NSMakePoint(x, y) 
-																   rect:NSMakeSize(16, 16)]];
-			}
-		}
-	}
+	/*
+	 
+	 for(int x = 0; x < 30; x++) {
+	 for(int y = 0; y < 20; y++) {
+	 aw::unit::ptr unit = scene->get_unit(x, y);
+	 
+	 if(unit != NULL && !unit->is_dummy()) {
+	 [self addUnitForDrawing:unit at:[self toViewCoordinates:NSMakePoint(x, y) 
+	 rect:NSMakeSize(16, 16)]];
+	 }
+	 }
+	 }
+	 */
 }
 
 @synthesize isEnabled;
@@ -54,7 +56,7 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 												options:NSTrackingMouseMoved|NSTrackingActiveInActiveApp
 												  owner:self userInfo:nil];
 	[self addTrackingArea:trackingArea];
-
+	
 	self.isEnabled = false;
 	
 	background = [[NSImage alloc] initByReferencingFile:[[NSBundle mainBundle] pathForResource:@"background" ofType:@"png" inDirectory:@"data"]];
@@ -86,13 +88,22 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 
 #pragma mark Unit-Animation Helper Methods
 
-- (NSArray*)unitMovements:(aw::scene::ptr&)newScene {
+- (AnimatableUnit*)getAnimatableUnit:(aw::unit::ptr)u {
+	std::map<aw::unit::ptr, AnimatableUnit*>::iterator it = unitMap.find(u);
+	if(it != unitMap.end())
+		return it->second;
+	else
+		return nil;
+}
+
+- (void)processScene:(aw::scene::ptr&)newScene {
 	aw::scene::ptr oldScene = [self scene];
 	
-	NSMutableArray* unitMovements = [NSMutableArray arrayWithCapacity:1];
+	NSMutableArray* unitMoves = [NSMutableArray arrayWithCapacity:1];
 	
 	if(newScene && oldScene) {
 		std::map<aw::unit::ptr, aw::coord> oldUnits;
+		std::map<aw::unit::ptr, aw::coord> newUnits;
 		typedef std::map<aw::unit::ptr, aw::coord>::iterator iterator;
 		
 		//Cycle through the old scene and collect 
@@ -101,38 +112,60 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 				const unit::ptr &oldUnit = oldScene->get_unit(x, y);
 				const unit::ptr &newUnit = newScene->get_unit(x, y);
 				
-				if(oldUnit != NULL) {
+				if(oldUnit != NULL && !oldUnit->is_dummy()) {
 					oldUnits.insert(std::make_pair(oldUnit, coord(x, y)));
 				}
 				
-				if(newUnit != NULL) {
-					//Cycle through the old units and search for the new, then add it to the move-list
-					iterator it = oldUnits.find(newUnit);
-					if(it != oldUnits.end() && coord(x, y) != it->second) {
-						NSLog(@"Unit moved from %i|%i to %i|%i", it->second.x, it->second.y, x, y);
-						[unitMovements addObject:[NSDictionary dictionaryWithObjectsAndKeys:
-												  [Coordinate coordinateWithCoordinates:it->second.x y:it->second.y], @"from",
-												  [Coordinate coordinateWithCoordinates:x y:y], @"to", nil]]; 
-					}
+				if(newUnit != NULL && !newUnit->is_dummy()) {
+					newUnits.insert(std::make_pair(newUnit, coord(x, y)));
+				}
+			}
+		}
+		
+		typedef std::pair<aw::unit::ptr, aw::coord> pair;
+		BOOST_FOREACH(pair newPair, newUnits) {
+			//oldUnits.insert(std::make_pair(newUnit, coord(x, y)));
+			
+			iterator it = oldUnits.find(newPair.first);
+			
+			//Cycle through the old units and search for the new, then add it to the move-list
+			if(it != oldUnits.end()) {
+				//Add the unit to the movement-array when the position has changed
+				if(newPair.second != it->second) {
+					NSLog(@"Unit moved from %i|%i to %i|%i", it->second.x, it->second.y, newPair.second.x, newPair.second.y);
+					[unitMoves addObject:[NSDictionary dictionaryWithObjectsAndKeys:
+										  [Coordinate coordinateWithCoordinates:it->second.x y:it->second.y], @"from",
+										  [Coordinate coordinateWithCoordinates:newPair.second.x y:newPair.second.y], @"to", 
+										  [self getAnimatableUnit:it->first], @"animatableUnit", nil]]; 
+				}
+			} else {
+				//Unit isn't in the old scene - it is new.
+				[self addUnitForDrawing:newPair.first at:[self toViewCoordinates:NSMakePoint(newPair.second.x, newPair.second.y) 
+																		   rect:NSMakeSize(16, 16)]];
+			}
+		}
+	} else if(newScene) {
+		//Cycle through the old scene and collect 
+		for(int x = 0; x < 30; ++x) {
+			for(int y = 0; y < 20; ++y) {
+				const unit::ptr &unit = newScene->get_unit(x, y);
+				
+				if(unit != NULL && !unit->is_dummy()) {
+					[self addUnitForDrawing:unit at:[self toViewCoordinates:NSMakePoint(x, y) 
+																	   rect:NSMakeSize(16, 16)]];
 				}
 			}
 		}
 	}
 	
-	return unitMovements;
+	[unitMovements release];
+	unitMovements = unitMoves;
+	[unitMovements retain];
 }
 
 - (void)addUnitForDrawing:(aw::unit::ptr)u at:(NSPoint)at {
-	
-	NSEnumerator* e = [managedUnits objectEnumerator];
-	
-	AnimatableUnit* unit = nil;
-	while(unit = [e nextObject]) {
-		if([unit unit] == u) {
-			//NSLog(@"Unit is already in the drawing set");
-			return;
-		}
-	}
+	if([self getAnimatableUnit:u])
+		return;
 	
 	AnimatableUnit* au = [[AnimatableUnit alloc] init];
 	au.unit = u;
@@ -149,7 +182,11 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 	[layer retain];
 	au.layer = layer;
 	
+	[au draw];
+	
 	[managedUnits addObject:au];
+	unitMap.insert(std::make_pair(u, au));
+	[au retain];
 }
 
 #pragma mark "Event Handling"
@@ -253,114 +290,35 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 	[self drawTerrain];
 	
 	if(currentScene) {
-		CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
+		//CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
+		
+		NSEnumerator* e = [unitMovements objectEnumerator];
+		NSDictionary* actions = nil;
+		while(actions = [e nextObject]) {
+			//Coordinate* from = [actions valueForKey:@"from"];
+			Coordinate* to = [actions valueForKey:@"to"];
+			
+			aw::unit::ptr u = currentScene->get_unit(to.coord.x, to.coord.y);
+			
+			AnimatableUnit* au = [self getAnimatableUnit:u];
+			//[au setPosition:[self toViewCoordinates:to.point rect:NSMakeSize(16.0, 16.0)]];
+			[au moveTo:[self toViewCoordinates:to.point rect:NSMakeSize(16.0, 16.0)]];
+		}
 		
 		/*
-		for(int x = 0; x < 30; x++)
-		{
-			for(int y = 0; y < 20; y++)
-			{
-				const unit::ptr &u = currentScene->get_unit(x, y);
-				
-				if(u)
-				{
-					//[self draw:[NSString stringWithCString:get_path(u->type(), u->color()).c_str()] at:NSMakePoint(x, y)];
-					
-					CGContextSaveGState(context);
-	
-					[NSGraphicsContext saveGraphicsState];
-
-					CALayer* layer = [CALayer layer];
-					[layer setAnchorPoint:CGPointMake(.0, .0)];
-					NSSize size = NSMakeSize(16, 16);
-					NSPoint p = [self toViewCoordinates:NSMakePoint(x, y) rect:size];
-					CGRect rect;
-					rect.origin = *(CGPoint*)&p;
-					rect.size = *(CGSize*)&size;
-					[layer setFrame:rect];
-					[[self layer] addSublayer:layer];
-					
-					AnimatableUnit* au = [[AnimatableUnit alloc] init];
-					au.unit = u;
-					
-					[layer setDelegate:au];
-					[layer display];
-					
-					[NSGraphicsContext restoreGraphicsState];
-					
-					
-					CGContextRestoreGState(context);
-					
-					if(u->moved())
-					{					 
-						NSImage* mask = [[[Sprites sharedSprites] getSprite:[NSString stringWithCString:get_path(u->type(), u->color()).c_str()]] copyWithZone:nil];
-						[mask setFlipped:YES];
-						
-						[mask lockFocus];
-						[NSGraphicsContext saveGraphicsState];
-						[[NSColor colorWithDeviceRed:0.0 green:0.0 blue:0.0 alpha:1.0] setFill];
-						NSRectFillUsingOperation(NSMakeRect(0.0, 0.0, mask.size.width, mask.size.height), NSCompositeSourceIn);
-						[NSGraphicsContext restoreGraphicsState];
-						[mask unlockFocus];
-						
-						[mask drawAtPoint:NSMakePoint(x*16, y*16) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:0.4];
-						
-						[mask release];
-					}
-				}
-			}
-		}		
-		*/
-
 		CGContextSaveGState(context);
 		[NSGraphicsContext saveGraphicsState];
 		
-		NSEnumerator* e = [managedUnits objectEnumerator];
-		AnimatableUnit* au = nil;
-		while(au = [e nextObject]) {
-			//NSLog(@"Draw %a", au);
-			[au draw];
-		}
+		[managedUnits makeObjectsPerformSelector:@selector(draw)];
 		
 		[NSGraphicsContext restoreGraphicsState];
 		CGContextRestoreGState(context);
-		
-		
+		*/
 		
 		for(int x = 0; x < 30; x++)
 		{   
 			for(int y = 0; y < 20; y++)
 			{   
-				const unit::ptr &u = currentScene->get_unit(x, y); 
-				if(u && !u->is_dummy())
-				{   
-					int life = u->get_hp();
-					if(life < 10 && life > 0)
-						[self draw:[NSString stringWithCString:get_path(unit::LIVE, life).c_str()] at:NSMakePoint(x, y)];
-					
-					if(u->low_ammo())
-						[self draw:[NSString stringWithCString:get_path(unit::LOW_AMMO).c_str()] at:NSMakePoint(x, y)];
-					
-					if(u->low_fuel())
-						[self draw:[NSString stringWithCString:get_path(unit::LOW_FUEL).c_str()] at:NSMakePoint(x, y)];
-					
-					if(u->is_hidden())
-						[self draw:[NSString stringWithCString:get_path(unit::HIDDEN).c_str()] at:NSMakePoint(x, y)];
-					
-					if(u->is_transporter() && boost::dynamic_pointer_cast<transporter>(u)->loaded_units_count() > 0)
-						[self draw:[NSString stringWithCString:get_path(unit::LOADED).c_str()] at:NSMakePoint(x, y)];
-					
-					if(u->can_capture())
-					{   
-						const terrain::ptr &t(currentScene->get_terrain(x, y));
-						
-						if(t->is_building() && boost::dynamic_pointer_cast<building>(t)->capture_points() < 20) 
-						{   
-							[self draw:[NSString stringWithCString:get_path(unit::CAPTURE).c_str()] at:NSMakePoint(x, y)];
-						}   
-					}   
-				}   
-				
 				static const NSString* range = [[NSString stringWithCString:(aw::config().get<std::string>("/config/dirs/pixmaps") + "/misc/range.png").c_str()] retain];
 				static const NSString* path = [[NSString stringWithCString:(aw::config().get<std::string>("/config/dirs/pixmaps") + "/misc/path.png").c_str()] retain];
 				
@@ -370,8 +328,10 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 				if(currentScene->path(x, y)) 
 					[self draw:path at:NSMakePoint(x, y)];
 			}   
-		} 
+		}
+		 
 	}
+		
 	
 	if(!isEnabled) {
 		static NSColor* color = [NSColor colorWithDeviceRed:0.6 green:0.6 blue:0.6 alpha:0.5]; 
