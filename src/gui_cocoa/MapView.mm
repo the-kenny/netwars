@@ -305,15 +305,7 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 			[au moveTo:[self toViewCoordinates:to.point rect:NSMakeSize(16.0, 16.0)]];
 		}
 		
-		/*
-		CGContextSaveGState(context);
-		[NSGraphicsContext saveGraphicsState];
-		
 		[managedUnits makeObjectsPerformSelector:@selector(draw)];
-		
-		[NSGraphicsContext restoreGraphicsState];
-		CGContextRestoreGState(context);
-		*/
 		
 		for(int x = 0; x < 30; x++)
 		{   
