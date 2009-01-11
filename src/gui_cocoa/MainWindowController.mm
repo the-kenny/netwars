@@ -6,7 +6,7 @@
 	
 	[self.window setAcceptsMouseMovedEvents:YES];
 	
-	mapViewController = [[NSViewController alloc] initWithNibName:@"MapView" bundle:nil];
+	mapViewController = [[MapViewController alloc] initWithNibName:@"MapView" bundle:nil];
 	[mainView addSubview:mapViewController.view];
 	mapView = (MapView*)mapViewController.view;
 }
