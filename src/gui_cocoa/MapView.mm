@@ -138,8 +138,11 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 		static int old_x;               
 		static int old_y; 
 		
-		int x = static_cast<int>((actualPoint.x+theEvent.deltaX)/16);
-		int y = static_cast<int>((actualPoint.y+theEvent.deltaY)/16);
+		int x = static_cast<int>(actualPoint.x/16);
+		int y = static_cast<int>(actualPoint.y/16);
+		
+		//int x = static_cast<int>((actualPoint.x+theEvent.deltaX)/16);
+		//int y = static_cast<int>((actualPoint.y+theEvent.deltaY)/16);
 		
 		//y = abs(y-19);
 		
