@@ -622,7 +622,7 @@ void game_controller::process_action(units::actions action, const coord &pos)
 
 		m_selection.reset();
 
-		this->update_display();
+		//this->update_display();
 	}
 	else if(action == units::UNLOAD) //Big and ugly
 	{
