@@ -30,6 +30,9 @@ def configure(conf):
 	if conf.env['DEBUG']:
 		conf.env.append_value('CXXFLAGS', '-g')
 		conf.env.append_value('LINKFLAGS', '-g')
+	else:
+		conf.env.append_value('CXXFLAGS', '-O3')
+		conf.env.append_value('LINKFLAGS', '-O3')
 
 	if windows:
 		conf.env.append_value('CXXFLAGS', '-IC:\MinGW\local\include -Wall')

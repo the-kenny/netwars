@@ -13,9 +13,12 @@
 #include "game/gui/paths.h"
 #include "game/units/transporter.h"
 
-
-
 @implementation AnimatableUnit
+
+- (void)dealloc {
+	[layer release];
+	[super dealloc];
+}
 
 @dynamic layer;
 
@@ -56,12 +59,12 @@
 
 	CGPoint q = layer.position;
 	
-	CGFloat length = (sqrt((p.x+p.y)*(p.x+p.y))-sqrt((q.x+q.y)*(q.x+q.y)))/16;
+	CGFloat length = (sqrt(((q.x - p.x) * (q.x - p.x)) + ((q.y - p.y) * (q.y - p.y))))/16.0;
 	[anim setDuration:1.0/length];
 	CAMediaTimingFunction* f = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
 	[anim setTimingFunction:f];
 	
-	[anim setDelegate:self];
+	//[anim setDelegate:self];
 	
 	[layer addAnimation:anim forKey:@"move"];
 	[self setPosition:p];
@@ -166,9 +169,10 @@
 }
 
 #pragma mark CAAnimation Delegate
-
+/*
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag {
 	[self draw];
 }
+*/
 
 @end

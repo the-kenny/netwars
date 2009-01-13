@@ -20,7 +20,7 @@ extern NSString* rightMouseClickNotification;
 	
 	NSMutableSet* managedUnits;
 	std::map<aw::unit::ptr, AnimatableUnit*> unitMap;
-	NSArray* unitMovements;
+	NSArray* unitActions;
 	
 	bool isEnabled;
 }
@@ -30,7 +30,9 @@ extern NSString* rightMouseClickNotification;
 
 - (NSPoint)toViewCoordinates:(NSPoint)pos rect:(NSSize)size;
 - (NSPoint)toGameCoordinates:(NSPoint)pos;
+
 - (void)addUnitForDrawing:(aw::unit::ptr)u at:(NSPoint)at;
+- (void)removeUnitFromDrawing:(aw::unit::ptr)u;
 
 - (void)drawTerrain;
 
