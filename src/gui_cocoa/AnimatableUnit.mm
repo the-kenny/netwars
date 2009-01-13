@@ -17,6 +17,11 @@
 
 @implementation AnimatableUnit
 
+- (void)dealloc {
+	[layer release];
+	[super dealloc];
+}
+
 @dynamic layer;
 
 - (void)setLayer:(CALayer*)l {

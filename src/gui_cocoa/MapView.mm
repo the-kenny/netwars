@@ -91,7 +91,7 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 - (AnimatableUnit*)getAnimatableUnit:(aw::unit::ptr)u {
 	std::map<aw::unit::ptr, AnimatableUnit*>::iterator it = unitMap.find(u);
 	if(it != unitMap.end())
-		return it->second;
+		return [it->second autorelease];
 	else
 		return nil;
 }
@@ -99,7 +99,7 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 - (void)processScene:(aw::scene::ptr&)newScene {
 	aw::scene::ptr oldScene = [self scene];
 	
-	NSMutableArray* unitMoves = [NSMutableArray arrayWithCapacity:1];
+	NSMutableArray* unitActs = [NSMutableArray arrayWithCapacity:1]; //There isn't a big chance for a scene with more than one change...
 	
 	if(newScene && oldScene) {
 		std::map<aw::unit::ptr, aw::coord> oldUnits;
@@ -133,15 +133,37 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 				//Add the unit to the movement-array when the position has changed
 				if(newPair.second != it->second) {
 					NSLog(@"Unit moved from %i|%i to %i|%i", it->second.x, it->second.y, newPair.second.x, newPair.second.y);
-					[unitMoves addObject:[NSDictionary dictionaryWithObjectsAndKeys:
-										  [Coordinate coordinateWithCoordinates:it->second.x y:it->second.y], @"from",
-										  [Coordinate coordinateWithCoordinates:newPair.second.x y:newPair.second.y], @"to", 
-										  [self getAnimatableUnit:it->first], @"animatableUnit", nil]]; 
+					[unitActs addObject:[NSDictionary dictionaryWithObjectsAndKeys:
+										 @"moved", @"action",
+										 [Coordinate coordinateWithCoordinates:it->second.x y:it->second.y], @"from",
+										 [Coordinate coordinateWithCoordinates:newPair.second.x y:newPair.second.y], @"to", 
+										 [self getAnimatableUnit:it->first], @"animatableUnit", nil]]; 
 				}
 			} else {
 				//Unit isn't in the old scene - it is new.
 				[self addUnitForDrawing:newPair.first at:[self toViewCoordinates:NSMakePoint(newPair.second.x, newPair.second.y) 
-																		   rect:NSMakeSize(16, 16)]];
+																			rect:NSMakeSize(16, 16)]];
+				
+				[unitActs addObject:[NSDictionary dictionaryWithObjectsAndKeys:
+									 @"added", @"action",
+									 [Coordinate coordinateWithCoordinates:it->second.x y:it->second.y], @"position",
+									 [self getAnimatableUnit:newPair.first], @"animatableUnit", nil]]; 
+			}
+		}
+		
+		BOOST_FOREACH(pair oldPair, oldUnits) {
+			iterator it = newUnits.find(oldPair.first);
+		
+			//Unit isn't in the new scene - it is gone.
+			if(it == newUnits.end()) {
+				[self removeUnitFromDrawing:oldPair.first];
+				
+				 /*
+				[unitActs addObject:[NSDictionary dictionaryWithObjectsAndKeys:
+									 @"removed", @"action",
+									 [Coordinate coordinateWithCoordinates:it->second.x y:it->second.y], @"position",
+									 [self getAnimatableUnit:oldPair.first], @"animatableUnit", nil]]; 
+				 */
 			}
 		}
 	} else if(newScene) {
@@ -158,9 +180,9 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 		}
 	}
 	
-	[unitMovements release];
-	unitMovements = unitMoves;
-	[unitMovements retain];
+	[unitActions release];
+	unitActions = unitActs;
+	[unitActions retain];
 }
 
 - (void)addUnitForDrawing:(aw::unit::ptr)u at:(NSPoint)at {
@@ -188,6 +210,15 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 	unitMap.insert(std::make_pair(u, au));
 	[au retain];
 }
+
+- (void)removeUnitFromDrawing:(aw::unit::ptr)u {
+	AnimatableUnit* au = [self getAnimatableUnit:u];
+	[managedUnits removeObject:au];
+	unitMap.erase(u);
+	
+	[[au layer] removeFromSuperlayer];
+	[au release];
+};
 
 #pragma mark "Event Handling"
 
@@ -292,17 +323,19 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 	if(currentScene) {
 		//CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
 		
-		NSEnumerator* e = [unitMovements objectEnumerator];
+		NSEnumerator* e = [unitActions objectEnumerator];
 		NSDictionary* actions = nil;
 		while(actions = [e nextObject]) {
-			//Coordinate* from = [actions valueForKey:@"from"];
-			Coordinate* to = [actions valueForKey:@"to"];
-			
-			aw::unit::ptr u = currentScene->get_unit(to.coord.x, to.coord.y);
-			
-			AnimatableUnit* au = [self getAnimatableUnit:u];
-			//[au setPosition:[self toViewCoordinates:to.point rect:NSMakeSize(16.0, 16.0)]];
-			[au moveTo:[self toViewCoordinates:to.point rect:NSMakeSize(16.0, 16.0)]];
+			if([[actions valueForKey:@"actions"] compare:@"moved"] == NSOrderedSame) {
+				//Coordinate* from = [actions valueForKey:@"from"];
+				Coordinate* to = [actions valueForKey:@"to"];
+				
+				aw::unit::ptr u = currentScene->get_unit(to.coord.x, to.coord.y);
+				
+				AnimatableUnit* au = [self getAnimatableUnit:u];
+				//[au setPosition:[self toViewCoordinates:to.point rect:NSMakeSize(16.0, 16.0)]];
+				[au moveTo:[self toViewCoordinates:to.point rect:NSMakeSize(16.0, 16.0)]];
+			}
 		}
 		
 		[managedUnits makeObjectsPerformSelector:@selector(draw)];
