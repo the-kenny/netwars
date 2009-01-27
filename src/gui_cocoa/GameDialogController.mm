@@ -17,6 +17,10 @@
 	
 	self.initialFunds = 1000;
 	self.fundsPerBuilding = 1000;
+	
+	NSString* mapPath = [[NSBundle mainBundle] pathForResource:@"7330" ofType:@"aws"];
+	if(mapPath != nil)
+		self.mapFile = mapPath;
 		
 	return self;
 }
@@ -225,6 +229,13 @@
 	[previewImage autorelease];
 	return previewImage;
 
+}
+
+#pragma mark WindowController methods 
+
+- (void)windowDidLoad {
+	if(self.mapFile)
+		[NSThread detachNewThreadSelector:@selector(createMapPreviewThreaded) toTarget:self withObject:nil];
 }
 
 #pragma mark Window Delegate Methods
