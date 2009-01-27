@@ -8,7 +8,7 @@ import Utils, Options, Configure
 def set_options(opt):
 	opt.tool_options('boost')
 	opt.add_option('--gui', type='string', default='NO', help='Choose the GUI [NO|GTK]. Default is NO', dest='gui')
-	opt.add_option('--debug', action='store_true', default='false', help='Debug build?', dest='debug')
+	opt.add_option('--debug', action='store_true', help='Debug build (-g) or release build (-O2)?', dest='debug')
 	pass
 
 def configure(conf):
@@ -31,8 +31,8 @@ def configure(conf):
 		conf.env.append_value('CXXFLAGS', '-g')
 		conf.env.append_value('LINKFLAGS', '-g')
 	else:
-		conf.env.append_value('CXXFLAGS', '-O3')
-		conf.env.append_value('LINKFLAGS', '-O3')
+		conf.env.append_value('CXXFLAGS', '-O2')
+		conf.env.append_value('LINKFLAGS', '-O2')
 
 	if windows:
 		conf.env.append_value('CXXFLAGS', '-IC:\MinGW\local\include -Wall')
