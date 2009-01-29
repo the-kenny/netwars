@@ -11,6 +11,8 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.mm */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		8E0BCC160F30B4B200BD795E /* UnitInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0BCC150F30B4B200BD795E /* UnitInfo.xib */; };
+		8E0BCC5B0F30B73900BD795E /* UnitInfoController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E0BCC590F30B73900BD795E /* UnitInfoController.mm */; };
 		8E0C476A0EEAF337008EFD65 /* CocoaActionMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E0C47690EEAF337008EFD65 /* CocoaActionMenu.mm */; };
 		8E0C4A410EEB16BD008EFD65 /* UnitUnloadMenuController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E0C4A400EEB16BD008EFD65 /* UnitUnloadMenuController.mm */; };
 		8E0C4AD40EEB1C49008EFD65 /* CocoaUnloadMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E0C4AD30EEB1C49008EFD65 /* CocoaUnloadMenu.mm */; };
@@ -54,6 +56,9 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* gui_cocoa_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gui_cocoa_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8E0BCC150F30B4B200BD795E /* UnitInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnitInfo.xib; sourceTree = "<group>"; };
+		8E0BCC590F30B73900BD795E /* UnitInfoController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UnitInfoController.mm; sourceTree = "<group>"; };
+		8E0BCC5A0F30B73900BD795E /* UnitInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitInfoController.h; sourceTree = "<group>"; };
 		8E0C47680EEAF337008EFD65 /* CocoaActionMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaActionMenu.h; sourceTree = "<group>"; };
 		8E0C47690EEAF337008EFD65 /* CocoaActionMenu.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaActionMenu.mm; sourceTree = "<group>"; };
 		8E0C4A3F0EEB16BD008EFD65 /* UnitUnloadMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitUnloadMenuController.h; sourceTree = "<group>"; };
@@ -199,6 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				8EBFF07F0F39FC9400FFFE14 /* Icon.icns */,
+				8E0BCC150F30B4B200BD795E /* UnitInfo.xib */,
 				8EFE83110F2F4F3600835B94 /* 7330.aws */,
 				8E303B3B0EEC8BFA005FD0B5 /* config.xml */,
 				8E303B3C0EEC8BFA005FD0B5 /* data */,
@@ -226,6 +232,8 @@
 		8E0C4B940EEB3E8D008EFD65 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8E0BCC5A0F30B73900BD795E /* UnitInfoController.h */,
+				8E0BCC590F30B73900BD795E /* UnitInfoController.mm */,
 				8E39AE550EEC7608000C7932 /* GameDialogController.h */,
 				8E39AE540EEC7608000C7932 /* GameDialogController.mm */,
 				8E0C4B910EEB3E64008EFD65 /* BuyMenuController.h */,
@@ -323,6 +331,7 @@
 				8EFE83120F2F4F3600835B94 /* 7330.aws in Resources */,
 				8E1BC66F0F39DEF700CE9290 /* Credits.rtf in Resources */,
 				8EBFF0800F39FC9400FFFE14 /* Icon.icns in Resources */,
+				8E0BCC160F30B4B200BD795E /* UnitInfo.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,6 +360,7 @@
 				8E3D6A100EF3F7B100F3F839 /* AnimatableUnit.mm in Sources */,
 				8E8C41260F13A73400F1E03A /* MapViewController.mm in Sources */,
 				8E57A5270F3E154C004AC992 /* HighlightedArea.mm in Sources */,
+				8E0BCC5B0F30B73900BD795E /* UnitInfoController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
