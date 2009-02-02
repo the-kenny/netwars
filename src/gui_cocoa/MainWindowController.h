@@ -1,6 +1,7 @@
 #import <Cocoa/Cocoa.h>
 
 #import "MapView.h"
+#import "MapViewController.h"
 
 #include "game/gui/main_window.h"
 
@@ -8,10 +9,10 @@
     MapView* mapView;
 	IBOutlet NSView* mainView;
 	
-	NSViewController* mapViewController;
+	MapViewController* mapViewController;
 }
 
 @property(readonly) MapView* mapView;
-@property(readonly) NSViewController* mapViewController;
+@property(readonly) MapViewController* mapViewController;
 
 @end

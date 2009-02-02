@@ -17,6 +17,10 @@
 	
 	self.initialFunds = 1000;
 	self.fundsPerBuilding = 1000;
+	
+	NSString* mapPath = [[NSBundle mainBundle] pathForResource:@"7330" ofType:@"aws"];
+	if(mapPath != nil)
+		self.mapFile = mapPath;
 		
 	return self;
 }
@@ -57,7 +61,10 @@
 	if ([panel runModalForDirectory:nil file:nil types:fileTypes] == NSOKButton) { 
 		self.mapFile = [[panel filenames] objectAtIndex:0];
 
-		[self createMapPreview];
+		
+		[NSThread detachNewThreadSelector:@selector(createMapPreviewThreaded) toTarget:self withObject:nil];
+		//[thread start];
+		//[self createMapPreview];
 	}
 }
 	
@@ -66,7 +73,17 @@
 	[[NSApplication sharedApplication] stopModal];
 }
 
-- (void)createMapPreview {
+- (void)createMapPreviewThreaded {
+	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+	
+	[mapPreview performSelectorOnMainThread:@selector(setImage:) 
+								 withObject:[self createMapPreview] 
+							  waitUntilDone:NO];
+	
+	[pool release];
+}
+
+- (NSImage*)createMapPreview {
 	aw::map_loader m([mapFile UTF8String]);
 	aw::map_loader::loaded_map::ptr loadedMap = m.load();
 	
@@ -208,9 +225,17 @@
 	
 	[previewImage unlockFocus];
 	
-	[mapPreview setImage:previewImage];
-	[previewImage release];
+	//[mapPreview setImage:previewImage];
+	[previewImage autorelease];
+	return previewImage;
 
+}
+
+#pragma mark WindowController methods 
+
+- (void)windowDidLoad {
+	if(self.mapFile)
+		[NSThread detachNewThreadSelector:@selector(createMapPreviewThreaded) toTarget:self withObject:nil];
 }
 
 #pragma mark Window Delegate Methods
