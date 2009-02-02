@@ -1,8 +1,0 @@
-Organization:
-	Nothing! :D
-
-Real coding:
-	- Port the gtk guito another toolkit
-	- Put units.xml and damagetable.xml into an sqlite database
-	- Make a Cocoa gui
-	- Hack something into it! (Better pathfinding would be nice) 
