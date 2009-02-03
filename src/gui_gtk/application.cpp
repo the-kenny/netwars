@@ -1,6 +1,7 @@
 #include "application.h"
 
 #include "game/gui/game_dialog.h"
+#include "game/config.h"
 
 #include "buy_menu.h"
 #include "game_dialog.h"
@@ -22,6 +23,7 @@ using namespace aw;
 application::application()
 {
 	std::srand(std::time(NULL));
+	aw::config().load("config.xml");	
 }
 
 int application::run(int &argc, char** &argv)
