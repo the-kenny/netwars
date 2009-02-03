@@ -42,6 +42,8 @@ namespace aw
 				template<typename T>
 				const T get(const std::string &path)
 				{
+					assert(!m_xml.NoChildren());
+
 					const char delim = '/';
 
 					std::vector<std::string> tokens;
