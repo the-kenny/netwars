@@ -240,19 +240,22 @@ void game::supply_unit_from_building(const coord &support_building)
 	unit::ptr unit = this->get_unit(support_building);
 	assert(unit != NULL);
 
-	assert(b->get_supply_environment() == unit->get_environment());
-
-	unit->supply();
-
-	int repair_points = b->get_repair_points();
-	if(repair_points != 0)
+	if(unit->get_hp() < unit->max_hp())
 	{
-		if(unit->get_hp()+repair_points >= unit->max_hp())
-			unit->set_hp(unit->max_hp());
-		else
-			unit->set_hp(unit->get_hp()+repair_points);
+		assert(b->get_supply_environment() == unit->get_environment());
 
-		this->get_active_player()->subtract_funds(unit_loader::instance().get_unit_info(unit->get_name()).price/10);
+		unit->supply();
+
+		int repair_points = b->get_repair_points();
+		if(repair_points != 0)
+		{
+			if(unit->get_hp()+repair_points >= unit->max_hp())
+				unit->set_hp(unit->max_hp());
+			else
+				unit->set_hp(unit->get_hp()+repair_points);
+
+			this->get_active_player()->subtract_funds(unit_loader::instance().get_unit_info(unit->get_name()).price/10);
+		}
 	}
 }
 

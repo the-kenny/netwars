@@ -13,6 +13,11 @@ namespace aw
 		class game_dialog
 		{
 			public:
+				game_dialog() {
+					m_funds_per_building = 1000;
+					m_initial_funds = 0;
+				}
+
 //				const bool *players() { return m_players; }
 				int funds_per_building() { return m_funds_per_building; }
 				int initial_funds() { return m_initial_funds; }
