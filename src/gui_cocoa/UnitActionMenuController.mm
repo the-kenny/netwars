@@ -67,15 +67,12 @@ const unsigned int buttonHeight = 15;
 	[button setTag:(NSInteger)action];
 	[button setAction:@selector(menuItemClicked:)];
 	[button setTarget:self];
+
+	[vboxView addItem:button];
+	[button release];
 	
 	//Resize the window
-	[self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.x, 
-									 self.window.frame.size.width, self.window.frame.size.height+24) display:YES];
-	
-	//Resize the vboxView
-	[vboxView setFrame:NSMakeRect(vboxView.frame.origin.x, vboxView.frame.origin.x, vboxView.frame.size.width, vboxView.frame.size.height+24)];
-	
-	[vboxView addItem:button];
+	[self.window setFrame:[vboxView frame] display:YES];
 }
 
 - (aw::units::actions)run:(Coordinate*)c {

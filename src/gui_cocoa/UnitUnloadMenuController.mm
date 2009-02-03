@@ -15,10 +15,13 @@
 
 @implementation UnitUnloadMenuController
 
+const unsigned int menuWidth = 80;
+const unsigned int buttonHeight = 16;
+
 -(UnitUnloadMenuController*)init {
 	self = [super init];
 	
-	NSWindow* window = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 80, 0)  //Size for actions.size buttons + the cancel-button
+	NSWindow* window = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, menuWidth, 0)  //Size for actions.size buttons + the cancel-button
 												   styleMask:NSBorderlessWindowMask  
 													 backing:NSBackingStoreRetained 
 													   defer:NO];
@@ -26,7 +29,7 @@
 	
 	[window release];
 	
-	vboxView = [[VBoxView alloc] initWithFrame:NSMakeRect(0, 0, 80, 0)];
+	vboxView = [[VBoxView alloc] initWithFrame:NSMakeRect(0, 0, menuWidth, 0)];
 	[vboxView setSpacing:0];
 	[self.window.contentView addSubview:vboxView];
 	
@@ -47,12 +50,13 @@
 }
 
 - (void)addUnit:(const aw::unit::ptr&)unit position:(int)pos {
-	NSButton* button = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 80, 20)];
+	NSButton* button = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, menuWidth, buttonHeight)];
 	
 	[button setTitle:[NSString stringWithCString:aw::unit_list().get_unit_info(unit->type()).name.c_str()]];
 	
 	[button setButtonType:NSMomentaryPushInButton];
 	[button setBezelStyle:NSShadowlessSquareBezelStyle];
+	[button setFont:[NSFont systemFontOfSize:[NSFont smallSystemFontSize]]];
 	
 	[button setImagePosition:NSImageLeft];
 	
@@ -62,42 +66,33 @@
 	[button setTag:pos];
 	[button setAction:@selector(menuItemClicked:)];
 	[button setTarget:self];
+
+	[vboxView addItem:button];
+	[button release];
 	
 	//Resize the window
-	[self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.x, 
-									 self.window.frame.size.width, self.window.frame.size.height+24) display:YES];
-	
-	//Resize the vboxView
-	[vboxView setFrame:NSMakeRect(vboxView.frame.origin.x, vboxView.frame.origin.x, vboxView.frame.size.width, vboxView.frame.size.height+24)];
-	
-	[vboxView addItem:button];
-	
-	[button release];
+	[self.window setFrame:[vboxView frame] display:YES];	
 }
 
 - (int)run:(NSPoint)pos {
 	//Add the Cancel-Button
-	NSButton* button = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 80, 20)];
+	NSButton* button = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, menuWidth, buttonHeight)];
 	
 	[button setTitle:@"Cancel"];
 	
 	[button setButtonType:NSMomentaryPushInButton];
 	[button setBezelStyle:NSShadowlessSquareBezelStyle];
+	[button setFont:[NSFont systemFontOfSize:[NSFont smallSystemFontSize]]];
 	
 	[button setTag:-1];
 	[button setAction:@selector(menuItemClicked:)];
 	[button setTarget:self];
+
+	[vboxView addItem:button];
+	[button release];
 	
 	//Resize the window
-	[self.window setFrame:NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.x, 
-									 self.window.frame.size.width, self.window.frame.size.height+24) display:YES];
-	
-	//Resize the vboxView
-	[vboxView setFrame:NSMakeRect(vboxView.frame.origin.x, vboxView.frame.origin.x, vboxView.frame.size.width, vboxView.frame.size.height+24)];
-	
-	[vboxView addItem:button];
-	
-	[button release];
+	[self.window setFrame:[vboxView frame] display:YES];	
 	
 	//Move the window to the mouse
 	[self.window setFrameOrigin:NSMakePoint(pos.x, (pos.y)-(self.window.frame.size.height))];
