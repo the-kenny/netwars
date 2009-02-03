@@ -56,7 +56,7 @@ aw::units::actions unit_action_menu::run()
 
 void unit_action_menu::add_action(units::actions a)
 {
-	std::string label(get_name(a));
+	std::string label(aw::gui::unit_action_menu::get_name(a));
 
 	using namespace aw::units;
 
