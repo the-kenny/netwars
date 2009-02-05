@@ -20,6 +20,7 @@
 		8E1A5F8C0EDEEE050089B499 /* CocoaMapWidget.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A5F8B0EDEEE050089B499 /* CocoaMapWidget.mm */; };
 		8E1A624D0EDF662A0089B499 /* GameDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E1A624C0EDF662A0089B499 /* GameDialog.xib */; };
 		8E1A62850EE033D70089B499 /* UnitActionMenuController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A62840EE033D70089B499 /* UnitActionMenuController.mm */; };
+		8E1BC66F0F39DEF700CE9290 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 8E1BC66E0F39DEF700CE9290 /* Credits.rtf */; };
 		8E26C4C90ED488A700704923 /* MapView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E26C4C80ED488A700704923 /* MapView.mm */; };
 		8E26C5210ED48F2D00704923 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E26C5200ED48F2D00704923 /* AppController.mm */; };
 		8E26CE860ED8304500704923 /* Coordinate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E26CE850ED8304500704923 /* Coordinate.mm */; };
@@ -35,6 +36,7 @@
 		8E3D6A100EF3F7B100F3F839 /* AnimatableUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E3D6A0F0EF3F7B100F3F839 /* AnimatableUnit.mm */; };
 		8E5D18EB0EE07D640087E028 /* VBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5D18E90EE07D640087E028 /* VBoxView.m */; };
 		8E8C41260F13A73400F1E03A /* MapViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E8C41250F13A73400F1E03A /* MapViewController.mm */; };
+		8EBFF0800F39FC9400FFFE14 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8EBFF07F0F39FC9400FFFE14 /* Icon.icns */; };
 		8EFE83120F2F4F3600835B94 /* 7330.aws in Resources */ = {isa = PBXBuildFile; fileRef = 8EFE83110F2F4F3600835B94 /* 7330.aws */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +66,7 @@
 		8E1A624C0EDF662A0089B499 /* GameDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameDialog.xib; sourceTree = "<group>"; };
 		8E1A62830EE033D70089B499 /* UnitActionMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitActionMenuController.h; sourceTree = "<group>"; };
 		8E1A62840EE033D70089B499 /* UnitActionMenuController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UnitActionMenuController.mm; sourceTree = "<group>"; };
+		8E1BC66E0F39DEF700CE9290 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		8E26C35A0ED4864000704923 /* Netwars.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Netwars.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E26C4C70ED488A700704923 /* MapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapView.h; sourceTree = "<group>"; };
 		8E26C4C80ED488A700704923 /* MapView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MapView.mm; sourceTree = "<group>"; };
@@ -91,6 +94,7 @@
 		8E5D18EA0EE07D640087E028 /* VBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBoxView.h; sourceTree = "<group>"; };
 		8E8C41240F13A73400F1E03A /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		8E8C41250F13A73400F1E03A /* MapViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MapViewController.mm; sourceTree = "<group>"; };
+		8EBFF07F0F39FC9400FFFE14 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		8EFE83110F2F4F3600835B94 /* 7330.aws */ = {isa = PBXFileReference; lastKnownFileType = file; name = 7330.aws; path = ../../7330.aws; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -176,6 +180,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8EBFF07F0F39FC9400FFFE14 /* Icon.icns */,
 				8EFE83110F2F4F3600835B94 /* 7330.aws */,
 				8E303B3B0EEC8BFA005FD0B5 /* config.xml */,
 				8E303B3C0EEC8BFA005FD0B5 /* data */,
@@ -186,6 +191,7 @@
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
+				8E1BC66E0F39DEF700CE9290 /* Credits.rtf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -299,6 +305,8 @@
 				8E303C970EEC8BFA005FD0B5 /* config.xml in Resources */,
 				8E303C980EEC8BFA005FD0B5 /* data in Resources */,
 				8EFE83120F2F4F3600835B94 /* 7330.aws in Resources */,
+				8E1BC66F0F39DEF700CE9290 /* Credits.rtf in Resources */,
+				8EBFF0800F39FC9400FFFE14 /* Icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
