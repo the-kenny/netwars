@@ -7,6 +7,7 @@
 #include "game/gui/paths.h"
 #include "game/terrain.h"
 #include "game/gui/map_widget.h"
+#include "game/gui/drawing.h"
 #include "game/config.h"
 
 #include <utility>
@@ -303,13 +304,15 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 }
 
 - (void)draw:(NSString*)path at:(NSPoint)pos {
-	NSImage* sprite = [[Sprites sharedSprites] getSprite:path];
-	
-	if([self isFlipped])
-		[sprite setFlipped:YES]; //We have to flip the image because the view is flipped
-	
-	[sprite drawAtPoint:[self toViewCoordinates:pos rect:sprite.size] fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-	[sprite setFlipped:NO];
+	if(path.length != 0) {
+		NSImage* sprite = [[Sprites sharedSprites] getSprite:path];
+		
+		if([self isFlipped])
+			[sprite setFlipped:YES]; //We have to flip the image because the view is flipped
+		
+		[sprite drawAtPoint:[self toViewCoordinates:pos rect:sprite.size] fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+		[sprite setFlipped:NO];
+	}
 }
 
 - (void)drawRect:(NSRect)rect { 
@@ -373,6 +376,9 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 		{
 			for(int y = 0; y < 20; y++)
 			{
+				[self draw:[NSString stringWithCString:gui::get_sprite_for(aw::coord(x, y), currentScene).c_str()] at:NSMakePoint(x, y)];
+				 
+				/*
 				const terrain::types type = currentScene->get_terrain(x, y)->type();
 				const terrain::extras extra = currentScene->get_terrain(x, y)->extra();
 				
@@ -781,6 +787,7 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 				{
 					[self draw:[NSString stringWithCString:get_path(currentScene->get_terrain(x, y)->type(), terrain::UNDEF, extra).c_str()] at:NSMakePoint(x, y)];
 				}
+				 */
 			}
 		}
 	}
