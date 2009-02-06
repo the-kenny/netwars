@@ -10,7 +10,7 @@ namespace aw
 {
 	namespace gui
 	{
-		std::string get_sprite_for(const coord& c, const scene& scene);
+		std::string get_sprite_for(const coord& c, const scene::ptr& scene);
 		bool is_connectable(terrain::types lhs, terrain::types rhs);
 	}
 }
