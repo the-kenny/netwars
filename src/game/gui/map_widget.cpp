@@ -29,6 +29,7 @@ namespace aw
 			this->queue_draw();
 		}
 
+		/*
 		bool is_connectable(terrain::types lhs, terrain::types rhs)
 		{
 			switch(lhs)
@@ -61,5 +62,6 @@ namespace aw
 
 			return false;
 		}
+		*/
 	}
 }

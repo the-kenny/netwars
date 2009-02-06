@@ -9,7 +9,6 @@ namespace aw
 {
 	namespace gui
 	{
-		//TODO: Make it bastract for different guis
 		class map_widget
 		{
 			public:
@@ -41,7 +40,7 @@ namespace aw
 				signal_focus_changed_t m_signal_focus_changed;
 		};
 
-		bool is_connectable(terrain::types lhs, terrain::types rhs);
+		//bool is_connectable(terrain::types lhs, terrain::types rhs);
 	}
 }
 
