@@ -35,6 +35,10 @@
 		8E39AE560EEC7608000C7932 /* GameDialogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E39AE540EEC7608000C7932 /* GameDialogController.mm */; };
 		8E3D6A100EF3F7B100F3F839 /* AnimatableUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E3D6A0F0EF3F7B100F3F839 /* AnimatableUnit.mm */; };
 		8E5D18EB0EE07D640087E028 /* VBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5D18E90EE07D640087E028 /* VBoxView.m */; };
+		8E5F27D70F3E121400AC012E /* libnetwars.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E5F27D50F3E121400AC012E /* libnetwars.a */; };
+		8E5F27D80F3E121400AC012E /* libtinyxml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E5F27D60F3E121400AC012E /* libtinyxml.a */; };
+		8E5F27DD0F3E123D00AC012E /* libboost_filesystem-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E5F27DB0F3E123D00AC012E /* libboost_filesystem-mt.a */; };
+		8E5F27DE0F3E123D00AC012E /* libboost_signals-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E5F27DC0F3E123D00AC012E /* libboost_signals-mt.a */; };
 		8E8C41260F13A73400F1E03A /* MapViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E8C41250F13A73400F1E03A /* MapViewController.mm */; };
 		8EBFF0800F39FC9400FFFE14 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8EBFF07F0F39FC9400FFFE14 /* Icon.icns */; };
 		8EFE83120F2F4F3600835B94 /* 7330.aws in Resources */ = {isa = PBXBuildFile; fileRef = 8EFE83110F2F4F3600835B94 /* 7330.aws */; };
@@ -92,6 +96,10 @@
 		8E3D6A0F0EF3F7B100F3F839 /* AnimatableUnit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AnimatableUnit.mm; sourceTree = "<group>"; };
 		8E5D18E90EE07D640087E028 /* VBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBoxView.m; sourceTree = "<group>"; };
 		8E5D18EA0EE07D640087E028 /* VBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBoxView.h; sourceTree = "<group>"; };
+		8E5F27D50F3E121400AC012E /* libnetwars.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnetwars.a; path = ../libnetwars.a; sourceTree = SOURCE_ROOT; };
+		8E5F27D60F3E121400AC012E /* libtinyxml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtinyxml.a; path = ../libtinyxml.a; sourceTree = SOURCE_ROOT; };
+		8E5F27DB0F3E123D00AC012E /* libboost_filesystem-mt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_filesystem-mt.a"; path = "/usr/local/lib/libboost_filesystem-mt.a"; sourceTree = "<absolute>"; };
+		8E5F27DC0F3E123D00AC012E /* libboost_signals-mt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_signals-mt.a"; path = "/usr/local/lib/libboost_signals-mt.a"; sourceTree = "<absolute>"; };
 		8E8C41240F13A73400F1E03A /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		8E8C41250F13A73400F1E03A /* MapViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MapViewController.mm; sourceTree = "<group>"; };
 		8EBFF07F0F39FC9400FFFE14 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
@@ -105,6 +113,10 @@
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				8E30FB520EECA46E00D06119 /* Quartz.framework in Frameworks */,
+				8E5F27D70F3E121400AC012E /* libnetwars.a in Frameworks */,
+				8E5F27D80F3E121400AC012E /* libtinyxml.a in Frameworks */,
+				8E5F27DD0F3E123D00AC012E /* libboost_filesystem-mt.a in Frameworks */,
+				8E5F27DE0F3E123D00AC012E /* libboost_signals-mt.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,6 +168,10 @@
 		29B97314FDCFA39411CA2CEA /* gui_cocoa */ = {
 			isa = PBXGroup;
 			children = (
+				8E5F27DB0F3E123D00AC012E /* libboost_filesystem-mt.a */,
+				8E5F27DC0F3E123D00AC012E /* libboost_signals-mt.a */,
+				8E5F27D50F3E121400AC012E /* libnetwars.a */,
+				8E5F27D60F3E121400AC012E /* libtinyxml.a */,
 				8E5D18E60EE07D550087E028 /* Helper Code */,
 				8E1A5F400EDEED6F0089B499 /* Glue Code */,
 				080E96DDFE201D6D7F000001 /* Classes */,
@@ -381,17 +397,11 @@
 				HEADER_SEARCH_PATHS = /usr/local/include;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = ../;
-				OTHER_LDFLAGS = (
-					"-ltinyxml",
-					"-lboost_signals-mt",
-					"-lboost_system-mt",
-					"-lboost_filesystem-mt",
-					"-lnetwars",
-				);
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/..\"";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = Netwars;
 				SDKROOT = macosx10.5;
-				USER_HEADER_SEARCH_PATHS = "../lib ..";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../lib";
 			};
 			name = Debug;
 		};
@@ -415,18 +425,12 @@
 				HEADER_SEARCH_PATHS = /usr/local/include;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = ../;
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/..\"";
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"-ltinyxml",
-					"-lboost_signals-mt",
-					"-lboost_system-mt",
-					"-lboost_filesystem-mt",
-					"-lnetwars",
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = Netwars;
 				SDKROOT = macosx10.5;
-				USER_HEADER_SEARCH_PATHS = "../lib ..";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../lib";
 			};
 			name = Release;
 		};
