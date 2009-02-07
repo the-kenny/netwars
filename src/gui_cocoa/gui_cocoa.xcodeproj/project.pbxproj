@@ -34,6 +34,7 @@
 		8E39AB100EEC497E000C7932 /* CocoaBuyMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E39AB0F0EEC497E000C7932 /* CocoaBuyMenu.mm */; };
 		8E39AE560EEC7608000C7932 /* GameDialogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E39AE540EEC7608000C7932 /* GameDialogController.mm */; };
 		8E3D6A100EF3F7B100F3F839 /* AnimatableUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E3D6A0F0EF3F7B100F3F839 /* AnimatableUnit.mm */; };
+		8E57A5270F3E154C004AC992 /* HighlightedArea.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E57A5260F3E154C004AC992 /* HighlightedArea.mm */; };
 		8E5D18EB0EE07D640087E028 /* VBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5D18E90EE07D640087E028 /* VBoxView.m */; };
 		8E5F27D70F3E121400AC012E /* libnetwars.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E5F27D50F3E121400AC012E /* libnetwars.a */; };
 		8E5F27D80F3E121400AC012E /* libtinyxml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E5F27D60F3E121400AC012E /* libtinyxml.a */; };
@@ -94,6 +95,8 @@
 		8E39AE550EEC7608000C7932 /* GameDialogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameDialogController.h; sourceTree = "<group>"; };
 		8E3D6A0E0EF3F7B100F3F839 /* AnimatableUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatableUnit.h; sourceTree = "<group>"; };
 		8E3D6A0F0EF3F7B100F3F839 /* AnimatableUnit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AnimatableUnit.mm; sourceTree = "<group>"; };
+		8E57A5250F3E154C004AC992 /* HighlightedArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighlightedArea.h; sourceTree = "<group>"; };
+		8E57A5260F3E154C004AC992 /* HighlightedArea.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HighlightedArea.mm; sourceTree = "<group>"; };
 		8E5D18E90EE07D640087E028 /* VBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBoxView.m; sourceTree = "<group>"; };
 		8E5D18EA0EE07D640087E028 /* VBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBoxView.h; sourceTree = "<group>"; };
 		8E5F27D50F3E121400AC012E /* libnetwars.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnetwars.a; path = ../libnetwars.a; sourceTree = SOURCE_ROOT; };
@@ -134,6 +137,8 @@
 				8E26CE850ED8304500704923 /* Coordinate.mm */,
 				8E3D6A0E0EF3F7B100F3F839 /* AnimatableUnit.h */,
 				8E3D6A0F0EF3F7B100F3F839 /* AnimatableUnit.mm */,
+				8E57A5250F3E154C004AC992 /* HighlightedArea.h */,
+				8E57A5260F3E154C004AC992 /* HighlightedArea.mm */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -351,6 +356,7 @@
 				8E39AE560EEC7608000C7932 /* GameDialogController.mm in Sources */,
 				8E3D6A100EF3F7B100F3F839 /* AnimatableUnit.mm in Sources */,
 				8E8C41260F13A73400F1E03A /* MapViewController.mm in Sources */,
+				8E57A5270F3E154C004AC992 /* HighlightedArea.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
