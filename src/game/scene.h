@@ -72,6 +72,11 @@ namespace aw
 					m_highlights.erase(coord(x, y));
 			}
 
+			const aw::area &get_highlighted_area() const
+			{
+				return m_highlights;
+			}
+
 //				bool path(unsigned int x, unsigned int y) { return m_path[x][y]; }
 //				void path(unsigned int x, unsigned int y, bool highlight) { m_path[x][y] = highlight; }
 
@@ -88,6 +93,11 @@ namespace aw
 					m_path.push_back(coord(x, y));
 				else if(!highlight)
 					m_path.erase(coord(x, y));
+			}
+
+			const aw::area get_path_area() const 
+			{
+				return m_path;
 			}
 
 			coord highlighted_unit() const { return m_highlighted_unit; }
