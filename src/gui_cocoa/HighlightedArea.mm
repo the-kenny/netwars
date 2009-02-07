@@ -14,7 +14,54 @@
 
 @implementation HighlightedArea
 
-@synthesize highlightedArea;
+- (id)init {
+	self = [super init];
+	
+	highlightedArea = aw::area();
+	
+	return self;
+}
+
+- (id)initWithSprite:(NSImage*)s {
+	[self init];
+	
+	sprite = s;
+	[sprite retain];
+	
+	return self;
+}
+
+- (void)dealloc {
+	[sprite release];
+	
+	[super dealloc];
+}
+
+@dynamic layer;
+
+- (void)setLayer:(CALayer*)l {
+	[layer removeFromSuperlayer];
+	[layer release];
+	
+	layer = l;
+	[layer retain];
+	
+	[layer setDelegate:self];
+}
+
+- (CALayer*)layer {
+	return layer;
+}
+
+@dynamic highlightedArea;
+
+- (void)setHighlightedArea:(aw::area)a {
+	highlightedArea = a;
+}
+
+-(aw::area)highlightedArea {
+	return highlightedArea;
+}
 
 - (NSPoint)toLayerCoordinates:(NSPoint)pos rect:(NSSize)size {	
 	NSSize viewSize = [layer bounds].size;
@@ -23,33 +70,40 @@
 	int unflippedY = pos.y*16;
 	
 	
-	//if(![self isFlipped])
-		return NSMakePoint(unflippedX, viewSize.height-unflippedY-16);
-	//else
-	//	return NSMakePoint(unflippedX, unflippedY+(16-size.height));
+	return NSMakePoint(unflippedX, viewSize.height-unflippedY-16);
 }
 
 - (void)draw {
-	[layer display];
+	[layer setNeedsDisplay];
 }
 
 #pragma mark CALayer Delegate
-	
-	- (void)drawLayer:(CALayer *)layer 
-inContext:(CGContextRef)ctx {
+
+- (void)drawLayer:(CALayer *)layer 
+		inContext:(CGContextRef)ctx {
 	NSGraphicsContext* nscontext =  [NSGraphicsContext graphicsContextWithGraphicsPort:ctx flipped:NO];
 	
 	[NSGraphicsContext saveGraphicsState];
 	[NSGraphicsContext setCurrentContext:nscontext];
-
-	BOOST_FOREACH(const aw::coord& a, highlightedArea)
-		[self drawHighlightAt:NSMakePoint(a.x, a.y)];
+	
+	if(!highlightedArea.empty()) {
+		int i = 0;
+		BOOST_FOREACH(aw::coord a, highlightedArea) {
+			++i;
+			[self drawHighlightAt:NSMakePoint(a.x, a.y)];
+		}
+	}
+	
+	[NSGraphicsContext restoreGraphicsState];
 }
 
 - (void)drawHighlightAt:(NSPoint)pos {
-	static const NSString* file = [[NSString stringWithCString:(aw::config().get<std::string>("/config/dirs/pixmaps") + "/misc/range.png").c_str()] retain];
-
-	NSImage* sprite = [[Sprites sharedSprites] getSprite:file];
+	if(sprite == nil) {
+		sprite = [[[Sprites sharedSprites] 
+				   getSprite:[NSString stringWithCString:(aw::config().get<std::string>("/config/dirs/pixmaps") + "/misc/range.png").c_str()]]
+				  retain];
+	}
+	
 	[sprite drawAtPoint:[self toLayerCoordinates:pos rect:sprite.size] fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 }
 

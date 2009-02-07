@@ -34,6 +34,9 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 	[self processScene:scene];
 	
 	currentScene = scene;
+	
+	[highlightedArea setHighlightedArea:scene->get_highlighted_area()];
+	[highlightedPath setHighlightedArea:scene->get_path_area()];
 	/*
 	 
 	 for(int x = 0; x < 30; x++) {
@@ -73,12 +76,46 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 	[maskImage unlockFocus];
 	
 	managedUnits = [[NSMutableSet alloc] initWithCapacity:10];
+	
+	highlightedArea = [[HighlightedArea alloc] init];
+	
+	NSImage* pathSprite = [[Sprites sharedSprites] 
+						   getSprite:[NSString stringWithCString:(aw::config().get<std::string>("/config/dirs/pixmaps") + "/misc/path.png").c_str()]];
+	highlightedPath = [[HighlightedArea alloc] initWithSprite:pathSprite];
+	[pathSprite release];
+	
+	CGRect rect;
+	rect.origin = CGPointZero;
+	rect.size = *(CGSize*)&self.bounds.size;
+	
+	CALayer* layer = [CALayer layer];
+	[layer setAnchorPoint:CGPointZero];
+	[layer setFrame:rect];
+	[[self layer] addSublayer:layer];
+	
+	[highlightedPath setLayer:layer];
+	
+	layer = [CALayer layer];
+	[layer setAnchorPoint:CGPointZero];
+	[layer setFrame:rect];
+	[[self layer] insertSublayer:layer below:[highlightedPath layer]];
+	
+	[highlightedArea setLayer:layer];
+	
+	
 }
 
 -(void)dealloc {
 	[background release];
 	[maskImage release];
 	[trackingArea release]; 
+	
+	[managedUnits release];
+	[unitActions release];
+	
+	[highlightedArea release];
+	[highlightedPath release];
+	
 	[super dealloc];
 }
 
@@ -200,7 +237,9 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 	rect.origin = *(CGPoint*)&at;
 	rect.size = *(CGSize*)&size;
 	[layer setFrame:rect];
-	[[self layer] addSublayer:layer];
+	
+	//Add the layer after the Highlight-Layer
+	[[self layer] insertSublayer:layer below:[highlightedArea layer]];
 	
 	[layer retain];
 	au.layer = layer;
@@ -342,21 +381,8 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 		
 		[managedUnits makeObjectsPerformSelector:@selector(draw)];
 		
-		for(int x = 0; x < 30; x++)
-		{   
-			for(int y = 0; y < 20; y++)
-			{   
-				static const NSString* range = [[NSString stringWithCString:(aw::config().get<std::string>("/config/dirs/pixmaps") + "/misc/range.png").c_str()] retain];
-				static const NSString* path = [[NSString stringWithCString:(aw::config().get<std::string>("/config/dirs/pixmaps") + "/misc/path.png").c_str()] retain];
-				
-				if(currentScene->highlighted(x, y)) 
-					[self draw:range at:NSMakePoint(x, y)];
-				
-				if(currentScene->path(x, y)) 
-					[self draw:path at:NSMakePoint(x, y)];
-			}   
-		}
-		 
+		[highlightedArea draw];
+		[highlightedPath draw];
 	}
 		
 	

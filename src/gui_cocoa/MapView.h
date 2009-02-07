@@ -1,6 +1,7 @@
 #import <Cocoa/Cocoa.h>
 
 #import "AnimatableUnit.h"
+#import "HighlightedArea.h"
 
 #include "game/scene.h"
 
@@ -21,6 +22,9 @@ extern NSString* rightMouseClickNotification;
 	NSMutableSet* managedUnits;
 	std::map<aw::unit::ptr, AnimatableUnit*> unitMap;
 	NSArray* unitActions;
+	
+	HighlightedArea* highlightedArea;
+	HighlightedArea* highlightedPath;
 	
 	bool isEnabled;
 }

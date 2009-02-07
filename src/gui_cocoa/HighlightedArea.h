@@ -13,10 +13,17 @@
 
 @interface HighlightedArea : NSObject {
 	CALayer* layer;
-	aw::area highlightedArea;
+	__strong aw::area highlightedArea;
+	
+	NSImage* sprite;
 }
 
-@property(assign) aw::area highlightedArea;
+@property CALayer* layer;
+@property(readwrite) aw::area highlightedArea;
+
+- (id)init;
+- (id)initWithSprite:(NSImage*)s;
+- (void)dealloc;
 
 - (void)draw;
 - (void)drawHighlightAt:(NSPoint)pos;
