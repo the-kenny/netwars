@@ -87,13 +87,8 @@
 	[NSGraphicsContext saveGraphicsState];
 	[NSGraphicsContext setCurrentContext:nscontext];
 	
-	if(!highlightedArea.empty()) {
-		int i = 0;
-		BOOST_FOREACH(aw::coord a, highlightedArea) {
-			++i;
-			[self drawHighlightAt:NSMakePoint(a.x, a.y)];
-		}
-	}
+	BOOST_FOREACH(aw::coord a, highlightedArea) 
+		[self drawHighlightAt:NSMakePoint(a.x, a.y)];
 	
 	[NSGraphicsContext restoreGraphicsState];
 }
