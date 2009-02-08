@@ -52,6 +52,17 @@
 	[layer setPosition:*(CGPoint*)&p];
 }
 
+//Hack
+@dynamic currentTerrain;
+
+- (void)setCurrentTerrain:(aw::terrain::ptr)t {
+	currentTerrain = t;
+}
+
+- (aw::terrain::ptr)currentTerrain {
+	return currentTerrain;
+}
+
 - (void)moveTo:(NSPoint)p {
 	CABasicAnimation* anim = [CABasicAnimation animationWithKeyPath:@"position"];
 	[anim setFromValue:[NSValue valueWithPoint:*(NSPoint*)&[layer position]]];
@@ -152,18 +163,13 @@
 	if(unit->is_transporter() && boost::dynamic_pointer_cast<aw::transporter>(unit)->loaded_units_count() > 0)
 		[self drawSprite:[NSString stringWithCString:get_path(aw::unit::LOADED).c_str()]];
 	
-	/*
 	 if(unit->can_capture())
 	 {   
-	 const terrain::ptr &t(currentScene->get_terrain(x, y));
-	 
-	 if(t->is_building() && boost::dynamic_pointer_cast<building>(t)->capture_points() < 20) 
-	 {   
-	 [self draw:[NSString stringWithCString:get_path(unit::CAPTURE).c_str()] at:NSMakePoint(x, y)];
+		 if(currentTerrain && currentTerrain->is_building() && boost::dynamic_pointer_cast<aw::building>(currentTerrain)->capture_points() < 20) 
+		 {   
+			 [self drawSprite:[NSString stringWithCString:get_path(aw::unit::CAPTURE).c_str()]];
+		 }   
 	 }   
-	 }   
-	 */
-	
 	
 	[NSGraphicsContext restoreGraphicsState];
 }

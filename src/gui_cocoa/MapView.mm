@@ -176,6 +176,10 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 										 [Coordinate coordinateWithCoordinates:it->second.x y:it->second.y], @"from",
 										 [Coordinate coordinateWithCoordinates:newPair.second.x y:newPair.second.y], @"to", 
 										 [self getAnimatableUnit:it->first], @"animatableUnit", nil]]; 
+
+					//Hack: Building capture-status
+					//Update the currentTerrain of the unit
+					[[self getAnimatableUnit:it->first] setCurrentTerrain:newScene->get_terrain(newPair.second.x, newPair.second.y)];  
 				}
 			} else {
 				//Unit isn't in the old scene - it is new.
@@ -229,6 +233,16 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 	
 	AnimatableUnit* au = [[AnimatableUnit alloc] init];
 	au.unit = u;
+
+	//Hack: Building capture-status
+	//NOTE: It isn't possible to capture a building immediate after the unit was added to the scene
+	//		So we don't need this one (yet)
+	/*
+	if(currentScene) {
+		NSPoint mapPos = [self toGameCoordinates:at];
+		au.currentTerrain = currentScene->get_terrain(mapPos.x, mapPos.y);
+	}
+	*/
 	
 	CALayer* layer = [CALayer layer];
 	[layer setAnchorPoint:CGPointMake(.0, .0)];
