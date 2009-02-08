@@ -39,7 +39,7 @@
 	[[mainWindowController window] makeMainWindow];
 	[[mainWindowController window] makeKeyAndOrderFront:self];
 	
-	mapView = mainWindowController.mapView;
+	mapView = [mainWindowController.mapView retain];
 		
 	 [[NSNotificationCenter defaultCenter] 
 	 addObserver:self 
@@ -79,6 +79,8 @@
 	 object:mapView];
 	
 	[mainWindowController release];
+	
+	[mapView release];
 	
 	[super dealloc];
 }

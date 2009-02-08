@@ -16,7 +16,6 @@
 		8E0C4AD40EEB1C49008EFD65 /* CocoaUnloadMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E0C4AD30EEB1C49008EFD65 /* CocoaUnloadMenu.mm */; };
 		8E0C4B8F0EEB3B05008EFD65 /* BuyMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0C4B8E0EEB3B05008EFD65 /* BuyMenu.xib */; };
 		8E0C4B930EEB3E64008EFD65 /* BuyMenuController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E0C4B920EEB3E64008EFD65 /* BuyMenuController.mm */; };
-		8E1A5F450EDEED910089B499 /* CocoaMainWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A5F440EDEED910089B499 /* CocoaMainWindow.mm */; };
 		8E1A5F8C0EDEEE050089B499 /* CocoaMapWidget.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A5F8B0EDEEE050089B499 /* CocoaMapWidget.mm */; };
 		8E1A624D0EDF662A0089B499 /* GameDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E1A624C0EDF662A0089B499 /* GameDialog.xib */; };
 		8E1A62850EE033D70089B499 /* UnitActionMenuController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A62840EE033D70089B499 /* UnitActionMenuController.mm */; };
@@ -64,8 +63,6 @@
 		8E0C4B8E0EEB3B05008EFD65 /* BuyMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BuyMenu.xib; sourceTree = "<group>"; };
 		8E0C4B910EEB3E64008EFD65 /* BuyMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyMenuController.h; sourceTree = "<group>"; };
 		8E0C4B920EEB3E64008EFD65 /* BuyMenuController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BuyMenuController.mm; sourceTree = "<group>"; };
-		8E1A5F430EDEED910089B499 /* CocoaMainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaMainWindow.h; sourceTree = "<group>"; };
-		8E1A5F440EDEED910089B499 /* CocoaMainWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaMainWindow.mm; sourceTree = "<group>"; };
 		8E1A5F8A0EDEEE050089B499 /* CocoaMapWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaMapWidget.h; sourceTree = "<group>"; };
 		8E1A5F8B0EDEEE050089B499 /* CocoaMapWidget.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaMapWidget.mm; sourceTree = "<group>"; };
 		8E1A624C0EDF662A0089B499 /* GameDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameDialog.xib; sourceTree = "<group>"; };
@@ -250,8 +247,6 @@
 		8E1A5F400EDEED6F0089B499 /* Glue Code */ = {
 			isa = PBXGroup;
 			children = (
-				8E1A5F430EDEED910089B499 /* CocoaMainWindow.h */,
-				8E1A5F440EDEED910089B499 /* CocoaMainWindow.mm */,
 				8E1A5F8A0EDEEE050089B499 /* CocoaMapWidget.h */,
 				8E1A5F8B0EDEEE050089B499 /* CocoaMapWidget.mm */,
 				8E0C47680EEAF337008EFD65 /* CocoaActionMenu.h */,
@@ -344,7 +339,6 @@
 				8E26CE860ED8304500704923 /* Coordinate.mm in Sources */,
 				8E26CF9A0ED851F300704923 /* Sprites.mm in Sources */,
 				8E26D18C0ED868E200704923 /* MainWindowController.mm in Sources */,
-				8E1A5F450EDEED910089B499 /* CocoaMainWindow.mm in Sources */,
 				8E1A5F8C0EDEEE050089B499 /* CocoaMapWidget.mm in Sources */,
 				8E1A62850EE033D70089B499 /* UnitActionMenuController.mm in Sources */,
 				8E5D18EB0EE07D640087E028 /* VBoxView.m in Sources */,

@@ -8,11 +8,12 @@
 	
 	mapViewController = [[MapViewController alloc] initWithNibName:@"MapView" bundle:nil];
 	[mainView addSubview:mapViewController.view];
-	mapView = (MapView*)mapViewController.view;
+	mapView = [(MapView*)mapViewController.view retain];
 }
 
 - (void)dealloc {
-	[mapViewController dealloc];
+	[mapViewController release];
+	[mapView release];
 	[super dealloc];
 }
 

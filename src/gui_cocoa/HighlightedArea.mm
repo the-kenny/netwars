@@ -33,6 +33,7 @@
 
 - (void)dealloc {
 	[sprite release];
+	[layer release];
 	
 	[super dealloc];
 }

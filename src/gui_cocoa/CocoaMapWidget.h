@@ -11,6 +11,10 @@ public:
 		mapView = mView;
 	}
 	
+	~CocoaMapWidget() {
+		[mapView release];
+	}
+	
 	void setView(MapView* mView) {
 		[mView retain];
 		[mapView release];

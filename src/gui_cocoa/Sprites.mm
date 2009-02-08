@@ -24,20 +24,20 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Sprites)
 }
 
 -(void)dealloc {
-	[cache dealloc];
+	[cache release];
 	[super dealloc];
 }
 
 -(NSImage*)getSprite:(NSString*)filename {
 	id value = [cache objectForKey:filename];
 	if(value != nil) {
-		return (NSImage*)value;
+		return [(NSImage*)value autorelease];
 	} else {
 		NSImage* image = [[NSImage alloc] initWithContentsOfFile:filename];
 		[cache setObject:image forKey:filename];
 		[image release];
 		
-		return image;
+		return [image autorelease];
 	}
 	
 }

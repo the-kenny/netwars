@@ -241,14 +241,13 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 	//Add the layer after the Highlight-Layer
 	[[self layer] insertSublayer:layer below:[highlightedArea layer]];
 	
-	[layer retain];
 	au.layer = layer;
+	[layer release];
 	
 	[au draw];
 	
 	[managedUnits addObject:au];
 	unitMap.insert(std::make_pair(u, au));
-	[au retain];
 }
 
 - (void)removeUnitFromDrawing:(aw::unit::ptr)u {
