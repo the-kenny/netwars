@@ -13,6 +13,9 @@
 #import "CocoaUnloadMenu.h"
 #import "CocoaBuyMenu.h"
 #import "GameDialogController.h"
+#import "NotificationNames.h"
+#import "CocoaUnit.h"
+#import "CocoaTerrain.h"
 
 #include "game/config.h"
 #include "game/units/actions.h"
@@ -64,19 +67,7 @@
 
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] 
-	 removeObserver:self 
-	 name: leftMouseClickNotification
-	 object:mapView];
-	
-	[[NSNotificationCenter defaultCenter] 
-	 removeObserver:self 
-	 name: rightMouseClickNotification
-	 object:mapView];
-	
-	[[NSNotificationCenter defaultCenter] 
-	 removeObserver:self 
-	 name: mouseMovedNotification
-	 object:mapView];
+	 removeObserver:self];
 	
 	[mainWindowController release];
 	
@@ -104,6 +95,22 @@
 	gameController->mouse_hover_changed(coord.coord);
 }
 
+#pragma mark Event Creating
+
+void postUnitClickedNotification(const aw::unit::ptr& unit, id sender) {
+	NSDictionary* userInfo = [NSDictionary dictionaryWithObject:[CocoaUnit cocoaUnitWithUnit:unit] forKey:@"unit"];
+	[[NSNotificationCenter defaultCenter] postNotificationName:unitClickedNotification
+														object:sender
+													  userInfo:userInfo];
+}
+
+void postTerrainClickedNotification(const aw::terrain::ptr terrain, id sender) {
+	NSDictionary* userInfo = [NSDictionary dictionaryWithObject:[CocoaTerrain cocoaTerrainWithTerrain:terrain] forKey:@"terrain"];
+	[[NSNotificationCenter defaultCenter] postNotificationName:terrainClickedNotification
+														object:sender
+													  userInfo:userInfo];
+}
+
 #pragma mark "Game related stuff"
 
 - (void)initGame {
@@ -127,6 +134,10 @@
 		gameController->signal_show_unit_action_menu().connect(boost::bind(&CocoaActionMenu::showActionMenu, _1));
 		gameController->signal_show_unload_menu().connect(boost::bind(&CocoaUnloadMenu::showUnloadMenu, _1));
 		gameController->signal_show_buy_menu().connect(boost::bind(&CocoaBuyMenu::showBuyMenu, _1, _2));
+		
+		//Connect general events
+		gameController->signal_unit_clicked().connect(boost::bind(&postUnitClickedNotification, _1, self));
+		gameController->signal_terrain_clicked().connect(boost::bind(&postTerrainClickedNotification, _1, self));
 		
 		[mapView setIsEnabled:YES];
 		[self setGameActive:YES];

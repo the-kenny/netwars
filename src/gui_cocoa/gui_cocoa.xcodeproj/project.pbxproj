@@ -41,6 +41,9 @@
 		8E5F27D80F3E121400AC012E /* libtinyxml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E5F27D60F3E121400AC012E /* libtinyxml.a */; };
 		8E5F27DD0F3E123D00AC012E /* libboost_filesystem-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E5F27DB0F3E123D00AC012E /* libboost_filesystem-mt.a */; };
 		8E5F27DE0F3E123D00AC012E /* libboost_signals-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E5F27DC0F3E123D00AC012E /* libboost_signals-mt.a */; };
+		8E8A54560F3FB8420084E240 /* NotificationNames.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A54550F3FB8420084E240 /* NotificationNames.mm */; };
+		8E8A545D0F3FB90E0084E240 /* CocoaUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A545C0F3FB90E0084E240 /* CocoaUnit.mm */; };
+		8E8A54920F3FBB310084E240 /* CocoaTerrain.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A54910F3FBB310084E240 /* CocoaTerrain.mm */; };
 		8E8C41260F13A73400F1E03A /* MapViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E8C41250F13A73400F1E03A /* MapViewController.mm */; };
 		8EBFF0800F39FC9400FFFE14 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8EBFF07F0F39FC9400FFFE14 /* Icon.icns */; };
 		8EFE83120F2F4F3600835B94 /* 7330.aws in Resources */ = {isa = PBXBuildFile; fileRef = 8EFE83110F2F4F3600835B94 /* 7330.aws */; };
@@ -105,6 +108,12 @@
 		8E5F27D60F3E121400AC012E /* libtinyxml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtinyxml.a; path = ../libtinyxml.a; sourceTree = SOURCE_ROOT; };
 		8E5F27DB0F3E123D00AC012E /* libboost_filesystem-mt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_filesystem-mt.a"; path = "/usr/local/lib/libboost_filesystem-mt.a"; sourceTree = "<absolute>"; };
 		8E5F27DC0F3E123D00AC012E /* libboost_signals-mt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_signals-mt.a"; path = "/usr/local/lib/libboost_signals-mt.a"; sourceTree = "<absolute>"; };
+		8E8A544F0F3FB7F20084E240 /* NotificationNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationNames.h; sourceTree = "<group>"; };
+		8E8A54550F3FB8420084E240 /* NotificationNames.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NotificationNames.mm; sourceTree = "<group>"; };
+		8E8A545B0F3FB90E0084E240 /* CocoaUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaUnit.h; sourceTree = "<group>"; };
+		8E8A545C0F3FB90E0084E240 /* CocoaUnit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaUnit.mm; sourceTree = "<group>"; };
+		8E8A54900F3FBB310084E240 /* CocoaTerrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaTerrain.h; sourceTree = "<group>"; };
+		8E8A54910F3FBB310084E240 /* CocoaTerrain.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaTerrain.mm; sourceTree = "<group>"; };
 		8E8C41240F13A73400F1E03A /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		8E8C41250F13A73400F1E03A /* MapViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MapViewController.mm; sourceTree = "<group>"; };
 		8EBFF07F0F39FC9400FFFE14 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
@@ -196,6 +205,8 @@
 			children = (
 				32CA4F630368D1EE00C91783 /* gui_cocoa_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.mm */,
+				8E8A544F0F3FB7F20084E240 /* NotificationNames.h */,
+				8E8A54550F3FB8420084E240 /* NotificationNames.mm */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -263,6 +274,10 @@
 				8E0C4AD30EEB1C49008EFD65 /* CocoaUnloadMenu.mm */,
 				8E39AB0E0EEC497E000C7932 /* CocoaBuyMenu.h */,
 				8E39AB0F0EEC497E000C7932 /* CocoaBuyMenu.mm */,
+				8E8A545B0F3FB90E0084E240 /* CocoaUnit.h */,
+				8E8A545C0F3FB90E0084E240 /* CocoaUnit.mm */,
+				8E8A54900F3FBB310084E240 /* CocoaTerrain.h */,
+				8E8A54910F3FBB310084E240 /* CocoaTerrain.mm */,
 			);
 			name = "Glue Code";
 			sourceTree = "<group>";
@@ -361,6 +376,9 @@
 				8E8C41260F13A73400F1E03A /* MapViewController.mm in Sources */,
 				8E57A5270F3E154C004AC992 /* HighlightedArea.mm in Sources */,
 				8E0BCC5B0F30B73900BD795E /* UnitInfoController.mm in Sources */,
+				8E8A54560F3FB8420084E240 /* NotificationNames.mm in Sources */,
+				8E8A545D0F3FB90E0084E240 /* CocoaUnit.mm in Sources */,
+				8E8A54920F3FBB310084E240 /* CocoaTerrain.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
