@@ -54,12 +54,24 @@ void game_controller::start_turn()
 
 void game_controller::click(const coord &pos, int key)
 {
-	if(!m_game->get_unit(pos) && !terrain::is_building(m_game->get_terrain(pos)->type()))
+	if(!m_game->get_unit(pos) && !terrain::is_building(m_game->get_terrain(pos)->type())) 
+	{
+		if(key == 1)
+			m_signal_terrain_clicked(m_game->get_terrain(pos));
 		this->on_free_click(pos, key);
+	}
 	else if(m_game->get_unit(pos))
+	{
+		if(key == 1)
+			m_signal_unit_clicked(m_game->get_unit(pos));
 		this->on_unit_click(pos, key);
+	}
 	else if(terrain::is_building(m_game->get_terrain(pos)->type()))
+	{
+		if(key == 1)
+			m_signal_terrain_clicked(m_game->get_terrain(pos));
 		this->on_building_click(pos, key);
+	}
 
 	this->update_display();
 }

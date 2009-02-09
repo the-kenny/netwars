@@ -89,6 +89,10 @@ namespace aw
 			typedef boost::signal<unit::types (unit::workshops, const player::ptr&)> unit_buy_menu_callback_t;
 			typedef boost::signal<int (const std::list<unit::ptr> &)> unit_unload_menu_callback_t;
 
+			//Misc callbacks
+			typedef boost::signal<void (const unit::ptr&)> unit_clicked_callback_t;
+			typedef boost::signal<void (const terrain::ptr&)> terrain_clicked_callback_t;
+
 			enum gamestate { IDLE, DISPLAYING, MOVING, ATTACKING, UNLOADING, REPAIRING };
 
 			game_controller();
@@ -106,6 +110,10 @@ namespace aw
 			unit_action_menu_callback_t &signal_show_unit_action_menu() { return m_unit_action_menu_callback; }
 			unit_buy_menu_callback_t &signal_show_buy_menu() { return m_unit_buy_menu_callback; }
 			unit_unload_menu_callback_t &signal_show_unload_menu() { return m_unit_unload_menu_callback; }
+
+			//General callback accessor methods
+			unit_clicked_callback_t &signal_unit_clicked() { return m_signal_unit_clicked; }
+			terrain_clicked_callback_t &signal_terrain_clicked() { return m_signal_terrain_clicked; }
 			
 		private:
 			void on_unit_click(const coord &pos, int key);
@@ -131,6 +139,10 @@ namespace aw
 			unit_action_menu_callback_t m_unit_action_menu_callback;
 			unit_buy_menu_callback_t m_unit_buy_menu_callback;
 			unit_unload_menu_callback_t m_unit_unload_menu_callback;
+
+			//General callbacks
+			unit_clicked_callback_t m_signal_unit_clicked;
+			terrain_clicked_callback_t m_signal_terrain_clicked;
 	};
 }
 
