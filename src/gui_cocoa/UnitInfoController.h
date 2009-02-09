@@ -9,6 +9,6 @@
     IBOutlet id sprite;
 }
 
--(void)showUnit:(aw::unit::ptr&)u;
+-(void)showUnit:(const aw::unit::ptr&)u;
 
 @end
