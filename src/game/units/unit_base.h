@@ -158,6 +158,7 @@ namespace aw
 			}
 
 			int fuel() const { return m_fuel; }
+			int max_fuel() const { return m_max_fuel; }
 			bool low_fuel() { return (static_cast<double>(m_fuel)/static_cast<double>(m_max_fuel) < 0.5); /*Weniger als die Hälfte der Maximalfüllung*/ }
 
 			bool remove()
