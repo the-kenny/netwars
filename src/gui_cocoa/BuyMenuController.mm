@@ -1,5 +1,7 @@
 #import "BuyMenuController.h"
 
+#import "CocoaUnit.h"
+#import "NotificationNames.h"
 #import "Sprites.h"
 
 #include "game/gui/paths.h"
@@ -38,6 +40,7 @@
 			[dict setValue:[NSString stringWithCString:loaded_unit.name.c_str()] forKey:@"name"];
 			[dict setValue:[NSNumber numberWithInt:loaded_unit.price] forKey:@"price"];
 			[dict setValue:[NSNumber numberWithBool:(loaded_unit.price <= self.playerFunds)]  forKey:@"affordable"];
+			[dict setValue:[CocoaUnit cocoaUnitWithUnit:loaded_unit.create_unit(p->get_unit_color())]  forKey:@"unit"];
 			
 			NSString* path = [NSString stringWithCString:aw::gui::get_path(loaded_unit.internal_name, player->get_unit_color()).c_str()];
 			[dict setValue:[[Sprites sharedSprites] getSprite:path] forKey:@"image"];
@@ -79,8 +82,14 @@
 - (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)rowIndex {
 	if([[[unitArray objectAtIndex:rowIndex] valueForKey:@"price"] intValue] <= player->get_funds())
 		returnValue = [[[unitArray objectAtIndex:rowIndex] valueForKey:@"internalName"] UTF8String];
-
-		return YES;
+		
+	//Trigger unitSelected-Notification
+	NSDictionary* userInfo = [NSDictionary dictionaryWithObject:[[unitArray objectAtIndex:rowIndex] valueForKey:@"unit"] forKey:@"unit"];
+	[[NSNotificationCenter defaultCenter] postNotificationName:unitClickedNotification
+														object:self
+													  userInfo:userInfo];
+	
+	return YES;
 }
 
 #pragma mark Window Delegate Methods
