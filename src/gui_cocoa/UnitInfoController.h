@@ -3,10 +3,8 @@
 #include "game/units/unit_base.h"
 
 @interface UnitInfoController : NSWindowController {
-    IBOutlet id fuel;
-    IBOutlet id hp;
-    IBOutlet id name;
-    IBOutlet id sprite;
+	aw::unit::ptr unit;
+	NSMutableDictionary* unitInfo;
 }
 
 -(void)showUnit:(const aw::unit::ptr&)u;
