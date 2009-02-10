@@ -5,6 +5,9 @@
 @interface UnitInfoController : NSWindowController {
 	aw::unit::ptr unit;
 	NSMutableDictionary* unitInfo;
+	NSMutableDictionary* transporterInfo;
+	
+	IBOutlet NSDrawer* drawer;
 }
 
 -(void)showUnit:(const aw::unit::ptr&)u;
