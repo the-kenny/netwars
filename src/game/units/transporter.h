@@ -60,6 +60,11 @@ namespace aw
 				return m_loaded_units.size();
 			}
 
+			unsigned int max_loaded_units() 
+			{
+				return m_max_load;
+			}
+
 			bool can_load(unit::types t)
 			{
 				if(m_loaded_units.size() < m_max_load && std::find(m_loadable_types.begin(), m_loadable_types.end(), t) != m_loadable_types.end())
