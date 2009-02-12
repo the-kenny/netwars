@@ -4,11 +4,14 @@
 
 TEMPLATE = app
 TARGET = netwars
-DEPENDPATH += .
-INCLUDEPATH += .
+DEPENDPATH += . ../ ../lib
+INCLUDEPATH += . ../ ../lib
+
+DEFINES += TIXML_USE_TICPP TIXML_USE_STL
+LIBS += ../*.a
 
 # Input
-HEADERS += MainWindow.h MapWidget.h
+HEADERS += MainWindow.h MapWidget.h Sprites.h
 FORMS += mainWindow.ui
-SOURCES += main.cpp MainWindow.cpp MapWidget.cpp
+SOURCES += main.cpp MainWindow.cpp MapWidget.cpp Sprites.cpp
 RESOURCES += data.qrc
