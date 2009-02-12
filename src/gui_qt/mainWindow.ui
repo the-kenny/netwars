@@ -55,7 +55,7 @@
     <property name="title" >
      <string>File</string>
     </property>
-    <addaction name="actionNew_Game" />
+    <addaction name="actionNewGame" />
     <addaction name="separator" />
     <addaction name="actionQuit" />
    </widget>
@@ -63,18 +63,18 @@
     <property name="title" >
      <string>Game</string>
     </property>
-    <addaction name="actionEnd_Turn" />
+    <addaction name="actionEndTurn" />
    </widget>
    <addaction name="menuFile" />
    <addaction name="menuGame" />
   </widget>
   <widget class="QStatusBar" name="statusbar" />
-  <action name="actionEnd_Turn" >
+  <action name="actionEndTurn" >
    <property name="text" >
     <string>End Turn</string>
    </property>
   </action>
-  <action name="actionNew_Game" >
+  <action name="actionNewGame" >
    <property name="text" >
     <string>New Game</string>
    </property>
@@ -94,5 +94,22 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionQuit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>248</x>
+     <y>193</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

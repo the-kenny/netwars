@@ -8,6 +8,9 @@ class MainWindow: public QMainWindow, public Ui::MainWindow {
 
 	public:
 		MainWindow(QMainWindow* parent = 0);
+
+	public Q_SLOTS:
+		void newGame();
 };
 
 #endif
