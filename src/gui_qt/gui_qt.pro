@@ -7,6 +7,8 @@ TARGET = netwars
 DEPENDPATH += . ../ ../lib
 INCLUDEPATH += . ../ ../lib
 
+CONFIG += no_keywords
+
 DEFINES += TIXML_USE_TICPP TIXML_USE_STL
 LIBS += ../*.a
 
