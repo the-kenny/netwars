@@ -22,7 +22,9 @@ class MapWidget: public QWidget {
 		virtual void paintEvent(QPaintEvent* event);
 
 	private:
+		void drawUnits(QPainter& painter);
 		void drawTerrain(QPainter& painter);
+		void drawPixmap(const std::string path, const aw::coord& coord, QPainter& painter);
 
 		QImage backgroundImage;
 
