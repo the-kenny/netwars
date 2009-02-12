@@ -1,5 +1,6 @@
 #include "MapWidget.h"
 
+#include <QMouseEvent>
 #include <QPainter>
 
 #include "Sprites.h"
@@ -22,6 +23,35 @@ void MapWidget::paintEvent(QPaintEvent* event) {
 
 	if(currentScene) {
 		this->drawTerrain(painter);
+	}
+}
+
+void MapWidget::mousePressEvent(QMouseEvent* event) {
+	aw::coord realCoord(event->x()/16, event->y()/16);
+
+	int button = -1;
+
+	switch(event->button()) {
+		case Qt::LeftButton:
+			button = 1;
+			break;
+		case Qt::RightButton:
+			button = 3;
+			break;
+		default:
+			return;
+	}
+
+	_signalClicked(realCoord, button);
+}
+
+void MapWidget::mouseMoveEvent(QMouseEvent* event) {
+	static coord lastCoord(0, 0);
+	coord currentCoord(event->x()/16, event->y()/16);
+
+	if(currentCoord != lastCoord) {
+		_signalFocusChanged(currentCoord);
+		lastCoord = currentCoord;
 	}
 }
 

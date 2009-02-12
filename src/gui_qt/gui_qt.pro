@@ -11,6 +11,7 @@ CONFIG += no_keywords
 
 DEFINES += TIXML_USE_TICPP TIXML_USE_STL
 LIBS += ../*.a
+LIBS += -lboost_signals-mt
 
 # Input
 HEADERS += MainWindow.h MapWidget.h Sprites.h
