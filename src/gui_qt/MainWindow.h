@@ -3,6 +3,8 @@
 
 #include "ui_mainWindow.h"
 
+#include "game/game_controller.h"
+
 class MainWindow: public QMainWindow, public Ui::MainWindow {
 	Q_OBJECT
 
@@ -11,6 +13,9 @@ class MainWindow: public QMainWindow, public Ui::MainWindow {
 
 	public Q_SLOTS:
 		void newGame();
+
+	private:
+		aw::game_controller::ptr gameController;
 };
 
 #endif
