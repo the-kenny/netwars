@@ -38,6 +38,9 @@
         <height>320</height>
        </size>
       </property>
+      <property name="mouseTracking" >
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
    </layout>

@@ -2,6 +2,7 @@
 
 #include <QMouseEvent>
 #include <QPainter>
+#include <boost/foreach.hpp>
 
 #include "Sprites.h"
 
@@ -23,6 +24,11 @@ void MapWidget::paintEvent(QPaintEvent* event) {
 
 	if(currentScene) {
 		this->drawTerrain(painter);
+		this->drawUnits(painter);
+
+		//Draw Path and Highlighted Area
+		this->drawHighlightedArea(painter, currentScene->get_highlighted_area(), "data/pixmaps/misc/range.png");
+		this->drawHighlightedArea(painter, currentScene->get_path_area(), "data/pixmaps/misc/path.png");
 	}
 }
 
@@ -56,13 +62,19 @@ void MapWidget::mouseMoveEvent(QMouseEvent* event) {
 }
 
 void MapWidget::drawPixmap(const std::string path, const aw::coord& c, QPainter& painter) {
-	painter.drawImage(QPoint(c.x*16, c.y*16), 
-			sharedSprites().getSprite(QString(path.c_str())));
+	if(path.size() != 0) {
+		QImage sprite = sharedSprites().getSprite(QString(path.c_str()));
+		assert(!sprite.isNull());
+
+		QSize size = sprite.size();
+
+		painter.drawImage(QPoint((c.x*16)+(16-size.width()), (c.y*16)+(16-size.height())), sprite);
+	}
 }
 
 void MapWidget::drawUnits(QPainter& painter) {
 	for(int x = 0; x < 30; ++x) {
-		for(int y = 0; y < 30; ++y) {
+		for(int y = 0; y < 20; ++y) {
 			aw::unit::ptr u = currentScene->get_unit(x, y);
 
 			if(u != NULL && !u->is_dummy()) {
@@ -103,11 +115,16 @@ void MapWidget::drawUnits(QPainter& painter) {
 
 void MapWidget::drawTerrain(QPainter& painter) {
 	for(int x = 0; x < 30; ++x) {
-		for(int y = 0; y < 30; ++y) {
+		for(int y = 0; y < 20; ++y) {
 			this->drawPixmap(aw::gui::get_sprite_for(aw::coord(x, y), 
 						currentScene),
 					aw::coord(x, y), 
 					painter);
 		}
 	}
+}
+
+void MapWidget::drawHighlightedArea(QPainter& painter, const aw::area& area, const std::string& pixmap) {
+	BOOST_FOREACH(const coord& c, area)
+		this->drawPixmap(pixmap, c, painter);
 }

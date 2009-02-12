@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QImage>
+#include <string>
 
 #include "game/scene.h"
 
@@ -20,7 +21,7 @@ class MapWidget: public QWidget {
 		aw::scene::ptr scene() const { return currentScene; }
 		void setScene(aw::scene::ptr scene) { 
 			currentScene = scene; 
-			this->repaint(); 
+			this->update(); 
 		}
 
 		signalClickedT &signalClicked() { return _signalClicked; }
@@ -34,7 +35,9 @@ class MapWidget: public QWidget {
 	private:
 		void drawUnits(QPainter& painter);
 		void drawTerrain(QPainter& painter);
-		void drawPixmap(const std::string path, const aw::coord& coord, QPainter& painter);
+		void drawHighlightedArea(QPainter& painter, const aw::area& area, const std::string& pixmap);
+
+		void drawPixmap(const std::string path, const aw::coord& c, QPainter& painter);
 
 		QImage backgroundImage;
 
