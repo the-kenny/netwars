@@ -21,7 +21,8 @@ class MapWidget: public QWidget {
 		aw::scene::ptr scene() const { return currentScene; }
 		void setScene(aw::scene::ptr scene) { 
 			currentScene = scene; 
-			this->update(); 
+			this->repaint(); 
+			this->repaint(); 
 		}
 
 		signalClickedT &signalClicked() { return _signalClicked; }
