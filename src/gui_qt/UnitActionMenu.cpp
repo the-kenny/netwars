@@ -40,7 +40,6 @@ aw::units::actions UnitActionMenu::showActionMenu(QWidget* parent, const std::li
 }
 
 void UnitActionMenu::setReturnValue(aw::units::actions a) {
-	std::cout << "setReturnValue" << std::endl;
 	_returnValue = a;
 }
 
