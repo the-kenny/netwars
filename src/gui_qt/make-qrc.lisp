@@ -37,4 +37,4 @@
                                    (walk-directory #P"data/" #'(lambda (file)
                                                                  (htm (:file (str (namestring (make-relative file)))))))))))
 
-(print "You have to change rcc to RCC in data.qrc before it works!)
+(print "You have to change rcc to RCC in data.qrc before it works!")
