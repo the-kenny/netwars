@@ -47,4 +47,5 @@ void MainWindow::newGame() {
 
 void MainWindow::endTurn() {
 	gameController->end_turn();
+	gameController->start_turn();
 }
