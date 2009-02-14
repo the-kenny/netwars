@@ -11,10 +11,17 @@
 
 using namespace aw;
 
+namespace {
+	//Used for masking
+	static QImage blackImage = QImage(32, 32, QImage::Format_ARGB32);
+}
+
 MapWidget::MapWidget(QWidget* parent) 
 	: QWidget(parent), 
 	backgroundImage(":/data/background.png") {
-
+	
+	//Initialize the blackImage;
+	blackImage.fill(0xff000000);
 }
 
 void MapWidget::paintEvent(QPaintEvent* event) {
@@ -61,7 +68,7 @@ void MapWidget::mouseMoveEvent(QMouseEvent* event) {
 	}
 }
 
-void MapWidget::drawPixmap(const std::string path, const aw::coord& c, QPainter& painter) {
+void MapWidget::drawPixmap(const std::string& path, const aw::coord& c, QPainter& painter) {
 	if(path.size() != 0) {
 		QImage sprite = sharedSprites().getSprite(QString(path.c_str()));
 		assert(!sprite.isNull());
@@ -71,6 +78,12 @@ void MapWidget::drawPixmap(const std::string path, const aw::coord& c, QPainter&
 		painter.drawImage(QPoint((c.x*16)+(16-size.width()), (c.y*16)+(16-size.height())), sprite);
 	}
 }
+
+void MapWidget::drawPixmap(const QImage& sprite, const aw::coord& c, QPainter& painter) {
+		QSize size = sprite.size();
+		painter.drawImage(QPoint((c.x*16)+(16-size.width()), (c.y*16)+(16-size.height())), sprite);
+}
+
 
 void MapWidget::drawUnits(QPainter& painter) {
 	for(int x = 0; x < 30; ++x) {
@@ -82,6 +95,21 @@ void MapWidget::drawUnits(QPainter& painter) {
 						aw::coord(x, y),
 						painter);
 
+				if(u->moved()) {
+					QImage mask = sharedSprites().getSprite(QString(aw::gui::get_path(u->type(), 
+									u->color()).c_str())).copy();
+					QPainter imagePainter(&mask);
+
+					imagePainter.setCompositionMode(QPainter::CompositionMode_SourceIn);
+					imagePainter.drawImage(QPoint(), blackImage);
+
+					painter.save();
+
+					painter.setOpacity(0.4);
+					this->drawPixmap(mask, aw::coord(x, y), painter);
+
+					painter.restore();
+				}
 
 				int life = u->get_hp();
 				if(life < 10 && life > 0)

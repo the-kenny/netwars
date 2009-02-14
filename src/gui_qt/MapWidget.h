@@ -38,7 +38,8 @@ class MapWidget: public QWidget {
 		void drawTerrain(QPainter& painter);
 		void drawHighlightedArea(QPainter& painter, const aw::area& area, const std::string& pixmap);
 
-		void drawPixmap(const std::string path, const aw::coord& c, QPainter& painter);
+		void drawPixmap(const std::string& path, const aw::coord& c, QPainter& painter);
+		void drawPixmap(const QImage& sprite, const aw::coord& c, QPainter& painter);
 
 		QImage backgroundImage;
 
