@@ -15,6 +15,7 @@ MainWindow::MainWindow(QMainWindow* parent) {
 
 	//Connect slots
 	connect(actionNewGame, SIGNAL(triggered()), this, SLOT(newGame()));
+	connect(actionEndTurn, SIGNAL(triggered()), this, SLOT(endTurn()));
 }
 
 
@@ -38,7 +39,12 @@ void MainWindow::newGame() {
 		//Connect the menu-callbacks
 		gameController->signal_show_unit_action_menu().connect(boost::bind(&UnitActionMenu::showActionMenu, this, _1));
 
+		actionEndTurn->setEnabled(true);
 
 		gameController->start_game(game);
 	}
+}
+
+void MainWindow::endTurn() {
+	gameController->end_turn();
 }

@@ -13,6 +13,7 @@ class MainWindow: public QMainWindow, public Ui::MainWindow {
 
 	public Q_SLOTS:
 		void newGame();
+		void endTurn();
 
 	private:
 		aw::game_controller::ptr gameController;
