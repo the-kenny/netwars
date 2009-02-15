@@ -15,7 +15,7 @@ LIBS += ../*.a
 LIBS += -lboost_signals-mt
 
 # Input
-HEADERS += GameDialog.h MainWindow.h MapWidget.h Sprites.h UnitActionMenu.h UnitActionMenuButton.h
-FORMS += mainWindow.ui gameDialog.ui
-SOURCES += GameDialog.cpp main.cpp MainWindow.cpp MapWidget.cpp Sprites.cpp UnitActionMenu.cpp
+HEADERS += BuyMenu.h GameDialog.h MainWindow.h MapWidget.h Sprites.h UnitActionMenu.h UnitActionMenuButton.h
+FORMS += buyMenu.ui gameDialog.ui mainWindow.ui 
+SOURCES += BuyMenu.cpp GameDialog.cpp main.cpp MainWindow.cpp MapWidget.cpp Sprites.cpp UnitActionMenu.cpp
 RESOURCES += data.qrc
