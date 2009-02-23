@@ -65,10 +65,13 @@
 	
 	
 	//We use an string because we can't do conditional formatting with bindings (as far as I know)
-	if(u->get_attack_distance() == 0)
-		[dict setValue:[NSString stringWithFormat:@"%i", u->get_attack_range()] forKey:@"rangeString"];
-	else
-		[dict setValue:[NSString stringWithFormat:@"%i to %i", u->get_attack_distance(), u->get_attack_range()+u->get_attack_distance()] forKey:@"rangeString"];
+	
+	if(u->get_attack_range() != -1) {
+		if(u->get_attack_distance() == 0)
+			[dict setValue:[NSString stringWithFormat:@"%i", u->get_attack_range()] forKey:@"rangeString"];
+		else
+			[dict setValue:[NSString stringWithFormat:@"%i to %i", u->get_attack_distance(), u->get_attack_range()+u->get_attack_distance()] forKey:@"rangeString"];
+	}
 
 	aw::transporter::ptr transporter = boost::dynamic_pointer_cast<aw::transporter>(u);
 	[dict setValue:[NSNumber numberWithBool:(transporter != NULL)] forKey:@"isTransporter"];
