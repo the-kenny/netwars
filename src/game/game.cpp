@@ -240,11 +240,12 @@ void game::supply_unit_from_building(const coord &support_building)
 	unit::ptr unit = this->get_unit(support_building);
 	assert(unit != NULL);
 
+	//I'm not sure if supplying (fuel and ammo) costs
+	unit->supply();
+
 	if(unit->get_hp() < unit->max_hp())
 	{
 		assert(b->get_supply_environment() == unit->get_environment());
-
-		unit->supply();
 
 		int repair_points = b->get_repair_points();
 		if(repair_points != 0)
