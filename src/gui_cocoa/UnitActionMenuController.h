@@ -6,8 +6,9 @@
 
 #include "game/units/actions.h"
 
-@interface UnitActionMenuController : NSWindowController {
+@interface UnitActionMenuController : NSObject {
 	VBoxView* vboxView;
+	NSWindow* window;
 	
 	aw::units::actions returnAction;
 }

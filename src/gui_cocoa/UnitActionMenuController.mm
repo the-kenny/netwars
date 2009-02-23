@@ -37,21 +37,21 @@ const unsigned int buttonHeight = 15;
 - (UnitActionMenuController*)init {
 	self = [super init];
 	
-	NSWindow* window = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, menuWidth, 0)  //Size for actions.size buttons + the cancel-button
+	window = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, menuWidth, 0)  //Size for actions.size buttons + the cancel-button
 												   styleMask:NSBorderlessWindowMask  
 													 backing:NSBackingStoreRetained 
 													   defer:NO];
-	self.window = window;
 	
 	vboxView = [[VBoxView alloc] initWithFrame:NSMakeRect(0, 0, menuWidth, 0)];
 	[vboxView setSpacing:0];
-	[self.window.contentView addSubview:vboxView];
+	[[window contentView] addSubview:vboxView];
 	
 	return self;
 }
 
 - (void)dealloc {
 	[vboxView release];
+	[window release];
 	[super dealloc];
 }
 
@@ -72,18 +72,18 @@ const unsigned int buttonHeight = 15;
 	[button release];
 	
 	//Resize the window
-	[self.window setFrame:[vboxView frame] display:YES];
+	[window setFrame:[vboxView frame] display:YES];
 }
 
 - (aw::units::actions)run:(Coordinate*)c {
 	//Add the Cancel-Button
 	[self addAction:aw::units::CANCEL];
 	
-	[self.window setFrameOrigin:NSMakePoint(c.coord.x, (c.coord.y)-(self.window.frame.size.height))];
+	[window setFrameOrigin:NSMakePoint(c.coord.x, (c.coord.y)-(window.frame.size.height))];
 	
-	[self showWindow:self];
-	[[NSApplication sharedApplication] runModalForWindow:self.window];
-	[self close];
+	[window setIsVisible:true];
+	[[NSApplication sharedApplication] runModalForWindow:window];
+	[window close];
 	return returnAction;
 }
 
