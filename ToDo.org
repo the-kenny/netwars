@@ -1,0 +1,31 @@
+* Current ToDo
+** TODO Clean up the core-code [0/10]
+   - [ ] Error-Checking!
+   - [ ] Clean up unit_base.h
+   - [ ] Clean up terrain.h
+   - [ ] Use the game_settings class
+   - [ ] Clean up area.h
+   - [ ] Clean up scene.h
+   - [ ] get_damage_percent shouldn't have to parse the damagetable
+	 after each call
+   - [ ] Just do the output on a debug-build
+   - [ ] Can pass should be located in aw::map
+   - [ ] beaten in player_utilities.h shoud be located in aw::game
+** TODO Fog of War [0/4]
+   - [ ] Determite the visible range for different units
+   - [ ] Implement in Core
+   - [ ] Implement in Qt-Gui
+   - [ ] Implement in Cocoa-Gui
+** TODO Customizable CO's
+*** Ideas
+    - Some sliders to assign a number of points to certain attributes
+      (Stronger land-units, stronger range-units and so...)
+** TODO Correct pathfinding
+** TODO Weather [0/2]
+   - [ ] Collect informations about weather in Advance Wars
+   - [ ] Implement in Core
+* Later
+** Drafts about networking
+   - Online-Games like old-school Go 
+     Send an email after each player's move so that you can play a
+     game over a greater range of days
