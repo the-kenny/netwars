@@ -11,6 +11,9 @@ GameDialog::GameDialog(QDialog* parent) {
 	connect(fundsPerBuildingSpinBox, SIGNAL(valueChanged(int)), this, SLOT(fundsPerBuildingChanged(int)));
 	connect(chooseMapButton, SIGNAL(clicked()), this, SLOT(chooseMapFile()));
 	connect(mapFileLineEdit, SIGNAL(textChanged(QString)), this, SLOT(mapFileChanged(QString)));
+
+	_initialFunds = 0;
+	_fundsPerBuilding = 1000;
 }
 
 
