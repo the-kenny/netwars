@@ -55,9 +55,10 @@ BuyMenu::BuyMenu(QWidget* parent, aw::player::ptr player, aw::unit::workshops wo
 
 aw::unit::types BuyMenu::showBuyMenu(QWidget* parent, aw::player::ptr player, aw::unit::workshops workshop) {
 	BuyMenu b(parent, player, workshop);
-	b.exec();
-
-	return b._returnValue;
+	if(b.exec() == QDialog::Accepted)
+	  return b._returnValue;
+	else
+	  return aw::unit::TYPE_NONE;
 }
 
 void BuyMenu::unitSelected(QTreeWidgetItem* current, QTreeWidgetItem* /* last */) {
