@@ -21,6 +21,8 @@ UnitActionMenu::UnitActionMenu(QWidget* parent)
 
 	this->setLayout(widgetLayout);
 
+	this->move(QCursor::pos());
+
 	_returnValue = aw::units::WAIT;
 }
 

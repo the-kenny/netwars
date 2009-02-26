@@ -17,6 +17,8 @@ UnitUnloadMenu::UnitUnloadMenu(QWidget* parent)
 
 	this->setLayout(widgetLayout);
 
+	this->move(QCursor::pos());
+
 	returnPosition = -1;
 }
 
