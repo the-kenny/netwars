@@ -3,6 +3,7 @@
 #include "BuyMenu.h"
 #include "GameDialog.h"
 #include "UnitActionMenu.h"
+#include "UnitUnloadMenu.h"
 
 #include "game/game.h"
 #include "game/game_controller.h"
@@ -40,6 +41,7 @@ void MainWindow::newGame() {
 		//Connect the menu-callbacks
 		gameController->signal_show_unit_action_menu().connect(boost::bind(&UnitActionMenu::showActionMenu, this, _1));
 		gameController->signal_show_buy_menu().connect(boost::bind(&BuyMenu::showBuyMenu, this, _2, _1));
+		gameController->signal_show_unload_menu().connect(boost::bind(&UnitUnloadMenu::showUnloadMenu, this, _1));
 
 		actionEndTurn->setEnabled(true);
 
