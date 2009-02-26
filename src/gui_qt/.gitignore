@@ -1,0 +1,4 @@
+moc_*
+Makefile
+qrc_data.cpp
+ui_*
