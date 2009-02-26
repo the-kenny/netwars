@@ -13,6 +13,10 @@ QImage Sprites::getSprite(const QString& filename) {
 	}	
 }
 
+QImage Sprites::getSprite(const std::string& filename) {
+  return getSprite(filename.c_str());
+}
+
 Sprites& sharedSprites() {
 	return Sprites::instance();
 }
