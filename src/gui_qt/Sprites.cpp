@@ -14,7 +14,7 @@ QImage Sprites::getSprite(const QString& filename) {
 }
 
 QImage Sprites::getSprite(const std::string& filename) {
-  return getSprite(filename.c_str());
+  return getSprite(QString(filename.c_str()));
 }
 
 Sprites& sharedSprites() {

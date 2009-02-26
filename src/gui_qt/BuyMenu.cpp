@@ -40,7 +40,7 @@ BuyMenu::BuyMenu(QWidget* parent, aw::player::ptr player, aw::unit::workshops wo
 				QTreeWidgetItem* treeItem = new QTreeWidgetItem(items);
 
 				QImage image = sharedSprites().getSprite(gui::get_path(loaded_unit.unit->type(), 
-							player->get_unit_color()).c_str());
+							player->get_unit_color()));
 				treeItem->setIcon(0, QIcon(QPixmap::fromImage(image)));
 
 				if(loaded_unit.price > playerFunds) {
