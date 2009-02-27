@@ -42,3 +42,4 @@
    - Online-Games like old-school Go 
      Send an email after each player's move so that you can play a
      game over a greater range of days
+   - Show games on a webserver
