@@ -2,6 +2,7 @@
 
 #include <QFileDialog>
 
+#include "game/config.h"
 
 GameDialog::GameDialog(QDialog* parent) {
 	setupUi(this);
@@ -12,8 +13,12 @@ GameDialog::GameDialog(QDialog* parent) {
 	connect(chooseMapButton, SIGNAL(clicked()), this, SLOT(chooseMapFile()));
 	connect(mapFileLineEdit, SIGNAL(textChanged(QString)), this, SLOT(mapFileChanged(QString)));
 
-	_initialFunds = 0;
-	_fundsPerBuilding = 1000;
+	_initialFunds = aw::config().get<int>("/config/defaults/initial-funds");
+	_fundsPerBuilding = aw::config().get<int>("/config/defaults/funds-per-building");
+
+	//Show the values in the spinBoxes
+	initialFundsSpinBox->setValue(_initialFunds);
+	fundsPerBuildingSpinBox->setValue(_fundsPerBuilding);
 }
 
 
