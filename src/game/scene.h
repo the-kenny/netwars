@@ -67,7 +67,7 @@ namespace aw
 			void highlighted(unsigned int x, unsigned int y, bool highlight)
 			{
 				if(highlight && !m_highlights.contains(coord(x, y)))
-					m_highlights.push_back(coord(x, y));
+					m_highlights.append(coord(x, y));
 				else
 					m_highlights.erase(coord(x, y));
 			}
@@ -90,7 +90,7 @@ namespace aw
 			void path(unsigned int x, unsigned int y, bool highlight)
 			{
 				if(highlight && !m_path.contains(coord(x, y)))
-					m_path.push_back(coord(x, y));
+					m_path.append(coord(x, y));
 				else if(!highlight)
 					m_path.erase(coord(x, y));
 			}

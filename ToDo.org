@@ -1,12 +1,12 @@
 #+SEQ_TODO: TODO ACTIVE DONE
 
 * Current ToDo
-** TODO Clean up the core-code [0/11]
+** ACTIVE Clean up the core-code [1/11]
    - [ ] Error-Checking!
    - [ ] Clean up unit_base.h
    - [ ] Clean up terrain.h
    - [ ] Use the game_settings class
-   - [ ] Clean up area.h
+   - [X] Clean up area.h
    - [ ] Clean up scene.h
    - [ ] Add more informations to scene.h
 	 (Like changed states etc.)

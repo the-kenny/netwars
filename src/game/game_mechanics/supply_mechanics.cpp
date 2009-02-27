@@ -78,7 +78,7 @@ aw::area game_mechanics::get_supply_coordinates(const map::ptr &map, const coord
 		if(map->on_map(c) && map->get_unit(c))
 		{
 			if(can_supply(map, unit_c, c))
-				ret.insert(c);
+				ret.append(c);
 		}
 	}
 
@@ -101,7 +101,7 @@ aw::area game_mechanics::get_repair_coordinates(const map::ptr &map, const coord
 		if(map->on_map(c) && map->get_unit(c))
 		{
 			if(can_repair(map, unit_c, c, funds))
-				ret.insert(c);
+				ret.append(c);
 		}
 	}
 
