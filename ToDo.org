@@ -24,7 +24,6 @@
       (Stronger land-units, stronger range-units and so...)
 ** TODO Correct pathfinding
 ** TODO Weather [0/2]
-** TODO 
    - [ ] Collect informations about weather in Advance Wars
    - [ ] Implement in Core
 ** TODO Make configurable [0/2]
