@@ -6,6 +6,7 @@
 
 #include "Sprites.h"
 
+#include "game/config.h"
 #include "game/gui/drawing.h"
 #include "game/gui/paths.h"
 
@@ -36,6 +37,11 @@ void MapWidget::paintEvent(QPaintEvent* event) {
 		//Draw Path and Highlighted Area
 		this->drawHighlightedArea(painter, currentScene->get_highlighted_area(), "data/pixmaps/misc/range.png");
 		this->drawHighlightedArea(painter, currentScene->get_path_area(), "data/pixmaps/misc/path.png");
+
+		if(currentScene->highlight())
+			this->drawPixmap(aw::config().get<std::string>("/config/dirs/pixmaps") + "misc/highlight.png",
+				currentScene->highlight(), 
+				painter);
 	}
 }
 
