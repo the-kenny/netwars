@@ -8,4 +8,9 @@
 
 	<damagetable>$datadir/damagetable.xml</damagetable>
 	<units>$datadir/units.xml</units>
+
+	<defaults>
+	  <initial-funds>0</initial-funds>
+	  <funds-per-building>1000</funds-per-building>
+	</defaults>
 </config>
