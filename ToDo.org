@@ -1,13 +1,13 @@
 #+SEQ_TODO: TODO ACTIVE DONE
 
 * Current ToDo
-** ACTIVE Clean up the core-code [1/11]
+** ACTIVE Clean up the core-code [2/11]
    - [ ] Error-Checking!
    - [ ] Clean up unit_base.h
    - [ ] Clean up terrain.h
    - [ ] Use the game_settings class
    - [X] Clean up area.h
-   - [ ] Clean up scene.h
+   - [X] Clean up scene.h
    - [ ] Add more informations to scene.h
 	 (Like changed states etc.)
    - [ ] get_damage_percent shouldn't have to parse the damagetable

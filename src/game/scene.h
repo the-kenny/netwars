@@ -23,85 +23,42 @@ namespace aw
 				for(int x = 0; x < 30; x++)
 					for(int y = 0; y < 20; y++)
 					{
-						this->set_terrain(x, y, map->get_terrain(coord(x, y)));
-						this->set_unit(x, y, map->get_unit(coord(x, y)));
+						const coord c(x, y);
+						this->set_terrain(c, map->get_terrain(c));
+						this->set_unit(c, map->get_unit(c));
 					}
 			}
 
 			scene()
-			: m_terrains(boost::extents[30][20]), m_units(boost::extents[30][20]) /*, m_highlights(boost::extents[30][20]), m_path(boost::extents[30][20])*/
+			: m_terrains(boost::extents[30][20]), m_units(boost::extents[30][20])
 			{
 				for(int x = 0; x < 30; x++)
 				{
 					for(int y = 0; y < 20; y++)
 					{
-//						m_terrains[x][y] = terrain::ptr(new terrain);
 						m_terrains[x][y] = terrain::create();
-//						m_highlights[x][y] = false;
-//						m_path[x][y] = false;
 					}
 				}
 			}
 
-//				terrain::types terrain_type(unsigned int x, unsigned int y) { return m_terrains[x][y]->type(); }
-//				terrain::extras terrain_extra(unsigned int x, unsigned int y) { return m_terrains[x][y]->extra(); }
+			const terrain::ptr &get_terrain(const coord& c) const { return get_terrain(c.x, c.y); }
+			const terrain::ptr &get_terrain(int x, int y) const { return m_terrains[x][y]; }
+			void set_terrain(const coord& c, const terrain::ptr &terr) { m_terrains[c.x][c.y] = terr; }
 
-//				void terrain_type(unsigned int x, unsigned int y, terrain::types type) { m_terrains[x][y]->type(type); }
-//				void terrain_extra(unsigned int x, unsigned int y, terrain::extras extra) { m_terrains[x][y]->extra(extra); }
+			const unit::ptr &get_unit(const coord& c) const { return get_unit(c.x, c.y); }
+			const unit::ptr &get_unit(int x, int y) const { return m_units[x][y]; }
+			void set_unit(const coord& c, const unit::ptr &u) { m_units[c.x][c.y] = u; }
 
+			bool is_highlighted(const coord& c) { return m_highlights.contains(c);}
+			void set_highlighted_area(const aw::area &h) { m_highlights.assign(h); }
+			const aw::area &get_highlighted_area() const { return m_highlights; }
 
-			const terrain::ptr &get_terrain(unsigned int x, unsigned int y) const { return m_terrains[x][y]; }
-			terrain::ptr &get_terrain(unsigned int x, unsigned int y) { return m_terrains[x][y]; }
-			void set_terrain(unsigned int x, unsigned int y, const terrain::ptr &terr) { m_terrains[x][y] = terr; }
+			bool is_path(const coord& c) { return  m_path.contains(c);}
+			void set_path(const aw::area &path) { m_path.assign(path); }
+			const aw::area& get_path_area() const { return m_path;}
 
-			const unit::ptr &get_unit(unsigned int x, unsigned int y) const { return m_units[x][y]; }
-			void set_unit(unsigned int x, unsigned int y, const unit::ptr &u) { m_units[x][y] = u; }
-
-			bool highlighted(unsigned int x, unsigned int y)
-			{
-				return m_highlights.contains(coord(x, y));
-			}
-
-			void highlighted(const aw::area &h) { m_highlights.assign(h); }
-
-			void highlighted(unsigned int x, unsigned int y, bool highlight)
-			{
-				if(highlight && !m_highlights.contains(coord(x, y)))
-					m_highlights.append(coord(x, y));
-				else
-					m_highlights.erase(coord(x, y));
-			}
-
-			const aw::area &get_highlighted_area() const
-			{
-				return m_highlights;
-			}
-
-//				bool path(unsigned int x, unsigned int y) { return m_path[x][y]; }
-//				void path(unsigned int x, unsigned int y, bool highlight) { m_path[x][y] = highlight; }
-
-			bool path(unsigned int x, unsigned int y)
-			{
-				return  m_path.contains(coord(x, y));
-			}
-
-			void path(const aw::area &path) { m_path.assign(path); }
-
-			void path(unsigned int x, unsigned int y, bool highlight)
-			{
-				if(highlight && !m_path.contains(coord(x, y)))
-					m_path.append(coord(x, y));
-				else if(!highlight)
-					m_path.erase(coord(x, y));
-			}
-
-			const aw::area get_path_area() const 
-			{
-				return m_path;
-			}
-
-			coord highlighted_unit() const { return m_highlighted_unit; }
-			void highlighted_unit(const coord &c) { m_highlighted_unit = c; }
+			const coord& highlight() const { return m_highlighted_unit; }
+			void set_highlight(const coord &c) { m_highlighted_unit = c; }
 
 		private:
 			boost::multi_array<terrain::ptr, 2> m_terrains;
@@ -109,7 +66,6 @@ namespace aw
 
 			aw::area m_highlights;
 			aw::area m_path;
-//				boost::multi_array<bool, 2> m_path;
 			aw::coord m_highlighted_unit;
 	};
 }

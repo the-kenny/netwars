@@ -782,13 +782,13 @@ void game_controller::update_display()
 	if(m_gamestate != IDLE)
 	{
 		if(!m_highlighted_area.empty())
-			scene->highlighted(m_highlighted_area);
+			scene->set_highlighted_area(m_highlighted_area);
 
 		if(m_selection)
-			scene->highlighted_unit(m_selection);
+			scene->set_highlight(m_selection);
 
 		if(m_gamestate == MOVING && m_path && !m_path->get_path().empty())
-			scene->path(m_path->get_path());
+			scene->set_path(m_path->get_path());
 	}
 
 	m_signal_scene_changed(scene);

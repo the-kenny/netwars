@@ -12,8 +12,8 @@ namespace aw
 			int x = c.x;
 			int y = c.y;
 
-			const terrain::types type = scene->get_terrain(x, y)->type();
-			const terrain::extras extra = scene->get_terrain(x, y)->extra();
+			const terrain::types type = scene->get_terrain(c)->type();
+			const terrain::extras extra = scene->get_terrain(c)->extra();
 
 			if(type == terrain::WATER)
 			{
