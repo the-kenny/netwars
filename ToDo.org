@@ -29,10 +29,11 @@
    - [ ] Implement in Core
 ** TODO Make configurable [0/2]
 ** TODO Make Configurable
-*** TODO Use defaults for initial-funds and funds-per-building [2/3]
+*** DONE Use defaults for initial-funds and funds-per-building [3/3]
+    CLOSED: [2009-02-27 Fri 15:01]
 	 - [X] Add to config.xml
 	 - [X] Use in Qt
-	 - [ ] Use in Cocoa
+	 - [X] Use in Cocoa
 *** TODO Make CoreAnimation-Animations configurable
 	 - [ ] Examine Cocoa-Config-Apis
 	 - [ ] Use configurations in the source
