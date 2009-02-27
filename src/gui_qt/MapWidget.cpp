@@ -34,12 +34,14 @@ void MapWidget::paintEvent(QPaintEvent* event) {
 		this->drawTerrain(painter);
 		this->drawUnits(painter);
 
+		const std::string& pixmapdir = aw::config().get<std::string>("/config/dirs/pixmaps");
+
 		//Draw Path and Highlighted Area
-		this->drawHighlightedArea(painter, currentScene->get_highlighted_area(), "data/pixmaps/misc/range.png");
-		this->drawHighlightedArea(painter, currentScene->get_path_area(), "data/pixmaps/misc/path.png");
+		this->drawHighlightedArea(painter, currentScene->get_highlighted_area(), pixmapdir + "misc/range.png");
+		this->drawHighlightedArea(painter, currentScene->get_path_area(), pixmapdir + "misc/path.png");
 
 		if(currentScene->highlight())
-			this->drawPixmap(aw::config().get<std::string>("/config/dirs/pixmaps") + "misc/highlight.png",
+			this->drawPixmap(pixmapdir + "misc/highlight.png",
 				currentScene->highlight(), 
 				painter);
 	}
