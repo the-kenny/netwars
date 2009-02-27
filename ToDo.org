@@ -1,3 +1,5 @@
+#+SEQ_TODO: TODO ACTIVE DONE
+
 * Current ToDo
 ** TODO Clean up the core-code [0/11]
    - [ ] Error-Checking!
@@ -26,14 +28,13 @@
 ** TODO Weather [0/2]
    - [ ] Collect informations about weather in Advance Wars
    - [ ] Implement in Core
-** TODO Make configurable [0/2]
 ** TODO Make Configurable
 *** DONE Use defaults for initial-funds and funds-per-building [3/3]
     CLOSED: [2009-02-27 Fri 15:01]
 	 - [X] Add to config.xml
 	 - [X] Use in Qt
 	 - [X] Use in Cocoa
-*** TODO Make CoreAnimation-Animations configurable
+*** TODO Make CoreAnimation-Animations configurable [0/3]
 	 - [ ] Examine Cocoa-Config-Apis
 	 - [ ] Use configurations in the source
 	 - [ ] Add config window
