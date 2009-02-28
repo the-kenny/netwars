@@ -9,7 +9,7 @@
 #include "Sprites.h"
 
 #include "game/units/unit_loader.h"
-#include "game/gui/paths.h"
+src/gui_qt/BuyMenu.cpp#include "game/gui/paths.h"
 
 using namespace aw;
 
@@ -58,7 +58,7 @@ aw::unit::types BuyMenu::showBuyMenu(QWidget* parent, aw::player::ptr player, aw
 	if(b.exec() == QDialog::Accepted)
 	  return b._returnValue;
 	else
-	  return aw::unit::TYPE_NONE;
+	  return aw::unit::NONE;
 }
 
 void BuyMenu::unitSelected(QTreeWidgetItem* current, QTreeWidgetItem* /* last */) {

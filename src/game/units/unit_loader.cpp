@@ -12,7 +12,7 @@
 using namespace aw;
 
 //TODO: 
-const unit::types unit::TYPE_NONE = "";
+const unit::types unit::NONE = "";
 
 namespace
 {

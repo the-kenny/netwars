@@ -329,7 +329,7 @@ void game_controller::on_building_click(const coord &pos, int key)
 */
 
 				unit::types unit = m_unit_buy_menu_callback(shop, m_game->get_active_player());
-				if(unit != unit::TYPE_NONE)
+				if(unit != unit::NONE)
 					m_game->buy_unit(pos, unit);
 			}
 		}

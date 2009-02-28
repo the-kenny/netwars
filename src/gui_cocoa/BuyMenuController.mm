@@ -73,7 +73,7 @@
 }
 
 -(IBAction)cancelButtonClicked:(NSButton*)button {
-	returnValue = aw::unit::TYPE_NONE;
+	returnValue = aw::unit::NONE;
 	[[NSApplication sharedApplication] stopModal];
 }
 
