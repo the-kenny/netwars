@@ -1,9 +1,10 @@
 #+SEQ_TODO: TODO ACTIVE DONE
 
 * Current ToDo
-** ACTIVE Clean up the core-code [2/11]
+** ACTIVE Clean up the core-code [3/12]
    - [ ] Error-Checking!
-   - [ ] Clean up unit_base.h
+   - [X] Clean up unit_base.h
+   - [ ] Create a property-interface for aw::unit
    - [ ] Clean up terrain.h
    - [ ] Use the game_settings class
    - [X] Clean up area.h
