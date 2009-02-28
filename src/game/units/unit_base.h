@@ -2,7 +2,6 @@
 	#define AW_UNIT_H
 
 #include <boost/shared_ptr.hpp>
-#include <boost/foreach.hpp>
 
 #include <string>
 #include <vector>
@@ -165,18 +164,11 @@ namespace aw
 								< 0.5);
 			}
 
-			bool remove()
-			{
-				if(m_remove_without_fuel && m_fuel <= 0)
-					return true;
-				else
-					return false;
-			}
-
-			bool has_shot() { return m_has_shot; }
+			bool remove() const { return (m_remove_without_fuel && m_fuel <= 0) }
+			bool has_shot() const { return m_has_shot; }
 			void reset_shot() { m_has_shot = false; }
 
-			bool low_ammo()
+			bool low_ammo() const
 			{
 				if(main_weapon_useable())
 				{
@@ -279,14 +271,13 @@ namespace aw
 						break;
 
 					default:
-						throw std::runtime_error(": Bad move_type");
+						throw std::runtime_error("Bad move_type");
 				}
 			}
 
 			void hide()
 			{
-				if(!m_can_hide)
-					throw std::runtime_error("Unit can't hide");
+				assert(m_can_hide == true);
 
 				std::swap(m_fuel_per_day, m_fuel_per_day_hidden);
 				m_is_hidden = true;
@@ -294,8 +285,7 @@ namespace aw
 
 			void appear()
 			{
-				if(!m_can_hide)
-					throw std::runtime_error("Unit can't appear");
+				assert(m_can_hide == true);
 
 				std::swap(m_fuel_per_day, m_fuel_per_day_hidden);
 				m_is_hidden = false;
@@ -316,7 +306,7 @@ namespace aw
 				m_moved = true;
 			}
 
-			bool can_fire()
+			bool can_fire() const
 			{
 				if(main_weapon_useable() || alt_weapon_useable())
 					return true;
@@ -407,7 +397,7 @@ namespace aw
 				return t;
 			}
 
-			bool is_transporter()
+			bool is_transporter() const
 			{
 				return m_can_load;
 			}
