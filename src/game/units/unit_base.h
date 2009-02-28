@@ -15,7 +15,7 @@ namespace aw
 {
 	class unit_loader;
 
-	//TODO: Eine Art Attributsystem als Ersatz der ganzen Variablen entwickeln
+	//TODO: Create an attribute-system and use it instead of all the memvers 
 	class unit
 	{
 		public:
@@ -157,7 +157,13 @@ namespace aw
 
 			int fuel() const { return m_fuel; }
 			int max_fuel() const { return m_max_fuel; }
-			bool low_fuel() { return (static_cast<double>(m_fuel)/static_cast<double>(m_max_fuel) < 0.5); /*Weniger als die Hälfte der Maximalfüllung*/ }
+			bool low_fuel() 
+			{ 
+				//Less than the half of max_fuel
+				return ((static_cast<double>(m_fuel) / 
+								 static_cast<double>(m_max_fuel))
+								< 0.5);
+			}
 
 			bool remove()
 			{
@@ -284,9 +290,6 @@ namespace aw
 
 				std::swap(m_fuel_per_day, m_fuel_per_day_hidden);
 				m_is_hidden = true;
-
-//				std::clog << "Unit is now hidden.\n"
-//							<< "Fuel-Usage: " << m_fuel_per_day << std::endl;
 			}
 
 			void appear()
@@ -296,9 +299,6 @@ namespace aw
 
 				std::swap(m_fuel_per_day, m_fuel_per_day_hidden);
 				m_is_hidden = false;
-
-//				std::clog << "Unit is now no more hidden.\n"
-//							<< "Fuel-Usage: " << m_fuel_per_day << std::endl;
 			}
 
 			void move(int costs)
@@ -369,7 +369,6 @@ namespace aw
 			void reset()
 			{
 				m_life = m_max_life;
-//				m_ammo = m_max_ammo;
 				m_fuel = m_max_fuel;
 
 				m_has_shot = false;
@@ -412,17 +411,6 @@ namespace aw
 			{
 				return m_can_load;
 			}
-//
-//			bool operator==(const std::string &o)
-//			{
-//				return this->type() == o;
-//			}
-//
-//			bool operator!=(const std::string &o)
-//			{
-//				return !(*this == o);
-//			}
-
 
 		protected:
 			int m_max_life;
@@ -463,12 +451,6 @@ namespace aw
 
 			weapon main_weapon;
 			weapon alt_weapon;
-
-
-//			std::vector<weapon> m_weapons;
-
-//			std::map<victim_t, int> m_first_weapon_efficiency;
-//			std::map<victim_t, int> m_second_weapon_efficiency;
 
         //NOTE: Very very bad!
 		public:
