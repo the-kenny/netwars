@@ -164,7 +164,7 @@ namespace aw
 								< 0.5);
 			}
 
-			bool remove() const { return (m_remove_without_fuel && m_fuel <= 0) }
+			bool remove() const { return (m_remove_without_fuel && m_fuel <= 0); }
 			bool has_shot() const { return m_has_shot; }
 			void reset_shot() { m_has_shot = false; }
 

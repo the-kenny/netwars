@@ -3,6 +3,8 @@
 
 #include "unit_base.h"
 
+#include <boost/foreach.hpp>
+
 namespace aw
 {
 	class transporter: public unit
@@ -55,17 +57,17 @@ namespace aw
 					return p;
 			}
 
-			unsigned int loaded_units_count()
+			unsigned int loaded_units_count() const
 			{
 				return m_loaded_units.size();
 			}
 
-			unsigned int max_loaded_units() 
+			unsigned int max_loaded_units() const
 			{
 				return m_max_load;
 			}
 
-			bool can_load(unit::types t)
+			bool can_load(unit::types t) const
 			{
 				if(m_loaded_units.size() < m_max_load && std::find(m_loadable_types.begin(), m_loadable_types.end(), t) != m_loadable_types.end())
 					return true;
@@ -73,7 +75,7 @@ namespace aw
 					return false;
 			}
 
-			bool can_unload()
+			bool can_unload() const
 			{
 				if(m_loaded_units.size() > 0)
 					return true;
