@@ -41,7 +41,7 @@
 	[dict setValue:[[Sprites sharedSprites] getSprite:path] forKey:@"image"];
 
 	[dict setValue:[NSNumber numberWithInt:u->max_hp()] forKey:@"maxHp"];
-	[dict setValue:[NSNumber numberWithInt:u->get_hp()] forKey:@"hp"];
+	[dict setValue:[NSNumber numberWithInt:u->hp()] forKey:@"hp"];
 
 	[dict setValue:[NSNumber numberWithInt:u->max_fuel()] forKey:@"maxFuel"];
 	[dict setValue:[NSNumber numberWithInt:u->fuel()] forKey:@"fuel"];
@@ -52,25 +52,25 @@
 	[dict setValue:[NSNumber numberWithBool:u->has_shot()] forKey:@"hasShot"];
 
 	/*
-	[dict setValue:[NSNumber numberWithInt:u->get_attack_range()] forKey:@"attackRange"];
-	[dict setValue:[NSNumber numberWithInt:u->get_attack_distance()] forKey:@"attackDistance"];
-	[dict setValue:[NSNumber numberWithInt:u->get_attack_range()+u->get_attack_distance()] forKey:@"realAttackRange"];
+	[dict setValue:[NSNumber numberWithInt:u->attack_range()] forKey:@"attackRange"];
+	[dict setValue:[NSNumber numberWithInt:u->attack_distance()] forKey:@"attackDistance"];
+	[dict setValue:[NSNumber numberWithInt:u->attack_range()+u->attack_distance()] forKey:@"realAttackRange"];
 	 */
 	
-	[dict setValue:[NSNumber numberWithInt:u->get_explosion_range()] forKey:@"explosionRange"];
-	[dict setValue:[NSNumber numberWithInt:u->get_explosion_damage()] forKey:@"explosionDamage"];
+	[dict setValue:[NSNumber numberWithInt:u->explosion_range()] forKey:@"explosionRange"];
+	[dict setValue:[NSNumber numberWithInt:u->explosion_damage()] forKey:@"explosionDamage"];
 
 	[dict setValue:[NSString stringWithCString:u->type().c_str()] forKey:@"internalName"];
-	[dict setValue:[NSString stringWithCString:aw::unit_list().get_unit_info(u->get_name()).name.c_str()] forKey:@"realName"];
+	[dict setValue:[NSString stringWithCString:aw::unit_list().get_unit_info(u->name()).name.c_str()] forKey:@"realName"];
 	
 	
 	//We use an string because we can't do conditional formatting with bindings (as far as I know)
 	
-	if(u->get_attack_range() != -1) {
-		if(u->get_attack_distance() == 0)
-			[dict setValue:[NSString stringWithFormat:@"%i", u->get_attack_range()] forKey:@"rangeString"];
+	if(u->attack_range() != -1) {
+		if(u->attack_distance() == 0)
+			[dict setValue:[NSString stringWithFormat:@"%i", u->attack_range()] forKey:@"rangeString"];
 		else
-			[dict setValue:[NSString stringWithFormat:@"%i to %i", u->get_attack_distance(), u->get_attack_range()+u->get_attack_distance()] forKey:@"rangeString"];
+			[dict setValue:[NSString stringWithFormat:@"%i to %i", u->attack_distance(), u->attack_range()+u->attack_distance()] forKey:@"rangeString"];
 	}
 
 	aw::transporter::ptr transporter = boost::dynamic_pointer_cast<aw::transporter>(u);

@@ -202,7 +202,7 @@ void game_controller::on_unit_click(const coord &pos, int key)
 				{
 					//TODO: Überprüfen, wann sich Einheiten zusammenfügen können
 					//if(m_game->get_unit(pos)->life() < m_game->get_unit(pos)->max_life())
-					if(m_game->get_unit(m_selection)->get_hp() < m_game->get_unit(m_selection)->max_hp() || unit->get_hp() < unit->max_hp())
+					if(m_game->get_unit(m_selection)->hp() < m_game->get_unit(m_selection)->max_hp() || unit->hp() < unit->max_hp())
 					{
 						std::list<units::actions> action;
 						action.push_back(units::JOIN);
@@ -250,7 +250,7 @@ void game_controller::on_unit_click(const coord &pos, int key)
 		}
 		else if(m_gamestate == REPAIRING)
 		{
-			if(m_game->get_active_player()->his_unit(unit) && m_game->get_unit(m_selection)->can_supply(unit->get_environment())) //Unit will be repaired
+			if(m_game->get_active_player()->his_unit(unit) && m_game->get_unit(m_selection)->can_supply(unit->environment())) //Unit will be repaired
 			{
 				m_game->repair_unit(m_selection, pos);
 
@@ -462,7 +462,7 @@ units::actions game_controller::show_actions(const coord &pos)
 	bool can_attack = false;
 
 //	if(unit->get_attack_distance() > 0 && unit->moved())
-	if(unit->get_attack_distance() > 0 && m_game->move_active())
+	if(unit->attack_distance() > 0 && m_game->move_active())
 	{
 		can_attack = false;
 	}
@@ -715,7 +715,7 @@ void game_controller::process_action(units::actions action, const coord &pos)
 		m_selection = pos;
 
 		game_mechanics::explosion_damage d;
-		d.calculate(m_game->get_map(), pos, unit->get_explosion_range(), unit->get_explosion_damage());
+		d.calculate(m_game->get_map(), pos, unit->explosion_range(), unit->explosion_damage());
 
 		m_highlighted_area.assign(d.get_area());
 	}

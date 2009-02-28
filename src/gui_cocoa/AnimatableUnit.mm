@@ -147,7 +147,7 @@
 		[mask release];
 	}
 	
-	int life = unit->get_hp();
+	int life = unit->hp();
 	if(life < 10 && life > 0)
 		[self drawSprite:[NSString stringWithCString:get_path(aw::unit::LIVE, life).c_str()]];
 	

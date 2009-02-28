@@ -22,13 +22,13 @@ void damage_calc::calculate(const map::ptr &map, coord att, coord def)
 	const terrain::ptr terrain1 = map->get_terrain(att);
 
 	const float terrain1_defense = terrain1->defense_value();
-	const float hp1 = unit1->get_hp();
+	const float hp1 = unit1->hp();
 
 	unit::ptr unit2 = map->get_unit(def);
 	const terrain::ptr terrain2 = map->get_terrain(def);
 
 	const float terrain2_defense = terrain2->defense_value();
-	const float hp2 = unit2->get_hp();
+	const float hp2 = unit2->hp();
 
 	if(!attack_utilities::can_attack(unit1, unit2))
 		throw std::runtime_error("Units können sich nicht angreifen.");
@@ -48,7 +48,7 @@ void damage_calc::calculate(const map::ptr &map, coord att, coord def)
 		damage = -1;
 
 	damage = std::floor(damage * (100 - (terrain2_defense * hp2)) * (hp1 / 10) * 100 / 10000);
-	std::cout << "[damage_calc::calculate] " << unit::get_name(unit1->type()) << "(" << hp1 << ")" << " --> " << unit::get_name(unit2->type()) << "(" << hp2 << ")" << "\tSchaden: " << damage << "%" << std::endl;
+	std::cout << "[damage_calc::calculate] " << unit::name(unit1->type()) << "(" << hp1 << ")" << " --> " << unit::name(unit2->type()) << "(" << hp2 << ")" << "\tSchaden: " << damage << "%" << std::endl;
 
 	if(static_cast<int>(damage) % 10 > 0)
 	{
@@ -104,7 +104,7 @@ void damage_calc::calculate(const map::ptr &map, coord att, coord def)
 				unit2->fire();
 
 			damage = std::floor(damage * (100 - (terrain1_defense * hp1)) * (new_hp2 / 10) * 100 / 10000);
-			std::cout << "[damage_calc::calculate] " << unit::get_name(unit1->type()) << "(" << hp1 << ")" << " <-- " << unit::get_name(unit2->type()) << "(" << new_hp2 << ")" << "\tSchaden: " << damage << "%" << std::endl;
+			std::cout << "[damage_calc::calculate] " << unit::name(unit1->type()) << "(" << hp1 << ")" << " <-- " << unit::name(unit2->type()) << "(" << new_hp2 << ")" << "\tSchaden: " << damage << "%" << std::endl;
 
 			if(static_cast<int>(damage) % 10 > 0)
 			{

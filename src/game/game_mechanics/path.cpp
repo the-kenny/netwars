@@ -13,7 +13,7 @@ namespace aw
 		void path::remove_element(const coord &c)
 		{
 			m_path.erase(c);
-			m_fuel_costs -= m_map->get_terrain(c)->movement_costs(m_map->get_unit(m_start)->get_move_type());
+			m_fuel_costs -= m_map->get_terrain(c)->movement_costs(m_map->get_unit(m_start)->move_type());
 		}
 
 		void path::reset()
@@ -141,7 +141,7 @@ namespace aw
 		{
 				if(m_map->on_map(coord(x, y)))
 				{
-						const int move_costs = m_map->get_terrain(coord(x, y))->movement_costs(u->get_move_type());
+						const int move_costs = m_map->get_terrain(coord(x, y))->movement_costs(u->move_type());
 
 						if(move_costs != -1)
 						{
@@ -220,7 +220,7 @@ namespace aw
 				m_fuel_costs = 0;
 				BOOST_FOREACH(const coord &c, m_path)
 				{
-						m_fuel_costs += m_map->get_terrain(c)->movement_costs(u->get_move_type());
+						m_fuel_costs += m_map->get_terrain(c)->movement_costs(u->move_type());
 				}
 		}
 	}

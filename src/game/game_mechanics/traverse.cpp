@@ -72,7 +72,7 @@ namespace aw
 		{
 			if(m_map->on_map(coord(x, y)))
 			{
-				const int move_costs = m_map->get_terrain(coord(x, y))->movement_costs(u->get_move_type());
+				const int move_costs = m_map->get_terrain(coord(x, y))->movement_costs(u->move_type());
 
 				if(move_costs != -1)
 				{

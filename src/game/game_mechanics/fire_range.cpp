@@ -15,7 +15,7 @@ void fire_range::calculate(const map::ptr &map, const coord& attacking_unit_c)
 	m_attacking_unit_c = attacking_unit_c;
 
 	const unit::ptr u = map->get_unit(m_attacking_unit_c);
-	int fire_range = u->get_attack_range();
+	int fire_range = u->attack_range();
 	int x = m_attacking_unit_c.x, y = m_attacking_unit_c.y;
 
 	if(fire_range == 1)
@@ -31,7 +31,7 @@ void fire_range::calculate(const map::ptr &map, const coord& attacking_unit_c)
 	}
 	else
 	{
-		const int distance = u->get_attack_distance();
+		const int distance = u->attack_distance();
 
 //		std::cout << "[fire_range::calculate] Range: " << range << " Distance: " << distance << std::endl;
 
@@ -107,7 +107,7 @@ void fire_range_preview::calculate(const map::ptr &map, int x, int y)
 		throw std::runtime_error("No unit at " + boost::lexical_cast<std::string>(x) + "|" + boost::lexical_cast<std::string>(y));
 
 
-	if(u->get_attack_distance() == 0)
+	if(u->attack_distance() == 0)
 	{
 		traverse tr;
 		tr.calculate(map,coord(x, y));

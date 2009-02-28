@@ -40,9 +40,9 @@ bool game_mechanics::can_repair(const map::ptr &map, const coord &unit_c, const 
 	assert(unit != NULL);
 	assert(target != NULL);
 
-	const int price = unit_loader::instance().get_unit_info(target->get_name()).price/10;
+	const int price = unit_loader::instance().get_unit_info(target->name()).price/10;
 
-	if(unit->color() == target->color() && unit->can_repair(target->get_environment()) && target->get_hp() < target->max_hp() && price <= funds)
+	if(unit->color() == target->color() && unit->can_repair(target->environment()) && target->hp() < target->max_hp() && price <= funds)
 		return true;
 	else
 		return false;
@@ -56,7 +56,7 @@ bool game_mechanics::can_supply(const map::ptr &map, const coord &unit_c, const 
 	assert(unit != NULL);
 	assert(target != NULL);
 
-	if(unit->color() == target->color() && unit->can_supply(target->get_environment()))
+	if(unit->color() == target->color() && unit->can_supply(target->environment()))
 		return true;
 	else
 		return false;

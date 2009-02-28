@@ -21,7 +21,7 @@ void explosion_damage::calculate(const map::ptr &map, const coord &c, int range,
 		unit::ptr u;
 		if(map->on_map(c) && (u = map->get_unit(c)) != NULL && !u->is_dummy())
 		{
-			float life = u->get_hp_as_float();
+			float life = u->hp_as_float();
 			if(life-damage < 1)
 				life = 1;
 			else
@@ -31,5 +31,3 @@ void explosion_damage::calculate(const map::ptr &map, const coord &c, int range,
 		}
 	}
 }
-
-

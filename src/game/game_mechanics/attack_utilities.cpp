@@ -41,8 +41,8 @@ int attack_utilities::get_damage_percent(unit::types att, unit::types vic, bool 
 	ticpp::Document xml;
 	xml.Parse(damagetable);
 
-	const std::string att_name(unit::get_name(att));
-	const std::string vic_name(unit::get_name(vic));
+	const std::string att_name(unit::name(att));
+	const std::string vic_name(unit::name(vic));
 
 //	std::cout << "Attacker-Name: " << att_name << "\n"
 //				<< "Victim-Name: " 	<< vic_name << std::endl;

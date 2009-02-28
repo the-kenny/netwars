@@ -119,7 +119,7 @@ void MapWidget::drawUnits(QPainter& painter) {
 					painter.restore();
 				}
 
-				int life = u->get_hp();
+				int life = u->hp();
 				if(life < 10 && life > 0)
 					this->drawPixmap(gui::get_path(unit::LIVE, life), aw::coord(x, y), painter);
 

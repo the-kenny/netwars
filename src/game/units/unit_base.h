@@ -44,8 +44,6 @@ namespace aw
 					int range;
 					int distance;
 
-//					std::vector<std::string> m_victims;
-
 					weapon()
 					{
 						active = false;
@@ -114,10 +112,10 @@ namespace aw
 			virtual bool is_dummy() const { return false; }
 
 			void set_hp(int hp) { m_life = hp; }
-			int get_hp() const { return m_life; }
+			int hp() const { return m_life; }
 			int max_hp() const { return m_max_life; }
 
-			float get_hp_as_float() const { return m_life; }
+			float hp_as_float() const { return m_life; }
 			void set_hp_as_float(float hp) { m_life = hp; }
 
 			void apply_damage(float damage)
@@ -188,7 +186,7 @@ namespace aw
 				return false;
 			}
 
-			int get_attack_distance() const
+			int attack_distance() const
 			{
 				if(main_weapon_useable())
 					return main_weapon.distance;
@@ -198,7 +196,7 @@ namespace aw
 					return -1;
 			}
 
-			int get_attack_range() const
+			int attack_range() const
 			{
 				if(main_weapon_useable())
 					return main_weapon.range;
@@ -224,12 +222,10 @@ namespace aw
 					return false;
 			}
 
-			move_types get_move_type() const { return m_move_type; }
 			types type() const { return m_type; }
 			colors color() const { return m_color; }
 			move_types move_type() const { return m_move_type; }
 			bool can_capture() const { return m_can_capture;}
-//			victim_t victim_type() const { return m_victim_type; }
 			bool can_counterattack() const { return m_can_counterattack; }
 
 			bool can_hide() const { return m_can_hide; }
@@ -238,7 +234,7 @@ namespace aw
 
 			bool can_supply() const { return m_can_supply; }
 			bool can_repair() const { return m_can_repair; }
-			int get_repair_points() const { return m_repair_points; }
+			int repair_points() const { return m_repair_points; }
 
 			bool can_supply(environments e) const
 			{
@@ -251,12 +247,12 @@ namespace aw
 			}
 
 			bool can_explode() const { return m_can_explode; }
-			int get_explosion_range() const { return m_explosion_range; }
-			int get_explosion_damage() const { return m_explosion_damage; }
+			int explosion_range() const { return m_explosion_range; }
+			int explosion_damage() const { return m_explosion_damage; }
 
-			environments get_environment() const
+			environments environment() const
 			{
-				switch(this->get_move_type())
+				switch(this->move_type())
 				{
 					case FOOT:
 					case MECHANICAL:
@@ -402,12 +398,12 @@ namespace aw
 					m_life = m_max_life;
 			}
 
-			std::string get_name() const
+			std::string name() const
 			{
-				return unit::get_name(m_type);
+				return unit::name(m_type);
 			}
 
-			static std::string get_name(const unit::types t)
+			static std::string name(const unit::types t)
 			{
 				return t;
 			}

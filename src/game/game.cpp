@@ -100,14 +100,14 @@ void game::attack_unit(const coord &attacker_c, const coord &victim_c)
 	{
 		float damage = calc.get_victim_damage();
 
-		if(victim->get_hp() - damage*10 <= 0)
+		if(victim->hp() - damage*10 <= 0)
 		{
 			m_map->delete_unit(victim_c);
 			m_map->get_terrain(victim_c)->type(terrain::WRECKAGE);
 		}
 		else
 		{
-			victim->set_hp(victim->get_hp_as_float() - damage*10);
+			victim->set_hp(victim->hp_as_float() - damage*10);
 		}
 	}
 	else
@@ -133,7 +133,7 @@ void game::explode(const coord &unit_c)
 	assert(bomb->can_explode() == true);
 
 	game_mechanics::explosion_damage damage;
-	damage.calculate(m_map, unit_c, bomb->get_explosion_range(), bomb->get_explosion_damage());
+	damage.calculate(m_map, unit_c, bomb->explosion_range(), bomb->explosion_damage());
 
 	BOOST_FOREACH(const game_mechanics::explosion_damage::value_type &p, damage)
 	{
@@ -243,19 +243,19 @@ void game::supply_unit_from_building(const coord &support_building)
 	//I'm not sure if supplying (fuel and ammo) costs
 	unit->supply();
 
-	if(unit->get_hp() < unit->max_hp())
+	if(unit->hp() < unit->max_hp())
 	{
-		assert(b->get_supply_environment() == unit->get_environment());
+		assert(b->get_supply_environment() == unit->environment());
 
 		int repair_points = b->get_repair_points();
 		if(repair_points != 0)
 		{
-			if(unit->get_hp()+repair_points >= unit->max_hp())
+			if(unit->hp()+repair_points >= unit->max_hp())
 				unit->set_hp(unit->max_hp());
 			else
-				unit->set_hp(unit->get_hp()+repair_points);
+				unit->set_hp(unit->hp()+repair_points);
 
-			this->get_active_player()->subtract_funds(unit_loader::instance().get_unit_info(unit->get_name()).price/10);
+			this->get_active_player()->subtract_funds(unit_loader::instance().get_unit_info(unit->name()).price/10);
 		}
 	}
 }
@@ -272,9 +272,9 @@ void game::repair_unit(const coord &repair_unit, const coord &to)
 	assert(game_mechanics::can_repair(this->get_map(), repair_unit, to, this->get_active_player()->get_funds()) == true);
 
 	rep_unit->supply();
-	rep_unit->repair(unit->get_repair_points());
+	rep_unit->repair(unit->repair_points());
 
-	this->get_active_player()->subtract_funds(unit_loader::instance().get_unit_info(rep_unit->get_name()).price/10);
+	this->get_active_player()->subtract_funds(unit_loader::instance().get_unit_info(rep_unit->name()).price/10);
 }
 
 //Takes care of the unit-movement
@@ -504,7 +504,7 @@ void game::start_turn()
 				building::ptr b = boost::dynamic_pointer_cast<building>(t);
 				assert(b != NULL);
 
-				if(m_map->get_unit(c) && b->can_supply() && b->can_supply(u->get_environment()))
+				if(m_map->get_unit(c) && b->can_supply() && b->can_supply(u->environment()))
 					this->supply_unit_from_building(c);
 			}
 		}

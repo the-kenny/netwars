@@ -9,7 +9,7 @@
 #include "Sprites.h"
 
 #include "game/units/unit_loader.h"
-src/gui_qt/BuyMenu.cpp#include "game/gui/paths.h"
+#include "game/gui/paths.h"
 
 using namespace aw;
 
