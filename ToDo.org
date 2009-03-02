@@ -1,12 +1,14 @@
 #+SEQ_TODO: TODO ACTIVE DONE
 
-* Current ToDo
-** ACTIVE Clean up the core-code [3/12]
+* Current ToDo							       :netwars:
+** ACTIVE Clean up the core-code [4/14]
    - [ ] Error-Checking!
    - [X] Clean up unit_base.h
    - [ ] Create a property-interface for aw::unit
    - [ ] Clean up terrain.h
-   - [ ] Use the game_settings class
+   - [X] Use the game_settings class
+   - [ ] Use game_settings in Qt-Gui
+   - [ ] Use game_settings in Cocoa-Gui
    - [X] Clean up area.h
    - [X] Clean up scene.h
    - [ ] Add more informations to scene.h
@@ -45,3 +47,4 @@
      Send an email after each player's move so that you can play a
      game over a greater range of days
    - Show games on a webserver
+** TODO Pack data/ or data/pixmaps in a zip-file to make it replacable

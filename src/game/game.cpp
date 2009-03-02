@@ -12,6 +12,18 @@
 
 using namespace aw;
 
+game::game(const game_settings& settings)
+{
+  this->set_initial_funds(settings.get_initial_funds());
+  this->set_funds_per_building(settings.get_funds_per_building());
+  this->load_map(settings.get_map_filename());
+}
+
+game::game() 
+{
+
+}
+
 void game::begin_unit_move(const coord &from, const coord &to)
 {
 	assert(m_active_move.active == false);

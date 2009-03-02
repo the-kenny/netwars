@@ -6,6 +6,7 @@
 #include "game_mechanics/path.h"
 #include "game_mechanics/player_utilities.h"
 #include "coord.h"
+#include "game_settings.h"
 
 #include <boost/signals.hpp>
 
@@ -25,6 +26,10 @@ namespace aw
 
 			typedef boost::signal<void (player::ptr, player::ptr, game_mechanics::defeat_type)> signal_player_defeated_t;
 			typedef boost::signal<void (player::ptr)> signal_game_finished_t;
+
+			game(const game_settings& settings);
+			game();
+
 
 			//to could be used for the preview of the move
 			void begin_unit_move(const coord &from, const coord &to);
