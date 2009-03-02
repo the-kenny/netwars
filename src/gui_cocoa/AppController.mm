@@ -123,11 +123,7 @@ void postTerrainClickedNotification(const aw::terrain::ptr terrain, id sender) {
 	if([gameDialog run]) {
 		[self initGame];
 		
-		aw::game::ptr game(new aw::game);
-
-		game->load_map(std::string([gameDialog.mapFile UTF8String]));
-		game->set_funds_per_building(gameDialog.fundsPerBuilding);
-		game->set_initial_funds(gameDialog.initialFunds);
+		aw::game::ptr game(new aw::game([gameDialog gameSettings]));
 		
 		gameController = aw::game_controller::ptr(new aw::game_controller);
 		gameController->signal_scene_change().connect(boost::bind(&aw::gui::map_widget::display, cocoaMapWidget, _1));

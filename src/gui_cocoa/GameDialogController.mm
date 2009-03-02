@@ -11,6 +11,18 @@
 @synthesize fundsPerBuilding;
 @synthesize mapFile;
 
+@dynamic gameSettings;
+
+-(aw::game_settings)gameSettings {
+	aw::game_settings s;
+	
+	s.set_map_filename([self.mapFile UTF8String]);
+	s.set_initial_funds(self.initialFunds);
+	s.set_funds_per_building(self.fundsPerBuilding);
+	
+	return s;
+}
+
 -(GameDialogController*)init {
 	self = [super initWithWindowNibName:@"GameDialog"];
 
