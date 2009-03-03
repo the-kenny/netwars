@@ -11,11 +11,15 @@
 	
 	aw::player::ptr player;
 	aw::unit::workshops workshop;
+	int unitPrice;
+	int remFunds;
 	
 	aw::unit::types returnValue;
 }
 
-@property(readonly) int playerFunds;
+@property int playerFunds;
+@property int unitPrice;
+@property int remFunds;
 
 -(BuyMenuController*)initWithPlayer:(aw::player::ptr)player workshop:(aw::unit::workshops)ws;
 -(aw::unit::types)run;
