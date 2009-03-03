@@ -21,6 +21,15 @@ GameDialog::GameDialog(QDialog* parent) {
 	fundsPerBuildingSpinBox->setValue(_fundsPerBuilding);
 }
 
+aw::game_settings GameDialog::gameSettings() const {
+  aw::game_settings s;
+  
+  s.set_map_filename(this->mapFile());
+  s.set_initial_funds(this->initialFunds());
+  s.set_funds_per_building(this->fundsPerBuilding());
+
+  return s;
+}
 
 void GameDialog::fundsPerBuildingChanged(int newValue) {
 	_fundsPerBuilding = newValue;

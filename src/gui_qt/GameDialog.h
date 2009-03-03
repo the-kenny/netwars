@@ -6,6 +6,8 @@
 
 #include "ui_gameDialog.h"
 
+#include "game/game_settings.h"
+
 class GameDialog: public QDialog, public Ui::GameDialog {
 	Q_OBJECT
 
@@ -15,6 +17,8 @@ class GameDialog: public QDialog, public Ui::GameDialog {
 		int fundsPerBuilding() const { return _fundsPerBuilding; }
 		int initialFunds() const { return _initialFunds; }
 		const std::string& mapFile() const { return _mapFile; }
+
+		aw::game_settings gameSettings() const;
 
 	private Q_SLOTS:
 		void fundsPerBuildingChanged(int newValue);

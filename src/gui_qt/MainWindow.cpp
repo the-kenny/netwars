@@ -24,13 +24,7 @@ MainWindow::MainWindow(QMainWindow* parent) {
 void MainWindow::newGame() {
 	GameDialog gameDialog;
 	if(gameDialog.exec() == QDialog::Accepted) { 
-		game::ptr game(new aw::game());
-
-		game->set_funds_per_building(gameDialog.fundsPerBuilding());
-		game->set_initial_funds(gameDialog.initialFunds());
-
-		game->load_map(gameDialog.mapFile());
-
+	  game::ptr game(new aw::game(gameDialog.gameSettings()));
 
 		gameController = game_controller::ptr(new game_controller);
 
