@@ -25,6 +25,13 @@ MapWidget::MapWidget(QWidget* parent)
 	blackImage.fill(0xff000000);
 }
 
+void MapWidget::reset() {
+  currentScene.reset();
+  
+  _signalClicked.disconnect_all_slots();
+  _signalFocusChanged.disconnect_all_slots();
+}
+
 void MapWidget::paintEvent(QPaintEvent* event) {
 	QPainter painter(this);
 

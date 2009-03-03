@@ -34,6 +34,7 @@ void MainWindow::newGame() {
 
 		gameController = game_controller::ptr(new game_controller);
 
+		drawingArea->reset();
 		drawingArea->signalClicked().connect(boost::bind(&aw::game_controller::click, gameController, _1, _2));
 		drawingArea->signalFocusChanged().connect(boost::bind(&aw::game_controller::mouse_hover_changed, gameController, _1));
 		gameController->signal_scene_change().connect(boost::bind(&MapWidget::setScene, drawingArea, _1));

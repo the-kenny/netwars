@@ -25,6 +25,9 @@ class MapWidget: public QWidget {
 			this->repaint(); 
 		}
 
+		// Resets all signals and makes the View ready for a new game
+		void reset();
+
 		signalClickedT &signalClicked() { return _signalClicked; }
 		signalFocusChangedT &signalFocusChanged() { return _signalFocusChanged; }
 
