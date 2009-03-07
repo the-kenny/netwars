@@ -38,6 +38,9 @@
 	 - [ ] Examine Cocoa-Config-Apis
 	 - [ ] Use configurations in the source
 	 - [ ] Add config window
+** Qt-Gui
+*** TODO (Maybe) Use QGraphicsView
+*** TODO Implement animations (Possible through QGraphicsView)
 * Later
 ** Drafts about networking
    - Online-Games like old-school Go 
