@@ -27,6 +27,7 @@ UnitActionMenu::UnitActionMenu(QWidget* parent)
 }
 
 aw::units::actions UnitActionMenu::run() {
+   this->addAction(aw::units::CANCEL);
 	this->show();
 	this->exec();
 
