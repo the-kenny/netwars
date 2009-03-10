@@ -15,20 +15,24 @@
 
 using namespace aw;
 
-
-
 MapWidget::MapWidget(QWidget* parent) 
 	: QGraphicsScene(parent), 
-	backgroundImage(":/data/background.png") {
+	  backgroundImage(":/data/background.png"),
+	  pathGraphicsItem(new PathGraphicsItem) {
+
+  this->setSceneRect(QRectF(0.0, 0.0, 16.0*30, 16.0*20));
+
+  this->addItem(pathGraphicsItem);
 }
 
 void MapWidget::setScene(aw::scene::ptr scene) { 
   processNewScene(scene);
 
   currentScene = scene;
-  
-  this->update(); 
-  this->update(); 
+
+  pathGraphicsItem->setScene(scene);
+
+  update();
 }
 
 void MapWidget::reset() {
@@ -67,64 +71,6 @@ void MapWidget::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
 	}
 }
 
-/*
-void MapWidget::drawUnits(QPainter& painter) {
-	for(int x = 0; x < 30; ++x) {
-		for(int y = 0; y < 20; ++y) {
-			aw::unit::ptr u = currentScene->get_unit(x, y);
-
-			if(u != NULL && !u->is_dummy()) {
-				Drawing::drawPixmap(aw::gui::get_path(u->type(), u->color()), 
-						aw::coord(x, y),
-						painter);
-
-				if(u->moved()) {
-					QImage mask = sharedSprites().getSprite(QString(aw::gui::get_path(u->type(), 
-									u->color()).c_str())).copy();
-					QPainter imagePainter(&mask);
-
-					imagePainter.setCompositionMode(QPainter::CompositionMode_SourceIn);
-					imagePainter.drawImage(QPoint(), blackImage);
-
-					painter.save();
-
-					painter.setOpacity(0.4);
-					Drawing::drawPixmap(mask, aw::coord(x, y), painter);
-
-					painter.restore();
-				}
-
-				int life = u->get_hp();
-				if(life < 10 && life > 0)
-					Drawing::drawPixmap(gui::get_path(unit::LIVE, life), aw::coord(x, y), painter);
-
-				if(u->low_ammo())
-					Drawing::drawPixmap(gui::get_path(unit::LOW_AMMO), aw::coord(x, y), painter);
-
-				if(u->low_fuel())
-					Drawing::drawPixmap(gui::get_path(unit::LOW_FUEL), aw::coord(x, y), painter);
-
-				if(u->is_hidden())
-					Drawing::drawPixmap(gui::get_path(unit::HIDDEN), aw::coord(x, y), painter);
-
-				if(u->is_transporter() && boost::dynamic_pointer_cast<transporter>(u)->loaded_units_count() > 0)
-					Drawing::drawPixmap(gui::get_path(unit::LOADED), aw::coord(x, y), painter);
-
-				if(u->can_capture())
-				{
-					const terrain::ptr &t(currentScene->get_terrain(x, y));
-
-					if(t->is_building() && boost::dynamic_pointer_cast<building>(t)->capture_points() < 20)
-					{
-						Drawing::drawPixmap(gui::get_path(unit::CAPTURE), aw::coord(x, y), painter);
-					}
-				}
-			}
-		}
-	}
-}
-*/
-
 void MapWidget::drawBackground(QPainter* painter, const QRectF& rect) {
   painter->drawImage(QPointF(0.0, 0.0), backgroundImage);
   
@@ -153,7 +99,9 @@ void MapWidget::drawItems(QPainter *painter,
 	  addUnitForDrawing(a.unit, a.position);
 	  break;
 	case UnitActions::REMOVED:
-	  removeUnitFromDrawing(a.unit);
+	  //removeUnitFromDrawing(a.unit);
+	  break;
+	default:;
 	}
   }
   
@@ -166,8 +114,33 @@ void MapWidget::drawItems(QPainter *painter,
   }
 }
 
+/*
+Doesn't work... shitty Qt-Drawing
+void MapWidget::drawForeground(QPainter* painter, const QRectF& rect) {
+  if(currentScene) {
+	static const std::string& pixmapdir = aw::config().get<std::string>("/config/dirs/pixmaps");
+
+	BOOST_FOREACH(const coord& c, currentScene->get_highlighted_area())
+	  this->drawPixmap(pixmapdir + "misc/range.png", c, *painter);
+
+	BOOST_FOREACH(const coord& c, currentScene->get_path_area())
+	  this->drawPixmap(pixmapdir + "misc/path.png", c, *painter);
+
+	if(currentScene->highlight())
+      this->drawPixmap(pixmapdir + "misc/highlight.png",
+        currentScene->highlight(),
+					   painter);
+  }
+}
+*/
+
 UnitGraphicsItem* MapWidget::getUnitGraphicsItem(const aw::unit::ptr& u) {
-  return managedUnits[u];
+  std::map<aw::unit::ptr, UnitGraphicsItem*>::iterator it = managedUnits.find(u);
+
+  if(it->first)
+	return it->second;
+  else
+	return NULL;
 }
 
 void MapWidget::addUnitForDrawing(const aw::unit::ptr &u, const aw::coord& c) {
@@ -210,7 +183,7 @@ void MapWidget::processNewScene(const scene::ptr& newScene) {
 		}
 	  }
 	}
-	
+
 	typedef std::pair<aw::unit::ptr, aw::coord> pair;
 	BOOST_FOREACH(pair newPair, newUnits) {
 	  iterator it = oldUnits.find(newPair.first);
@@ -236,11 +209,13 @@ void MapWidget::processNewScene(const scene::ptr& newScene) {
 		//Unit isn't in the old scene - it is new.
 		addUnitForDrawing(newPair.first, newPair.second);
 
+		/*
 		UnitActions action;
 		action.position = it->second;
 		action.action = UnitActions::ADDED;
 		action.unit = newPair.first;
 		unitActions.push_back(action);
+		*/
 	  }
 
 	  BOOST_FOREACH(pair oldPair, oldUnits) {
@@ -248,6 +223,7 @@ void MapWidget::processNewScene(const scene::ptr& newScene) {
 		
 		//Unit isn't in the new scene - it is gone.
 		if(it == newUnits.end()) {
+		  std::cout << "removeUnitFromDrawing: " << oldPair.first->type() << std::endl;
 		  removeUnitFromDrawing(oldPair.first);
 		}
 	  }

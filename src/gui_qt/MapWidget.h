@@ -12,6 +12,7 @@
 #include "game/scene.h"
 
 #include "UnitGraphicsItem.h"
+#include "PathGraphicsItem.h"
 
 #include <boost/signals.hpp>
 
@@ -49,9 +50,12 @@ class MapWidget: public QGraphicsScene {
   //		virtual void mousePressEvent(QMouseEvent* event);
         virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
 		virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
-  
+
   virtual void drawBackground(QPainter* painter, const QRectF& rect);
-  virtual void drawItems(QPainter *painter, int numItems, QGraphicsItem *items[], const QStyleOptionGraphicsItem options[], QWidget *widget);
+  virtual void drawItems(QPainter *painter,
+						 int numItems, QGraphicsItem *items[],
+						 const QStyleOptionGraphicsItem options[],
+						 QWidget *widget);
 
 	private:
   //void drawUnits(QPainter& painter);
@@ -76,6 +80,8 @@ class MapWidget: public QGraphicsScene {
 
   std::list<UnitActions> unitActions;
   std::map<aw::unit::ptr, UnitGraphicsItem*> managedUnits;
+
+  PathGraphicsItem* pathGraphicsItem;
 };
 
 #endif
