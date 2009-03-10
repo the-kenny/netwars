@@ -22,11 +22,11 @@ HEADERS +=	BuyMenu.h \
 			PathGraphicsItem.h \
 			PixmapDrawing.h \
 			Sprites.h \
-			UnitGraphicsItem.h \
-			UnitActionMenu.h \
 			UnitActionMenuButton.h \
-			UnitUnloadMenu.h \
+			UnitActionMenu.h \
+			UnitGraphicsItem.h \
 			UnitUnloadMenuButton.h \
+			UnitUnloadMenu.h \
 
 FORMS +=	buyMenu.ui \
 			gameDialog.ui \
