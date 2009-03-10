@@ -26,6 +26,10 @@ UnitGraphicsItem::UnitGraphicsItem(QGraphicsItem* parent)
 	initialize();
 }
 
+void UnitGraphicsItem::moveTo(const QPointF& p) {
+  this->setPos(p);
+}
+
 void UnitGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
   using namespace aw;
   

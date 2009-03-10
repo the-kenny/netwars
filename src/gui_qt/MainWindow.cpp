@@ -12,9 +12,12 @@
 
 using namespace aw;
 
-MainWindow::MainWindow(QMainWindow* parent) {
+MainWindow::MainWindow(QMainWindow* parent)
+  : drawingArea(new MapWidget(this)) {
 	setupUi(this);
 
+	mapView->setScene(drawingArea);
+	
 	//Connect slots
 	connect(actionNewGame, SIGNAL(triggered()), this, SLOT(newGame()));
 	connect(actionEndTurn, SIGNAL(triggered()), this, SLOT(endTurn()));

@@ -39,7 +39,11 @@
 	 - [ ] Use configurations in the source
 	 - [ ] Add config window
 ** Qt-Gui
-*** TODO (Maybe) Use QGraphicsView
+*** ACTIVE (Maybe) Use QGraphicsView [2/4]
+	- [X] Build UnitGraphicsItem
+	- [ ] Add added-/removed-/moved--units to aw::scene
+	- [X] Make MapWidget a QGraphicsView
+	- [ ] Put everything together
 *** TODO Implement animations (Possible through QGraphicsView)
 * Later
 ** Drafts about networking

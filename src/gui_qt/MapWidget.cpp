@@ -2,8 +2,11 @@
 
 #include <QMouseEvent>
 #include <QPainter>
+#include <QStyleOptionGraphicsItem>
+
 #include <boost/foreach.hpp>
 
+#include "PixmapDrawing.h"
 #include "Sprites.h"
 
 #include "game/config.h"
@@ -12,17 +15,20 @@
 
 using namespace aw;
 
-namespace {
-	//Used for masking
-	static QImage blackImage = QImage(32, 32, QImage::Format_ARGB32);
-}
+
 
 MapWidget::MapWidget(QWidget* parent) 
-	: QWidget(parent), 
+	: QGraphicsScene(parent), 
 	backgroundImage(":/data/background.png") {
-	
-	//Initialize the blackImage;
-	blackImage.fill(0xff000000);
+}
+
+void MapWidget::setScene(aw::scene::ptr scene) { 
+  processNewScene(scene);
+
+  currentScene = scene;
+  
+  this->update(); 
+  this->update(); 
 }
 
 void MapWidget::reset() {
@@ -32,30 +38,8 @@ void MapWidget::reset() {
   _signalFocusChanged.disconnect_all_slots();
 }
 
-void MapWidget::paintEvent(QPaintEvent* event) {
-	QPainter painter(this);
-
-	painter.drawImage(QPoint(), backgroundImage);
-
-	if(currentScene) {
-		this->drawTerrain(painter);
-		this->drawUnits(painter);
-
-		const std::string& pixmapdir = aw::config().get<std::string>("/config/dirs/pixmaps");
-
-		//Draw Path and Highlighted Area
-		this->drawHighlightedArea(painter, currentScene->get_highlighted_area(), pixmapdir + "misc/range.png");
-		this->drawHighlightedArea(painter, currentScene->get_path_area(), pixmapdir + "misc/path.png");
-
-		if(currentScene->highlight())
-			this->drawPixmap(pixmapdir + "misc/highlight.png",
-				currentScene->highlight(), 
-				painter);
-	}
-}
-
-void MapWidget::mousePressEvent(QMouseEvent* event) {
-	aw::coord realCoord(event->x()/16, event->y()/16);
+void MapWidget::mousePressEvent(QGraphicsSceneMouseEvent* event) {
+    aw::coord realCoord(event->scenePos().x()/16, event->scenePos().y()/16);
 
 	int button = -1;
 
@@ -73,9 +57,9 @@ void MapWidget::mousePressEvent(QMouseEvent* event) {
 	_signalClicked(realCoord, button);
 }
 
-void MapWidget::mouseMoveEvent(QMouseEvent* event) {
+void MapWidget::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
 	static coord lastCoord(0, 0);
-	coord currentCoord(event->x()/16, event->y()/16);
+	coord currentCoord(event->scenePos().x()/16, event->scenePos().y()/16);
 
 	if(currentCoord != lastCoord) {
 		_signalFocusChanged(currentCoord);
@@ -83,30 +67,14 @@ void MapWidget::mouseMoveEvent(QMouseEvent* event) {
 	}
 }
 
-void MapWidget::drawPixmap(const std::string& path, const aw::coord& c, QPainter& painter) {
-	if(path.size() != 0) {
-		QImage sprite = sharedSprites().getSprite(QString(path.c_str()));
-		assert(!sprite.isNull());
-
-		QSize size = sprite.size();
-
-		painter.drawImage(QPoint((c.x*16)+(16-size.width()), (c.y*16)+(16-size.height())), sprite);
-	}
-}
-
-void MapWidget::drawPixmap(const QImage& sprite, const aw::coord& c, QPainter& painter) {
-		QSize size = sprite.size();
-		painter.drawImage(QPoint((c.x*16)+(16-size.width()), (c.y*16)+(16-size.height())), sprite);
-}
-
-
+/*
 void MapWidget::drawUnits(QPainter& painter) {
 	for(int x = 0; x < 30; ++x) {
 		for(int y = 0; y < 20; ++y) {
 			aw::unit::ptr u = currentScene->get_unit(x, y);
 
 			if(u != NULL && !u->is_dummy()) {
-				this->drawPixmap(aw::gui::get_path(u->type(), u->color()), 
+				Drawing::drawPixmap(aw::gui::get_path(u->type(), u->color()), 
 						aw::coord(x, y),
 						painter);
 
@@ -121,26 +89,26 @@ void MapWidget::drawUnits(QPainter& painter) {
 					painter.save();
 
 					painter.setOpacity(0.4);
-					this->drawPixmap(mask, aw::coord(x, y), painter);
+					Drawing::drawPixmap(mask, aw::coord(x, y), painter);
 
 					painter.restore();
 				}
 
 				int life = u->get_hp();
 				if(life < 10 && life > 0)
-					this->drawPixmap(gui::get_path(unit::LIVE, life), aw::coord(x, y), painter);
+					Drawing::drawPixmap(gui::get_path(unit::LIVE, life), aw::coord(x, y), painter);
 
 				if(u->low_ammo())
-					this->drawPixmap(gui::get_path(unit::LOW_AMMO), aw::coord(x, y), painter);
+					Drawing::drawPixmap(gui::get_path(unit::LOW_AMMO), aw::coord(x, y), painter);
 
 				if(u->low_fuel())
-					this->drawPixmap(gui::get_path(unit::LOW_FUEL), aw::coord(x, y), painter);
+					Drawing::drawPixmap(gui::get_path(unit::LOW_FUEL), aw::coord(x, y), painter);
 
 				if(u->is_hidden())
-					this->drawPixmap(gui::get_path(unit::HIDDEN), aw::coord(x, y), painter);
+					Drawing::drawPixmap(gui::get_path(unit::HIDDEN), aw::coord(x, y), painter);
 
 				if(u->is_transporter() && boost::dynamic_pointer_cast<transporter>(u)->loaded_units_count() > 0)
-					this->drawPixmap(gui::get_path(unit::LOADED), aw::coord(x, y), painter);
+					Drawing::drawPixmap(gui::get_path(unit::LOADED), aw::coord(x, y), painter);
 
 				if(u->can_capture())
 				{
@@ -148,26 +116,153 @@ void MapWidget::drawUnits(QPainter& painter) {
 
 					if(t->is_building() && boost::dynamic_pointer_cast<building>(t)->capture_points() < 20)
 					{
-						this->drawPixmap(gui::get_path(unit::CAPTURE), aw::coord(x, y), painter);
+						Drawing::drawPixmap(gui::get_path(unit::CAPTURE), aw::coord(x, y), painter);
 					}
 				}
 			}
 		}
 	}
 }
+*/
 
-void MapWidget::drawTerrain(QPainter& painter) {
+void MapWidget::drawBackground(QPainter* painter, const QRectF& rect) {
+  painter->drawImage(QPointF(0.0, 0.0), backgroundImage);
+  
+  if(currentScene) {
 	for(int x = 0; x < 30; ++x) {
-		for(int y = 0; y < 20; ++y) {
-			this->drawPixmap(aw::gui::get_sprite_for(aw::coord(x, y), 
-						currentScene),
-					aw::coord(x, y), 
-					painter);
-		}
+	  for(int y = 0; y < 20; ++y) {
+		Drawing::drawPixmap(aw::gui::get_sprite_for(aw::coord(x, y), 
+													currentScene),
+							aw::coord(x, y), 
+							*painter);
+	  }
 	}
+  }
 }
 
-void MapWidget::drawHighlightedArea(QPainter& painter, const aw::area& area, const std::string& pixmap) {
-	BOOST_FOREACH(const coord& c, area)
-		this->drawPixmap(pixmap, c, painter);
+void MapWidget::drawItems(QPainter *painter,
+						  int numItems, QGraphicsItem *items[],
+						  const QStyleOptionGraphicsItem options[],
+						  QWidget *widget) {
+  BOOST_FOREACH(const UnitActions& a, unitActions) {
+	switch(a.action) {
+	case UnitActions::MOVED:
+	  getUnitGraphicsItem(a.unit)->moveTo(mapToSceneCoord(a.position));
+	  break;
+	case UnitActions::ADDED:
+	  addUnitForDrawing(a.unit, a.position);
+	  break;
+	case UnitActions::REMOVED:
+	  removeUnitFromDrawing(a.unit);
+	}
+  }
+  
+  for (int i = 0; i < numItems; ++i) {
+	// Draw the item
+	painter->save();
+	painter->setMatrix(items[i]->sceneMatrix(), true);
+	items[i]->paint(painter, options+i, widget);
+	painter->restore();
+  }
 }
+
+UnitGraphicsItem* MapWidget::getUnitGraphicsItem(const aw::unit::ptr& u) {
+  return managedUnits[u];
+}
+
+void MapWidget::addUnitForDrawing(const aw::unit::ptr &u, const aw::coord& c) {
+  UnitGraphicsItem* ugi(new UnitGraphicsItem);
+  ugi->setUnit(u);
+  ugi->moveTo(mapToSceneCoord(c));
+
+  this->addItem(ugi);
+
+  managedUnits.insert(std::make_pair(u, ugi));
+}
+
+void MapWidget::removeUnitFromDrawing(const aw::unit::ptr &u) {
+  UnitGraphicsItem* ugi = getUnitGraphicsItem(u);
+
+  this->removeItem(ugi);
+  managedUnits.erase(u);
+
+  delete ugi;
+}
+
+void MapWidget::processNewScene(const scene::ptr& newScene) {
+  if(newScene && currentScene) {
+	std::map<aw::unit::ptr, aw::coord> oldUnits;
+	std::map<aw::unit::ptr, aw::coord> newUnits;
+	typedef std::map<aw::unit::ptr, aw::coord>::iterator iterator;
+
+	//Cycle through the old scene and collect all units
+	for(int x = 0; x < 30; ++x) {
+	  for(int y = 0; y < 20; ++y) {
+		const unit::ptr &oldUnit = currentScene->get_unit(x, y);
+		const unit::ptr &newUnit = newScene->get_unit(x, y);
+		
+		if(oldUnit != NULL && !oldUnit->is_dummy()) {
+		  oldUnits.insert(std::make_pair(oldUnit, coord(x, y)));
+		}
+		
+		if(newUnit != NULL && !newUnit->is_dummy()) {
+		  newUnits.insert(std::make_pair(newUnit, coord(x, y)));
+		}
+	  }
+	}
+	
+	typedef std::pair<aw::unit::ptr, aw::coord> pair;
+	BOOST_FOREACH(pair newPair, newUnits) {
+	  iterator it = oldUnits.find(newPair.first);
+			
+	  //Cycle through the old units and search for the new, then add it to the move-list
+	  if(it != oldUnits.end()) {
+		//Add the unit to the movement-array when the position has changed
+		if(newPair.second != it->second) {
+		  //LOG("Unit moved from %i|%i to %i|%i", it->second.x, it->second.y, newPair.second.x, newPair.second.y);
+
+		  UnitActions action;
+		  action.action = UnitActions::MOVED;
+		  action.oldPosition = it->second;
+		  action.position = newPair.second;
+		  action.unit = newPair.first;
+		  unitActions.push_back(action);
+
+		  //Hack: Building capture-status
+		  //Update the currentTerrain of the unit
+		  //[[self getAnimatableUnit:it->first] setCurrentTerrain:newScene->get_terrain(newPair.second.x, newPair.second.y)];  
+		}
+	  } else {
+		//Unit isn't in the old scene - it is new.
+		addUnitForDrawing(newPair.first, newPair.second);
+
+		UnitActions action;
+		action.position = it->second;
+		action.action = UnitActions::ADDED;
+		action.unit = newPair.first;
+		unitActions.push_back(action);
+	  }
+
+	  BOOST_FOREACH(pair oldPair, oldUnits) {
+		iterator it = newUnits.find(oldPair.first);
+		
+		//Unit isn't in the new scene - it is gone.
+		if(it == newUnits.end()) {
+		  removeUnitFromDrawing(oldPair.first);
+		}
+	  }
+	}
+  } else if(newScene) {
+	//Cycle through the old scene and collect 
+	for(int x = 0; x < 30; ++x) {
+	  for(int y = 0; y < 20; ++y) {
+		const unit::ptr &unit = newScene->get_unit(x, y);
+		
+		if(unit != NULL && !unit->is_dummy()) {
+		  addUnitForDrawing(unit, coord(x, y));
+		}
+	  }
+	}
+  }
+}
+

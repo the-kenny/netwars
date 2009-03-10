@@ -3,6 +3,8 @@
 
 #include "ui_mainWindow.h"
 
+#include "MapWidget.h"
+
 #include "game/game_controller.h"
 
 class MainWindow: public QMainWindow, public Ui::MainWindow {
@@ -17,6 +19,7 @@ class MainWindow: public QMainWindow, public Ui::MainWindow {
 
 	private:
 		aw::game_controller::ptr gameController;
+  MapWidget* drawingArea;
 };
 
 #endif
