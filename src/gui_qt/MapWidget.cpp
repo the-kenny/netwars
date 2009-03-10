@@ -223,8 +223,8 @@ void MapWidget::processNewScene(const scene::ptr& newScene) {
 		
 		//Unit isn't in the new scene - it is gone.
 		if(it == newUnits.end()) {
-		  std::cout << "removeUnitFromDrawing: " << oldPair.first->type() << std::endl;
 		  removeUnitFromDrawing(oldPair.first);
+		  oldUnits.erase(oldPair.first);
 		}
 	  }
 	}
