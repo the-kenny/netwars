@@ -45,7 +45,8 @@
 	- [X] Make MapWidget a QGraphicsView
 	- [X] Put everything together
 	- [X] Clean up the code
-*** ACTIVE Implement animations (Possible through QGraphicsView)
+*** DONE Implement animations (Possible through QGraphicsView)
+	 CLOSED: [2009-03-12 Do 00:31]
 * Later
 ** Drafts about networking
    - Online-Games like old-school Go 
