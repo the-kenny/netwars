@@ -50,36 +50,40 @@ void MapWidget::reset() {
 void MapWidget::mousePressEvent(QGraphicsSceneMouseEvent* event) {
     aw::coord realCoord(event->scenePos().x()/16, event->scenePos().y()/16);
 
-	int button = -1;
+	if(realCoord.x < 30 && realCoord.y < 20) {
+	  int button = -1;
 
-	switch(event->button()) {
-		case Qt::LeftButton:
-			button = 1;
-			break;
-		case Qt::RightButton:
-			button = 3;
-			break;
-		default:
-			return;
+	  switch(event->button()) {
+	  case Qt::LeftButton:
+		button = 1;
+		break;
+	  case Qt::RightButton:
+		button = 3;
+		break;
+	  default:
+		return;
+	  }
+
+	  _signalClicked(realCoord, button);
 	}
-
-	_signalClicked(realCoord, button);
 }
 
 void MapWidget::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
 	static coord lastCoord(0, 0);
 	coord currentCoord(event->scenePos().x()/16, event->scenePos().y()/16);
 
-	if(currentCoord != lastCoord) {
+	if(currentCoord.x < 30 && currentCoord.y < 20) {
+	  if(currentCoord != lastCoord) {
 		_signalFocusChanged(currentCoord);
 		lastCoord = currentCoord;
+	  }
 	}
 }
 
 void MapWidget::drawBackground(QPainter* painter, const QRectF& rect) {
   painter->drawImage(QPointF(0.0, 0.0), backgroundImage);
 
-   if(currentScene) {
+  if(currentScene) {
 	for(int x = 0; x < 30; ++x) {
 	  for(int y = 0; y < 20; ++y) {
 		Drawing::drawPixmap(aw::gui::get_sprite_for(aw::coord(x, y), 
