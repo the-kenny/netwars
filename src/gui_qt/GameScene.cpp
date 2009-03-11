@@ -103,12 +103,18 @@ void GameScene::drawItems(QPainter *painter,
 	case UnitActions::MOVED:
 	  getUnitGraphicsItem(a.unit)->moveTo(mapToSceneCoord(a.position));
 	  break;
+
+	  //The next two things are handled directly by processNewScene().
+	  //We need them only if animations for adding and removing will be
+	  //added in the future.
+	  /*
 	case UnitActions::ADDED:
 	  addUnitForDrawing(a.unit, a.position);
 	  break;
 	case UnitActions::REMOVED:
-	  //removeUnitFromDrawing(a.unit);
+	  removeUnitFromDrawing(a.unit);
 	  break;
+	  */
 	default:;
 	}
   }
