@@ -3,6 +3,9 @@
 #include "PixmapDrawing.h"
 #include "Sprites.h"
 
+#include <QGraphicsItemAnimation>
+#include <QTimeLine>
+
 #include "game/gui/drawing.h"
 #include "game/gui/paths.h"
 
@@ -27,7 +30,20 @@ UnitGraphicsItem::UnitGraphicsItem(QGraphicsItem* parent)
 }
 
 void UnitGraphicsItem::moveTo(const QPointF& p) {
-  this->setPos(p);
+  std::cout << "moveTo called" << std::endl;
+  
+  QGraphicsItemAnimation* animation = new QGraphicsItemAnimation;
+  animation->setPosAt(0.99, p);
+  
+  QTimeLine* timer = new QTimeLine;
+  timer->setDuration(1000);
+  timer->setLoopCount(1);
+  timer->setCurveShape(QTimeLine::EaseInOutCurve);
+  
+  animation->setItem(this);
+  animation->setTimeLine(timer);
+
+  timer->start();
 }
 
 void UnitGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
