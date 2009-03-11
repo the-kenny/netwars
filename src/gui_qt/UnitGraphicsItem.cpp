@@ -40,7 +40,7 @@ void UnitGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 						  aw::coord(0, 0),
 						  *painter);
 
-	  const aw::coord nullCoord(0, 0);
+	  static const aw::coord nullCoord(0, 0);
   
 	  if(u->moved()) {
 		QImage mask = sharedSprites().getSprite(QString(aw::gui::get_path(u->type(), 
