@@ -1,10 +1,12 @@
 #include "MapWidget.h"
 
+#include <QGraphicsView>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 
 #include <boost/foreach.hpp>
+#include <boost/bind.hpp>
 
 #include "PixmapDrawing.h"
 #include "Sprites.h"
@@ -33,6 +35,9 @@ void MapWidget::setScene(aw::scene::ptr scene) {
   pathGraphicsItem->setScene(scene);
 
   update();
+
+  BOOST_FOREACH(QGraphicsView* view, views())
+	view->repaint();
 }
 
 void MapWidget::reset() {
@@ -73,8 +78,8 @@ void MapWidget::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
 
 void MapWidget::drawBackground(QPainter* painter, const QRectF& rect) {
   painter->drawImage(QPointF(0.0, 0.0), backgroundImage);
-  
-  if(currentScene) {
+
+   if(currentScene) {
 	for(int x = 0; x < 30; ++x) {
 	  for(int y = 0; y < 20; ++y) {
 		Drawing::drawPixmap(aw::gui::get_sprite_for(aw::coord(x, y), 

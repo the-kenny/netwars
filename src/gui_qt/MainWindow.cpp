@@ -41,7 +41,6 @@ void MainWindow::newGame() {
 		drawingArea->signalClicked().connect(boost::bind(&aw::game_controller::click, gameController, _1, _2));
 		drawingArea->signalFocusChanged().connect(boost::bind(&aw::game_controller::mouse_hover_changed, gameController, _1));
 		gameController->signal_scene_change().connect(boost::bind(&MapWidget::setScene, drawingArea, _1));
-		gameController->signal_scene_change().connect(boost::bind(&QGraphicsView::repaint, mapView));
 
 		//Connect the menu-callbacks
 		gameController->signal_show_unit_action_menu().connect(boost::bind(&UnitActionMenu::showActionMenu, this, _1));
