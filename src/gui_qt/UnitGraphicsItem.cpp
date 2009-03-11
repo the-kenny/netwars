@@ -33,11 +33,12 @@ void UnitGraphicsItem::moveTo(const QPointF& p) {
   std::cout << "moveTo called" << std::endl;
   
   QGraphicsItemAnimation* animation = new QGraphicsItemAnimation;
-  animation->setPosAt(0.99, p);
+  animation->setPosAt(1.0, p);
   
   QTimeLine* timer = new QTimeLine;
   timer->setDuration(1000);
   timer->setLoopCount(1);
+  timer->setUpdateInterval(1000.0/30);
   timer->setCurveShape(QTimeLine::EaseInOutCurve);
   
   animation->setItem(this);
