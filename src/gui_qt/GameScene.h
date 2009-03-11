@@ -26,14 +26,14 @@ public:
   aw::unit::ptr unit;
 };
 
-class MapWidget: public QGraphicsScene {
+class GameScene: public QGraphicsScene {
 	Q_OBJECT
 
 	public:
 		typedef boost::signal<void (const aw::coord &, int)> signalClickedT;
 		typedef boost::signal<void (const aw::coord &)> signalFocusChangedT;
 
-		MapWidget(QWidget* parent);
+		GameScene(QWidget* parent);
 
 		aw::scene::ptr scene() const { return currentScene; }
         void setScene(aw::scene::ptr scene);

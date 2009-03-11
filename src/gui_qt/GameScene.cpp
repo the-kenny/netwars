@@ -1,4 +1,4 @@
-#include "MapWidget.h"
+#include "GameScene.h"
 
 #include <QGraphicsView>
 #include <QMouseEvent>
@@ -17,7 +17,7 @@
 
 using namespace aw;
 
-MapWidget::MapWidget(QWidget* parent) 
+GameScene::GameScene(QWidget* parent) 
 	: QGraphicsScene(parent), 
 	  backgroundImage(":/data/background.png"),
 	  pathGraphicsItem(new PathGraphicsItem) {
@@ -27,27 +27,26 @@ MapWidget::MapWidget(QWidget* parent)
   this->addItem(pathGraphicsItem);
 }
 
-void MapWidget::setScene(aw::scene::ptr scene) { 
+void GameScene::setScene(aw::scene::ptr scene) { 
   processNewScene(scene);
 
   currentScene = scene;
 
   pathGraphicsItem->setScene(scene);
-
   update();
 
   BOOST_FOREACH(QGraphicsView* view, views())
 	view->repaint();
 }
 
-void MapWidget::reset() {
+void GameScene::reset() {
   currentScene.reset();
   
   _signalClicked.disconnect_all_slots();
   _signalFocusChanged.disconnect_all_slots();
 }
 
-void MapWidget::mousePressEvent(QGraphicsSceneMouseEvent* event) {
+void GameScene::mousePressEvent(QGraphicsSceneMouseEvent* event) {
     aw::coord realCoord(event->scenePos().x()/16, event->scenePos().y()/16);
 
 	if(realCoord.x < 30 && realCoord.y < 20) {
@@ -68,7 +67,7 @@ void MapWidget::mousePressEvent(QGraphicsSceneMouseEvent* event) {
 	}
 }
 
-void MapWidget::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
+void GameScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
 	static coord lastCoord(0, 0);
 	coord currentCoord(event->scenePos().x()/16, event->scenePos().y()/16);
 
@@ -80,7 +79,7 @@ void MapWidget::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
 	}
 }
 
-void MapWidget::drawBackground(QPainter* painter, const QRectF& rect) {
+void GameScene::drawBackground(QPainter* painter, const QRectF& rect) {
   painter->drawImage(QPointF(0.0, 0.0), backgroundImage);
 
   if(currentScene) {
@@ -95,7 +94,7 @@ void MapWidget::drawBackground(QPainter* painter, const QRectF& rect) {
   }
 }
 
-void MapWidget::drawItems(QPainter *painter,
+void GameScene::drawItems(QPainter *painter,
 						  int numItems, QGraphicsItem *items[],
 						  const QStyleOptionGraphicsItem options[],
 						  QWidget *widget) {
@@ -125,7 +124,7 @@ void MapWidget::drawItems(QPainter *painter,
 
 /*
 Doesn't work... shitty Qt-Drawing
-void MapWidget::drawForeground(QPainter* painter, const QRectF& rect) {
+void GameScene::drawForeground(QPainter* painter, const QRectF& rect) {
   if(currentScene) {
 	static const std::string& pixmapdir = aw::config().get<std::string>("/config/dirs/pixmaps");
 
@@ -143,7 +142,7 @@ void MapWidget::drawForeground(QPainter* painter, const QRectF& rect) {
 }
 */
 
-UnitGraphicsItem* MapWidget::getUnitGraphicsItem(const aw::unit::ptr& u) {
+UnitGraphicsItem* GameScene::getUnitGraphicsItem(const aw::unit::ptr& u) {
   std::map<aw::unit::ptr, UnitGraphicsItem*>::iterator it = managedUnits.find(u);
 
   if(it->first)
@@ -152,7 +151,7 @@ UnitGraphicsItem* MapWidget::getUnitGraphicsItem(const aw::unit::ptr& u) {
 	return NULL;
 }
 
-void MapWidget::addUnitForDrawing(const aw::unit::ptr &u, const aw::coord& c) {
+void GameScene::addUnitForDrawing(const aw::unit::ptr &u, const aw::coord& c) {
   UnitGraphicsItem* ugi(new UnitGraphicsItem);
   ugi->setUnit(u);
   ugi->moveTo(mapToSceneCoord(c));
@@ -162,7 +161,7 @@ void MapWidget::addUnitForDrawing(const aw::unit::ptr &u, const aw::coord& c) {
   managedUnits.insert(std::make_pair(u, ugi));
 }
 
-void MapWidget::removeUnitFromDrawing(const aw::unit::ptr &u) {
+void GameScene::removeUnitFromDrawing(const aw::unit::ptr &u) {
   UnitGraphicsItem* ugi = getUnitGraphicsItem(u);
 
   this->removeItem(ugi);
@@ -171,7 +170,7 @@ void MapWidget::removeUnitFromDrawing(const aw::unit::ptr &u) {
   delete ugi;
 }
 
-void MapWidget::processNewScene(const scene::ptr& newScene) {
+void GameScene::processNewScene(const scene::ptr& newScene) {
   if(newScene && currentScene) {
 	std::map<aw::unit::ptr, aw::coord> oldUnits;
 	std::map<aw::unit::ptr, aw::coord> newUnits;

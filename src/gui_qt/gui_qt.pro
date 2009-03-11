@@ -17,8 +17,8 @@ LIBS += -lboost_signals-mt
 # Input
 HEADERS +=	BuyMenu.h \
 			GameDialog.h \
-			MainWindow.h \
-			MapWidget.h \
+			GameScene.h \
+            MainWindow.h \
 			PathGraphicsItem.h \
 			PixmapDrawing.h \
 			Sprites.h \
@@ -34,9 +34,9 @@ FORMS +=	buyMenu.ui \
 
 SOURCES +=	BuyMenu.cpp \
 			GameDialog.cpp \
+			GameScene.cpp \
 			main.cpp \
 			MainWindow.cpp \
-			MapWidget.cpp \
 			PixmapDrawing.cpp \
 			Sprites.cpp \
 			UnitGraphicsItem.cpp \
