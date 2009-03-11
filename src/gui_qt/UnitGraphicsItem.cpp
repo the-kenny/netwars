@@ -3,8 +3,8 @@
 #include "PixmapDrawing.h"
 #include "Sprites.h"
 
+#include <QCoreApplication>
 #include <QGraphicsItemAnimation>
-#include <QTimeLine>
 
 #include "game/gui/drawing.h"
 #include "game/gui/paths.h"
@@ -23,28 +23,40 @@ namespace {
 }
 
 UnitGraphicsItem::UnitGraphicsItem(QGraphicsItem* parent)
-  : QGraphicsItem(parent) {
+  : QGraphicsItem(parent),
+	timeLine(NULL) {
 
   if(!initialized)
 	initialize();
 }
 
 void UnitGraphicsItem::moveTo(const QPointF& p) {
-  std::cout << "moveTo called" << std::endl;
-  
+  if(timeLine) {
+	if(timeLine->state() == QTimeLine::Running) {
+	  //Not good... we have to wait until the animation is finished
+	  //But this shouldn't happen
+
+	  while(timeLine->state() == QTimeLine::Running)
+		QCoreApplication::processEvents(QEventLoop::AllEvents, 100); 
+	}
+	
+	delete timeLine;
+	timeLine = NULL;
+  }
+   
   QGraphicsItemAnimation* animation = new QGraphicsItemAnimation;
   animation->setPosAt(1.0, p);
   
-  QTimeLine* timer = new QTimeLine;
-  timer->setDuration(1000);
-  timer->setLoopCount(1);
-  timer->setUpdateInterval(1000.0/30);
-  timer->setCurveShape(QTimeLine::EaseInOutCurve);
+  timeLine = new QTimeLine;
+  timeLine->setDuration(1000);
+  timeLine->setLoopCount(1);
+  timeLine->setUpdateInterval(1000.0/30);
+  timeLine->setCurveShape(QTimeLine::EaseInOutCurve);
   
   animation->setItem(this);
-  animation->setTimeLine(timer);
+  animation->setTimeLine(timeLine);
 
-  timer->start();
+  timeLine->start();
 }
 
 void UnitGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {

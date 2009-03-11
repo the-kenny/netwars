@@ -2,6 +2,7 @@
 #define AW_QT_TERRAIN_GRAPHICS_ITEM_H
 
 #include <QGraphicsItem>
+#include <QTimeLine>
 
 #include <boost/shared_ptr.hpp>
 
@@ -25,6 +26,8 @@ protected:
 
 private:
   aw::unit::ptr _unit;
+
+  QTimeLine* timeLine;
 };
 
 #endif
