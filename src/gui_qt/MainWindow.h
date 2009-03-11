@@ -19,7 +19,7 @@ class MainWindow: public QMainWindow, public Ui::MainWindow {
 
 	private:
 		aw::game_controller::ptr gameController;
-  GameScene* drawingArea;
+  GameScene* graphicsScene;
 };
 
 #endif
