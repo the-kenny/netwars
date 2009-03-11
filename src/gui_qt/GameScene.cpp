@@ -162,7 +162,7 @@ UnitGraphicsItem* GameScene::getUnitGraphicsItem(const aw::unit::ptr& u) {
 void GameScene::addUnitForDrawing(const aw::unit::ptr &u, const aw::coord& c) {
   UnitGraphicsItem* ugi(new UnitGraphicsItem);
   ugi->setUnit(u);
-  ugi->moveTo(mapToSceneCoord(c));
+  ugi->setPos(mapToSceneCoord(c));
 
   this->addItem(ugi);
 
