@@ -118,6 +118,8 @@ void GameScene::drawItems(QPainter *painter,
 	default:;
 	}
   }
+
+  unitActions.clear();
   
   for (int i = 0; i < numItems; ++i) {
 	// Draw the item
