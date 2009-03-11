@@ -1,5 +1,5 @@
 #+SEQ_TODO: TODO ACTIVE DONE
-
+			
 * Current ToDo
 ** ACTIVE Clean up the core-code [2/11]
    - [ ] Error-Checking!
@@ -39,11 +39,12 @@
 	 - [ ] Use configurations in the source
 	 - [ ] Add config window
 ** Qt-Gui
-*** ACTIVE (Maybe) Use QGraphicsView [3/4]
+*** DONE (Maybe) Use QGraphicsView [4/4]
+	 CLOSED: [2009-03-11 Mi 23:13]
 	- [X] Build UnitGraphicsItem
 	- [X] Make MapWidget a QGraphicsView
 	- [X] Put everything together
-	- [ ] Clean up the code
+	- [X] Clean up the code
 *** TODO Implement animations (Possible through QGraphicsView)
 * Later
 ** Drafts about networking
