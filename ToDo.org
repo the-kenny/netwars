@@ -29,15 +29,19 @@
    - [ ] Collect informations about weather in Advance Wars
    - [ ] Implement in Core
 ** TODO Make Configurable
+*** TODO Extend the config-api
+*** TODO Make Qt configurable [0/2]
+	- [ ] Build a settings-window
+	- [ ] Make a setting for the animation-types (Type, duration etc.)
+*** TODO Make CoreAnimation-Animations configurable [0/3]
+	- [ ] Examine Cocoa-Config-Apis
+	- [ ] Use configurations in the source
+	- [ ] Add config window
 *** DONE Use defaults for initial-funds and funds-per-building [3/3]
     CLOSED: [2009-02-27 Fri 15:01]
 	 - [X] Add to config.xml
 	 - [X] Use in Qt
 	 - [X] Use in Cocoa
-*** TODO Make CoreAnimation-Animations configurable [0/3]
-	 - [ ] Examine Cocoa-Config-Apis
-	 - [ ] Use configurations in the source
-	 - [ ] Add config window
 ** Qt-Gui
 *** DONE (Maybe) Use QGraphicsView [4/4]
 	 CLOSED: [2009-03-11 Mi 23:13]
