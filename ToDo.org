@@ -47,3 +47,6 @@
      Send an email after each player's move so that you can play a
      game over a greater range of days
    - Show games on a webserver
+   - How should the protocol look like? (XML/JSON/Binary)?
+   - Logic on server&client or just on client?
+   - Should the scene sended? Or just the changed parts?
