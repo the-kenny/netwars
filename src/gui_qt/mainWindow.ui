@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow" >
-  <property name="geometry" >
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,104 +10,93 @@
     <height>387</height>
    </rect>
   </property>
-  <property name="sizePolicy" >
-   <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <property name="minimumSize" >
+  <property name="minimumSize">
    <size>
     <width>498</width>
     <height>387</height>
    </size>
   </property>
-  <property name="maximumSize" >
+  <property name="maximumSize">
    <size>
     <width>16777215</width>
     <height>16777215</height>
    </size>
   </property>
-  <property name="windowTitle" >
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
+  <property name="windowTitle">
    <string>Netwars</string>
   </property>
-  <widget class="QWidget" name="centralwidget" >
-   <layout class="QHBoxLayout" name="horizontalLayout" >
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="MapWidget" native="1" name="drawingArea" >
-      <property name="minimumSize" >
-       <size>
-        <width>480</width>
-        <height>320</height>
-       </size>
+     <widget class="QGraphicsView" name="mapView">
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
       </property>
-      <property name="maximumSize" >
-       <size>
-        <width>480</width>
-        <height>320</height>
-       </size>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
       </property>
-      <property name="mouseTracking" >
-       <bool>true</bool>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
       </property>
      </widget>
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar" >
-   <property name="geometry" >
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
      <width>498</width>
-     <height>26</height>
+     <height>25</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFile" >
-    <property name="title" >
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionNewGame" />
-    <addaction name="separator" />
-    <addaction name="actionQuit" />
+    <addaction name="actionNewGame"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
    </widget>
-   <widget class="QMenu" name="menuGame" >
-    <property name="title" >
+   <widget class="QMenu" name="menuGame">
+    <property name="title">
      <string>Game</string>
     </property>
-    <addaction name="actionEndTurn" />
+    <addaction name="actionEndTurn"/>
    </widget>
-   <addaction name="menuFile" />
-   <addaction name="menuGame" />
+   <addaction name="menuFile"/>
+   <addaction name="menuGame"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar" />
-  <action name="actionEndTurn" >
-   <property name="enabled" >
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionEndTurn">
+   <property name="enabled">
     <bool>false</bool>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>End Turn</string>
    </property>
   </action>
-  <action name="actionNewGame" >
-   <property name="text" >
+  <action name="actionNewGame">
+   <property name="text">
     <string>New Game</string>
    </property>
   </action>
-  <action name="actionQuit" >
-   <property name="text" >
+  <action name="actionQuit">
+   <property name="text">
     <string>Quit</string>
    </property>
   </action>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>MapWidget</class>
-   <extends>QWidget</extends>
-   <header>MapWidget.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections>
   <connection>
@@ -115,11 +105,11 @@
    <receiver>MainWindow</receiver>
    <slot>close()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>-1</x>
      <y>-1</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>248</x>
      <y>193</y>
     </hint>
