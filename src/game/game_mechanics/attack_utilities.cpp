@@ -11,9 +11,10 @@ using namespace aw;
 
 namespace
 {
-	std::string damagetable = "";
+  bool loaded = false;
+  ticpp::Document damagetable;
 
-	void load_damagetable()
+    void load_damagetable()
 	{
 		std::string s;
 		std::ifstream f(config().get<std::string>("/config/damagetable").c_str());
@@ -28,28 +29,23 @@ namespace
 
 		while(std::getline(f, line))
 			s += line;
-
-		damagetable = s;
+		
+		damagetable.Parse(s);
+		loaded = true;
 	}
 }
 
 int attack_utilities::get_damage_percent(unit::types att, unit::types vic, bool alt_fire)
-{
-	if(damagetable.empty())
-		load_damagetable();
-
-	ticpp::Document xml;
-	xml.Parse(damagetable);
-
+{	
 	const std::string att_name(unit::name(att));
 	const std::string vic_name(unit::name(vic));
 
-//	std::cout << "Attacker-Name: " << att_name << "\n"
-//				<< "Victim-Name: " 	<< vic_name << std::endl;
-
 	try
 	{
-		ticpp::Element *element = xml.FirstChildElement("damagetable");
+	  	if(!loaded)
+		  load_damagetable();
+
+		ticpp::Element *element = damagetable.FirstChildElement("damagetable");
 
 		element = element->FirstChildElement("unit");
 
@@ -103,7 +99,9 @@ int attack_utilities::get_damage_percent(unit::types att, unit::types vic, bool 
 
 bool attack_utilities::can_attack(const unit::ptr &attacker, const unit::ptr &victim)
 {
-	if(damagetable.empty())
+  try
+  {
+	if(!loaded)
 		load_damagetable();
 
 	assert(attacker != NULL);
@@ -145,6 +143,12 @@ bool attack_utilities::can_attack(const unit::ptr &attacker, const unit::ptr &vi
 		return true;
 	else
 		return false;
+  }
+  catch(const ticpp::Exception &e)
+  {
+	  std::cout << "[In can_attack()] ticpp::Exception caught: " << e.what() << std::endl;
+	  return false;
+  }
 }
 
 int attack_utilities::choose_weapon(const unit::ptr &attacker, const unit::ptr &victim)

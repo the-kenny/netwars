@@ -1,7 +1,7 @@
 #+SEQ_TODO: TODO ACTIVE DONE
 
 * Current ToDo							       :netwars:
-** ACTIVE Clean up the core-code [6/14]
+** ACTIVE Clean up the core-code [7/13]
    - [ ] Error-Checking!
    - [X] Clean up unit_base.h
    - [ ] Create a property-interface for aw::unit
@@ -12,7 +12,7 @@
    - [X] Clean up scene.h
    - [ ] Add more informations to scene.h
 	 (Like changed states etc.)
-   - [ ] get_damage_percent shouldn't have to parse the damagetable
+   - [X] get_damage_percent shouldn't have to parse the damagetable
 	 after each call
    - [ ] Just do the output on a debug-build
    - [ ] Can pass should be located in aw::map
