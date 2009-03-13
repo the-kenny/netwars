@@ -88,7 +88,7 @@ void GameScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
 	}
 }
 
-void GameScene::drawBackground(QPainter* painter, const QRectF& rect) {
+void GameScene::drawBackground(QPainter* painter, const QRectF& /* rect */) {
   painter->drawImage(QPointF(0.0, 0.0), backgroundImage);
 
   if(currentScene) {
