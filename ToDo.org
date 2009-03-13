@@ -5,7 +5,6 @@
    - [ ] Error-Checking!
    - [X] Clean up unit_base.h
    - [ ] Create a property-interface for aw::unit
-   - [ ] Clean up terrain.h
    - [X] Use the game_settings class
    - [X] Use game_settings in Qt-Gui
    - [X] Use game_settings in Cocoa-Gui
