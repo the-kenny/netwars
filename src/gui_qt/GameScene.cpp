@@ -41,6 +41,15 @@ void GameScene::setScene(aw::scene::ptr scene) {
 
 void GameScene::reset() {
   currentScene.reset();
+
+  //Reset the unit layers
+  typedef std::pair<aw::unit::ptr, UnitGraphicsItem*> pair_t;
+  BOOST_FOREACH(const pair_t& p, managedUnits) {
+	removeItem(p.second);
+	delete p.second;
+  }
+
+  managedUnits.clear();
   
   _signalClicked.disconnect_all_slots();
   _signalFocusChanged.disconnect_all_slots();
