@@ -10,6 +10,8 @@
 
 #include <boost/bind.hpp>
 
+#include <QMessageBox>
+
 using namespace aw;
 
 MainWindow::MainWindow(QMainWindow* parent)
@@ -47,13 +49,25 @@ void MainWindow::newGame() {
 		gameController->signal_show_buy_menu().connect(boost::bind(&BuyMenu::showBuyMenu, this, _2, _1));
 		gameController->signal_show_unload_menu().connect(boost::bind(&UnitUnloadMenu::showUnloadMenu, this, _1));
 
+		//Connect callbacks like game-won etc.
+		game->signal_game_finished().connect(boost::bind(&MainWindow::gameFinished, this, _1));
+
 		actionEndTurn->setEnabled(true);
 
 		gameController->start_game(game);
+		mapView->setEnabled(true);
 	}
 }
 
 void MainWindow::endTurn() {
 	gameController->end_turn();
 	gameController->start_turn();
+}
+
+void MainWindow::gameFinished(const aw::player::ptr& p) {
+  actionEndTurn->setEnabled(false);
+  gameController.reset();
+  mapView->setEnabled(false);
+
+  QMessageBox::information(this, "Game is finished!", QString("The %1 player has won!").arg(p->get_color_string().c_str()));
 }
