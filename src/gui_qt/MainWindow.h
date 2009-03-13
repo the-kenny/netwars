@@ -20,6 +20,8 @@ class MainWindow: public QMainWindow, public Ui::MainWindow {
 	private:
 		aw::game_controller::ptr gameController;
   GameScene* graphicsScene;
+
+  void gameFinished(const aw::player::ptr& p);
 };
 
 #endif
