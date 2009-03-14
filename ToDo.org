@@ -1,7 +1,7 @@
 #+SEQ_TODO: TODO ACTIVE DONE
 
 * Current ToDo							       :netwars:
-** ACTIVE Clean up the core-code [7/15]
+** ACTIVE Clean up the core-code [8/15]
    - [ ] Error-Checking!
    - [X] Clean up unit_base.h
    - [ ] Create a property-interface for aw::unit
@@ -17,7 +17,7 @@
    - [ ] Just do the output on a debug-build
    - [ ] Can pass should be located in aw::map
    - [ ] beaten in player_utilities.h shoud be located in aw::game
-   - [ ] Translate german comments to english
+   - [X] Translate german comments to english
    - [ ] Comment the code
 ** TODO Fog of War [0/4]
    - [ ] Determite the visible range for different units
