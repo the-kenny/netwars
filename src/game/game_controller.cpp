@@ -200,7 +200,7 @@ void game_controller::on_unit_click(const coord &pos, int key)
 				}
 				else if(m_game->get_unit(m_selection)->type() == unit->type()) //Combine units
 				{
-					//TODO: Überprüfen, wann sich Einheiten zusammenfügen können
+					//TODO: Check when units can be merhed
 					//if(m_game->get_unit(pos)->life() < m_game->get_unit(pos)->max_life())
 					if(m_game->get_unit(m_selection)->hp() < m_game->get_unit(m_selection)->max_hp() || unit->hp() < unit->max_hp())
 					{
@@ -297,7 +297,7 @@ void game_controller::on_building_click(const coord &pos, int key)
 	{
 		if(m_gamestate == IDLE)
 		{
-			//Wenn dort kein Unit steht und es sein Gebäude ist
+			//If there is no building
 			if(!m_game->get_unit(pos) && m_game->get_terrain(pos)->is_building() && m_game->get_active_player()->his_building(m_game->get_terrain(pos)))
 			{
 				unit::workshops shop;
@@ -313,20 +313,10 @@ void game_controller::on_building_click(const coord &pos, int key)
 						shop = unit::PORT;
 						break;
 
-					//Kann keine Einheiten produzieren
+					//Can't produce an unit
 					default:
 						return;
 				}
-
-//NOTE: Ersetzen
-/*
-				gui::buy_menu *d = gui::create_buy_menu();
-				d->set_player(m_game->get_active_player());
-				d->set_workshop(shop);
-
-				d->on_buy_signal().connect(boost::bind(&game::buy_unit, m_game, pos, _1));
-				d->run();
-*/
 
 				unit::types unit = m_unit_buy_menu_callback(shop, m_game->get_active_player());
 				if(unit != unit::NONE)
@@ -528,12 +518,8 @@ units::actions game_controller::show_actions(const coord &pos)
 	bool can_supply = game_mechanics::can_supply(m_game->get_map(), pos);
 	bool can_repair = game_mechanics::can_repair(m_game->get_map(), pos, m_game->get_active_player()->get_funds());
 
-//NOTE: Ersetzen
-
 	std::list<units::actions> actions;
 	
-	
-
 	if(can_attack)
 		actions.push_back(units::ATTACK);
 	if(can_launch)
@@ -650,13 +636,6 @@ void game_controller::process_action(units::actions action, const coord &pos)
 			unloadable_unit_indices.push_back(p.first);
 		}
 
-//NOTE: Ersetzen
-	/*
-		gui::unit_unload_menu *um = gui::create_unload_menu();
-		um->set_units(unloadable_units);
-		int ret = um->run();
-	*/
-	
 		int ret = m_unit_unload_menu_callback(unloadable_units);
 	
 		m_highlighted_area.clear();
@@ -744,20 +723,6 @@ void game_controller::process_action(units::actions action, const coord &pos)
 		m_gamestate = REPAIRING;
 		m_selection = pos;
 
-//		area a(area::create(pos, 1));
-//		a.erase(pos);
-
-//		BOOST_FOREACH(const coord &c, a)
-//		{
-//			if(m_game->on_map(c))
-//			{
-//				const unit::ptr u = m_game->get_unit(c);
-//				//if(!u || !m_game->get_active_player()->his_unit(u) || !unit->can_supply(u->get_environment()) || u->life() >= u->max_life())
-//				if(!u || !m_game->get_active_player()->his_unit(u) || !unit->can_repair(u->get_environment()) || u->life() >= u->max_life())
-//					a.erase(c);
-//			}
-//		}
-
 		area a = game_mechanics::get_repair_coordinates(m_game->get_map(), pos, m_game->get_active_player()->get_funds());
 
 		m_highlighted_area.assign(a);
@@ -776,8 +741,7 @@ void game_controller::process_action(units::actions action, const coord &pos)
 
 void game_controller::update_display()
 {
-//	scene::ptr scene = m_game->get_prepared_scene();
-		scene::ptr scene = scene::ptr(new aw::scene(m_game->get_map()));
+	scene::ptr scene = scene::ptr(new aw::scene(m_game->get_map()));
 
 	if(m_gamestate != IDLE)
 	{
