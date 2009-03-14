@@ -15,7 +15,8 @@
 using namespace aw;
 
 MainWindow::MainWindow(QMainWindow* parent)
-  : graphicsScene(new GameScene(this)) {
+  : QMainWindow(parent),
+	graphicsScene(new GameScene(this)) {
 	setupUi(this);
 
 	mapView->setScene(graphicsScene);

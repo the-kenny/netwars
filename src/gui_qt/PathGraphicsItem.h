@@ -18,7 +18,7 @@ public:
   void setScene(const aw::scene::ptr& scene) { currentScene = scene; update(); }
 
 protected:
-  virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+  virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem* /* option */, QWidget* /* widget */) {
 
 	if(currentScene) {
 	  const static std::string& pixmapdir = aw::config().get<std::string>("/config/dirs/pixmaps");
