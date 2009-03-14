@@ -14,69 +14,49 @@
 #include <boost/utility.hpp>
 
 /*
-Bewegen
-Nach einem Klick auf eine Einheit wird game::begin_unit_move() ausgeführt.
-Bei Mausbewegung wird der Path neu berechnet.
-Abbruch
-Wird die Bewegung abgebrochen, wird game::cancel_unit_move() ausgeführt.
+* Moving
+  After a click on a unit is game::begin_unit_move() executed.
+  On mouse-movements will the path recalculated.
+  If the movement is canceled, game::cancel_unit_move() will executed.
 
-Aktionen
-Mögliche Aktionen werden in game_controller errechnet und angezeigt
+* Actions
+  The possible actions are calculated in game_controller and are 
+  choosed trough a callback.
 
-Angriff
-Nachdem Angriff ausgewählt wurde, werden die Möglichkeiten errechnet.
-Nach der bestätigung wird complete_unit_move()  und game::attack_unit() ausgeführt.
+* Attack
+  After a unit was selected to attack, the possible targets will 
+  calculated.
+  After the target was selected, complete_unit_move() and
+  game::attack_unit() are executed (In this order!)
 
-Explodieren
-gamestate wird zu attacking.
-Explosionsreichweite wird angezeigt und nach Konfirmation wird complete_unit_move() und explode() aufgerufen.
+* Explosions
+  m_gamestate is set to ATTACKING
+  The range is shown and after the confirmation is complete_unit_move()
+  and then explode() executed.
 
-Übernehmen
-complete_unit_move() und capture_building() werden aufgerufen
+* Takeovers
+  complete_unit_move() and capture_building() is executed.
 
-Einladen
-game::load_unit() wird aufgerufen (ruft complete_unit_move() auf)
+* Loading
+  game::load_unit() is executed 
+  (complete_unit_move() will called from aw::game)
 
-Ausladen:
-Beim ausladen wird erst das Menü angezeigt, Nach der Auswahl einer Einheit werden die möglichen Ausladefelder angezeigt.
-Wird vor dem ersten Ausladen abgebrochen, wird cancel_unit_move() aufgerufen.
-Beim ausladen wird game::unload_unit(from, to) aufgerufen (berechnet Sprit usw.)
-Nachdem die erste Einheit ausgeladen wurde, wird complete_unit_move() ausgeführt.
+* Unloading
+  The loaded units are chosen with a callback.
+  If the unloading is canceled, cancel_unit_move() is executed.
+  game::unload_unit(from, to) and executed, and after that,
+  complete_unit_move() is executed.
 
-Hide
-game::hide_unit() wird aufgerufen
+* Hidi/Appear:
+  game::[hide|appear]_unit() is executed.
 
-Appear
-game::appear_unit() wird aufgerufen
-
-Cancel
-game::cancel_unit_move() wird aufgerufen
-
-Raketensilo
-gamestate wird zu attacking und es wird der Zielort ausgewählt. Danach wird game::launch_silo() ausgeführt
-Bei abbruch wird das auswhählen des Zielpunktes abgebrochen und das Menü gezeigt.
-Eventuell wird die Einheit auch nur zurück ins Bewegen versetzt, je nach komplexität
-
-
-Anzeige
-Die Szene wird von der map angenommen, wird von game eventuell verändert, und schließlich in game_controller vervollständigt.
-
-Vielleicht sollte die komplette Szene erst in game_controller erzeugt werden.
-Map erzeugt und game verarbeitet dann nur ein Zwischenobjekt, was nur die Map beinhaltet,
-
-Vielleicht sollte scene umgebaut werden, so dass sie eine liste mit pair<string, area> enthält.
-*/
-
-/*
-//NOTE: Ideas for signals:
-
-signal_unit_clicked()
-signal_terrain_clicked()
+* Silos
+  m_gamestate is set to ATTACKING. After the target is choosen,
+  game::launch_silo() is executed. 
 */
 
 namespace aw
 {
-	//NOTE: Eventuell einen neuen State "SELECTING" einführen und die im Menü ausgewählte Aktion in einer Variable speichern
 	class game_controller
 	{
 		public:
