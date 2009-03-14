@@ -23,5 +23,6 @@
 
 - (IBAction)startNewGame:(id)sender;
 - (IBAction)endTurn:(id)sender;
+- (void)gameFinished:(const aw::player::ptr&)winner;
 
 @end

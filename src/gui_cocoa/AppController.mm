@@ -25,6 +25,10 @@
 #include <list>
 #include <boost/bind.hpp>
 
+void gameFinished(id game, const aw::player::ptr& p) {
+  [game gameFinished:p];
+}
+
 @implementation AppController
 
 @synthesize gameActive;
@@ -61,6 +65,12 @@
 	 selector:@selector(mouseMovedOnMap:) 
 	 name: mouseMovedNotification
 	 object:mapView];
+
+	//Bind isEnabled of MapView to self.gameActive
+	[mapView bind:@"isEnabled" 
+			 toObject:self
+			 withKeyPath:@"gameActive"
+			 options:nil];
 	
 	[self setGameActive:NO];
 }
@@ -74,6 +84,15 @@
 	[mapView release];
 	
 	[super dealloc];
+}
+
+- (void)gameFinished:(const aw::player::ptr&)winner {
+  [self setGameActive:false];
+
+  NSRunAlertPanel(@"Game has ended", [NSString stringWithFormat:@"The %@ player has won!",
+											   [NSString stringWithCString:
+														   winner->get_color_string().c_str()]],
+				  nil, nil, nil);
 }
 
 #pragma mark "Event Handling"
@@ -128,6 +147,8 @@ void postTerrainClickedNotification(const aw::terrain::ptr terrain, id sender) {
 		game->load_map(std::string([gameDialog.mapFile UTF8String]));
 		game->set_funds_per_building(gameDialog.fundsPerBuilding);
 		game->set_initial_funds(gameDialog.initialFunds);
+		game->signal_game_finished().connect(boost::bind(&gameFinished, self, _1));
+ 
 		
 		gameController = aw::game_controller::ptr(new aw::game_controller);
 		gameController->signal_scene_change().connect(boost::bind(&aw::gui::map_widget::display, cocoaMapWidget, _1));
