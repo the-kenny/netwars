@@ -60,7 +60,6 @@ namespace aw
 
 			private:
 				int m_funds; //should not be negative
-//				int m_funds_per_turn;
 				const colors m_color;
 
 				bool m_has_units;
@@ -82,11 +81,6 @@ namespace aw
 			{
 				m_active_player = index;
 			}
-
-//			void push_back(const player::ptr &p)
-//			{
-//				m_players.insert(p);
-//			}
 
 			player::ptr &get_active_player()
 			{

@@ -23,7 +23,6 @@ game_controller::game_controller()
 {
 	m_gamestate = IDLE;
 
-//	m_path = game_mechanics::path::ptr(new game_mechanics::path);
 	m_traverse = game_mechanics::traverse::ptr(new game_mechanics::traverse);
 }
 
@@ -201,7 +200,7 @@ void game_controller::on_unit_click(const coord &pos, int key)
 				else if(m_game->get_unit(m_selection)->type() == unit->type()) //Combine units
 				{
 					//TODO: Check when units can be merhed
-					//if(m_game->get_unit(pos)->life() < m_game->get_unit(pos)->max_life())
+				
 					if(m_game->get_unit(m_selection)->hp() < m_game->get_unit(m_selection)->max_hp() || unit->hp() < unit->max_hp())
 					{
 						std::list<units::actions> action;
@@ -619,8 +618,6 @@ void game_controller::process_action(units::actions action, const coord &pos)
 			unit->set_moved();
 
 		m_selection.reset();
-
-		//this->update_display();
 	}
 	else if(action == units::UNLOAD) //Big and ugly
 	{
@@ -729,11 +726,8 @@ void game_controller::process_action(units::actions action, const coord &pos)
 	}
 	else if(action == units::CANCEL)
 	{
-//		m_gamestate = IDLE;
-
 		if(m_game->move_active())
 			m_game->cancel_unit_move();
-//		m_selection.reset();
 
 		this->update_display();
 	}

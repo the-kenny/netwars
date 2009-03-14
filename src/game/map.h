@@ -12,9 +12,7 @@
 
 namespace aw
 {
-	//TODO(#2): Make iterable
 	//TODO(#1): make variable-sized maps work
-	//TODO(#2): Use the coord-class
 	class map: public boost::enable_shared_from_this<map>
 	{
 		public:
@@ -33,8 +31,6 @@ namespace aw
 			void move_unit(const coord& from, const coord& to);
 			void change_building_color(const coord& c, const player::ptr &player);
 
-//			unsigned int get_player_count(); //Haesslich implentiert
-//			bool participates(player::colors color); //Nun im namespace game_mechanics::participates()
 			unsigned int num_buildings(player::colors c);
 
 			bool valid();
@@ -47,9 +43,6 @@ namespace aw
 				return (c.x < 30 && c.x > -1 && c.y < 20 && c.y > -1);
 			}
 			
-
-//			display::scene::ptr scene();
-
 		private:
 			void init();
 

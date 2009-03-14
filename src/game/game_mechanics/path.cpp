@@ -26,19 +26,6 @@ namespace aw
 
 		void path::print(std::ostream &o) const
 		{
-//			for(int y = 0; y < 20; y++)
-//			{
-//				for(int x = 0; x < 30; x++)
-//				{
-//					if(m_path.contains(coord(x, y)))
-//						o << '1';
-//					else
-//						o << '0';
-//				}
-//				o << '\n';
-//			}
-		
-			//o << "Start: " << "(" << m_start.x << "|" << m_start.y << ") End: (" << m_end.x << "|" << m_end.y << ") Fuel costs: " << m_fuel_costs << std::endl;
 			BOOST_FOREACH(const coord& c, m_path)
 				std::cout << "(" << c.x << "|" << c.y << ")" << std::endl;
 		}
@@ -58,25 +45,6 @@ namespace aw
 			assert(start != end);
 			assert(t->get_origin() == start); //The traverse's origin has to be the start of the path
 
-			//the start is the same and the new end is in the path
-			/*
-			if(m_start == start && m_end != end && m_path.contains(end))
-			{
-				//...so we remove all parts of the path which are beyond the new end
-				BOOST_FOREACH(const coord &c, m_path)
-				{
-					if(c != end && m_traverse->get_rest_mp(end.x, end.y) >= m_traverse->get_rest_mp(c.x, c.y))
-					{
-						this->remove_element(c);
-					}
-				}
-				remove_element(m_end); //...and the end too
-				m_path.insert(end);
-
-				m_start = start;
-				m_end = end;
-		}
-			else*/
 			if(m_start != start || m_path.empty()) //start has changed or empty - recalculate
 			{
 				this->reset();
@@ -161,7 +129,8 @@ namespace aw
 						{
 								if(x == end_x && y == end_y)
 								{
-										if(rest_movement_range == m_traverse->get_rest_mp(coord(x, y)))  // Hält immer den kleinstmöglichen mp-Vebrauch
+										if(rest_movement_range ==
+						m_traverse->get_rest_mp(coord(x, y)))  // Holds the smallest possible mp-usage
 										{
 												m_fuel_costs = u->fuel() - rest_gas;
 												append(x, y);
@@ -169,13 +138,13 @@ namespace aw
 										}
 								}
 
-								//Wenn noch nicht gecheckt, oder weg mit weniger verbrauch gefunden.
+								//If not checked or a way with less
+								//fuel-usage is found
 								if(m_traverse->get_rest_mp(coord(x, y)) == -1 || m_traverse->get_rest_mp(coord(x, y)) <= rest_movement_range)
 								{
 										for(int i= -1; i < 2; i++)
 										{
 												bool done = false;
-												//Verstehe ich selber nicht so ganz :D
 												if(!((left == true && i == -1) || (right == true && i == 1)))
 												{
 														switch((dir+i)%4)

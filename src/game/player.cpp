@@ -10,14 +10,6 @@ namespace aw
 
 	}
 
-//	void player::capture_building(int fpr)
-//	{
-//		if(m_funds_per_turn + fpr < 0)
-//			m_funds_per_turn = 0;
-//		else
-//			m_funds_per_turn += fpr;
-//	}
-
 	unit::colors player::get_unit_color() const
 	{
 		unit::colors color = unit::RED;
@@ -76,7 +68,6 @@ namespace aw
 
 	void player::start_turn()
 	{
-//		m_funds += m_funds_per_turn;
 	}
 
 	void player::end_turn()

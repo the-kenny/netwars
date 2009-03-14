@@ -24,7 +24,6 @@ map::map(const boost::multi_array<terrain::ptr, 2> &terrain, const boost::multi_
 			if(units[x][y])
 				m_units[x][y] = units::create(units[x][y]->type(), units[x][y]->color());
 
-//				m_terrain[x][y] = terrain::ptr(new aw::terrain(terrain[x][y]->type(), terrain[x][y]->extra()));
 			m_terrain[x][y] = terrain::create(terrain[x][y]->type(), terrain[x][y]->extra());
 		}
 	}
@@ -68,9 +67,6 @@ void map::change_building_color(const coord& c, const player::ptr &player)
 
 	if(!p->is_building())
 		throw std::runtime_error("[map::change_building_color] Auf gegebener Position ist kein Gebäude.");
-
-//		if(p->capture_points() > 0)
-//			std::clog << "[map::change_building_color] WARNUNG: Ändere die Farbe eines Gebäudes dessen Capture-Points > 0 sind." << std::endl;
 
 	std::clog << "[map::change_building_color] Übernehme Gebäude" << std::endl;
 	p->extra(player->get_building_color());

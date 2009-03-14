@@ -33,8 +33,6 @@ void fire_range::calculate(const map::ptr &map, const coord& attacking_unit_c)
 	{
 		const int distance = u->attack_distance();
 
-//		std::cout << "[fire_range::calculate] Range: " << range << " Distance: " << distance << std::endl;
-
 		int temp_range = 0;
 
 		for(int x2 = -(fire_range+distance); x2 <= fire_range+distance; x2++)

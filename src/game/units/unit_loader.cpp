@@ -354,19 +354,6 @@ unit_loader::unit_loader()
 		n.GetAttribute("hp", &int_data);
 		p->m_max_life = int_data;
 
-		//TODO: Implent damage_multiplier
-//		//<combat>
-//		try
-//		{
-//			ticpp::Element *combat = n.GetElement("combat");
-//
-//			combat->GetAttribute
-//		}
-//		catch(const ticpp::Exception &e)
-//		{
-//
-//		}
-
 		p->reset();
 		loaded.unit = p;
 

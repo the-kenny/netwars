@@ -73,7 +73,6 @@ bool terrain::is_water(types t)
 	{
 		case WATER:
 		case REEF:
-		//case terrain::RIVER: //Ein Fluss zählt als fester Boden
 		case BRIDGE: //Muss so sein (Klippen an Brücken)
 		case BEACH:
 			return true;

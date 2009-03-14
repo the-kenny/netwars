@@ -542,20 +542,6 @@ void game::end_turn()
 	m_active_move.reset();
 }
 
-
-//display::scene::ptr game::get_prepared_scene()
-//{
-//	display::scene::ptr scene = m_map->scene();
-//
-////	if(m_active_move.active)
-////	{
-//////		scene->move_unit(m_active_move.from.x, m_active_move.from.y, m_active_move.to.x, m_active_move.to.y, true);
-////		scene->get_unit(m_active_move.to.x, m_active_move.to.y) = scene->get_unit(m_active_move.from.x, m_active_move.from.y);
-////	}
-//
-//	return scene;
-//}
-
 void game::check_for_defeat()
 {
 	BOOST_FOREACH(const player::ptr &p, m_players.get_players())

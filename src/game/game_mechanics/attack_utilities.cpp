@@ -112,24 +112,6 @@ bool attack_utilities::can_attack(const unit::ptr &attacker, const unit::ptr &vi
 
 	float damage = -1;
 
-//	if(attacker->main_weapon_useable())
-//	{
-//		damage = attack_utilities::get_damage_percent(attacker->type(), victim->type(), false);
-//
-//		if(damage == -1 && attacker->alt_weapon_useable())
-//		{
-//			damage = attack_utilities::get_damage_percent(attacker->type(), victim->type(), true);
-//		}
-//	}
-//	else if(attacker->alt_weapon_useable())
-//	{
-//		damage = attack_utilities::get_damage_percent(attacker->type(), victim->type(), true);
-//	}
-//	else
-//	{
-//		throw std::runtime_error("No weapon can fire");
-//	}
-
 	int weapon = choose_weapon(attacker, victim);
 
 	if(weapon == 0)

@@ -9,7 +9,6 @@
 
 namespace aw
 {
-	//TODO: change_type(types new_type) einbauen und nutzen
 	class terrain
 	{
 		public:
@@ -77,7 +76,6 @@ namespace aw
 			int m_damage;
 	};
 
-	//TODO: change_color(color new_color) einbauen und nutzen
 	class building: public terrain
 	{
 		public:

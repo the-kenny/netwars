@@ -42,9 +42,7 @@ namespace aw
 				void print(std::ostream &o) const;
 
 			private:
-//				void move(int x, int y, int dir, int rest_movement_range, int rest_gas, bool left, bool right, unit::ptr u, terrain::types previous_terrain);
 				void move(int x, int y, int dir, int rest_movement_range, int rest_gas, bool left, bool right, const unit::ptr &u);
-//				bool can_overdrive(int x, int y, unit::ptr unit) const;
 
 				coord m_start;
 				area_type m_coords;

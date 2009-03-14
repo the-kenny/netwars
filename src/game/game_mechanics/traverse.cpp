@@ -37,7 +37,6 @@ namespace aw
 			}
 		}
 
-		//verschachtelte Templates und typedefs machen probleme
 		const traverse::area_type &traverse::get_coordinates() const
 		{
 			return m_coords;
@@ -96,14 +95,14 @@ namespace aw
 
 					std::map<coord, int>::iterator it = m_move_range_left.find(coord(x, y));
 
-					//Wenn noch nicht gecheckt, oder weg mit weniger verbrauch gefunden.
+					//If not checked or a way with less fuel usage is foune
 					if(it == m_move_range_left.end() || it->second <= rest_movement_range)
 					{
-						m_move_range_left[coord(x, y)] = rest_movement_range; // Hält immer den kleinstmöglichen mp-Vebrauch
+					  // Holds the smallest possible usage
+						m_move_range_left[coord(x, y)] = rest_movement_range; 
 
 						for(int i= -1; i < 2; i++)
 						{
-							//Verstehe ich selber nicht so ganz :D
 							if(!((left == true && i == -1) || (right == true && i == 1)))
 							{
 								switch((dir+i)%4)

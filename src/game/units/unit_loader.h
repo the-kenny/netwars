@@ -73,7 +73,6 @@ namespace aw
 
 			unit_loader();
 			const loaded_unit &get_unit_info(const std::string &internal_name) const;
-//			const std::vector<std::string> &get_unit_names() const { return m_unit_names; }
 
 		private:
 			container_t m_units;
