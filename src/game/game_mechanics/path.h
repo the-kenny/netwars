@@ -28,7 +28,7 @@ namespace aw
 				void remove_element(const coord &c);
 
 				int get_fuel_costs() const { return m_fuel_costs; }
-				int get_length() const { return m_path.num_fields(); }
+				int get_length() const { return m_path.size(); }
 
 				void reset();
 

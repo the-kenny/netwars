@@ -33,14 +33,7 @@ namespace aw
 			{
 				this->assign(c.begin(), c.end());
 			}
-
-			void push_back(const value_type &c) { m_coords.insert(c); }
-			void insert(const value_type &c) { m_coords.insert(c); }
-
-			void erase(const value_type &c) { m_coords.erase(c); }
-			bool empty() const { return m_coords.empty(); }
-			void clear() { m_coords.clear(); }
-
+			
 			iterator begin() { return m_coords.begin(); }
 			iterator end() { return m_coords.end(); }
 
@@ -49,35 +42,19 @@ namespace aw
 
 			bool contains(const value_type &c) const
 			{
-				if(std::find(m_coords.begin(), m_coords.end(), c) != m_coords.end())
-					return true;
-				else
-					return false;
+			  return (std::find(m_coords.begin(), m_coords.end(), c) != m_coords.end());
 			}
 
-			int num_fields() const
-			{
-				return m_coords.size();
-			}
+			void erase(const value_type &c) { m_coords.erase(c); }
+			void clear() { m_coords.clear(); }
+			bool empty() const { return m_coords.empty(); }
+			std::size_t size() const { return m_coords.size(); }
+			void append(const value_type &c) { m_coords.insert(c); }
 
 			void append(const area& o)
 			{
-				*this += o;
-			}
-
-			area &operator+=(const area &o)
-			{
-				BOOST_FOREACH(const value_type &c, o)
-					this->push_back(c);
-
-				return *this;
-			}
-
-			area &operator+=(const coord &c)
-			{
-				this->push_back(c);
-
-				return *this;
+			  BOOST_FOREACH(const value_type &c, o)
+				  this->append(c);
 			}
 
 			static area create(const coord &middle, int range)
@@ -93,10 +70,10 @@ namespace aw
 				{
 					for(int j = 0; j < temp_range+1; j++)
 					{
-						a += coord(x + i, y + j);
-						a += coord(x - i, y + j);
-						a += coord(x + i, y - j);
-						a += coord(x - i, y - j);
+					  a.append(coord(x + i, y + j));
+					  a.append(coord(x - i, y + j));
+					  a.append(coord(x + i, y - j));
+					  a.append(coord(x - i, y - j));
 					}
 					temp_range--;
 				}

@@ -46,6 +46,7 @@ namespace aw
 			{
 				return (c.x < 30 && c.x > -1 && c.y < 20 && c.y > -1);
 			}
+			
 
 //			display::scene::ptr scene();
 

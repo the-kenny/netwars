@@ -2,6 +2,7 @@
 
 #import "QuartzCore/QuartzCore.h"
 
+#include "game/config.h"
 #include "game/map_loader/map_loader.h"
 
 @implementation GameDialogController
@@ -15,8 +16,8 @@
 
 	startGame = false;
 	
-	self.initialFunds = 1000;
-	self.fundsPerBuilding = 1000;
+	self.initialFunds = aw::config().get<int>("/config/defaults/initial-funds");
+	self.fundsPerBuilding = aw::config().get<int>("/config/defaults/funds-per-building");
 	
 	NSString* mapPath = [[NSBundle mainBundle] pathForResource:@"7330" ofType:@"aws"];
 	if(mapPath != nil)

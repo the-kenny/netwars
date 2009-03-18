@@ -21,13 +21,13 @@ void fire_range::calculate(const map::ptr &map, const coord& attacking_unit_c)
 	if(fire_range == 1)
 	{
 		if(map->on_map(coord(x+1, y)))
-			m_coordinates.push_back(coord(x+1, y));
+			m_coordinates.append(coord(x+1, y));
 		if(map->on_map(coord(x-1, y)))
-			m_coordinates.push_back(coord(x-1, y));
+			m_coordinates.append(coord(x-1, y));
 		if(map->on_map(coord(x, y-1)))
-			m_coordinates.push_back(coord(x, y-1));
+			m_coordinates.append(coord(x, y-1));
 		if(map->on_map(coord(x, y+1)))
-			m_coordinates.push_back(coord(x, y+1));
+			m_coordinates.append(coord(x, y+1));
 	}
 	else
 	{
@@ -46,7 +46,7 @@ void fire_range::calculate(const map::ptr &map, const coord& attacking_unit_c)
 					coord c(x2+x, y2+y);
 
 					if(map->on_map(c))
-						m_coordinates.push_back(c);
+						m_coordinates.append(c);
 				}
 			}
 
@@ -91,7 +91,7 @@ const area &fire_range::get_victims(const map::ptr &map, const player::ptr &/*pl
 
 			if(victim && attack_utilities::can_attack(attacker, victim))
 			{
-				m_opposite_coords.push_back(c);
+				m_opposite_coords.append(c);
 			}
 		}
 	}
@@ -115,19 +115,19 @@ void fire_range_preview::calculate(const map::ptr &map, int x, int y)
 		area temp_coords;
 
 		//Fill the 4 directions around the unit
-		temp_coords.push_back(coord(x+1, y));
-		temp_coords.push_back(coord(x-1, y));
-		temp_coords.push_back(coord(x, y+1));
-		temp_coords.push_back(coord(x, y-1));
+		temp_coords.append(coord(x+1, y));
+		temp_coords.append(coord(x-1, y));
+		temp_coords.append(coord(x, y+1));
+		temp_coords.append(coord(x, y-1));
 
 		BOOST_FOREACH(const area::value_type &t, tr.get_coordinates())
 		{
 			if(map->on_map(t) && !map->get_unit(t))
 			{
-				temp_coords.push_back(coord(t.x+1, t.y));
-				temp_coords.push_back(coord(t.x-1, t.y));
-				temp_coords.push_back(coord(t.x, t.y+1));
-				temp_coords.push_back(coord(t.x, t.y-1));
+				temp_coords.append(coord(t.x+1, t.y));
+				temp_coords.append(coord(t.x-1, t.y));
+				temp_coords.append(coord(t.x, t.y+1));
+				temp_coords.append(coord(t.x, t.y-1));
 			}
 		}
 

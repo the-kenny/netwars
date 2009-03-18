@@ -122,7 +122,7 @@ namespace aw
 
 				//Append the path
 				extended_path.m_path.append(m_path);
-				extended_path.m_path.insert(end);
+				extended_path.m_path.append(end);
 				extended_path.m_start = m_start;
 				extended_path.recalculate_costs(unit);
 				assert(extended_path.end() == end);
@@ -212,7 +212,7 @@ namespace aw
 
 		void path::append(int x, int y)
 		{
-				m_path.push_back(coord(x, y));
+				m_path.append(coord(x, y));
 		}
 
 		void path::recalculate_costs(const unit::ptr &u)

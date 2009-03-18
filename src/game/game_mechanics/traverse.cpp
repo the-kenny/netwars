@@ -92,7 +92,7 @@ namespace aw
 
 				if(can_pass(m_map, coord(x, y), u))
 				{
-					m_coords.push_back(coord(x, y));
+					m_coords.append(coord(x, y));
 
 					std::map<coord, int>::iterator it = m_move_range_left.find(coord(x, y));
 

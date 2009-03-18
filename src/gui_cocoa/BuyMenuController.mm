@@ -11,6 +11,9 @@
 
 #pragma mark Properties
 
+@synthesize unitPrice;
+@synthesize remFunds;
+
 @dynamic playerFunds;
 
 - (int)playerFunds {
@@ -83,6 +86,9 @@
 	if([[[unitArray objectAtIndex:rowIndex] valueForKey:@"price"] intValue] <= player->get_funds())
 		returnValue = [[[unitArray objectAtIndex:rowIndex] valueForKey:@"internalName"] UTF8String];
 		
+	self.unitPrice = [[[unitArray objectAtIndex:rowIndex] valueForKey:@"price"] intValue];
+	self.remFunds = (self.playerFunds - self.unitPrice);
+	
 	//Trigger unitSelected-Notification
 	NSDictionary* userInfo = [NSDictionary dictionaryWithObject:[[unitArray objectAtIndex:rowIndex] valueForKey:@"unit"] forKey:@"unit"];
 	[[NSNotificationCenter defaultCenter] postNotificationName:unitClickedNotification
