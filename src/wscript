@@ -7,7 +7,7 @@ import Utils, Options, Configure
 
 def set_options(opt):
 	opt.tool_options('boost')
-	opt.add_option('--gui', type='string', default='NO', help='Choose the GUI [NO|GTK]. Default is NO', dest='gui')
+	opt.add_option('--gui', type='string', default='NO', help='Choose the GUI [NO|QT|COCOA]. Default is NO', dest='gui')
 	opt.add_option('--debug', action='store_true', help='Debug build (-g) or release build (-O2)?', dest='debug')
 	pass
 
@@ -58,7 +58,4 @@ def build(bld):
 	netwars.defines = 'TIXML_USE_TICPP=1 TIXML_USE_STL=1'
 	netwars.find_sources_in_dirs('game game/game_mechanics game/map_loader game/units game/gui')
 	netwars.install_path = '../src'
-	
-	if bld.env['GUI'] == 'GTK':
-		bld.add_subdirs('gui_gtk')
 
