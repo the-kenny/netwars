@@ -52,7 +52,7 @@ def build(bld):
 
 	netwars = bld.new_task_gen('cxx', 'staticlib')
 	netwars.target = 'netwars'
-	netwars.uselib = 'BOOST_FILESYSTEM BOOST_SIGNALS BOOST_SYSTEM'
+	netwars.uselib = 'BOOST_FILESYSTEM BOOST_SIGNALS BOOST_SYSTEM BOOST'
 	netwars.uselib_local = 'tinyxml'
 	netwars.includes = '. lib'
 	netwars.defines = 'TIXML_USE_TICPP=1 TIXML_USE_STL=1'
