@@ -46,7 +46,7 @@
 		8E8A54920F3FBB310084E240 /* CocoaTerrain.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A54910F3FBB310084E240 /* CocoaTerrain.mm */; };
 		8E8C41260F13A73400F1E03A /* MapViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E8C41250F13A73400F1E03A /* MapViewController.mm */; };
 		8EBFF0800F39FC9400FFFE14 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8EBFF07F0F39FC9400FFFE14 /* Icon.icns */; };
-		8EFE83120F2F4F3600835B94 /* 7330.aws in Resources */ = {isa = PBXBuildFile; fileRef = 8EFE83110F2F4F3600835B94 /* 7330.aws */; };
+		8EF8D4880F76EB28000F6F9C /* 7330.aws in Resources */ = {isa = PBXBuildFile; fileRef = 8EF8D4870F76EB28000F6F9C /* 7330.aws */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -117,7 +117,7 @@
 		8E8C41240F13A73400F1E03A /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		8E8C41250F13A73400F1E03A /* MapViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MapViewController.mm; sourceTree = "<group>"; };
 		8EBFF07F0F39FC9400FFFE14 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
-		8EFE83110F2F4F3600835B94 /* 7330.aws */ = {isa = PBXFileReference; lastKnownFileType = file; name = 7330.aws; path = ../../7330.aws; sourceTree = SOURCE_ROOT; };
+		8EF8D4870F76EB28000F6F9C /* 7330.aws */ = {isa = PBXFileReference; lastKnownFileType = file; name = 7330.aws; path = ../../maps/7330.aws; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,9 +214,9 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8EF8D4870F76EB28000F6F9C /* 7330.aws */,
 				8EBFF07F0F39FC9400FFFE14 /* Icon.icns */,
 				8E0BCC150F30B4B200BD795E /* UnitInfo.xib */,
-				8EFE83110F2F4F3600835B94 /* 7330.aws */,
 				8E303B3B0EEC8BFA005FD0B5 /* config.xml */,
 				8E303B3C0EEC8BFA005FD0B5 /* data */,
 				8E0C4B8E0EEB3B05008EFD65 /* BuyMenu.xib */,
@@ -343,10 +343,10 @@
 				8E0C4B8F0EEB3B05008EFD65 /* BuyMenu.xib in Resources */,
 				8E303C970EEC8BFA005FD0B5 /* config.xml in Resources */,
 				8E303C980EEC8BFA005FD0B5 /* data in Resources */,
-				8EFE83120F2F4F3600835B94 /* 7330.aws in Resources */,
 				8E1BC66F0F39DEF700CE9290 /* Credits.rtf in Resources */,
 				8EBFF0800F39FC9400FFFE14 /* Icon.icns in Resources */,
 				8E0BCC160F30B4B200BD795E /* UnitInfo.xib in Resources */,
+				8EF8D4880F76EB28000F6F9C /* 7330.aws in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
