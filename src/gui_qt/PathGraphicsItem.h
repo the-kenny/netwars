@@ -21,7 +21,7 @@ protected:
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem* /* option */, QWidget* /* widget */) {
 
 	if(currentScene) {
-	  const static std::string& pixmapdir = aw::config().get<std::string>("/config/dirs/pixmaps");
+	  const static std::string pixmapdir = aw::config().get<std::string>("/config/dirs/pixmaps");
 	  
 	  BOOST_FOREACH(const aw::coord& c, currentScene->get_highlighted_area())
 		Drawing::drawPixmap(pixmapdir + "misc/range.png", c, *painter);
