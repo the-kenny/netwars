@@ -21,12 +21,6 @@ def configure(conf):
 	conf.check_tool('boost')
 	conf.check_boost(lib='signals filesystem system', kind='STATIC_BOTH')
 	
-	if conf.env['GUI'] == 'GTK':
-		conf.check_cfg(atleast_pkgconfig_version='0.0.0')
-		conf.check_cfg(package='gtkmm-2.4', args='--cflags --libs', uselib_store='GTKMM')
-		conf.check_cfg(package='cairomm-1.0', args='--cflags --libs', uselib_store='CAIROMM')
-		conf.check_cfg(package='libglademm-2.4', args='--cflags --libs', uselib_store='GLADEMM')
-
 	if conf.env['DEBUG']:
 		conf.env.append_value('CXXFLAGS', '-g')
 		conf.env.append_value('LINKFLAGS', '-g')
@@ -43,9 +37,6 @@ def configure(conf):
 		conf.env.append_value('CXXFLAGS', '-I/usr/local/include -Wall')
 		
 	conf.sub_config('lib')
-	
-	if conf.env['GUI'] == 'GTK':
-		conf.sub_config('gui_gtk')
 
 def build(bld):
 	bld.add_subdirs('lib')
