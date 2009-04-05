@@ -16,8 +16,6 @@ def configure(conf):
 	conf.env['GUI'] = Options.options.gui
 	conf.env['DEBUG'] = Options.options.debug
 
-	#conf.env['BOOST'] = ' -lboost_filesystem -lboost_system -lboost_signals'
-
 	conf.check_tool('boost')
 	conf.check_boost(lib='signals filesystem system', kind='STATIC_BOTH')
 	
@@ -30,12 +28,6 @@ def configure(conf):
 		conf.env.append_value('CXXFLAGS', '-O2')
 		conf.env.append_value('LINKFLAGS', '-O2')
 
-	if windows:
-		conf.env.append_value('CXXFLAGS', '-IC:\MinGW\local\include -Wall')
-		conf.env.append_value('LINKFLAGS', '-LC:\MinGW\local\lib')
-	else:
-		conf.env.append_value('CXXFLAGS', '-I/usr/local/include -Wall')
-		
 	conf.sub_config('lib')
 
 def build(bld):
