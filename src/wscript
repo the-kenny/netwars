@@ -17,7 +17,7 @@ def configure(conf):
 	conf.env['DEBUG'] = Options.options.debug
 
 	conf.check_tool('boost')
-	conf.check_boost(lib='signals filesystem system', kind='STATIC_BOTH')
+	conf.check_boost(lib='signals filesystem system', kind='BOTH')
 	
 	if conf.env['DEBUG']:
 		conf.env.append_value('CXXFLAGS', '-g')
@@ -27,6 +27,9 @@ def configure(conf):
 	else:
 		conf.env.append_value('CXXFLAGS', '-O2')
 		conf.env.append_value('LINKFLAGS', '-O2')
+
+	if conf.env['GUI'] == 'QT':
+		conf.check_tool('qt4')
 
 	conf.sub_config('lib')
 
