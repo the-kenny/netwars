@@ -16,8 +16,8 @@
 
 	startGame = false;
 	
-	self.initialFunds = aw::config().get<int>("/config/defaults/initial-funds");
-	self.fundsPerBuilding = aw::config().get<int>("/config/defaults/funds-per-building");
+	[self setInitialFunds:aw::config().get<int>("/config/defaults/initial-funds")];
+	[self setFundsPerBuilding:aw::config().get<int>("/config/defaults/funds-per-building")];
 	
 	NSString* mapPath = [[NSBundle mainBundle] pathForResource:@"7330" ofType:@"aws"];
 	if(mapPath != nil)
