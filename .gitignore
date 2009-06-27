@@ -1,0 +1,5 @@
+.lock-wscript
+.waf*
+.swp*
+build/
+src/
