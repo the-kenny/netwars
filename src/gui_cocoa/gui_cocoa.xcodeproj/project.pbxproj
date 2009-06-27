@@ -18,6 +18,9 @@
 		8E0C4AD40EEB1C49008EFD65 /* CocoaUnloadMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E0C4AD30EEB1C49008EFD65 /* CocoaUnloadMenu.mm */; };
 		8E0C4B8F0EEB3B05008EFD65 /* BuyMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0C4B8E0EEB3B05008EFD65 /* BuyMenu.xib */; };
 		8E0C4B930EEB3E64008EFD65 /* BuyMenuController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E0C4B920EEB3E64008EFD65 /* BuyMenuController.mm */; };
+		8E155C8F0FF697AA00E72B92 /* libboost_filesystem-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E155C8D0FF697AA00E72B92 /* libboost_filesystem-mt.a */; };
+		8E155C900FF697AA00E72B92 /* libboost_system-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E155C8E0FF697AA00E72B92 /* libboost_system-mt.a */; };
+		8E155C920FF697E400E72B92 /* libboost_signals-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E155C910FF697E400E72B92 /* libboost_signals-mt.a */; };
 		8E1A5F8C0EDEEE050089B499 /* CocoaMapWidget.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A5F8B0EDEEE050089B499 /* CocoaMapWidget.mm */; };
 		8E1A624D0EDF662A0089B499 /* GameDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E1A624C0EDF662A0089B499 /* GameDialog.xib */; };
 		8E1A62850EE033D70089B499 /* UnitActionMenuController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A62840EE033D70089B499 /* UnitActionMenuController.mm */; };
@@ -39,8 +42,6 @@
 		8E5D18EB0EE07D640087E028 /* VBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5D18E90EE07D640087E028 /* VBoxView.m */; };
 		8E5F27D70F3E121400AC012E /* libnetwars.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E5F27D50F3E121400AC012E /* libnetwars.a */; };
 		8E5F27D80F3E121400AC012E /* libtinyxml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E5F27D60F3E121400AC012E /* libtinyxml.a */; };
-		8E5F27DD0F3E123D00AC012E /* libboost_filesystem-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E5F27DB0F3E123D00AC012E /* libboost_filesystem-mt.a */; };
-		8E5F27DE0F3E123D00AC012E /* libboost_signals-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E5F27DC0F3E123D00AC012E /* libboost_signals-mt.a */; };
 		8E8A54560F3FB8420084E240 /* NotificationNames.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A54550F3FB8420084E240 /* NotificationNames.mm */; };
 		8E8A545D0F3FB90E0084E240 /* CocoaUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A545C0F3FB90E0084E240 /* CocoaUnit.mm */; };
 		8E8A54920F3FBB310084E240 /* CocoaTerrain.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A54910F3FBB310084E240 /* CocoaTerrain.mm */; };
@@ -71,6 +72,9 @@
 		8E0C4B8E0EEB3B05008EFD65 /* BuyMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BuyMenu.xib; sourceTree = "<group>"; };
 		8E0C4B910EEB3E64008EFD65 /* BuyMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyMenuController.h; sourceTree = "<group>"; };
 		8E0C4B920EEB3E64008EFD65 /* BuyMenuController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BuyMenuController.mm; sourceTree = "<group>"; };
+		8E155C8D0FF697AA00E72B92 /* libboost_filesystem-mt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_filesystem-mt.a"; path = "/usr/local/lib/libboost_filesystem-mt.a"; sourceTree = "<absolute>"; };
+		8E155C8E0FF697AA00E72B92 /* libboost_system-mt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_system-mt.a"; path = "/usr/local/lib/libboost_system-mt.a"; sourceTree = "<absolute>"; };
+		8E155C910FF697E400E72B92 /* libboost_signals-mt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_signals-mt.a"; path = "/usr/local/lib/libboost_signals-mt.a"; sourceTree = "<absolute>"; };
 		8E1A5F8A0EDEEE050089B499 /* CocoaMapWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaMapWidget.h; sourceTree = "<group>"; };
 		8E1A5F8B0EDEEE050089B499 /* CocoaMapWidget.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaMapWidget.mm; sourceTree = "<group>"; };
 		8E1A624C0EDF662A0089B499 /* GameDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameDialog.xib; sourceTree = "<group>"; };
@@ -106,8 +110,6 @@
 		8E5D18EA0EE07D640087E028 /* VBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBoxView.h; sourceTree = "<group>"; };
 		8E5F27D50F3E121400AC012E /* libnetwars.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnetwars.a; path = ../libnetwars.a; sourceTree = SOURCE_ROOT; };
 		8E5F27D60F3E121400AC012E /* libtinyxml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtinyxml.a; path = ../libtinyxml.a; sourceTree = SOURCE_ROOT; };
-		8E5F27DB0F3E123D00AC012E /* libboost_filesystem-mt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_filesystem-mt.a"; path = "/usr/local/lib/libboost_filesystem-mt.a"; sourceTree = "<absolute>"; };
-		8E5F27DC0F3E123D00AC012E /* libboost_signals-mt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_signals-mt.a"; path = "/usr/local/lib/libboost_signals-mt.a"; sourceTree = "<absolute>"; };
 		8E8A544F0F3FB7F20084E240 /* NotificationNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationNames.h; sourceTree = "<group>"; };
 		8E8A54550F3FB8420084E240 /* NotificationNames.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NotificationNames.mm; sourceTree = "<group>"; };
 		8E8A545B0F3FB90E0084E240 /* CocoaUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaUnit.h; sourceTree = "<group>"; };
@@ -129,8 +131,9 @@
 				8E30FB520EECA46E00D06119 /* Quartz.framework in Frameworks */,
 				8E5F27D70F3E121400AC012E /* libnetwars.a in Frameworks */,
 				8E5F27D80F3E121400AC012E /* libtinyxml.a in Frameworks */,
-				8E5F27DD0F3E123D00AC012E /* libboost_filesystem-mt.a in Frameworks */,
-				8E5F27DE0F3E123D00AC012E /* libboost_signals-mt.a in Frameworks */,
+				8E155C8F0FF697AA00E72B92 /* libboost_filesystem-mt.a in Frameworks */,
+				8E155C900FF697AA00E72B92 /* libboost_system-mt.a in Frameworks */,
+				8E155C920FF697E400E72B92 /* libboost_signals-mt.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,8 +187,9 @@
 		29B97314FDCFA39411CA2CEA /* gui_cocoa */ = {
 			isa = PBXGroup;
 			children = (
-				8E5F27DB0F3E123D00AC012E /* libboost_filesystem-mt.a */,
-				8E5F27DC0F3E123D00AC012E /* libboost_signals-mt.a */,
+				8E155C910FF697E400E72B92 /* libboost_signals-mt.a */,
+				8E155C8D0FF697AA00E72B92 /* libboost_filesystem-mt.a */,
+				8E155C8E0FF697AA00E72B92 /* libboost_system-mt.a */,
 				8E5F27D50F3E121400AC012E /* libnetwars.a */,
 				8E5F27D60F3E121400AC012E /* libtinyxml.a */,
 				8E5D18E60EE07D550087E028 /* Helper Code */,
@@ -302,6 +306,7 @@
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
+				8E155C9D0FF6989100E72B92 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -351,6 +356,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8E155C9D0FF6989100E72B92 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script is used to repair the search path for libraries of Netwars.app\n# It makes it possible to deliver dynamic libraries (.dylib) in the appbundle\n# so that no other installation is required \n\nNETWARS=\"$TARGET_BUILD_DIR/$TARGET_NAME.app\"\n\nmkdir $NETWARS/Contents/Frameworks/\n\ncp /usr/local/lib/libboost_filesystem-mt.dylib $NETWARS/Contents/Frameworks/\ncp /usr/local/lib/libboost_signals-mt.dylib $NETWARS/Contents/Frameworks/\ncp /usr/local/lib/libboost_system-mt.dylib $NETWARS/Contents/Frameworks/\n\n# boost.filesystem\ninstall_name_tool -id \\\n @executable_path/../Frameworks/libboost_filesystem-mt.dylib \\\n $NETWARS/Contents/Frameworks/libboost_filesystem-mt.dylib \n\ninstall_name_tool -change libboost_filesystem-mt.dylib \\\n @executable_path/../Frameworks/libboost_filesystem-mt.dylib \\\n $NETWARS/Contents/MacOS/Netwars \n\n# boost.signals\ninstall_name_tool -id \\\n @executable_path/../Frameworks/libboost_signals-mt.dylib \\\n $NETWARS/Contents/Frameworks/libboost_signals-mt.dylib \n\ninstall_name_tool -change libboost_signals-mt.dylib \\\n @executable_path/../Frameworks/libboost_signals-mt.dylib \\\n $NETWARS/Contents/MacOS/Netwars \n\n# boost.system\ninstall_name_tool -id \\\n @executable_path/../Frameworks/libboost_system-mt.dylib \\\n $NETWARS/Contents/Frameworks/libboost_system-mt.dylib \n\ninstall_name_tool -change libboost_system-mt.dylib \\\n @executable_path/../Frameworks/libboost_system-mt.dylib \\\n $NETWARS/Contents/MacOS/Netwars \n\n# changing boost.filesystem to find boost.system \ninstall_name_tool -change libboost_system-mt.dylib \\\n @executable_path/../Frameworks/libboost_system-mt.dylib \\\n $NETWARS/Contents/Frameworks/libboost_filesystem-mt.dylib";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8D11072C0486CEB800E47090 /* Sources */ = {
@@ -425,7 +446,10 @@
 				HEADER_SEARCH_PATHS = /usr/local/include;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/..\"";
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/..\"",
+					"\"$(SRCROOT)/../../../../Downloads/boost\"",
+				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = Netwars;
 				SDKROOT = macosx10.5;
@@ -453,7 +477,10 @@
 				HEADER_SEARCH_PATHS = /usr/local/include;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/..\"";
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/..\"",
+					"\"$(SRCROOT)/../../../../Downloads/boost\"",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = Netwars;
