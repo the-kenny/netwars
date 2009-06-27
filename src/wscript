@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # encoding: utf-8
 
-from logging import fatal, error
+from logging import fatal, error, warning
 import sys, os
 import Utils, Options, Configure
 
@@ -30,6 +30,10 @@ def configure(conf):
 
 	if conf.env['GUI'] == 'QT':
 		conf.check_tool('qt4')
+	elif conf.env['GUI'] == "COCOA":
+		conf.check_tool('osx')
+	else:
+		warning("WARNING: Building just the static library.")
 
 	conf.sub_config('lib')
 
