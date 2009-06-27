@@ -76,6 +76,32 @@ void GameScene::mousePressEvent(QGraphicsSceneMouseEvent* event) {
 	}
 }
 
+void GameScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event) {
+  /*
+	aw::coord realCoord(event->scenePos().x()/16, event->scenePos().y()/16);
+
+	if(realCoord.x < 30 && realCoord.y < 20) {
+	  int button = -1;
+
+	  switch(event->button()) {
+	  case Qt::LeftButton:
+		button = 1;
+		break;
+	  case Qt::RightButton:
+		button = 3;
+		break;
+	  default:
+		return;
+	  }
+
+	  _signalClicked(realCoord, button);
+	}
+  */
+  
+  this->mousePressEvent(event);
+}
+
+
 void GameScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
 	static coord lastCoord(0, 0);
 	coord currentCoord(event->scenePos().x()/16, event->scenePos().y()/16);

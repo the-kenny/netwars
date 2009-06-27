@@ -46,9 +46,9 @@ class GameScene: public QGraphicsScene {
 		signalFocusChangedT &signalFocusChanged() { return _signalFocusChanged; }
 
 	protected:
-  //virtual void paintEvent(QPaintEvent* event);
-  //		virtual void mousePressEvent(QMouseEvent* event);
         virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
+  //To resend a single click if thr user clicks too fast
+        virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
 		virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
 
   virtual void drawBackground(QPainter* painter, const QRectF& rect);
