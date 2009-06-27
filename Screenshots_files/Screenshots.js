@@ -16,7 +16,9 @@ function onStubPage()
 {var args=getArgs();parent.IWMediaStreamPhotoPageSetMediaStream(createMediaStream_id2(),args.id);}
 if(window.stubPage)
 {onStubPage();}
-setTransparentGifURL('Media/transparent.gif');function hostedOnDM()
+setTransparentGifURL('Media/transparent.gif');function applyEffects()
+{var registry=IWCreateEffectRegistry();registry.registerEffects({stroke_0:new IWEmptyStroke()});registry.applyEffects();}
+function hostedOnDM()
 {return false;}
 function onPageLoad()
 {IWRegisterNamedImage('comment overlay','Media/Photo-Overlay-Comment.png')
@@ -24,7 +26,7 @@ IWRegisterNamedImage('movie overlay','Media/Photo-Overlay-Movie.png')
 IWRegisterNamedImage('contribution overlay','Media/Photo-Overlay-Contribution.png')
 loadMozillaCSS('Screenshots_files/ScreenshotsMoz.css')
 adjustLineHeightIfTooBig('id1');adjustFontSizeIfTooBig('id1');NotificationCenter.addObserver(null,relayoutMediaGrid_id2,'RangeChanged','id2')
-adjustLineHeightIfTooBig('id3');adjustFontSizeIfTooBig('id3');Widget.onload();fixAllIEPNGs('Media/transparent.gif');fixupIECSS3Opacity('id4');initializeMediaStream_id2()
-performPostEffectsFixups()}
+adjustLineHeightIfTooBig('id3');adjustFontSizeIfTooBig('id3');Widget.onload();fixAllIEPNGs('Media/transparent.gif');fixupIECSS3Opacity('id4');fixupIECSS3Opacity('id5');applyEffects()
+initializeMediaStream_id2()}
 function onPageUnload()
 {Widget.onunload();}

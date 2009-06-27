@@ -73,6 +73,10 @@
     background: transparent;
     opacity: 1.00;
 }
+.style_SkipStroke_5 {
+    background: transparent;
+    opacity: 0.35;
+}
 .Body {
     color: #463c3c;
     font-family: 'ArialMT', 'Arial', sans-serif;
