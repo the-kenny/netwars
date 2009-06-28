@@ -1,4 +1,122 @@
+.Body {
+    color: #463c3c;
+    font-family: 'ArialMT', 'Arial', sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    letter-spacing: 0;
+    line-height: 20px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    opacity: 1.00;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    text-align: left;
+    text-decoration: none;
+    text-indent: 0px;
+    text-transform: none;
+}
+.Header {
+    color: #969696;
+    font-family: 'ArialMT', 'Arial', sans-serif;
+    font-size: 36px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 42px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    opacity: 1.00;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    text-align: center;
+    text-decoration: none;
+    text-indent: 0px;
+    text-transform: none;
+}
+.Normal_External_449_231 {
+    position: relative;
+}
+.Normal {
+    padding: 4px;
+}
+.Normal_External_630_50 {
+    position: relative;
+}
+.Title {
+    color: #463c3c;
+    font-family: 'ArialMT', 'Arial', sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    letter-spacing: 0;
+    line-height: 25px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    opacity: 1.00;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    text-align: left;
+    text-decoration: none;
+    text-indent: 0px;
+    text-transform: none;
+}
+.graphic_generic_body_textbox_style_default_SkipStroke {
+    background: transparent;
+    opacity: 1.00;
+}
+.graphic_generic_header_textbox_style_default_SkipStroke {
+    background: transparent;
+    opacity: 1.00;
+}
+.graphic_generic_title_textbox_style_default_SkipStroke {
+    background: transparent;
+    opacity: 1.00;
+}
+.graphic_image_style_default_SkipStroke {
+    background: transparent;
+    opacity: 1.00;
+}
+.graphic_shape_layout_style_default {
+    padding: 4px;
+}
+.graphic_shape_layout_style_default_External_449_32 {
+    position: relative;
+}
+.style_SkipStroke_4 {
+    background: transparent;
+    opacity: 1.00;
+}
+.graphic_textbox_layout_style_default_External_174_33 {
+    position: relative;
+}
+.style_2 {
+    font-family: 'Arial-BoldMT', 'Arial', 'Arial Bold', sans-serif;
+    font-weight: bold;
+}
+.style_SkipStroke_5 {
+    background: transparent;
+    opacity: 0.35;
+}
+.graphic_textbox_layout_style_default_External_181_27 {
+    position: relative;
+}
+.graphic_textbox_layout_style_default {
+    padding: 4px;
+}
 .style_External_449_231 {
+    position: relative;
+}
+.graphic_textbox_layout_style_default_External_181_91 {
     position: relative;
 }
 .style {
@@ -46,24 +164,44 @@
     text-indent: 0px;
     text-transform: none;
 }
+.graphic_textbox_layout_style_default_External_181_33 {
+    position: relative;
+}
 .style_1 {
     font-size: 20px;
     line-height: 28px;
 }
-.style_SkipStroke_4 {
-    background: transparent;
+.paragraph_style_2 {
+    color: #463c3c;
+    font-family: 'ArialMT', 'Arial', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    letter-spacing: 0;
+    line-height: 17px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
     opacity: 1.00;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    text-align: left;
+    text-decoration: none;
+    text-indent: 0px;
+    text-transform: none;
 }
 .style_SkipStroke {
     background: transparent;
     opacity: 1.00;
 }
-.style_External_630_50 {
-    position: relative;
-}
 .style_SkipStroke_1 {
     background: transparent;
     opacity: 1.00;
+}
+.style_External_630_50 {
+    position: relative;
 }
 .style_SkipStroke_2 {
     background: transparent;
@@ -72,116 +210,6 @@
 .style_SkipStroke_3 {
     background: transparent;
     opacity: 1.00;
-}
-.style_SkipStroke_5 {
-    background: transparent;
-    opacity: 0.35;
-}
-.Body {
-    color: #463c3c;
-    font-family: 'ArialMT', 'Arial', sans-serif;
-    font-size: 15px;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: normal;
-    letter-spacing: 0;
-    line-height: 20px;
-    margin-bottom: 0px;
-    margin-left: 0px;
-    margin-right: 0px;
-    margin-top: 0px;
-    opacity: 1.00;
-    padding-bottom: 0px;
-    padding-top: 0px;
-    text-align: left;
-    text-decoration: none;
-    text-indent: 0px;
-    text-transform: none;
-}
-.Header {
-    color: #969696;
-    font-family: 'ArialMT', 'Arial', sans-serif;
-    font-size: 36px;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: bold;
-    letter-spacing: 0;
-    line-height: 42px;
-    margin-bottom: 0px;
-    margin-left: 0px;
-    margin-right: 0px;
-    margin-top: 0px;
-    opacity: 1.00;
-    padding-bottom: 0px;
-    padding-top: 0px;
-    text-align: center;
-    text-decoration: none;
-    text-indent: 0px;
-    text-transform: none;
-}
-.Normal_External_630_50 {
-    position: relative;
-}
-.Normal_External_449_231 {
-    position: relative;
-}
-.Normal {
-    padding: 4px;
-}
-.Title {
-    color: #463c3c;
-    font-family: 'ArialMT', 'Arial', sans-serif;
-    font-size: 20px;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: normal;
-    letter-spacing: 0;
-    line-height: 25px;
-    margin-bottom: 0px;
-    margin-left: 0px;
-    margin-right: 0px;
-    margin-top: 0px;
-    opacity: 1.00;
-    padding-bottom: 0px;
-    padding-top: 0px;
-    text-align: left;
-    text-decoration: none;
-    text-indent: 0px;
-    text-transform: none;
-}
-.graphic_generic_body_textbox_style_default_SkipStroke {
-    background: transparent;
-    opacity: 1.00;
-}
-.graphic_generic_header_textbox_style_default_SkipStroke {
-    background: transparent;
-    opacity: 1.00;
-}
-.graphic_generic_title_textbox_style_default_SkipStroke {
-    background: transparent;
-    opacity: 1.00;
-}
-.graphic_image_style_default_SkipStroke {
-    background: transparent;
-    opacity: 1.00;
-}
-.graphic_shape_layout_style_default {
-    padding: 4px;
-}
-.graphic_shape_layout_style_default_External_449_32 {
-    position: relative;
-}
-.graphic_textbox_layout_style_default_External_181_33 {
-    position: relative;
-}
-.graphic_textbox_layout_style_default_External_174_33 {
-    position: relative;
-}
-.graphic_textbox_layout_style_default_External_181_82 {
-    position: relative;
-}
-.graphic_textbox_layout_style_default {
-    padding: 4px;
 }
 .graphic_textbox_style_default_SkipStroke {
     background: transparent;
