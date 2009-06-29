@@ -182,6 +182,7 @@ namespace aw
 
 	void map_loader::read_metadata(std::size_t position)
 	{
+	  if(m_data.size() < position) {
 		uint32_t name_length = *reinterpret_cast<uint32_t*>(&m_data.at(position));
 		position += sizeof(uint32_t);
 		if(name_length > 0)
@@ -202,6 +203,7 @@ namespace aw
 		position += sizeof(uint32_t);
 		if(desc_length > 0)
 			m_description.assign(&m_data.at(position), desc_length);
+	  }
 	}
 
 	void map_loader::process_data(uint16_t data, unsigned int x, unsigned int y)
