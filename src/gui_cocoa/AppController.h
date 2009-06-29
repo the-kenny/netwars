@@ -20,6 +20,7 @@
 
 @property(readwrite) bool gameActive;
 
+- (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename;
 
 - (IBAction)startNewGame:(id)sender;
 - (IBAction)endTurn:(id)sender;

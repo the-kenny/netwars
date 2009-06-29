@@ -72,6 +72,9 @@ void gameFinished(id game, const aw::player::ptr& p) {
 			 withKeyPath:@"gameActive"
 			 options:nil];
 	
+	//Set the delegate
+	[NSApp setDelegate:self];
+	
 	[self setGameActive:NO];
 }
 
@@ -136,38 +139,57 @@ void postTerrainClickedNotification(const aw::terrain::ptr terrain, id sender) {
 	cocoaMapWidget = CocoaMapWidget::ptr(new CocoaMapWidget(mapView));
 }
 
+
+- (void)startNewGameImpl:(GameDialogController*)gameDialog {
+	[self initGame];
+	
+	aw::game::ptr game(new aw::game);
+	
+	game->load_map(std::string([gameDialog.mapFile UTF8String]));
+	game->set_funds_per_building(gameDialog.fundsPerBuilding);
+	game->set_initial_funds(gameDialog.initialFunds);
+	game->signal_game_finished().connect(boost::bind(&gameFinished, self, _1));
+	
+	
+	gameController = aw::game_controller::ptr(new aw::game_controller);
+	gameController->signal_scene_change().connect(boost::bind(&aw::gui::map_widget::display, cocoaMapWidget, _1));
+	gameController->signal_show_unit_action_menu().connect(boost::bind(&CocoaActionMenu::showActionMenu, _1));
+	gameController->signal_show_unload_menu().connect(boost::bind(&CocoaUnloadMenu::showUnloadMenu, _1));
+	gameController->signal_show_buy_menu().connect(boost::bind(&CocoaBuyMenu::showBuyMenu, _1, _2));
+	
+	//Connect general events
+	gameController->signal_unit_clicked().connect(boost::bind(&postUnitClickedNotification, _1, self));
+	gameController->signal_terrain_clicked().connect(boost::bind(&postTerrainClickedNotification, _1, self));
+	
+	[mapView setIsEnabled:YES];
+	[self setGameActive:YES];
+	
+	gameController->start_game(game);
+}
+
+- (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {
+	GameDialogController* gameDialog = [[GameDialogController alloc] init];
+	[gameDialog setMapFile:filename];
+	
+	if([gameDialog run]) {
+		[self startNewGameImpl:gameDialog];
+		
+		return YES;
+	}
+	
+	[gameDialog release];
+	
+	return NO;
+}
+
 - (IBAction)startNewGame:(id)sender {
 	GameDialogController* gameDialog = [[GameDialogController alloc] init];
 	
 	if([gameDialog run]) {
-		[self initGame];
-		
-		aw::game::ptr game(new aw::game);
-
-		game->load_map(std::string([gameDialog.mapFile UTF8String]));
-		game->set_funds_per_building(gameDialog.fundsPerBuilding);
-		game->set_initial_funds(gameDialog.initialFunds);
-		game->signal_game_finished().connect(boost::bind(&gameFinished, self, _1));
- 
-		
-		gameController = aw::game_controller::ptr(new aw::game_controller);
-		gameController->signal_scene_change().connect(boost::bind(&aw::gui::map_widget::display, cocoaMapWidget, _1));
-		gameController->signal_show_unit_action_menu().connect(boost::bind(&CocoaActionMenu::showActionMenu, _1));
-		gameController->signal_show_unload_menu().connect(boost::bind(&CocoaUnloadMenu::showUnloadMenu, _1));
-		gameController->signal_show_buy_menu().connect(boost::bind(&CocoaBuyMenu::showBuyMenu, _1, _2));
-		
-		//Connect general events
-		gameController->signal_unit_clicked().connect(boost::bind(&postUnitClickedNotification, _1, self));
-		gameController->signal_terrain_clicked().connect(boost::bind(&postTerrainClickedNotification, _1, self));
-		
-		[mapView setIsEnabled:YES];
-		[self setGameActive:YES];
-		
-		gameController->start_game(game);
+		[self startNewGameImpl:gameDialog];
 	}
 	
 	[gameDialog release];
-	gameDialog = nil;
 }
 
 - (IBAction)endTurn:(id)sender {
