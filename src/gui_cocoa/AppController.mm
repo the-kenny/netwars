@@ -165,6 +165,9 @@ void postTerrainClickedNotification(const aw::terrain::ptr terrain, id sender) {
 		
 		gameController->start_game(game);
 	}
+	
+	[gameDialog release];
+	gameDialog = nil;
 }
 
 - (IBAction)endTurn:(id)sender {
