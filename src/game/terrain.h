@@ -87,7 +87,7 @@ namespace aw
 
 			int capture_points();
 			void reset_capture_points(int points = 20);
-			unsigned int capture(unsigned int points = 10);
+			unsigned int capture(unsigned int points);
 
 			bool can_supply() const { return m_can_supply; }
 			bool can_supply(unit::environments e) const;

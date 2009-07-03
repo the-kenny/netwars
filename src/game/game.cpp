@@ -199,7 +199,7 @@ void game::capture_building(const coord &unit_c)
 
 	building::ptr b = boost::dynamic_pointer_cast<building>(terr);
 
-	if(b->capture() <= 0)
+	if(b->capture(unit->get_hp()) <= 0)
 	{
 		if(b->type() == terrain::HEADQUARTER && (b->extra() != terrain::WHITE && b->extra() != terrain::LAUNCHED))
 			b->type(terrain::CITY);
