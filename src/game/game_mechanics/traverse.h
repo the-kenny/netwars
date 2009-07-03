@@ -25,6 +25,8 @@ namespace aw
 
 				void calculate(const map::ptr &map, const coord &origin);
 				void calculate(const map::ptr &map, const coord &origin, const unit::ptr &u, int range = -1);
+		  
+                void calculate_for_unload(const map::ptr &map, const coord &origin, const unit::ptr &u);
 
 				inline bool in_range(const coord &pos) const { return this->get_rest_mp(pos) != -1; }
 				inline coord get_origin() const { return m_start; }

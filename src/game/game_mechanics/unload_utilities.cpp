@@ -48,7 +48,7 @@ area game_mechanics::get_unload_coordinates(const map::ptr &map, const coord &tr
 	assert(unit != NULL);
 
 	game_mechanics::traverse trav;
-	trav.calculate(map, transporter_c, unit, 1);
+	trav.calculate_for_unload(map, transporter_c, unit);
 
 	area a(trav.get_coordinates());
 

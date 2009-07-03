@@ -37,6 +37,31 @@ namespace aw
 			}
 		}
 
+	  void traverse::calculate_for_unload(const map::ptr &map, const coord &origin, const unit::ptr &u)
+	  {
+		m_map = map;
+
+		if(m_coords.empty() || m_start != origin)
+		  {
+			m_start = origin;
+
+			m_coords.clear();
+
+			const int x = origin.x;
+			const int y = origin.y;
+
+			coord coords[] = {coord(x,y+1), coord(x+1,y), 
+							  coord(x,y-1), coord(x-1,y)};
+
+			BOOST_FOREACH(const coord& c, coords) {
+			  const int move_costs = m_map->get_terrain(c)->movement_costs(u->get_move_type());
+			  const bool passable = can_pass(m_map, c, u);
+			  if(move_costs != -1 && passable)
+				m_coords.append(c);
+			} 
+		  }
+	  }
+
 		//verschachtelte Templates und typedefs machen probleme
 		const traverse::area_type &traverse::get_coordinates() const
 		{
@@ -67,7 +92,6 @@ namespace aw
 			}
 		}
 
-//		void traverse::move(int x, int y, int dir, int rest_movement_range, int rest_gas, bool left, bool right, unit::ptr u, terrain::types previous_terrain)
 		void traverse::move(int x, int y, int dir, int rest_movement_range, int rest_gas, bool left, bool right, const unit::ptr &u)
 		{
 			if(m_map->on_map(coord(x, y)))
@@ -130,7 +154,7 @@ namespace aw
 			} // bool on_map()
 		}
 
-		std::ostream &operator<<(std::ostream &o, const traverse &t)
+	  std::ostream &operator<<(std::ostream &o, const game_mechanics::traverse &t)
 		{
 			t.print(o);
 			return o;
