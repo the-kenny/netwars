@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <content collectionGUID="A6B5EBD0-4838-45F6-AB5A-9F55EC198477">
-  <lastEdited clientType="local-build-20090708" date="2009-07-08 01:10:04 +0200"/>
+  <lastEdited clientType="local-build-20090708" date="2009-07-08 01:34:52 +0200"/>
   <textBox id="generic-header-attribute" dynamic="no" visible="yes">
-    <richText>&lt;b&gt;My Blog&lt;/b&gt;</richText>
+    <richText>&lt;b&gt;News&lt;/b&gt;</richText>
   </textBox>
   <textBox id="generic-title-attributes" dynamic="no" visible="yes">
     <richText>Network Games</richText>
