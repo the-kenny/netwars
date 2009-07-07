@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<rss xmlns:iweb="http://www.apple.com/iweb" version="2.0">
+  <channel>
+    <title>News</title>
+    <link>http://the-kenny.ath.cx/~Moritz/netwars/Netwars/News</link>
+    <description>A simple blog for news and all things like this.
+If you want to contact me, you can do this with one of the addresses on the front page.</description>
+    <item>
+      <title>Network Games</title>
+      <link>http://the-kenny.ath.cx/%7EMoritz/netwars/Netwars/News/Entries/2009/7/8_Network_Games.html</link>
+      <guid isPermaLink="false">ea62efb2-86f0-4f40-b8e6-b1e539bfa922</guid>
+      <pubDate>Wed, 8 Jul 2009 01:02:29 +0200</pubDate>
+      <iweb:comment link="http://the-kenny.ath.cx/%7EMoritz/netwars/Netwars/News/Entries/2009/7/8_Network_Games.html#comment_layer" count="0" enabled="0"></iweb:comment>
+    </item>
+    <item>
+      <title>Progress of Netwars</title>
+      <link>http://the-kenny.ath.cx/%7EMoritz/netwars/Netwars/News/Entries/2009/7/7_A_blog.html</link>
+      <guid isPermaLink="false">18a43104-681c-498e-894b-ba14efd55b89</guid>
+      <pubDate>Tue, 7 Jul 2009 19:52:50 +0200</pubDate>
+      <iweb:comment link="http://the-kenny.ath.cx/%7EMoritz/netwars/Netwars/News/Entries/2009/7/7_A_blog.html#comment_layer" count="0" enabled="0"></iweb:comment>
+    </item>
+    <iweb:dateFormat>EEEE, d. MMMM yyyy</iweb:dateFormat>
+    <iweb:baseURL>http://the-kenny.ath.cx/~Moritz/netwars/Netwars/News</iweb:baseURL>
+    <iweb:maximumSummaryItems>5</iweb:maximumSummaryItems>
+  </channel>
+</rss>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<content collectionGUID="A6B5EBD0-4838-45F6-AB5A-9F55EC198477">
+  <lastEdited clientType="local-build-20090708" date="2009-07-08 01:10:04 +0200"/>
+  <textBox id="generic-header-attribute" dynamic="no" visible="yes">
+    <richText>&lt;b&gt;My Blog&lt;/b&gt;</richText>
+  </textBox>
+  <textBox id="generic-title-attributes" dynamic="no" visible="yes">
+    <richText>Progress of Netwars</richText>
+  </textBox>
+  <textBox id="generic-body-attributes" dynamic="no" visible="yes">
+    <richText>I want to describe everything around this project a bit.&#xD;&#xD;I&#x2019;m currently the only developer of this project, I&#x2019;m a student and I really don&#x2019;t have very much free time. This means that the development on Netwars is slow. Very slow.&#xD;&#xD;Also, building Netwars for Windows is not so trivial, and I don&#x2019;t want to do this process every day. So the Windows version lags behind the Mac version, which is easy to build.</richText>
+  </textBox>
+  <textBox id="generic-datefield-attributes" dynamic="no" visible="yes">
+    <richText>&lt;b&gt;Dienstag, 7. Juli 2009&lt;/b&gt;</richText>
+  </textBox>
+</content>

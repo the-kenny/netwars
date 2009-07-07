@@ -1,4 +1,4 @@
-// Created by iWeb 2.0.4 local-build-20090629
+// Created by iWeb 2.0.4 local-build-20090708
 
 function createMediaStream_id2()
 {return IWCreatePhotocast("http://the-kenny.ath.cx/%7EMoritz/netwars/Netwars/Screenshots_files/rss.xml",true,true);}
