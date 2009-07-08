@@ -64,4 +64,4 @@ is replaced with replacement."
 											 (make-relative file))))))))))
 				 "rcc"
 				 "RCC")
-				file)))
+				file))
