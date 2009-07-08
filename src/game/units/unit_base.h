@@ -356,18 +356,18 @@ namespace aw
 
 			void join(const unit &o)
 			{
-				if(m_life + o.m_life <= m_max_life)
+				if(m_life + o.m_life >= m_max_life)
 					m_life += o.m_life;
 				else
 					m_life = m_max_life;
 
-				if(m_fuel + o.m_fuel <= m_max_fuel)
+				if(m_fuel + o.m_fuel >= m_max_fuel)
 					m_fuel += o.m_fuel;
 				else
 					m_fuel = m_max_fuel;
 
-					main_weapon.join(o.main_weapon);
-					alt_weapon.join(o.alt_weapon);
+				main_weapon.join(o.main_weapon);
+				alt_weapon.join(o.alt_weapon);
 			}
 
 			void reset()
