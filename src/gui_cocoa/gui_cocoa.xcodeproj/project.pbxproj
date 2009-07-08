@@ -33,7 +33,6 @@
 		8E26D12C0ED864BE00704923 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E26D12B0ED864BE00704923 /* MainWindow.xib */; };
 		8E26D18C0ED868E200704923 /* MainWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E26D18A0ED868E200704923 /* MainWindowController.mm */; };
 		8E303C970EEC8BFA005FD0B5 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 8E303B3B0EEC8BFA005FD0B5 /* config.xml */; };
-		8E303C980EEC8BFA005FD0B5 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 8E303B3C0EEC8BFA005FD0B5 /* data */; };
 		8E30FB520EECA46E00D06119 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E30FB510EECA46E00D06119 /* Quartz.framework */; };
 		8E39AB100EEC497E000C7932 /* CocoaBuyMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E39AB0F0EEC497E000C7932 /* CocoaBuyMenu.mm */; };
 		8E39AE560EEC7608000C7932 /* GameDialogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E39AE540EEC7608000C7932 /* GameDialogController.mm */; };
@@ -42,6 +41,7 @@
 		8E5D18EB0EE07D640087E028 /* VBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5D18E90EE07D640087E028 /* VBoxView.m */; };
 		8E5F27D70F3E121400AC012E /* libnetwars.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E5F27D50F3E121400AC012E /* libnetwars.a */; };
 		8E5F27D80F3E121400AC012E /* libtinyxml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E5F27D60F3E121400AC012E /* libtinyxml.a */; };
+		8E60A06F10051221009BF0CD /* data in Resources */ = {isa = PBXBuildFile; fileRef = 8E609FBE10051221009BF0CD /* data */; };
 		8E8A54560F3FB8420084E240 /* NotificationNames.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A54550F3FB8420084E240 /* NotificationNames.mm */; };
 		8E8A545D0F3FB90E0084E240 /* CocoaUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A545C0F3FB90E0084E240 /* CocoaUnit.mm */; };
 		8E8A54920F3FBB310084E240 /* CocoaTerrain.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A54910F3FBB310084E240 /* CocoaTerrain.mm */; };
@@ -96,7 +96,6 @@
 		8E26D18A0ED868E200704923 /* MainWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MainWindowController.mm; sourceTree = "<group>"; };
 		8E26D18B0ED868E200704923 /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
 		8E303B3B0EEC8BFA005FD0B5 /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = SOURCE_ROOT; };
-		8E303B3C0EEC8BFA005FD0B5 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = data; path = ../../data; sourceTree = SOURCE_ROOT; };
 		8E30FB510EECA46E00D06119 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		8E39AB0E0EEC497E000C7932 /* CocoaBuyMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaBuyMenu.h; sourceTree = "<group>"; };
 		8E39AB0F0EEC497E000C7932 /* CocoaBuyMenu.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaBuyMenu.mm; sourceTree = "<group>"; };
@@ -110,6 +109,7 @@
 		8E5D18EA0EE07D640087E028 /* VBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBoxView.h; sourceTree = "<group>"; };
 		8E5F27D50F3E121400AC012E /* libnetwars.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnetwars.a; path = ../libnetwars.a; sourceTree = SOURCE_ROOT; };
 		8E5F27D60F3E121400AC012E /* libtinyxml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtinyxml.a; path = ../libtinyxml.a; sourceTree = SOURCE_ROOT; };
+		8E609FBE10051221009BF0CD /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = data; path = ../../data; sourceTree = SOURCE_ROOT; };
 		8E8A544F0F3FB7F20084E240 /* NotificationNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationNames.h; sourceTree = "<group>"; };
 		8E8A54550F3FB8420084E240 /* NotificationNames.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NotificationNames.mm; sourceTree = "<group>"; };
 		8E8A545B0F3FB90E0084E240 /* CocoaUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaUnit.h; sourceTree = "<group>"; };
@@ -218,11 +218,11 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8E609FBE10051221009BF0CD /* data */,
 				8EF8D4870F76EB28000F6F9C /* 7330.aws */,
 				8EBFF07F0F39FC9400FFFE14 /* Icon.icns */,
 				8E0BCC150F30B4B200BD795E /* UnitInfo.xib */,
 				8E303B3B0EEC8BFA005FD0B5 /* config.xml */,
-				8E303B3C0EEC8BFA005FD0B5 /* data */,
 				8E0C4B8E0EEB3B05008EFD65 /* BuyMenu.xib */,
 				8E1A624C0EDF662A0089B499 /* GameDialog.xib */,
 				8E26D12B0ED864BE00704923 /* MainWindow.xib */,
@@ -347,11 +347,11 @@
 				8E1A624D0EDF662A0089B499 /* GameDialog.xib in Resources */,
 				8E0C4B8F0EEB3B05008EFD65 /* BuyMenu.xib in Resources */,
 				8E303C970EEC8BFA005FD0B5 /* config.xml in Resources */,
-				8E303C980EEC8BFA005FD0B5 /* data in Resources */,
 				8E1BC66F0F39DEF700CE9290 /* Credits.rtf in Resources */,
 				8EBFF0800F39FC9400FFFE14 /* Icon.icns in Resources */,
 				8E0BCC160F30B4B200BD795E /* UnitInfo.xib in Resources */,
 				8EF8D4880F76EB28000F6F9C /* 7330.aws in Resources */,
+				8E60A06F10051221009BF0CD /* data in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
