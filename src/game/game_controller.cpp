@@ -147,7 +147,7 @@ void game_controller::on_unit_click(const coord &pos, int key)
 
 				if(m_game->move_active())
 					m_game->complete_unit_move(*m_path);
-				else
+				else if(m_game->get_unit(m_selection))
 					m_game->get_unit(m_selection)->set_moved();
 
 				m_gamestate = IDLE;
