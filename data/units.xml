@@ -275,9 +275,10 @@
 		<movement range="7" type="transport" capture_buildings="0" />
 		<fuel level="60" waste="1" remove_without="1" />
 
-		<supply repair_points="2">
-			<available type="infantry" />
-			<available type="mech" />
+		<supply repair_points="1">
+			<environment type="ground" />
+			<environment type="air" />
+			<environment type="water" />
 		</supply>
 
 		<transport count="2">
