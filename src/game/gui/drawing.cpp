@@ -36,11 +36,11 @@ namespace aw
 		  if(y < 19 && terrain::is_ground(scene->get_terrain(x, y+1)->type()))
 			ret = get_path(terrain::SEASIDE, terrain::D); //Küste unten
 
-		  if(y > 0 && y < 20 &&
+		  if(y > 0 && y < 19 &&
 			 terrain::is_ground(scene->get_terrain(x, y-1)->type()) &&
 			 terrain::is_ground(scene->get_terrain(x, y+1)->type()))
 			ret = get_path(terrain::SEASIDE, terrain::UD); //Küste oben/unten
-		  if(x > 0 && x < 30 &&
+		  if(x > 0 && x < 29 &&
 			 terrain::is_ground(scene->get_terrain(x-1, y)->type()) &&
 			 terrain::is_ground(scene->get_terrain(x+1, y)->type()))
 			ret = get_path(terrain::SEASIDE, terrain::LR); //Küste links/rechts
