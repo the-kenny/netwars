@@ -14,5 +14,10 @@ def build(bld):
 	obj.defines = 'TIXML_USE_STL=1 TIXML_USE_TICPP=1'
 	obj.find_sources_in_dirs('tinyxml')
 	obj.install_path = '../src'
-
-
+	
+	json = bld.new_task_gen('cxx', 'staticlib')
+	json.target = 'json'
+	json.defines = ''
+	json.find_sources_in_dirs('json')
+	json.install_path = '../src'
+	
