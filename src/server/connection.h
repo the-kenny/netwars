@@ -31,11 +31,18 @@ public:
 								 message));
   }
 
-  void start() {
-	boost::asio::async_read_until(socket_, buffer_, "\n", 
-								  boost::bind(&tcp_connection::handle_read,
-											  this,
-											  boost::asio::placeholders::error));
+  void connect(const std::string& host, const std::string& port) {
+	tcp::resolver resolver(io_service_);
+	tcp::resolver::query query(host, port);
+	
+	tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
+	
+	
+    socket_.async_connect(*endpoint_iterator,
+        boost::bind(&tcp_connection::handle_connect, 
+					this,
+					boost::asio::placeholders::error,
+					++endpoint_iterator));
   }
 
 
@@ -54,6 +61,26 @@ private:
     : socket_(io_service), io_service_(io_service) {
 
   }
+
+  void handle_connect(const boost::system::error_code& error,
+      tcp::resolver::iterator endpoint_iterator)
+  {
+    if (!error) {
+boost::asio::async_read_until(socket_, buffer_, "\n", 
+								  boost::bind(&tcp_connection::handle_read,
+											  this,
+											  boost::asio::placeholders::error));
+	} else if (endpoint_iterator != tcp::resolver::iterator()) {
+      socket_.close();
+      tcp::endpoint endpoint = *endpoint_iterator;
+      socket_.async_connect(endpoint,
+							boost::bind(&tcp_connection::handle_connect, 
+										this,
+										boost::asio::placeholders::error, 
+										++endpoint_iterator));
+    }
+  }
+
 
   void do_write(std::string message) {
 	std::cout << "do_write called" << std::endl;
