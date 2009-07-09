@@ -103,16 +103,14 @@ void UnitGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 	  if(u->is_transporter() && boost::dynamic_pointer_cast<transporter>(u)->loaded_units_count() > 0)
 		Drawing::drawPixmap(gui::get_path(unit::LOADED), nullCoord, *painter);
 
-	  /*
-		if(u->can_capture())
-		{
-		  const terrain::ptr &t(currentScene->get_terrain(x, y));
-
-		  if(t->is_building() && boost::dynamic_pointer_cast<building>(t)->capture_points() < 20) {
-			  Drawing::drawPixmap(gui::get_path(unit::CAPTURE), nullCoord, *painter);
-			}
+	  
+	  if(u->can_capture()) {
+		if(_currentTerrain && _currentTerrain->is_building() && boost::dynamic_pointer_cast<building>(_currentTerrain)->capture_points() < 20) {
+		  Drawing::drawPixmap(gui::get_path(unit::CAPTURE), 
+							  nullCoord, 
+							  *painter);
 		}
-	  */
+	  } 
 	}
   }
 }

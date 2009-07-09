@@ -137,6 +137,7 @@ void GameScene::drawItems(QPainter *painter,
 	switch(a.action) {
 	case UnitActions::MOVED:
 	  getUnitGraphicsItem(a.unit)->moveTo(mapToSceneCoord(a.position));
+	  getUnitGraphicsItem(a.unit)->setCurrentTerrain(currentScene->get_terrain(a.position));
 	  break;
 
 	  //The next two things are handled directly by processNewScene().
