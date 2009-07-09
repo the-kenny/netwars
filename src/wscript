@@ -36,9 +36,11 @@ def configure(conf):
 		warning("WARNING: Building just the static library.")
 
 	conf.sub_config('lib')
+	conf.sub_config('server')
 
 def build(bld):
 	bld.add_subdirs('lib')
+	bld.add_subdirs('server');
 
 	netwars = bld.new_task_gen('cxx', 'staticlib')
 	netwars.target = 'netwars'

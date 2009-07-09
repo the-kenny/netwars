@@ -1,0 +1,23 @@
+
+def configure(conf):
+	conf.check_tool('boost')
+	conf.check_boost(lib='signals thread system', kind='BOTH')
+
+	if conf.env['DEBUG']:
+		conf.env.append_value('CXXFLAGS', '-g')
+		conf.env.append_value('LINKFLAGS', '-g')
+		conf.env.append_value('CXXFLAGS', '-ggdb')
+		conf.env.append_value('LINKFLAGS', '-ggdb')
+	else:
+		conf.env.append_value('CXXFLAGS', '-O2')
+		conf.env.append_value('LINKFLAGS', '-O2')
+
+def build(bld):
+	server = bld.new_task_gen('cxx', 'cprogram')
+	server.target = 'netwars_server'
+	server.uselib = 'BOOST_SIGNALS BOOST_SYSTEM BOOST_THREAD BOOST'
+	server.uselib_local = 'tinyxml json netwars'
+	server.includes = '. ../lib'
+	server.defines = 'TIXML_USE_TICPP=1 TIXML_USE_STL=1'
+	server.find_sources_in_dirs('.')
+	server.install_path = '../src'

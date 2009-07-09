@@ -1,0 +1,5 @@
+class server {
+public:
+  
+private:
+};
