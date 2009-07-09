@@ -15,114 +15,32 @@ using boost::asio::ip::tcp;
 class tcp_connection
   : public boost::enable_shared_from_this<tcp_connection> {
 public:
-  typedef boost::shared_ptr<tcp_connection> pointer;
+  typedef boost::shared_ptr<tcp_connection> ptr;
 
-  static pointer create(boost::asio::io_service& io_service) {
-    return pointer(new tcp_connection(io_service));
-  }
+  static ptr create(boost::asio::io_service& io_service);
+  tcp::socket& socket();
 
-  tcp::socket& socket() {
-    return socket_;
-  }
+  void send_message(const std::string& message);
 
-  void send_message(const std::string& message) {
-    io_service_.post(boost::bind(&tcp_connection::do_write, 
-								 this, 
-								 message));
-  }
-
-  void connect(const std::string& host, const std::string& port) {
-	tcp::resolver resolver(io_service_);
-	tcp::resolver::query query(host, port);
-	
-	tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
-	
-	
-    socket_.async_connect(*endpoint_iterator,
-        boost::bind(&tcp_connection::handle_connect, 
-					this,
-					boost::asio::placeholders::error,
-					++endpoint_iterator));
-  }
+  void connect(const std::string& host, const std::string& port);
 
 
-  bool has_line() const {
-	return !receive_queue_.empty();
-  }
+  bool has_line() const;
 
-  std::string receive_line() {
-	std::string line(receive_queue_.front());
-	receive_queue_.pop_front();
-	return line;
-  }
+  std::string receive_line();
 
 private:
-  tcp_connection(boost::asio::io_service& io_service)
-    : socket_(io_service), io_service_(io_service) {
-
-  }
+  tcp_connection(boost::asio::io_service& io_service);
 
   void handle_connect(const boost::system::error_code& error,
-      tcp::resolver::iterator endpoint_iterator)
-  {
-    if (!error) {
-boost::asio::async_read_until(socket_, buffer_, "\n", 
-								  boost::bind(&tcp_connection::handle_read,
-											  this,
-											  boost::asio::placeholders::error));
-	} else if (endpoint_iterator != tcp::resolver::iterator()) {
-      socket_.close();
-      tcp::endpoint endpoint = *endpoint_iterator;
-      socket_.async_connect(endpoint,
-							boost::bind(&tcp_connection::handle_connect, 
-										this,
-										boost::asio::placeholders::error, 
-										++endpoint_iterator));
-    }
-  }
+					  tcp::resolver::iterator endpoint_iterator);
 
 
-  void do_write(std::string message) {
-	std::cout << "do_write called" << std::endl;
+  void do_write(std::string message);
 
-	bool write_in_progress = !send_queue_.empty();
-    send_queue_.push_back(message);
-    if (!write_in_progress) {
-	  boost::asio::async_write(socket_, 
-							   boost::asio::buffer(send_queue_.front()),
-							   boost::bind(&tcp_connection::handle_write, 
-										   this,
-										   boost::asio::placeholders::error));
-	}
-  }
+  void handle_write(const boost::system::error_code& error);
 
-  void handle_write(const boost::system::error_code& error) {
-	if(!error) {
-	  send_queue_.pop_front();
-
-	if (!send_queue_.empty()) {
-	  boost::asio::async_write(socket_,
-							   boost::asio::buffer(send_queue_.front()),
-							   boost::bind(&tcp_connection::handle_write, 
-										   this,
-										   boost::asio::placeholders::error));
-      }
-	}
-  }
-
-  void handle_read(const boost::system::error_code&) {
-	std::istream is(&buffer_);
-	std::string line;
-	
-	std::getline(is, line);
-	receive_queue_.push_back(line);
-	  
-	
-	boost::asio::async_read_until(socket_, buffer_, "\n", 
-								  boost::bind(&tcp_connection::handle_read,
-											  this,
-											  boost::asio::placeholders::error));
-  }
+  void handle_read(const boost::system::error_code&);
 
 
   tcp::socket socket_;
