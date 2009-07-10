@@ -17,7 +17,7 @@ def build(bld):
 	server.target = 'netwars_server'
 	server.uselib = 'BOOST_SIGNALS BOOST_SYSTEM BOOST_THREAD BOOST'
 	server.uselib_local = 'tinyxml json netwars'
-	server.includes = '. ../lib'
+	server.includes = '. .. ../lib'
 	server.defines = 'TIXML_USE_TICPP=1 TIXML_USE_STL=1'
 	server.find_sources_in_dirs('.')
 	server.install_path = '../src'

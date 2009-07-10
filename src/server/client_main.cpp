@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "connection.h"
+#include "game/networking/connection.h"
 
 int main() {
   boost::asio::io_service io_service;
