@@ -18,28 +18,23 @@ public:
   typedef boost::shared_ptr<tcp_connection> ptr;
 
   static ptr create(boost::asio::io_service& io_service);
-  tcp::socket& socket();
 
   void send_message(const std::string& message);
-
   void connect(const std::string& host, const std::string& port);
+  void start();
 
-
+  tcp::socket& socket();
   bool has_line() const;
-
   std::string receive_line();
 
 private:
   tcp_connection(boost::asio::io_service& io_service);
 
-  void handle_connect(const boost::system::error_code& error,
-					  tcp::resolver::iterator endpoint_iterator);
-
-
   void do_write(std::string message);
 
+  void handle_connect(const boost::system::error_code& error,
+					  tcp::resolver::iterator endpoint_iterator);
   void handle_write(const boost::system::error_code& error);
-
   void handle_read(const boost::system::error_code&);
 
 

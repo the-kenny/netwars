@@ -21,12 +21,18 @@ void tcp_connection::connect(const std::string& host, const std::string& port) {
 	
   tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
 	
-	
   socket_.async_connect(*endpoint_iterator,
 						boost::bind(&tcp_connection::handle_connect, 
 									this,
 									boost::asio::placeholders::error,
 									++endpoint_iterator));
+}
+
+void tcp_connection::start() {
+  boost::asio::async_read_until(socket_, buffer_, "\n", 
+								boost::bind(&tcp_connection::handle_read,
+											this,
+											boost::asio::placeholders::error));
 }
 
 
@@ -49,10 +55,7 @@ void tcp_connection::handle_connect(const boost::system::error_code& error,
 									tcp::resolver::iterator endpoint_iterator)
 {
   if (!error) {
-	boost::asio::async_read_until(socket_, buffer_, "\n", 
-								  boost::bind(&tcp_connection::handle_read,
-											  this,
-											  boost::asio::placeholders::error));
+	this->start();
   } else if (endpoint_iterator != tcp::resolver::iterator()) {
 	socket_.close();
 	tcp::endpoint endpoint = *endpoint_iterator;
