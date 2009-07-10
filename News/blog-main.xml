@@ -2,27 +2,35 @@
 <rss xmlns:iweb="http://www.apple.com/iweb" version="2.0">
   <channel>
     <title>News</title>
-    <link>http://the-kenny.ath.cx/~Moritz/netwars/Netwars/News</link>
+    <link>http://the-kenny.github.com/Netwars/News</link>
     <description>A simple blog for news and all things like this.
 If you want to contact me, you can do this with one of the addresses on the front page.</description>
     <item>
+      <title>Broken Windows Build</title>
+      <link>http://the-kenny.github.com/Netwars/News/Entries/2009/7/10_Broken_Windows_Build.html</link>
+      <guid isPermaLink="false">f55b1899-b610-4692-8169-2dd83fa7a098</guid>
+      <pubDate>Fri, 10 Jul 2009 15:02:59 +0200</pubDate>
+      <description>The build for windows was broken for a few days now, sorry!&lt;br/&gt;I&#x2019;ve uploaded a fixed build. &lt;br/&gt;&lt;br/&gt;Please drop me a mail if something doesn&#x2019;t work.&lt;br/&gt;&lt;br/&gt;PS: I think you will like to hear that I&#x2019;ve started working on a modus for games over network. Shouldn&#x2019;t take toooo long...</description>
+      <iweb:comment link="http://the-kenny.github.com/Netwars/News/Entries/2009/7/10_Broken_Windows_Build.html#comment_layer" count="0" enabled="0"></iweb:comment>
+    </item>
+    <item>
       <title>Network Games</title>
-      <link>http://the-kenny.ath.cx/%7EMoritz/netwars/Netwars/News/Entries/2009/7/8_Network_Games.html</link>
+      <link>http://the-kenny.github.com/Netwars/News/Entries/2009/7/8_Network_Games.html</link>
       <guid isPermaLink="false">ea62efb2-86f0-4f40-b8e6-b1e539bfa922</guid>
       <pubDate>Wed, 8 Jul 2009 01:02:29 +0200</pubDate>
       <description>It&#x2019;s boring to play against yourself or against a friend next to you, I know this.&lt;br/&gt;&lt;br/&gt;I have plans to implement network gaming in Netwars so that it&#x2019;s possible to play against friends (Or other people) over the internet.&lt;br/&gt;&lt;br/&gt;But please give me some time, it&#x2019;s a big job, and I&#x2019;m only one person and I have only two hands - I&#x2019;m not that fast.&lt;br/&gt;&lt;br/&gt;(If anyone wants to help me, just contact me!)</description>
-      <iweb:comment link="http://the-kenny.ath.cx/%7EMoritz/netwars/Netwars/News/Entries/2009/7/8_Network_Games.html#comment_layer" count="0" enabled="0"></iweb:comment>
+      <iweb:comment link="http://the-kenny.github.com/Netwars/News/Entries/2009/7/8_Network_Games.html#comment_layer" count="0" enabled="0"></iweb:comment>
     </item>
     <item>
       <title>Progress of Netwars</title>
-      <link>http://the-kenny.ath.cx/%7EMoritz/netwars/Netwars/News/Entries/2009/7/7_A_blog.html</link>
+      <link>http://the-kenny.github.com/Netwars/News/Entries/2009/7/7_A_blog.html</link>
       <guid isPermaLink="false">18a43104-681c-498e-894b-ba14efd55b89</guid>
       <pubDate>Tue, 7 Jul 2009 19:52:50 +0200</pubDate>
       <description>I want to describe everything around this project a bit.&lt;br/&gt;&lt;br/&gt;I&#x2019;m currently the only developer of this project, I&#x2019;m a student and I really don&#x2019;t have very much free time. This means that the development on Netwars is slow. Very slow.&lt;br/&gt;&lt;br/&gt;Also, building Netwars for Windows is not so trivial, and I don&#x2019;t want to do this process every day. So the Windows version lags behind the Mac version, which is easy to build.</description>
-      <iweb:comment link="http://the-kenny.ath.cx/%7EMoritz/netwars/Netwars/News/Entries/2009/7/7_A_blog.html#comment_layer" count="0" enabled="0"></iweb:comment>
+      <iweb:comment link="http://the-kenny.github.com/Netwars/News/Entries/2009/7/7_A_blog.html#comment_layer" count="0" enabled="0"></iweb:comment>
     </item>
     <iweb:dateFormat>EEEE, d. MMMM yyyy</iweb:dateFormat>
-    <iweb:baseURL>http://the-kenny.ath.cx/~Moritz/netwars/Netwars/News</iweb:baseURL>
+    <iweb:baseURL>http://the-kenny.github.com/Netwars/News</iweb:baseURL>
     <iweb:maximumSummaryItems>5</iweb:maximumSummaryItems>
   </channel>
 </rss>

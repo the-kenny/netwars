@@ -1,12 +1,12 @@
-// Created by iWeb 2.0.4 local-build-20090708
+// Created by iWeb 2.0.4 local-build-20090710
 
 function createMediaStream_id2()
-{return IWCreatePhotocast("http://the-kenny.ath.cx/%7EMoritz/netwars/Netwars/Screenshots_files/rss.xml",true,true);}
+{return IWCreatePhotocast("http://the-kenny.github.com/Netwars/Screenshots_files/rss.xml",true,true);}
 function initializeMediaStream_id2()
-{createMediaStream_id2().load('http://the-kenny.ath.cx/%7EMoritz/netwars/Netwars',function(imageStream)
+{createMediaStream_id2().load('http://the-kenny.github.com/Netwars',function(imageStream)
 {var entryCount=imageStream.length;var headerView=widgets['widget1'];headerView.setPreferenceForKey(imageStream.length,'entryCount');NotificationCenter.postNotification(new IWNotification('SetPage','id2',{pageIndex:0}));});}
 function layoutMediaGrid_id2(range)
-{createMediaStream_id2().load('http://the-kenny.ath.cx/%7EMoritz/netwars/Netwars',function(imageStream)
+{createMediaStream_id2().load('http://the-kenny.github.com/Netwars',function(imageStream)
 {if(range==null)
 {range=new IWRange(0,imageStream.length);}
 IWLayoutPhotoGrid('id2',new IWPhotoGridLayout(4,new IWSize(129,129),new IWSize(129,32),new IWSize(159,176),27,27,0,new IWSize(2,2)),new IWEmptyStroke(),imageStream,range,null,null,1.000000,{backgroundColor:'#000000',reflectionHeight:100,reflectionOffset:2,captionHeight:100,fullScreen:0,transitionIndex:2},'Media/slideshow.html','widget1','widget2','widget3')});}
