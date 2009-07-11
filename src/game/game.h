@@ -28,7 +28,7 @@ namespace aw
 
 			//to could be used for the preview of the move
 			void begin_unit_move(const coord &from, const coord &to);
-			void complete_unit_move(const game_mechanics::path &path);
+	  void complete_unit_move(const game_mechanics::path &path, bool without_moving = false);
 			void cancel_unit_move();
 
 			void attack_unit(const coord &attacker_c, const coord &victim_c);

@@ -31,7 +31,7 @@ void game::begin_unit_move(const coord &from, const coord &to)
 	m_active_move.to = to;
 }
 
-void game::complete_unit_move(const game_mechanics::path &path)
+void game::complete_unit_move(const game_mechanics::path &path, bool without_moving)
 {
 	assert(m_active_move.active == true);
 	assert(m_active_move.done == false);
@@ -42,10 +42,12 @@ void game::complete_unit_move(const game_mechanics::path &path)
 	assert(path.start() == from);
 	assert(path.end() == to);
 
-	unit::ptr unit = m_map->get_unit(to);
-	assert(unit != NULL);
-	assert(unit->moved() == false);
-	unit->move(path.get_fuel_costs());
+	if(without_moving == false) {
+	  unit::ptr unit = m_map->get_unit(to);
+	  assert(unit != NULL);
+	  assert(unit->moved() == false);
+	  unit->move(path.get_fuel_costs());
+	}
 
 	const terrain::ptr terr = m_map->get_terrain(from);
 	if(terr->is_building())

@@ -145,11 +145,25 @@ void game_controller::on_unit_click(const coord &pos, int key)
 			{
 				m_game->attack_unit(m_selection, pos);
 
+				if(m_game->get_unit(m_selection) != NULL) {
+				  if(m_game->move_active())
+					m_game->complete_unit_move(*m_path);
+				  else
+					m_game->get_unit(m_selection)->set_moved();
+				} else {
+				  if(m_game->move_active()) {
+					//std::cout << "calling complete_unit_move without moving" << std::endl;
+					m_game->complete_unit_move(*m_path, true);
+				  }
+				}
+
+				/*
 				if(m_game->move_active())
 					m_game->complete_unit_move(*m_path);
 				else if(m_game->get_unit(m_selection))
 					m_game->get_unit(m_selection)->set_moved();
-
+				*/
+				
 				m_gamestate = IDLE;
 			}
 			else if(m_selection == pos && m_game->get_active_player()->his_unit(unit) && unit->can_explode()) //Menu for explosion will be displayed
@@ -232,10 +246,14 @@ void game_controller::on_unit_click(const coord &pos, int key)
 
 						m_game->begin_unit_move(m_selection, pos); //Ugly
 
-						if(m_game->move_active())
-							m_game->complete_unit_move(*m_path);
-						else
-							m_game->get_unit(m_selection)->set_moved();
+						if(m_game->get_unit(pos) != NULL) {
+							if(m_game->move_active())
+							  m_game->complete_unit_move(*m_path);
+							else
+							  m_game->get_unit(m_selection)->set_moved();
+						  } else {
+							m_game->complete_unit_move(*m_path, true);
+						  }
 
 						m_gamestate = IDLE;
 						m_selection.reset();
