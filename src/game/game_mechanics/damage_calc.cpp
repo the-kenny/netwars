@@ -70,7 +70,7 @@ void damage_calc::calculate(const map::ptr &map, coord att, coord def)
 		}
 	}
 
-	unit1->fire();
+	unit1->fire(att_weapon);
 
 	m_victim_damage = (damage / 10);
 	float new_hp2 = hp2 - m_victim_damage;
@@ -101,7 +101,7 @@ void damage_calc::calculate(const map::ptr &map, coord att, coord def)
 				damage = -1;
 
 			if(damage != -1)
-				unit2->fire();
+				unit2->fire(def_weapon);
 
 			damage = std::floor(damage * (100 - (terrain1_defense * hp1)) * (new_hp2 / 10) * 100 / 10000);
 			std::cout << "[damage_calc::calculate] " << unit::get_name(unit1->type()) << "(" << hp1 << ")" << " <-- " << unit::get_name(unit2->type()) << "(" << new_hp2 << ")" << "\tSchaden: " << damage << "%" << std::endl;
