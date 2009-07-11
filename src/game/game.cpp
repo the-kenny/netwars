@@ -480,6 +480,7 @@ void game::start_game()
 
 void game::start_turn()
 {
+  player::ptr player = this->get_active_player();
 	for(int x = 0; x < 30; x++)
 	{
 		for(int y = 0; y < 20; y++)
@@ -488,7 +489,7 @@ void game::start_turn()
 			unit::ptr u = m_map->get_unit(c);
 			terrain::ptr t = m_map->get_terrain(c);
 
-			if(u && u->color() == this->get_active_player()->get_unit_color())
+			if(u && u->color() == player->get_unit_color())
 			{
 				u->begin_turn();
 
@@ -499,12 +500,13 @@ void game::start_turn()
 					this->supply_units(c);
 			}
 
-			if(t && t->is_building() && t->extra() == this->get_active_player()->get_building_color())
+			if(t && t->is_building() && t->extra() == player->get_building_color())
 			{
 				building::ptr b = boost::dynamic_pointer_cast<building>(t);
 				assert(b != NULL);
 
-				if(m_map->get_unit(c) && b->can_supply() && b->can_supply(u->get_environment()))
+				if(m_map->get_unit(c) && b->can_supply() && b->can_supply(u->get_environment()) &&
+				   m_map->get_unit(c)->color() == player->get_unit_color())
 					this->supply_unit_from_building(c);
 			}
 		}
