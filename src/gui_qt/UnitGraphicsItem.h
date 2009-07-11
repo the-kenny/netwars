@@ -2,6 +2,7 @@
 #define AW_QT_TERRAIN_GRAPHICS_ITEM_H
 
 #include <QGraphicsItem>
+#include <QGraphicsItemAnimation>
 #include <QTimeLine>
 
 #include <boost/shared_ptr.hpp>
@@ -23,6 +24,7 @@ public:
   const aw::terrain::ptr& CurrentTerrain() const { return _currentTerrain; }
 	
   void moveTo(const QPointF& p);
+  void stop();
   
 protected:
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -34,6 +36,7 @@ private:
   aw::terrain::ptr _currentTerrain;
 
   QTimeLine* timeLine;
+  QGraphicsItemAnimation* animation;
 };
 
 #endif

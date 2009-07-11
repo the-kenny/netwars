@@ -24,7 +24,8 @@ namespace {
 
 UnitGraphicsItem::UnitGraphicsItem(QGraphicsItem* parent)
   : QGraphicsItem(parent),
-	timeLine(NULL) {
+	timeLine(NULL),
+	animation(NULL) {
 
   if(!initialized)
 	initialize();
@@ -40,11 +41,17 @@ void UnitGraphicsItem::moveTo(const QPointF& p) {
 		QCoreApplication::processEvents(QEventLoop::AllEvents, 100); 
 	}
 	
-	delete timeLine;
-	timeLine = NULL;
+	//delete timeLine;
+	//timeLine = NULL;
+  }
+
+  if(animation) {
+	animation->reset();
+	delete animation;
+	animation = NULL;
   }
    
-  QGraphicsItemAnimation* animation = new QGraphicsItemAnimation;
+  animation = new QGraphicsItemAnimation;
   animation->setPosAt(1.0, p);
   
   timeLine = new QTimeLine;
@@ -57,6 +64,14 @@ void UnitGraphicsItem::moveTo(const QPointF& p) {
   animation->setTimeLine(timeLine);
 
   timeLine->start();
+}
+
+void UnitGraphicsItem::stop() {
+  if(animation) {
+	animation->reset();
+	delete animation;
+	animation = NULL;
+  }
 }
 
 void UnitGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
