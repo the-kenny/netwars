@@ -3,6 +3,7 @@
 #include <fstream>
 #include <stdexcept>
 
+#include <boost/cstdint.hpp>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 
@@ -96,30 +97,30 @@ namespace aw
 
 	std::size_t map_loader::load_aws(std::size_t position)
 	{
-		m_size_x = *reinterpret_cast<uint8_t*>(&m_data.at(position));
-		position += sizeof(uint8_t);
-		m_size_y = *reinterpret_cast<uint8_t*>(&m_data.at(position));
-		position += sizeof(uint8_t);
+		m_size_x = *reinterpret_cast<boost::uint8_t*>(&m_data.at(position));
+		position += sizeof(boost::uint8_t);
+		m_size_y = *reinterpret_cast<boost::uint8_t*>(&m_data.at(position));
+		position += sizeof(boost::uint8_t);
 
 		if(m_size_x != 30 || m_size_y != 20)
 			throw std::runtime_error("Größe der geladenen Map ist nicht unterstützt.");
 
-		m_tileset =  *reinterpret_cast<uint8_t*>(&m_data.at(position));
-		position += sizeof(uint8_t);
+		m_tileset =  *reinterpret_cast<boost::uint8_t*>(&m_data.at(position));
+		position += sizeof(boost::uint8_t);
 
-		uint16_t data = 0;
+		boost::uint16_t data = 0;
 		for(int i = 0; i < 600; i++)
 		{
-			data =  *reinterpret_cast<uint16_t*>(&m_data.at(position));
-			position += sizeof(uint16_t);
+			data =  *reinterpret_cast<boost::uint16_t*>(&m_data.at(position));
+			position += sizeof(boost::uint16_t);
 
 			this->process_data(data, i/20, i%20);
 		}
 
 		for(int i = 0; i < 600; i++)
 		{
-			data =  *reinterpret_cast<uint16_t*>(&m_data.at(position));
-			position += sizeof(uint16_t);
+			data =  *reinterpret_cast<boost::uint16_t*>(&m_data.at(position));
+			position += sizeof(boost::uint16_t);
 
 			this->process_data(data, i/20, i%20);
 		}
@@ -132,22 +133,22 @@ namespace aw
 		m_size_x = 30;
 		m_size_y = 20;
 
-		m_tileset =  *reinterpret_cast<uint8_t*>(&m_data.at(position));
-		position += sizeof(uint8_t);
+		m_tileset =  *reinterpret_cast<boost::uint8_t*>(&m_data.at(position));
+		position += sizeof(boost::uint8_t);
 
-		uint16_t data = 0;
+		boost::uint16_t data = 0;
 		for(int i = 0; i < 600; i++)
 		{
-			data =  *reinterpret_cast<uint16_t*>(&m_data.at(position));
-			position += sizeof(uint16_t);
+			data =  *reinterpret_cast<boost::uint16_t*>(&m_data.at(position));
+			position += sizeof(boost::uint16_t);
 
 			this->process_data(data, i/20, i%20);
 		}
 
 		for(int i = 0; i < 600; i++)
 		{
-			data =  *reinterpret_cast<uint16_t*>(&m_data.at(position));
-			position += sizeof(uint16_t);
+			data =  *reinterpret_cast<boost::uint16_t*>(&m_data.at(position));
+			position += sizeof(boost::uint16_t);
 
 			this->process_data(data, i/20, i%20);
 		}
@@ -160,19 +161,19 @@ namespace aw
 		m_size_x = 30;
 		m_size_y = 20;
 
-		uint16_t data = 0;
+		boost::uint16_t data = 0;
 		for(int i = 0; i < 600; i++)
 		{
-			data =  *reinterpret_cast<uint16_t*>(&m_data.at(position));
-			position += sizeof(uint16_t);
+			data =  *reinterpret_cast<boost::uint16_t*>(&m_data.at(position));
+			position += sizeof(boost::uint16_t);
 
 			this->process_data(data, i/20, i%20);
 		}
 
 		for(int i = 0; i < 600; i++)
 		{
-			data =  *reinterpret_cast<uint16_t*>(&m_data.at(position));
-			position += sizeof(uint16_t);
+			data =  *reinterpret_cast<boost::uint16_t*>(&m_data.at(position));
+			position += sizeof(boost::uint16_t);
 
 			this->process_data(data, i/20, i%20);
 		}
@@ -183,30 +184,30 @@ namespace aw
 	void map_loader::read_metadata(std::size_t position)
 	{
 	  if(m_data.size() < position) {
-		uint32_t name_length = *reinterpret_cast<uint32_t*>(&m_data.at(position));
-		position += sizeof(uint32_t);
+		boost::uint32_t name_length = *reinterpret_cast<boost::uint32_t*>(&m_data.at(position));
+		position += sizeof(boost::uint32_t);
 		if(name_length > 0)
 		{
 			m_name.assign(&m_data.at(position), name_length);
 			position += name_length;
 		}
 
-		uint32_t author_length = *reinterpret_cast<uint32_t*>(&m_data.at(position));
-		position += sizeof(uint32_t);
+		boost::uint32_t author_length = *reinterpret_cast<boost::uint32_t*>(&m_data.at(position));
+		position += sizeof(boost::uint32_t);
 		if(author_length > 0)
 		{
 			m_author.assign(&m_data.at(position), author_length);
 			position += author_length;
 		}
 
-		uint32_t desc_length = *reinterpret_cast<uint32_t*>(&m_data.at(position));
-		position += sizeof(uint32_t);
+		boost::uint32_t desc_length = *reinterpret_cast<boost::uint32_t*>(&m_data.at(position));
+		position += sizeof(boost::uint32_t);
 		if(desc_length > 0)
 			m_description.assign(&m_data.at(position), desc_length);
 	  }
 	}
 
-	void map_loader::process_data(uint16_t data, unsigned int x, unsigned int y)
+	void map_loader::process_data(boost::uint16_t data, unsigned int x, unsigned int y)
 	{
 		if(data <= 499) //Terrains and Bases
 		{
@@ -232,7 +233,7 @@ namespace aw
 		}
 	}
 
-	terrain::types map_loader::convert_to_terrain_type(uint16_t value)
+	terrain::types map_loader::convert_to_terrain_type(boost::uint16_t value)
 	{
 		switch(value)
 		{
@@ -306,7 +307,7 @@ namespace aw
 		throw std::runtime_error("Undefinierter Wert aus der Karte eingelesen, Abbruch");
 	}
 
-	 terrain::extras map_loader::convert_to_terrain_extra(uint16_t value)
+	 terrain::extras map_loader::convert_to_terrain_extra(boost::uint16_t value)
 	{
 		switch((value-300)/10)
 		{
@@ -337,7 +338,7 @@ namespace aw
 		}
 	}
 
-	 unit::types map_loader::convert_to_unit_type(uint16_t value)
+	 unit::types map_loader::convert_to_unit_type(boost::uint16_t value)
 	{
 		static std::map<int, std::string> pairs;
 
@@ -358,7 +359,7 @@ namespace aw
 			return it->second;
 	}
 
-	 unit::colors map_loader::convert_to_unit_color(uint16_t value)
+	 unit::colors map_loader::convert_to_unit_color(boost::uint16_t value)
 	{
 
 		switch((value-500)/40)
