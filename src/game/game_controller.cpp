@@ -153,7 +153,9 @@ void game_controller::on_unit_click(const coord &pos, int key)
 				} else {
 				  if(m_game->move_active()) {
 					//std::cout << "calling complete_unit_move without moving" << std::endl;
-					m_game->complete_unit_move(*m_path, true);
+					//m_game->complete_unit_move(*m_path, true);
+
+					m_game->complete_dead_unit_move();
 				  }
 				}
 
@@ -252,7 +254,7 @@ void game_controller::on_unit_click(const coord &pos, int key)
 							else
 							  m_game->get_unit(m_selection)->set_moved();
 						  } else {
-							m_game->complete_unit_move(*m_path, true);
+							m_game->complete_unit_move(*m_path);
 						  }
 
 						m_gamestate = IDLE;

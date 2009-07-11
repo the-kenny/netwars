@@ -31,7 +31,7 @@ void game::begin_unit_move(const coord &from, const coord &to)
 	m_active_move.to = to;
 }
 
-void game::complete_unit_move(const game_mechanics::path &path, bool without_moving)
+void game::complete_unit_move(const game_mechanics::path &path)
 {
 	assert(m_active_move.active == true);
 	assert(m_active_move.done == false);
@@ -42,12 +42,10 @@ void game::complete_unit_move(const game_mechanics::path &path, bool without_mov
 	assert(path.start() == from);
 	assert(path.end() == to);
 
-	if(without_moving == false) {
-	  unit::ptr unit = m_map->get_unit(to);
-	  assert(unit != NULL);
-	  assert(unit->moved() == false);
-	  unit->move(path.get_fuel_costs());
-	}
+	unit::ptr unit = m_map->get_unit(to);
+	assert(unit != NULL);
+	assert(unit->moved() == false);
+	unit->move(path.get_fuel_costs());
 
 	const terrain::ptr terr = m_map->get_terrain(from);
 	if(terr->is_building())
@@ -83,6 +81,20 @@ void game::cancel_unit_move()
 	m_active_move.reset();
 }
 
+void game::complete_dead_unit_move()
+{
+	assert(m_active_move.active == true);
+
+	//Place dummy-units back
+	std::map<coord, dummy_unit::ptr>::iterator it = m_removed_dummy_units.find(m_active_move.to);
+	if(it != m_removed_dummy_units.end())
+	{
+		this->get_map()->add_unit(m_active_move.to, it->second);
+		m_removed_dummy_units.erase(it);
+	}
+
+	m_active_move.reset();
+}
 
 void game::attack_unit(const coord &attacker_c, const coord &victim_c)
 {
