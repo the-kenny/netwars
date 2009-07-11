@@ -1,35 +1,43 @@
 #include <boost/asio.hpp>
 
+#include "game/networking/connection.h"
+
 using namespace boost;
 using boost::asio::ip::tcp;
 
-class tcp_server
-{
+class server {
 public:
-  tcp_server(boost::asio::io_service& io_service)
-    : acceptor_(io_service, tcp::endpoint(tcp::v4(), 4242)) {
-    start_accept();
+  server(asio::io_service& io)
+	: io_service_(io), acceptor_(io, tcp::endpoint(tcp::v4(), 4242)) {
+
   }
 
-private:
-  void start_accept() {
-    tcp_connection::pointer new_connection =
-      tcp_connection::create(acceptor_.io_service());
+   void start_accept() {
+    tcp_connection::ptr new_connection =
+      tcp_connection::create(io_service_);
 
     acceptor_.async_accept(new_connection->socket(),
-						   boost::bind(&tcp_server::handle_accept, 
+						   boost::bind(&server::handle_accept, 
 									   this, 
 									   new_connection,
 									   boost::asio::placeholders::error));
   }
 
-  void handle_accept(tcp_connection::pointer new_connection,
-					 const boost::system::error_code& error) {
+private:
+ void handle_accept(tcp_connection::ptr new_connection,
+					const boost::system::error_code& error) {
     if (!error) {
-	  new_connection->start();
-	  start_accept();
-	}
+	  conections_.push_back(new_connection);
+      new_connection->start();
+      start_accept();
+    }
   }
 
-  tcp::acceptor acceptor_;
+private:
+  asio::io_service& io_service_;
+  asio::ip::tcp::acceptor acceptor_;
+
+
+  std::list<tcp_connection::ptr> conections_;
+
 };

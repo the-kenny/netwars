@@ -36,11 +36,11 @@ def configure(conf):
 		warning("WARNING: Building just the static library.")
 
 	conf.sub_config('lib')
-	conf.sub_config('server')
+	#conf.sub_config('server')
 
 def build(bld):
 	bld.add_subdirs('lib')
-	bld.add_subdirs('server');
+	#bld.add_subdirs('server');
 
 	netwars = bld.new_task_gen('cxx', 'staticlib')
 	netwars.target = 'netwars'
@@ -48,6 +48,6 @@ def build(bld):
 	netwars.uselib_local = 'tinyxml'
 	netwars.includes = '. lib'
 	netwars.defines = 'TIXML_USE_TICPP=1 TIXML_USE_STL=1'
-	netwars.find_sources_in_dirs('game game/game_mechanics game/map_loader game/units game/gui')
+	netwars.find_sources_in_dirs('game game/game_mechanics game/map_loader game/units game/gui game/networking')
 	netwars.install_path = '../src'
 
