@@ -28,14 +28,14 @@ public:
   std::string receive_line();
 
 protected:
+  connection(boost::asio::io_service& io_service);
+
   // on_line_received will be called when a line was received.
   // The default implementation pops the received line from the line stack
   // Any subclasses should do the same.
   virtual void on_line_received(const std::string& line);
 
 private:
-  connection(boost::asio::io_service& io_service);
-
   void do_write(std::string message);
 
   void handle_connect(const boost::system::error_code& error,
