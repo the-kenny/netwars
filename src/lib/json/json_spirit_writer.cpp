@@ -1,13 +1,12 @@
-/* Copyright (c) 2007-2008 John W Wilkinson
+/* Copyright (c) 2007-2009 John W Wilkinson
 
    This source code can be used for any purpose as long as
    this comment is retained. */
 
-// json spirit version 2.06
+// json spirit version 4.00
 
 #include "json_spirit_writer.h"
 #include "json_spirit_value.h"
-#include "utf8/checked.h"
 
 #include <cassert>
 #include <sstream>
@@ -18,292 +17,313 @@ using namespace std;
 
 namespace
 {
-    template< class String_t >
-    struct AsciiCP
+    template< typename Char_type >
+    Char_type to_hex( Char_type c )
     {
-        typedef typename String_t::const_iterator iterator;
+        assert( c <= 0xF );
 
-        static unsigned read(iterator &in, iterator /*end*/)
-        {
-            unsigned cp = *in > 0 ? unsigned(*in) : unsigned(*in) + 256U;
-            ++in;
-            return cp;
-        }
-    };
+        if( c < 10 ) return '0' + c;
 
-    template< class String_t >
-    struct Utf8CP
+        return 'A' + c - 10;
+    }
+
+    template< class String_type >
+    String_type non_printable_to_string( unsigned int c )
     {
-        typedef typename String_t::const_iterator iterator;
+        String_type result( 6, '\\' );
 
-        static unsigned read(iterator &in, iterator end)
+        result[1] = 'u';
+
+        result[ 5 ] = to_hex( c & 0x000F ); c >>= 4;
+        result[ 4 ] = to_hex( c & 0x000F ); c >>= 4;
+        result[ 3 ] = to_hex( c & 0x000F ); c >>= 4;
+        result[ 2 ] = to_hex( c & 0x000F );
+
+        return result;
+    }
+
+    template< typename Char_type, class String_type >
+    bool add_esc_char( Char_type c, String_type& s )
+    {
+        switch( c )
         {
-            return utf8::next(in, end);
+            case '"':  s += to_str< String_type >( "\\\"" ); return true;
+            case '\\': s += to_str< String_type >( "\\\\" ); return true;
+            case '\b': s += to_str< String_type >( "\\b"  ); return true;
+            case '\f': s += to_str< String_type >( "\\f"  ); return true;
+            case '\n': s += to_str< String_type >( "\\n"  ); return true;
+            case '\r': s += to_str< String_type >( "\\r"  ); return true;
+            case '\t': s += to_str< String_type >( "\\t"  ); return true;
         }
-    };
 
-    // this class solely allows its inner classes and methods to
-    // be conveniently templatised by Value type and dependent types
+        return false;
+    }
+
+    template< class String_type >
+    String_type add_esc_chars( const String_type& s )
+    {
+        typedef typename String_type::const_iterator Iter_type;
+        typedef typename String_type::value_type     Char_type;
+
+        String_type result;
+
+        const Iter_type end( s.end() );
+
+        for( Iter_type i = s.begin(); i != end; ++i )
+        {
+            const Char_type c( *i );
+
+            if( add_esc_char( c, result ) ) continue;
+
+            const wint_t unsigned_c( ( c >= 0 ) ? c : 256 + c );
+
+            if( iswprint( unsigned_c ) )
+            {
+                result += c;
+            }
+            else
+            {
+                result += non_printable_to_string< String_type >( unsigned_c );
+            }
+        }
+
+        return result;
+    }
+
+    // this class generates the JSON text,
+    // it keeps track of the indentation level etc.
     //
-    template< class Value_t, template<class> class CP >
-    struct Writer
+    template< class Value_type, class Ostream_type >
+    class Generator
     {
-        typedef typename Value_t::String_type     String_t;
-        typedef typename Value_t::Object          Object_t;
-        typedef typename Value_t::Array           Array_t;
-        typedef typename String_t::value_type     Char_t;
-        typedef typename String_t::const_iterator Iter_t;
-        typedef Pair_impl< String_t >             Pair_t;
-        typedef std::basic_ostream< Char_t >      Ostream_t;
-        typedef CP<String_t>                      CP_t;
+        typedef typename Value_type::Config_type Config_type;
+        typedef typename Config_type::String_type String_type;
+        typedef typename Config_type::Object_type Object_type;
+        typedef typename Config_type::Array_type Array_type;
+        typedef typename String_type::value_type Char_type;
+        typedef typename Object_type::value_type Obj_member_type;
 
-        // this class generates the JSON text,
-        // it keeps track of the indentation level etc.
-        //
-        class Generator
+    public:
+
+        Generator( const Value_type& value, Ostream_type& os, bool pretty )
+        :   os_( os )
+        ,   indentation_level_( 0 )
+        ,   pretty_( pretty )
         {
-        public:
+            output( value );
+        }
 
-            Generator( const Value_t& value, Ostream_t& os, bool pretty )
-            :   os_( os )
-            ,   indentation_level_( 0 )
-            ,   pretty_( pretty )
+    private:
+
+        void output( const Value_type& value )
+        {
+            switch( value.type() )
             {
-                output( value );
+                case obj_type:   output( value.get_obj() );   break;
+                case array_type: output( value.get_array() ); break;
+                case str_type:   output( value.get_str() );   break;
+                case bool_type:  output( value.get_bool() );  break;
+                case int_type:   output_int( value );         break;
+                case real_type:  os_ << showpoint << setprecision( 16 ) 
+                                     << value.get_real();     break;
+                case null_type:  os_ << "null";               break;
+                default: assert( false );
             }
+        }
 
-        private:
+        void output( const Object_type& obj )
+        {
+            output_array_or_obj( obj, '{', '}' );
+        }
 
-            void output( const Value_t& value )
+        void output( const Array_type& arr )
+        {
+            output_array_or_obj( arr, '[', ']' );
+        }
+
+        void output( const Obj_member_type& member )
+        {
+            output( Config_type::get_name( member ) ); space(); 
+            os_ << ':'; space(); 
+            output( Config_type::get_value( member ) );
+        }
+
+        void output_int( const Value_type& value )
+        {
+            if( value.is_uint64() )
             {
-                switch( value.type() )
-                {
-                    case obj_type:   output( value.get_obj() );   break;
-                    case array_type: output( value.get_array() ); break;
-                    case str_type:   output( value.get_str() );   break;
-                    case bool_type:  output( value.get_bool() );  break;
-                    case int_type:   os_ << value.get_int64();    break;
-                    case real_type:  os_ << showpoint << setprecision( 16 ) 
-                                         << value.get_real();     break;
-                    case null_type:  os_ << "null";               break;
-                    default: assert( false );
-                }
+                os_ << value.get_uint64();
             }
-
-            void output( const Object_t& obj )
+            else
             {
-                output_array_or_obj( obj, '{', '}' );
+               os_ << value.get_int64();
             }
+        }
 
-            void output( const Array_t& arr )
-            {
-                output_array_or_obj( arr, '[', ']' );
-            }
+        void output( const String_type& s )
+        {
+            os_ << '"' << add_esc_chars( s ) << '"';
+        }
 
-            void output( const Pair_t& pair )
-            {
-                output( pair.name_ ); space(); os_ << ':'; space(); output( pair.value_ );
-            }
+        void output( bool b )
+        {
+            os_ << to_str< String_type >( b ? "true" : "false" );
+        }
 
-            void output( const String_t& s )
-            {
-                os_ << '"' << add_esc_chars( s ) << '"';
-            }
+        template< class T >
+        void output_array_or_obj( const T& t, Char_type start_char, Char_type end_char )
+        {
+            os_ << start_char; new_line();
 
-            void output( bool b )
-            {
-                os_ << to_str( b ? "true" : "false" );
-            }
-
-            template< class T >
-            void output_array_or_obj( const T& t, Char_t start_char, Char_t end_char )
-            {
-                os_ << start_char; new_line();
-
-                ++indentation_level_;
-                
-                for( typename T::const_iterator i = t.begin(); i != t.end(); ++i )
-                {
-                    indent(); output( *i );
-
-                    if( i != t.end() - 1 )
-                    {
-                        os_ << ',';
-                    }
-
-                    new_line();
-                }
-
-                --indentation_level_;
-
-                indent(); os_ << end_char;
-            }
+            ++indentation_level_;
             
-            void indent()
+            for( typename T::const_iterator i = t.begin(); i != t.end(); ++i )
             {
-                if( !pretty_ ) return;
+                indent(); output( *i );
 
-                for( int i = 0; i < indentation_level_; ++i )
-                { 
-                    os_ << "    ";
-                }
-            }
+                typename T::const_iterator next = i;
 
-            void space()
-            {
-                if( pretty_ ) os_ << ' ';
-            }
-
-            void new_line()
-            {
-                if( pretty_ ) os_ << '\n';
-            }
-
-            String_t to_str( const char* c_str )
-            {
-                return ::to_str< String_t >( c_str );
-            }
-
-            Char_t to_hex( Char_t c )
-            {
-                assert( c <= 0xF );
-
-                if( c < 10 ) return '0' + c;
-
-                return 'A' + c - 10;
-            }
-
-            String_t non_printable_to_string( unsigned int c )
-            {
-                String_t result( to_str( "\\u" ) );
-
-                result.resize( 6, '0' );
-
-                for( int i = 0; i < 4; ++i  )
+                if( ++next != t.end())
                 {
-                    result[ 5 - i ] = to_hex( c % 16 );
-
-                    c >>= 4;
+                    os_ << ',';
                 }
 
-                return result;
+                new_line();
             }
 
-            bool add_esc_char( Char_t c, String_t& s )
-            {
-                switch( c )
-                {
-                    case '"':  s += to_str( "\\\"" ); return true;
-                    case '\\': s += to_str( "\\\\" ); return true;
-                    case '\b': s += to_str( "\\b"  ); return true;
-                    case '\f': s += to_str( "\\f"  ); return true;
-                    case '\n': s += to_str( "\\n"  ); return true;
-                    case '\r': s += to_str( "\\r"  ); return true;
-                    case '\t': s += to_str( "\\t"  ); return true;
-                }
+            --indentation_level_;
 
-                return false;
-            }
-
-            String_t add_esc_chars( const String_t& s )
-            {
-                String_t result;
-
-                const Iter_t end( s.end() );
-
-                for( Iter_t i = s.begin(); i != end; )
-                {
-                    const Char_t c( *i );
-
-                    const unsigned cp(CP_t::read(i, end));
-
-                    if( add_esc_char((Char_t) cp, result) ) continue;
-
-                    if( iswprint( cp ) )
-                    {
-                        result += c;
-                    }
-                    else
-                    {
-                        result += non_printable_to_string( cp );
-                    }
-                }
-
-                return result;
-            }
-
-            Ostream_t& os_;
-            int indentation_level_;
-            bool pretty_;
-        };
-
-        static void write( const Value_t& value, Ostream_t& os, bool pretty )
+            indent(); os_ << end_char;
+        }
+        
+        void indent()
         {
-            Generator( value, os, pretty );
+            if( !pretty_ ) return;
+
+            for( int i = 0; i < indentation_level_; ++i )
+            { 
+                os_ << "    ";
+            }
         }
 
-        static String_t write( const Value_t& value, bool pretty )
+        void space()
         {
-            basic_ostringstream< Char_t > os;
-
-            write( value, os, pretty );
-
-            return os.str();
+            if( pretty_ ) os_ << ' ';
         }
+
+        void new_line()
+        {
+            if( pretty_ ) os_ << '\n';
+        }
+
+        Ostream_type& os_;
+        int indentation_level_;
+        bool pretty_;
     };
+
+    template< class Value_type, class Ostream_type >
+    void write_( const Value_type& value, Ostream_type& os, bool pretty )
+    {
+        Generator< Value_type, Ostream_type >( value, os, pretty );
+    }
+
+    template< class Value_type >
+    typename Value_type::String_type write_( const Value_type& value, bool pretty )
+    {
+        typedef typename Value_type::String_type::value_type Char_type;
+
+        basic_ostringstream< Char_type > os;
+
+        write_( value, os, pretty );
+
+        return os.str();
+    }
 }
 
-void json_spirit::write( const Value& value, std::ostream& os, bool utf8 )
+void json_spirit::write( const Value& value, std::ostream& os )
 {
-    if (utf8)
-       Writer< Value, Utf8CP >::write( value, os, false );
-    else
-       Writer< Value, AsciiCP >::write( value, os, false );
+    write_( value, os, false );
 }
 
-void json_spirit::write_formatted( const Value& value, std::ostream& os, bool utf8 )
+void json_spirit::write_formatted( const Value& value, std::ostream& os )
 {
-    if (utf8)
-       Writer< Value, Utf8CP >::write( value, os, true );
-    else
-       Writer< Value, AsciiCP >::write( value, os, true );
+    write_( value, os, true );
 }
 
-std::string json_spirit::write( const Value& value, bool utf8 )
+std::string json_spirit::write( const Value& value )
 {
-    if (utf8)
-       return Writer< Value, Utf8CP >::write( value, false );
-    else
-       return Writer< Value, AsciiCP >::write( value, false );
+    return write_( value, false );
 }
 
-std::string json_spirit::write_formatted( const Value& value, bool utf8 )
+std::string json_spirit::write_formatted( const Value& value )
 {
-    if (utf8)
-       return Writer< Value, Utf8CP >::write( value, true );
-    else
-       return Writer< Value, AsciiCP >::write( value, true );
+    return write_( value, true );
 }
 
 #ifndef BOOST_NO_STD_WSTRING
 
 void json_spirit::write( const wValue& value, std::wostream& os )
 {
-    Writer< wValue, AsciiCP >::write( value, os, false );
+    write_( value, os, false );
 }
 
 void json_spirit::write_formatted( const wValue& value, std::wostream& os )
 {
-    Writer< wValue, AsciiCP >::write( value, os, true );
+    write_( value, os, true );
 }
+
 std::wstring json_spirit::write( const wValue&  value )
 {
-    return Writer< wValue, AsciiCP >::write( value, false );
+    return write_( value, false );
 }
 
 std::wstring json_spirit::write_formatted( const wValue&  value )
 {
-    return Writer< wValue, AsciiCP >::write( value, true );
+    return write_( value, true );
+}
+
+#endif
+
+void json_spirit::write( const mValue& value, std::ostream& os )
+{
+    write_( value, os, false );
+}
+
+void json_spirit::write_formatted( const mValue& value, std::ostream& os )
+{
+    write_( value, os, true );
+}
+
+std::string json_spirit::write( const mValue& value )
+{
+    return write_( value, false );
+}
+
+std::string json_spirit::write_formatted( const mValue& value )
+{
+    return write_( value, true );
+}
+
+#ifndef BOOST_NO_STD_WSTRING
+
+void json_spirit::write( const wmValue& value, std::wostream& os )
+{
+    write_( value, os, false );
+}
+
+void json_spirit::write_formatted( const wmValue& value, std::wostream& os )
+{
+    write_( value, os, true );
+}
+
+std::wstring json_spirit::write( const wmValue&  value )
+{
+    return write_( value, false );
+}
+
+std::wstring json_spirit::write_formatted( const wmValue&  value )
+{
+    return write_( value, true );
 }
 
 #endif
