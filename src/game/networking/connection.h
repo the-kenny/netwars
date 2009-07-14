@@ -12,8 +12,7 @@
 
 using boost::asio::ip::tcp;
 
-class connection
-  : public boost::enable_shared_from_this<connection> {
+class connection {
 public:
   typedef boost::shared_ptr<connection> ptr;
 

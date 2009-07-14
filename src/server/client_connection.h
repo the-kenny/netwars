@@ -5,10 +5,11 @@
 
 #include <boost/signals.hpp>
 #include <boost/asio.hpp>
+#include <boost/shared_ptr.hpp>
 
 using namespace boost;
 
-class client_connection: public connection {
+class client_connection: public connection, public boost::enable_shared_from_this<client_connection> {
 public:
   typedef boost::shared_ptr<client_connection> ptr;
 
@@ -16,7 +17,8 @@ public:
 	return ptr(new client_connection(io));
   }
 
-  boost::signal<void(const std::string&)> &deliver_callback() {
+  boost::signal<void(const std::string&,
+					 const client_connection::ptr&)> &deliver_callback() {
 	return deliver_callback_;
   }
 
@@ -25,7 +27,7 @@ protected:
 	//We simply deliver all messages unchanged to the other clients
    
 	if(!deliver_callback_.empty()) {
-	  deliver_callback_(line);
+	  deliver_callback_(line, shared_from_this());
 	  receive_line();
 	} else {
 	  throw std::logic_error("No deliver-callback defined.");
@@ -36,8 +38,8 @@ private:
   client_connection(asio::io_service& io)
 	: connection(io) {
   }
-
-  boost::signal<void(const std::string&)> deliver_callback_;
+  boost::signal<void(const std::string&,
+					 const client_connection::ptr&)> deliver_callback_;
 };
 
 #endif
