@@ -11,40 +11,16 @@ using boost::asio::ip::tcp;
 
 class server {
 public:
-  server(asio::io_service& io)
-	: io_service_(io), acceptor_(io, tcp::endpoint(tcp::v4(), 4242)) {
+  server(asio::io_service& io);
 
-  }
+  void start_accept();
 
-   void start_accept() {
-	 client_connection::ptr new_connection =
-	   client_connection::create(io_service_);
-
-    acceptor_.async_accept(new_connection->socket(),
-						   boost::bind(&server::handle_accept, 
-									   this, 
-									   new_connection,
-									   boost::asio::placeholders::error));
-  }
-
-  void deliver(const std::string& message) {
-	std::clog << "Delivering message to all clients" << std::endl;
-	BOOST_FOREACH(const client_connection::ptr& c, conections_) {
-	  c->send_message(message);
-	}
-  }
+  void deliver_to_all(const std::string& message);
+  void deliver_to(client_connection::ptr& to, const std::string& message);
 
 private:
  void handle_accept(client_connection::ptr new_connection,
-					const boost::system::error_code& error) {
-    if (!error) {
-	  std::clog << "Got a new client" << std::endl;
-	  conections_.push_back(new_connection);
-	  new_connection->deliver_callback().connect(boost::bind(&server::deliver,this,_1));
-      new_connection->start();
-      start_accept();
-    }
-  }
+					const boost::system::error_code& error);
 
 private:
   asio::io_service& io_service_;
