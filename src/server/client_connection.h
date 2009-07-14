@@ -4,6 +4,9 @@
 #include "game/networking/connection.h"
 
 #include <boost/signals.hpp>
+#include <boost/asio.hpp>
+
+using namespace boost;
 
 class client_connection: public connection {
 public:
