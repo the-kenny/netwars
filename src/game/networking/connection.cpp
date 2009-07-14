@@ -46,6 +46,10 @@ std::string connection::receive_line() {
   return line;
 }
 
+void connection::on_line_received(const std::string&) {
+  receive_queue_.pop_back();
+}
+
 connection::connection(boost::asio::io_service& io_service)
   : socket_(io_service), io_service_(io_service) {
 
@@ -102,6 +106,7 @@ void connection::handle_read(const boost::system::error_code&) {
 	
   std::getline(is, line);
   receive_queue_.push_back(line);
+  on_line_received(line);
 	  
 	
   boost::asio::async_read_until(socket_, buffer_, "\n", 

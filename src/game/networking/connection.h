@@ -28,6 +28,9 @@ public:
   std::string receive_line();
 
 protected:
+  // on_line_received will be called when a line was received.
+  // The default implementation pops the received line from the line stack
+  // Any subclasses should do the same.
   virtual void on_line_received(const std::string& line);
 
 private:
@@ -38,7 +41,7 @@ private:
   void handle_connect(const boost::system::error_code& error,
 					  tcp::resolver::iterator endpoint_iterator);
   void handle_write(const boost::system::error_code& error);
-  void handle_read(const boost::system::error_code&);
+  void handle_read(const boost::system::error_code& error);
 
 
   tcp::socket socket_;
