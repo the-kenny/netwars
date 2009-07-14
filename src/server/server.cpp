@@ -43,7 +43,8 @@ void server::deliver_to(client_connection::ptr& to, const std::string& message) 
   to->send_message(message);
 }
 
-void server::handle_message(const std::string& message) {
+void server::handle_message(const std::string& message, 
+							const client_connection::ptr& from) {
   json::mValue js;
 
   if(json::read(message, js)) {
@@ -53,7 +54,11 @@ void server::handle_message(const std::string& message) {
 	  //Handle it for the server
 	} else if(dest == "client") {
 	  //Just pass it to all other clients
-	  deliver_to_all(message);
+
+	  BOOST_FOREACH(const client_connection::ptr& c, conections_) {
+		if(c != from)
+		  c->send_message(message);
+	  }
 	}
   } else {
 	std::clog << "Got invalid json: " << message << std::endl;
@@ -65,7 +70,7 @@ void server::handle_accept(client_connection::ptr new_connection,
   if (!error) {
 	std::clog << "Got a new client" << std::endl;
 	conections_.push_back(new_connection);
-	new_connection->deliver_callback().connect(boost::bind(&server::handle_message,this,_1));
+	new_connection->deliver_callback().connect(boost::bind(&server::handle_message,this,_1,_2));
 	new_connection->start();
 	start_accept();
   }

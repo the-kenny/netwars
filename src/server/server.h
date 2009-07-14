@@ -18,7 +18,9 @@ public:
   void deliver_to_all(const std::string& message);
   void deliver_to(client_connection::ptr& to, const std::string& message);
 
-  void handle_message(const std::string& message);
+  void handle_message(const std::string& message, 
+					  const client_connection::ptr& from);
+
 
 private:
  void handle_accept(client_connection::ptr new_connection,
