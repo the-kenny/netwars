@@ -28,6 +28,7 @@ public:
   }
 
   void deliver(const std::string& message) {
+	std::clog << "Delivering message to all clients" << std::endl;
 	BOOST_FOREACH(const client_connection::ptr& c, conections_) {
 	  c->send_message(message);
 	}
@@ -37,6 +38,7 @@ private:
  void handle_accept(client_connection::ptr new_connection,
 					const boost::system::error_code& error) {
     if (!error) {
+	  std::clog << "Got a new client" << std::endl;
 	  conections_.push_back(new_connection);
 	  new_connection->deliver_callback().connect(boost::bind(&server::deliver,this,_1));
       new_connection->start();
