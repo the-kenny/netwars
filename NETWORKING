@@ -1,0 +1,46 @@
+JSON-Example:
+{
+     "firstName": "John",
+     "lastName": "Smith",
+     "address": {
+         "streetAddress": "21 2nd Street",
+         "city": "New York",
+         "state": "NY",
+         "postalCode": 10021
+     },
+     "phoneNumbers": [
+         "212 555-1234",
+         "646 555-4567"
+     ]
+}
+
+Verbindungsaufbau:
+server:
+{
+  "name": "<name>",
+	  "players": [
+				  {
+					"name": "<name>",
+					  "color": "<color>"
+				  }
+				  ]
+}
+
+client:
+{
+  	"destination": "server",
+	  "name": "<name>",
+	"visitor": "true/false"
+}
+
+server:
+{
+  "color": "<color>"
+}
+
+server to all:
+{
+  "type": "new-client",
+	"name": "<name>",
+	"color": "<color>"
+}
