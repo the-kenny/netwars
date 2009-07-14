@@ -12,10 +12,10 @@
 
 using boost::asio::ip::tcp;
 
-class tcp_connection
-  : public boost::enable_shared_from_this<tcp_connection> {
+class connection
+  : public boost::enable_shared_from_this<connection> {
 public:
-  typedef boost::shared_ptr<tcp_connection> ptr;
+  typedef boost::shared_ptr<connection> ptr;
 
   static ptr create(boost::asio::io_service& io_service);
 
@@ -27,8 +27,11 @@ public:
   bool has_line() const;
   std::string receive_line();
 
+protected:
+  virtual void on_line_received(const std::string& line);
+
 private:
-  tcp_connection(boost::asio::io_service& io_service);
+  connection(boost::asio::io_service& io_service);
 
   void do_write(std::string message);
 
