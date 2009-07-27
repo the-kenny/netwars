@@ -16,6 +16,8 @@ class connection {
 public:
   typedef boost::shared_ptr<connection> ptr;
 
+  virtual ~connection() {}
+
   static ptr create(boost::asio::io_service& io_service);
 
   void send_message(const std::string& message);
