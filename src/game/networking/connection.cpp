@@ -100,17 +100,21 @@ void connection::handle_write(const boost::system::error_code& error) {
   }
 }
 
-void connection::handle_read(const boost::system::error_code&) {
-  std::istream is(&buffer_);
-  std::string line;
+void connection::handle_read(const boost::system::error_code& e) {
+  if(!e) {
+	std::istream is(&buffer_);
+	std::string line;
 	
-  std::getline(is, line);
-  receive_queue_.push_back(line);
-  on_line_received(line);
-	  
+	std::getline(is, line);
+	receive_queue_.push_back(line);
+	on_line_received(line);
 	
-  boost::asio::async_read_until(socket_, buffer_, "\n", 
-								boost::bind(&connection::handle_read,
-											this,
-											boost::asio::placeholders::error));
+	
+	boost::asio::async_read_until(socket_, buffer_, "\n", 
+								  boost::bind(&connection::handle_read,
+											  this,
+											  boost::asio::placeholders::error));
+  } else {
+	std::cerr << "handle_read error: " << e << std::endl;
+  }
 }
