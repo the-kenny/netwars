@@ -10,10 +10,15 @@ const json::mValue& find_value(const json::mObject& obj,
 							   const std::string& name) {
   json::mObject::const_iterator i = obj.find(name);
 
-    assert(i != obj.end());
-    assert(i->first == name);
+  //assert(i != obj.end());
+ 
 
-    return i->second;
+  if(i == obj.end())
+	return json::mValue::null;
+
+  assert(i->first == name);
+
+  return i->second;
 }
 
 server::server(asio::io_service& io)
@@ -45,10 +50,16 @@ void server::deliver_to(client_connection::ptr& to, const std::string& message) 
 
 void server::handle_message(const std::string& message, 
 							const client_connection::ptr& from) {
-  json::mValue js;
+  try {
+	json::mValue js;
+	json::read_or_throw(message, js);
 
-  if(json::read(message, js)) {
-	std::string dest = find_value(js.get_obj(), "destination").get_str();
+	json::mValue destination = find_value(js.get_obj(), "destination");
+
+	if(destination == json::mValue::null) 
+	  throw std::runtime_error("Didn't find key");
+
+	std::string dest = destination.get_str();
 
 	if(dest == "server") {
 	  //Handle it for the server
@@ -60,13 +71,17 @@ void server::handle_message(const std::string& message,
 		  c->send_message(message);
 	  }
 	}
-  } else {
+  } catch(const json::Error_position& e) {
 	std::clog << "Got invalid json: " << message << std::endl;
+  } catch(const std::exception& e) {
+	std::clog << "Got invalid json: " << message << std::endl;
+  } catch(...) {
+	std::abort();
   }
 }
 
 void server::handle_accept(client_connection::ptr new_connection,
-				   const boost::system::error_code& error) {
+						   const boost::system::error_code& error) {
   if (!error) {
 	std::clog << "Got a new client" << std::endl;
 	conections_.push_back(new_connection);
