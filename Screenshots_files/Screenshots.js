@@ -1,4 +1,4 @@
-// Created by iWeb 2.0.4 local-build-20090710
+// Created by iWeb 2.0.4 local-build-20090810
 
 function createMediaStream_id2()
 {return IWCreatePhotocast("http://the-kenny.github.com/Netwars/Screenshots_files/rss.xml",true,true);}

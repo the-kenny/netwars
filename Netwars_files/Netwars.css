@@ -239,6 +239,14 @@ ol  {
           text-transform:none ;
           border: none;          
         }
+#widget1 a {
+    color: #463c3c;
+    text-decoration: underline;
+}
+#widget1 a:visited {
+    color: #666666;
+    text-decoration: underline;
+}
 #widget0 a:visited {
     color: #666666;
     text-decoration: underline;
@@ -246,6 +254,10 @@ ol  {
 .bumper {
     font-size: 1px;
     line-height: 1px;
+}
+#widget1 a:hover {
+    color: #000000;
+    text-decoration: underline;
 }
 #widget0 a:hover {
     color: #000000;

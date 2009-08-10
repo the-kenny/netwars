@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <content collectionGUID="A6B5EBD0-4838-45F6-AB5A-9F55EC198477">
-  <lastEdited clientType="local-build-20090710" date="2009-07-10 15:09:43 +0200"/>
+  <lastEdited clientType="local-build-20090810" date="2009-08-10 16:20:31 +0200"/>
   <textBox id="generic-header-attribute" dynamic="no" visible="yes">
     <richText>&lt;b&gt;News&lt;/b&gt;</richText>
   </textBox>
