@@ -53,7 +53,7 @@ is replaced with replacement."
 (with-open-file (file "data.qrc" :direction :output :if-exists :supersede)
   (write-string (replace-all
 				 (cl-who:with-html-output-to-string
-					 (*standard-output* nil :prologue t)
+					 (*standard-output* nil :prologue t :indent t)
 				   (:RCC :version "1.0"
 						 (:qresource
 						  (walk-directory
