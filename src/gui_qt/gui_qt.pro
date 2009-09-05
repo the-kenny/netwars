@@ -19,7 +19,8 @@ HEADERS +=	BuyMenu.h \
 			GameDialog.h \
 			GameScene.h \
             MainWindow.h \
-			PathGraphicsItem.h \
+            MinimapDrawingThread.h \
+            PathGraphicsItem.h \
 			PixmapDrawing.h \
 			Sprites.h \
 			UnitActionMenuButton.h \
@@ -27,7 +28,7 @@ HEADERS +=	BuyMenu.h \
 			UnitGraphicsItem.h \
 			UnitUnloadMenuButton.h \
 			UnitUnloadMenu.h \
-
+           
 FORMS +=	buyMenu.ui \
 			gameDialog.ui \
 			mainWindow.ui \
@@ -37,6 +38,7 @@ SOURCES +=	BuyMenu.cpp \
 			GameScene.cpp \
 			main.cpp \
 			MainWindow.cpp \
+            MinimapDrawingThread.cpp \
 			PixmapDrawing.cpp \
 			Sprites.cpp \
 			UnitGraphicsItem.cpp \

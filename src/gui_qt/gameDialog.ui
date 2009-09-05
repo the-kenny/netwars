@@ -1,110 +1,96 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>GameDialog</class>
- <widget class="QDialog" name="GameDialog" >
-  <property name="geometry" >
+ <widget class="QDialog" name="GameDialog">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>402</width>
-    <height>191</height>
+    <width>522</width>
+    <height>242</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QWidget" name="" >
-   <property name="geometry" >
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
     <rect>
      <x>10</x>
-     <y>100</y>
-     <width>381</width>
-     <height>30</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout" >
-    <item>
-     <widget class="QLineEdit" name="mapFileLineEdit" />
-    </item>
-    <item>
-     <widget class="QPushButton" name="chooseMapButton" >
-      <property name="text" >
-       <string>Choose Map</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="" >
-   <property name="geometry" >
-    <rect>
-     <x>12</x>
-     <y>12</y>
+     <y>10</y>
      <width>241</width>
      <height>70</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="gridLayout" >
-    <item row="0" column="0" >
-     <widget class="QLabel" name="fpbLabel" >
-      <property name="text" >
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="fpbLabel">
+      <property name="text">
        <string>Funds per Building:</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="1" >
-     <widget class="QSpinBox" name="fundsPerBuildingSpinBox" >
-      <property name="minimum" >
+    <item row="0" column="1">
+     <widget class="QSpinBox" name="fundsPerBuildingSpinBox">
+      <property name="minimum">
        <number>1000</number>
       </property>
-      <property name="maximum" >
+      <property name="maximum">
        <number>9999999</number>
       </property>
-      <property name="singleStep" >
+      <property name="singleStep">
        <number>100</number>
       </property>
      </widget>
     </item>
-    <item row="1" column="0" >
-     <widget class="QLabel" name="initialFundsLabel" >
-      <property name="text" >
+    <item row="1" column="0">
+     <widget class="QLabel" name="initialFundsLabel">
+      <property name="text">
        <string>Initial Funds:</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="1" >
-     <widget class="QSpinBox" name="initialFundsSpinBox" >
-      <property name="minimum" >
+    <item row="1" column="1">
+     <widget class="QSpinBox" name="initialFundsSpinBox">
+      <property name="minimum">
        <number>0</number>
       </property>
-      <property name="maximum" >
+      <property name="maximum">
        <number>100000</number>
       </property>
-      <property name="singleStep" >
+      <property name="singleStep">
        <number>100</number>
       </property>
-      <property name="value" >
+      <property name="value">
        <number>0</number>
       </property>
      </widget>
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="" >
-   <property name="geometry" >
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
     <rect>
      <x>10</x>
-     <y>150</y>
-     <width>381</width>
-     <height>34</height>
+     <y>200</y>
+     <width>501</width>
+     <height>31</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_2" >
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
-     <spacer name="horizontalSpacer" >
-      <property name="orientation" >
+     <widget class="QPushButton" name="chooseMapButton">
+      <property name="text">
+       <string>Choose Map</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <property name="sizeHint" stdset="0" >
+      <property name="sizeHint" stdset="0">
        <size>
         <width>148</width>
         <height>28</height>
@@ -113,16 +99,57 @@
      </spacer>
     </item>
     <item>
-     <widget class="QDialogButtonBox" name="buttonBox" >
-      <property name="orientation" >
+     <widget class="QDialogButtonBox" name="buttonBox">
+      <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <property name="standardButtons" >
+      <property name="standardButtons">
        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
       </property>
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>140</y>
+     <width>241</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Map:</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="mapFileLineEdit"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QLabel" name="imageLabel">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>10</y>
+     <width>231</width>
+     <height>171</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Panel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Sunken</enum>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
   </widget>
  </widget>
  <resources/>
@@ -133,11 +160,11 @@
    <receiver>GameDialog</receiver>
    <slot>accept()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>248</x>
      <y>254</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>157</x>
      <y>274</y>
     </hint>
@@ -149,11 +176,11 @@
    <receiver>GameDialog</receiver>
    <slot>reject()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>316</x>
      <y>260</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>286</x>
      <y>274</y>
     </hint>

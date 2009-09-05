@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <string>
 
+#include "MinimapDrawingThread.h"
+
 #include "ui_gameDialog.h"
 
 class GameDialog: public QDialog, public Ui::GameDialog {
@@ -22,11 +24,19 @@ class GameDialog: public QDialog, public Ui::GameDialog {
 		void mapFileChanged(QString newValue);
 
 		void chooseMapFile();
+
+
 	
 	private:
 		int _fundsPerBuilding;
 		int _initialFunds;
 		std::string _mapFile;
+
+  MinimapDrawingThread *minimapThread;
+
+public Q_SLOTS: 
+  void setMinimapImage(QImage image);
+
 };
 
 #endif

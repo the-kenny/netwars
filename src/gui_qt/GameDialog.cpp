@@ -4,6 +4,7 @@
 
 #include "game/config.h"
 
+
 GameDialog::GameDialog(QDialog* parent) {
 	setupUi(this);
 
@@ -12,6 +13,8 @@ GameDialog::GameDialog(QDialog* parent) {
 	connect(fundsPerBuildingSpinBox, SIGNAL(valueChanged(int)), this, SLOT(fundsPerBuildingChanged(int)));
 	connect(chooseMapButton, SIGNAL(clicked()), this, SLOT(chooseMapFile()));
 	connect(mapFileLineEdit, SIGNAL(textChanged(QString)), this, SLOT(mapFileChanged(QString)));
+
+
 
 	_initialFunds = aw::config().get<int>("/config/defaults/initial-funds");
 	_fundsPerBuilding = aw::config().get<int>("/config/defaults/funds-per-building");
@@ -33,6 +36,19 @@ void GameDialog::initialFundsChanged(int newValue) {
 void GameDialog::mapFileChanged(QString newValue) {
 	mapFileLineEdit->setText(newValue);
 	_mapFile = newValue.toStdString();
+
+	if(minimapThread != NULL) {
+	  minimapThread->terminate();
+	  disconnect(minimapThread, SIGNAL(minimapReady(QImage)), this, SLOT(setMinimapImage(QImage)));
+	  minimapThread = NULL;
+	}
+
+	minimapThread = new MinimapDrawingThread;
+
+	//Minimap
+	connect(minimapThread, SIGNAL(minimapReady(QImage)), this, SLOT(setMinimapImage(QImage)), Qt::QueuedConnection);
+
+	minimapThread->start();
 }
 
 
@@ -41,3 +57,6 @@ void GameDialog::chooseMapFile() {
 	this->mapFileChanged(QFileDialog::getOpenFileName(this, "Choose a Map", QString(), mapEditorFilter));
 }
 
+void GameDialog::setMinimapImage(QImage image) {
+  imageLabel->setPixmap(QPixmap::fromImage(image));
+}
