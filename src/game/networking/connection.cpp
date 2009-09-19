@@ -2,6 +2,7 @@
 
 #include <boost/lexical_cast.hpp>
 
+using namespace aw;
 
 connection::ptr connection::create(boost::asio::io_service& io_service) {
   return ptr(new connection(io_service));
