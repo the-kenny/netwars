@@ -18,6 +18,7 @@ def build(bld):
 	json = bld.new_task_gen('cxx', 'staticlib')
 	json.target = 'json'
 	json.defines = ''
+	json.includes = 'lib .'
 	json.find_sources_in_dirs('json')
 	json.install_path = '../src'
 	
