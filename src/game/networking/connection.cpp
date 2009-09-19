@@ -1,5 +1,7 @@
 #include "connection.h"
 
+#include <boost/lexical_cast.hpp>
+
 
 connection::ptr connection::create(boost::asio::io_service& io_service) {
   return ptr(new connection(io_service));
@@ -50,6 +52,10 @@ void connection::on_line_received(const std::string&) {
   receive_queue_.pop_back();
 }
 
+void connection::on_connection_closed(const std::string& reason) {
+  socket_.close();
+}
+
 connection::connection(boost::asio::io_service& io_service)
   : socket_(io_service), io_service_(io_service) {
 
@@ -68,6 +74,8 @@ void connection::handle_connect(const boost::system::error_code& error,
 									  this,
 									  boost::asio::placeholders::error, 
 									  ++endpoint_iterator));
+  } else {
+	throw std::runtime_error("Couldn't resolve hostname");
   }
 }
 
@@ -97,11 +105,13 @@ void connection::handle_write(const boost::system::error_code& error) {
 										   this,
 										   boost::asio::placeholders::error));
 	}
+  } else {
+	on_connection_closed(boost::lexical_cast<std::string>(error));
   }
 }
 
-void connection::handle_read(const boost::system::error_code& e) {
-  if(!e) {
+void connection::handle_read(const boost::system::error_code& error) {
+  if(!error) {
 	std::istream is(&buffer_);
 	std::string line;
 	
@@ -114,7 +124,7 @@ void connection::handle_read(const boost::system::error_code& e) {
 								  boost::bind(&connection::handle_read,
 											  this,
 											  boost::asio::placeholders::error));
-  } else {
-	std::cerr << "handle_read error: " << e << std::endl;
+  }  else {
+	on_connection_closed(boost::lexical_cast<std::string>(error));
   }
 }

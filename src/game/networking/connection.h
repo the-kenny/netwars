@@ -35,6 +35,7 @@ protected:
   // The default implementation pops the received line from the line stack
   // Any subclasses should do the same.
   virtual void on_line_received(const std::string& line);
+  virtual void on_connection_closed(const std::string& reason);
 
 private:
   void do_write(std::string message);
