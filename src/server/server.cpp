@@ -1,25 +1,8 @@
 #include "server.h"
 
-#include "json/json_spirit.h"
+#include "json/json.h"
 
-namespace json = json_spirit;
-
-
-//utilities
-const json::mValue& find_value(const json::mObject& obj, 
-							   const std::string& name) {
-  json::mObject::const_iterator i = obj.find(name);
-
-  //assert(i != obj.end());
- 
-
-  if(i == obj.end())
-	return json::mValue::null;
-
-  assert(i->first == name);
-
-  return i->second;
-}
+namespace json = Json;
 
 server::server(asio::io_service& io)
   : io_service_(io), acceptor_(io, tcp::endpoint(tcp::v4(), 4242)) {
@@ -51,15 +34,17 @@ void server::deliver_to(client_connection::ptr& to, const std::string& message) 
 void server::handle_message(const std::string& message, 
 							const client_connection::ptr& from) {
   try {
-	json::mValue js;
-	json::read_or_throw(message, js);
+	json::Value root;
+	json::Reader reader;
+	if(!reader.parse(message, root))
+	  throw std::runtime_error(reader.getFormatedErrorMessages());
 
-	json::mValue destination = find_value(js.get_obj(), "destination");
+	json::Value destination = root.get("destination", json::Value());
 
-	if(destination == json::mValue::null) 
-	  throw std::runtime_error("Didn't find key");
+	if(!destination) 
+	  throw std::runtime_error("Didn't find the key 'destination'");
 
-	std::string dest = destination.get_str();
+	std::string dest = destination.asString();
 
 	if(dest == "server") {
 	  //Handle it for the server
@@ -71,12 +56,8 @@ void server::handle_message(const std::string& message,
 		  c->send_message(message);
 	  }
 	}
-  } catch(const json::Error_position& e) {
-	std::clog << "Got invalid json: " << message << std::endl;
   } catch(const std::exception& e) {
 	std::clog << "Got invalid json: " << message << std::endl;
-  } catch(...) {
-	std::abort();
   }
 }
 
