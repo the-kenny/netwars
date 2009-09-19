@@ -9,7 +9,7 @@
 
 using namespace boost;
 
-class client_connection: public connection, public boost::enable_shared_from_this<client_connection> {
+class client_connection: public aw::connection, public boost::enable_shared_from_this<client_connection> {
 public:
   typedef boost::shared_ptr<client_connection> ptr;
 
@@ -20,6 +20,11 @@ public:
   boost::signal<void(const std::string&,
 					 const client_connection::ptr&)> &deliver_callback() {
 	return deliver_callback_;
+  }
+
+  boost::signal<void(const std::string&,
+					 const client_connection::ptr&)> &connection_lost_callback() {
+	return connection_lost_callback_;
   }
 
 protected:
@@ -34,12 +39,25 @@ protected:
 	}
   }
 
+  void on_connection_closed(const std::string& reason) {
+	if(!connection_lost_callback_.empty()) {
+	  connection_lost_callback_(reason, shared_from_this());
+
+	  //Call super (to close socket)
+	  aw::connection::on_connection_closed(reason);
+	} else {
+	  throw std::logic_error("No connection-lost-callback defined.");
+	}
+  }
+
 private:
   client_connection(asio::io_service& io)
 	: connection(io) {
   }
   boost::signal<void(const std::string&,
 					 const client_connection::ptr&)> deliver_callback_;
+  boost::signal<void(const std::string&,
+					 const client_connection::ptr&)> connection_lost_callback_;
 };
 
 #endif
