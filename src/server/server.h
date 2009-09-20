@@ -23,7 +23,7 @@ public:
 							 const std::string& message);
   void deliver_to(client_connection::ptr& to, const std::string& message);
   void handle_message(const std::string& message, 
-					  const client_connection::ptr& from);
+					  client_connection::ptr from);
 
 
 private:
@@ -33,12 +33,16 @@ private:
 							  const client_connection::ptr& from);
 
   void handle_server_message(const Json::Value& root,
-							 const client_connection::ptr& from);
+							 client_connection::ptr from);
 
   //Convenience-method
   std::string write_json(const Json::Value& v);
   Json::Value serialize_client_connection(const client_connection::ptr& ptr);
   std::list<std::string> get_available_colors();
+
+  Json::Value create_error_response(const std::string& request,
+									const std::string& reason);
+						   
 
 private:
   asio::io_service& io_service_;

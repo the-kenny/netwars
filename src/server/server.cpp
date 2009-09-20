@@ -22,6 +22,21 @@ namespace {
 	  return "FAIL";
 	}
   }
+
+  aw::player::colors get_color_from_string(const std::string& c) {
+	if(c == "red")
+	  return aw::player::RED;
+	else if(c == "blue")
+	  return aw::player::BLUE;
+	else if(c == "greeen")
+	  return aw::player::GREEN;
+	else if(c == "yellow")
+	  return aw::player::YELLOW;
+	else if(c == "black")
+	  return aw::player::BLACK;
+	else
+	  throw std::runtime_error("wrong color-string");
+  }
 }
 
 server::server(asio::io_service& io)
@@ -60,7 +75,7 @@ void server::deliver_to(client_connection::ptr& to, const std::string& message) 
 }
 
 void server::handle_message(const std::string& message, 
-							const client_connection::ptr& from) {
+							client_connection::ptr from) {
   try {
 	json::Value root;
 	json::Reader reader;
@@ -153,12 +168,13 @@ std::string server::write_json(const Json::Value& v) {
 }
 
 void server::handle_server_message(const json::Value& root,
-								   const client_connection::ptr& from) {
+								   client_connection::ptr from) {
   const std::string type = root.get("type", "UNDEFINED").asString();
   
-  if(type == "UNDEFINED")
+  if(type == "UNDEFINED") {
 	throw std::runtime_error("Type for a server-message is undefined");
-  else if(type == "set-username") {
+
+  } else if(type == "set-username") {
 	std::string old_username = from->username;
 	std::string new_username = root.get("new-username", 
 										old_username).asString();
@@ -177,7 +193,49 @@ void server::handle_server_message(const json::Value& root,
 
 	  deliver_to_all_except(from, write_json(notify));
 	}
-  }
+  } else if(type == "choose-color") {
+	try {
+	  std::string color = root.get("chosen-color", "UNDEFINED").asString();
+
+	  bool available = false;
+
+	  //Check if the color is available
+	  std::list<std::string> available_colors(get_available_colors());
+	  if(std::find(available_colors.begin(), available_colors.end(), color) !=
+		 available_colors.end())
+		available = true;
+
+	  if(color == "UNDEFINED" || !available) {
+		//small hack to avoid code-duplication if get_color_from_string throws
+		throw std::runtime_error("Chosen color not available");
+	  } else {
+		//Everything is fine. Set the new color and inform other clients
+	  
+		std::string old_color = get_color_string(from->color);
+		from->color = get_color_from_string(color);
+		
+		json::Value root;
+		root["destination"] = "client";
+		root["type"] = "color-changed";
+		root["new-color"] = color;
+		root["player"] = serialize_client_connection(from);
+
+		deliver_to_all_except(from, write_json(root));
+	 
+	  }
+	} catch(const std::runtime_error& e) {
+	  //color not available or json is damaged. Create an error-response
+	  json::Value error = create_error_response(type, 
+												e.what());
+		
+	  json::Value available_colors(json::arrayValue);
+	  BOOST_FOREACH(const std::string& c, get_available_colors())
+		available_colors.append(c);
+	  error["available-colors"] = available_colors;
+		
+	  deliver_to(from, write_json(error));
+	}
+  } 
 }
 
 json::Value server::serialize_client_connection(const client_connection::ptr& ptr) {
@@ -215,3 +273,14 @@ std::list<std::string> server::get_available_colors() {
 
   return ret;
 }
+
+ json::Value server::create_error_response(const std::string& request,
+										   const std::string& reason) {
+   json::Value root;
+   root["destination"] = "client";
+   root["type"] = "error";
+   root["request"] = request;
+   root["reason"] = reason;
+
+   return root;
+ }
