@@ -29,5 +29,9 @@ def build(bld):
 	base64.find_sources_in_dirs('base64')
 	base64.install_path = '../src'
 	
-
-	
+	md5 = bld.new_task_gen('cxx', 'staticlib')
+	md5.target = 'md5'
+	md5.defines = ''
+	md5.includes = 'lib .'
+	md5.find_sources_in_dirs('md5')
+	md5.install_path = '../src'
