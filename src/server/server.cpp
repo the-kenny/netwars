@@ -345,11 +345,13 @@ json::Value server::serialize_client_connection(const client_connection::ptr& pt
 }
 
 std::list<std::string> server::get_available_colors() {
-  static player::colors colors[] = { player::RED, 
+  /*
+	static player::colors colors[] = { player::RED, 
 										 player::BLUE,
 										 player::GREEN,
 										 player::YELLOW,
 										 player::BLACK };
+  */
   
   if(!map_) {
 	return std::list<std::string>();
