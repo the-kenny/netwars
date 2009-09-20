@@ -27,6 +27,14 @@ void server::deliver_to_all(const std::string& message) {
   }
 }
 
+void server::deliver_to_all_except(const client_connection::ptr& except, 
+								   const std::string& message) {
+  BOOST_FOREACH(client_connection::ptr& c, connections_) {
+	if(c != except)
+	  deliver_to(c, message);
+  }
+}
+
 void server::deliver_to(client_connection::ptr& to, const std::string& message) {
   to->send_message(message);
 }
@@ -47,14 +55,10 @@ void server::handle_message(const std::string& message,
 	std::string dest = destination.asString();
 
 	if(dest == "server") {
-	  //Handle it for the server
+	  handle_server_message(root, from);
 	} else if(dest == "client") {
 	  //Just pass it to all other clients
-
-	  BOOST_FOREACH(client_connection::ptr& c, connections_) {
-		if(c != from)
-		  deliver_to(c, message);
-	  }
+	  deliver_to_all_except(from, message);
 	} else {
 	  std::clog << "Destionation unknown (" << dest 
 				<< "), discarding it" << std::endl;
@@ -103,11 +107,40 @@ void server::handle_accept(client_connection::ptr new_connection,
 	root["destination"] = "client";
 	root["type"] = "server-status";
 	root["host"] = new_connection->is_host;
-	root["map"] = "UNDEFINED";
+	root["map"] = json::Value();
 
 	json::FastWriter writer;
 	deliver_to(new_connection, writer.write(root));
 	
 	start_accept();
+  }
+}
+
+void server::handle_server_message(const json::Value& root,
+								   const client_connection::ptr& from) {
+  const std::string type = root.get("type", "UNDEFINED").asString();
+  
+  if(type == "UNDEFINED")
+	throw std::runtime_error("Type for a server-message is undefined");
+  else if(type == "set-username") {
+	std::string old_username = from->username;
+	std::string new_username = root.get("new-username", 
+										old_username).asString();
+
+
+	  
+	if(old_username != new_username) {
+	  from->username = new_username;
+
+	  //Notify clients
+	  json::Value notify;
+	  notify["destination"] = "client";
+	  notify["type"] = "username-changed";
+	  notify["old-name"] = old_username;
+	  notify["new-name"] = new_username;
+
+	  json::FastWriter writer;
+	  deliver_to_all_except(from, writer.write(notify));
+	}
   }
 }

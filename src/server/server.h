@@ -6,6 +6,8 @@
 
 #include "client_connection.h"
 
+#include "json/json.h"
+
 using namespace boost;
 using boost::asio::ip::tcp;
 
@@ -16,6 +18,8 @@ public:
   void start_accept();
 
   void deliver_to_all(const std::string& message);
+  void deliver_to_all_except(const client_connection::ptr& except, 
+							 const std::string& message);
   void deliver_to(client_connection::ptr& to, const std::string& message);
   void handle_message(const std::string& message, 
 					  const client_connection::ptr& from);
@@ -26,6 +30,9 @@ private:
 					 const boost::system::error_code& error);
   void handle_lost_connection(const std::string& reason, 
 							  const client_connection::ptr& from);
+
+  void handle_server_message(const Json::Value& root,
+							 const client_connection::ptr& from);
 
 private:
   asio::io_service& io_service_;
