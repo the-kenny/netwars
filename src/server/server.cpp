@@ -334,6 +334,42 @@ void server::handle_server_message(const json::Value& root,
 												"No map was loaded by the host");
 	  deliver_to(from, write_json(error));
 	}
+  } else if(type == "map-data") {
+	try {
+	  std::string filename = root.get("filename", "UNDEFINED").asString();
+	  std::string md5sum = root.get("md5sum", "UNDEFINED").asString();
+	  std::string base64data = root.get("data", "UNDEFINED").asString();
+
+	  if(filename   == "UNDEFINED" ||
+		 md5sum     == "UNDEFINED" ||
+		 base64data == "UNDEFINED") 
+		throw std::runtime_error("Not all data supplied, aborting");
+
+	  //Decode the data
+	  std::vector<unsigned char> data(base64_decode(base64data));
+											   
+	  //Check the md5-sum
+	  MD5 md5;
+	  md5.update(&data.front(), data.size());
+	  md5.finalize();
+	  if(md5sum != md5.hexdigest()) 
+		throw std::runtime_error("md5-sums not matched, aborting");
+
+	  std::ofstream os(std::string(map_dir + filename).c_str());
+	  os.write(reinterpret_cast<char*>(&data.begin()), data.size());
+	  os.close();
+
+	  //Small hack: fake a request to the server to load the map
+	  json::Value root;
+	  root["type"] = "load-map";
+	  root["destination"] = "server";
+	  root["map-file"] = filename;
+	  handle_server_message(write_json(root), from);
+
+	} catch(const std::runtime_error& e) {
+	  json::Value error = create_error_response(type, e.what()); 
+	  deliver_to(from, write_json(error));
+	}
   }
 }
 
