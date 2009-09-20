@@ -8,6 +8,7 @@
 
 #include "json/json.h"
 #include "game/player.h"
+#include "game/map.h"
 
 using namespace boost;
 using boost::asio::ip::tcp;
@@ -42,14 +43,19 @@ private:
 
   Json::Value create_error_response(const std::string& request,
 									const std::string& reason);
+  Json::Value create_map_data_response();
 						   
 
 private:
   asio::io_service& io_service_;
   asio::ip::tcp::acceptor acceptor_;
 
-
   std::list<client_connection::ptr> connections_;
+
+  aw::map::ptr map_;
+  std::string map_filename_;
+  boost::shared_array<unsigned char> map_data_;
+  std::size_t map_data_size_;
 };
 
 #endif

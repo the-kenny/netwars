@@ -2,6 +2,14 @@
 
 #include "json/json.h"
 
+#include <fstream>
+#include <boost/filesystem.hpp>
+
+#include "game/map_loader/map_loader.h"
+
+#include "md5/md5.h"
+#include "base64/base64.h"
+
 namespace json = Json;
 
 //Some convenience-methods
@@ -37,6 +45,9 @@ namespace {
 	else
 	  throw std::runtime_error("wrong color-string");
   }
+
+  //Needs to be configurable
+  const std::string map_dir = "maps/";
 }
 
 server::server(asio::io_service& io)
@@ -235,7 +246,66 @@ void server::handle_server_message(const json::Value& root,
 		
 	  deliver_to(from, write_json(error));
 	}
-  } 
+  } else if(type == "load-map") {
+	try {
+	  if(!from->is_host)
+		throw std::runtime_error("Only hosts can load maps");
+	  
+	  map_filename_ = root.get("map-file", 
+							   "UNDEFINED").asString();
+
+	  
+	  //TODO: Check if the md5sum matches
+
+	  //When the file can't be found, ask the host for the data
+	  if(!boost::filesystem::exists(map_dir + map_filename_)) {
+		std::clog << map_dir + map_filename_
+				  << " doesn't exists. Asking host for data" << std::endl;
+
+		json::Value root;
+		root["destination"] = "client";
+		root["type"] = "map-data";
+		root["filename"] = map_filename_;
+		
+		deliver_to(from, write_json(root));
+
+		//Return, as we have to wait for the data
+		return;
+	  }
+
+	  //Load map
+	  aw::map_loader loader;
+	  aw::map_loader::loaded_map::ptr loaded_map = loader.load(map_dir + map_filename_);
+	  map_ = aw::map::ptr(new aw::map(loaded_map->m_terrain, 
+									  loaded_map->m_unit));
+
+	  //Load map-data
+	  std::ifstream is(std::string(map_dir + map_filename_).c_str());
+	  is.seekg(0, std::ios::end);
+	  map_data_size_ = is.tellg();
+	  is.seekg(0, std::ios::beg);
+
+	  map_data_ = boost::shared_array<unsigned char>(new unsigned char[map_data_size_]);
+	  is.read(reinterpret_cast<char*>(map_data_.get()), map_data_size_);
+	  is.close();
+
+	  //Deliver this to all other clients
+	  deliver_to_all_except(from, 
+							write_json(create_map_data_response()));
+
+	} catch(const std::runtime_error& e) {
+	  //Deliver an errror-message to the sender
+	  deliver_to(from, write_json(create_error_response(type, e.what())));
+	}
+  } else if(type == "get-map") {
+	if(map_ != NULL) {
+	  deliver_to(from, write_json(create_map_data_response()));
+	} else {
+	  json::Value error = create_error_response(type, 
+												"No map was loaded by the host");
+	  deliver_to(from, write_json(error));
+	}
+  }
 }
 
 json::Value server::serialize_client_connection(const client_connection::ptr& ptr) {
@@ -284,3 +354,19 @@ std::list<std::string> server::get_available_colors() {
 
    return root;
  }
+
+Json::Value server::create_map_data_response() {
+  json::Value root;
+  root["destination"] = "server";
+  root["type"] = "map-loaded";
+  root["filename"] = map_filename_;
+  
+  MD5 md5;
+  md5.update(reinterpret_cast<char*>(map_data_.get()), map_data_size_);
+  md5.finalize();
+  root["md5sum"] = md5.hexdigest();
+  root["data"] = base64_encode(reinterpret_cast<unsigned char*>(map_data_.get()),
+							   map_data_size_);
+
+  return root;
+}
