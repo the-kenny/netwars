@@ -27,6 +27,13 @@ public:
 	return connection_lost_callback_;
   }
 
+
+  //Game-Specific things
+  //I know this is ugly, but I'm to lazy for all these accessor-methods
+  bool is_host;
+  bool is_spectator;
+  std::string username;
+
 protected:
   void on_line_received(const std::string& line);
   void on_connection_closed(const std::string& reason);

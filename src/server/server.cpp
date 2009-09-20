@@ -86,10 +86,28 @@ void server::handle_accept(client_connection::ptr new_connection,
 						   const boost::system::error_code& error) {
   if (!error) {
 	std::clog << "Got a new client" << std::endl;
+
+	//If the server is empty, make this user the host
+	if(connections_.empty()) {
+	  new_connection->is_host = true;
+	  std::clog << "New connection is now host!" << std::endl;
+	}
+
 	connections_.push_back(new_connection);
 	new_connection->deliver_callback().connect(boost::bind(&server::handle_message,this,_1,_2));
 	new_connection->connection_lost_callback().connect(boost::bind(&server::handle_lost_connection,this,_1,_2));
 	new_connection->start();
+
+	//Inform the client that he is the host now
+	json::Value root;
+	root["destination"] = "client";
+	root["type"] = "server-status";
+	root["host"] = new_connection->is_host;
+	root["map"] = "UNDEFINED";
+
+	json::FastWriter writer;
+	deliver_to(new_connection, writer.write(root));
+	
 	start_accept();
   }
 }
