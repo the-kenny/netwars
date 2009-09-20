@@ -1,46 +1,146 @@
-JSON-Example:
-{
-     "firstName": "John",
-     "lastName": "Smith",
-     "address": {
-         "streetAddress": "21 2nd Street",
-         "city": "New York",
-         "state": "NY",
-         "postalCode": 10021
-     },
-     "phoneNumbers": [
-         "212 555-1234",
-         "646 555-4567"
-     ]
-}
+* Server
+** Basic Layout
+   {
+   "type": <type-of-request>,
+   "destination": "server"/"client",
+   <additional data of request>
+   }
 
-Verbindungsaufbau:
-server:
-{
-  "name": "<name>",
-	  "players": [
-				  {
-					"name": "<name>",
-					  "color": "<color>"
-				  }
-				  ]
-}
+** Initial connect:
+*** To the new connection:
+	{
+	"type": "server-status", 
+	"destination": "client",
+	"host": true/false //If the new connection is host
+	"map": map //Needs to be serialized
+	}
+	
+*** To all other clients
+	{
+	"type": "new-player",
+	"destination": "client",
+	"player": <player-struct>
+	}
 
-client:
-{
-  	"destination": "server",
-	  "name": "<name>",
-	"visitor": "true/false"
-}
+** Connection Lost
+*** To all clients:
+	{
+	"type": "connection-lost",
+	"destination": "client",
+	"reason": <reason>,
+	"player": <player-struct>
+	}
+	
+** Server-Requests
+*** set-username
+**** Incoming
+	 {
+	 "type": "set-username",
+	 "destination": "server",
+	 "new-username": <username>
+	 }
+**** To all
+	 {
+	 "type": "username-changed",
+	 "destination": "client",
+	 "old-name": <old-name>,
+	 "new-name": <new-name>
+	 }
+	 
+*** get-available-colors
+**** Incoming
+	 {
+	 "type": "get-available-colors",
+	 "destination": "server",
+	 }
+	 
+**** To requester
+	 {
+	 "type": "available-colors",
+	 "destination": "client",
+	 "request": "get-available-colors",
+	 "available-colors": <array-with-colors>
+	 }
 
-server:
-{
-  "color": "<color>"
-}
+*** choose-color
+**** Incoming
+	 {
+	 "type": "choose-color",
+	 "destination": "server",
+	 "chosen-color": <color as string>
+	 }
+	 
+**** To requester *ON ERROR*
+	 {
+	 "destination": "client",
+	 "type": "error",
+	 "request": <the request which failed>,
+	 "reason": <reason for the error>
+	 }
+	 
+**** To all clients except requester *ON SUCCESS*
+	 {
+	 "destination": "client",
+	 "type": "color-changed",
+	 "new-color": <new-color>,
+	 "player": <player-struct>,
+	 "available-colors": <array of available colors>
+	 }
 
-server to all:
-{
-  "type": "new-client",
-	"name": "<name>",
-	"color": "<color>"
-}
+*** load-map
+**** Incoming
+	 {
+	 "type": "load-map",
+	 "destination": "server",
+	 "map-file": <filename>
+	 }
+
+**** To requester if the map can't be found
+ 	{
+	"type": "map-data",
+	"destination": "client",
+	"filename": <filename>
+	}
+
+	The client then sends the send-map-data -request to the server
+	
+**** To every client except the requester
+	 {
+	 "type": "map-loaded",
+	 "destination": "client",
+	 "filename": <filename>,
+	 "md5sum": <md5sum of the map-data>, //When base64-*decoded*!
+	 "data": <data of file, base64-encoded>
+	 }
+
+**** On error
+	 {
+	 "destination": "client",
+	 "type": "error",
+	 "request": <the request which failed>,
+	 "reason": <reason for the error>
+	 }
+
+*** get-map
+**** Incoming
+	 {
+	 "type": "get-map",
+	 "destination": "server",
+	 }
+
+**** To requester
+	 {
+	 "type": "map-loaded",
+	 "destination": "client",
+	 "filename": <filename>,
+	 "md5sum": <md5sum of the map-data>, //When base64-*decoded*!
+	 "data": <data of file, base64-encoded>
+	 }
+
+**** On error
+	 {
+	 "destination": "client",
+	 "type": "error",
+	 "request": <the request which failed>,
+	 "reason": <reason for the error>
+	 }
