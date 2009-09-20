@@ -34,6 +34,9 @@ private:
   void handle_server_message(const Json::Value& root,
 							 const client_connection::ptr& from);
 
+  //Convenience-method
+  std::string write_json(const Json::Value& v);
+
 private:
   asio::io_service& io_service_;
   asio::ip::tcp::acceptor acceptor_;

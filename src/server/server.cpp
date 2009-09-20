@@ -82,8 +82,7 @@ void server::handle_lost_connection(const std::string& reason,
   root["reason"] = reason;
   root["player"] = "NONAME";
   
-  json::FastWriter writer;
-  deliver_to_all(writer.write(root));
+  deliver_to_all(write_json(root));
 }
 
 void server::handle_accept(client_connection::ptr new_connection,
@@ -109,11 +108,15 @@ void server::handle_accept(client_connection::ptr new_connection,
 	root["host"] = new_connection->is_host;
 	root["map"] = json::Value();
 
-	json::FastWriter writer;
-	deliver_to(new_connection, writer.write(root));
+	deliver_to(new_connection, write_json(root));
 	
 	start_accept();
   }
+}
+
+std::string server::write_json(const Json::Value& v) {
+  json::FastWriter writer;
+  return writer.write(v);
 }
 
 void server::handle_server_message(const json::Value& root,
@@ -139,8 +142,7 @@ void server::handle_server_message(const json::Value& root,
 	  notify["old-name"] = old_username;
 	  notify["new-name"] = new_username;
 
-	  json::FastWriter writer;
-	  deliver_to_all_except(from, writer.write(notify));
+	  deliver_to_all_except(from, write_json(notify));
 	}
   }
 }
