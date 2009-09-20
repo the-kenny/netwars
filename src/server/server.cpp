@@ -55,6 +55,9 @@ void server::handle_message(const std::string& message,
 		if(c != from)
 		  deliver_to(c, message);
 	  }
+	} else {
+	  std::clog << "Destionation unknown (" << dest 
+				<< "), discarding it" << std::endl;
 	}
   } catch(const std::exception& e) {
 	std::clog << "Got invalid json: " << message << std::endl;
