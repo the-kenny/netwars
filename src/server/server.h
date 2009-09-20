@@ -22,15 +22,17 @@ public:
 
 
 private:
- void handle_accept(client_connection::ptr new_connection,
-					const boost::system::error_code& error);
+  void handle_accept(client_connection::ptr new_connection,
+					 const boost::system::error_code& error);
+  void handle_lost_connection(const std::string& reason, 
+							  const client_connection::ptr& from);
 
 private:
   asio::io_service& io_service_;
   asio::ip::tcp::acceptor acceptor_;
 
 
-  std::list<client_connection::ptr> conections_;
+  std::list<client_connection::ptr> connections_;
 };
 
 #endif

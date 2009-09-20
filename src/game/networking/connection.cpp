@@ -54,7 +54,7 @@ void connection::on_line_received(const std::string&) {
 }
 
 void connection::on_connection_closed(const std::string& reason) {
-  socket_.close();
+  //socket_.close(); //This crashes somehow the server, we just leave it open
 }
 
 connection::connection(boost::asio::io_service& io_service)

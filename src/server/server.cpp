@@ -22,7 +22,7 @@ void server::start_accept() {
 
 void server::deliver_to_all(const std::string& message) {
   std::clog << "Delivering message to all clients" << std::endl;
-  BOOST_FOREACH(const client_connection::ptr& c, conections_) {
+  BOOST_FOREACH(client_connection::ptr& c, connections_) {
 	c->send_message(message);
   }
 }
@@ -51,9 +51,9 @@ void server::handle_message(const std::string& message,
 	} else if(dest == "client") {
 	  //Just pass it to all other clients
 
-	  BOOST_FOREACH(const client_connection::ptr& c, conections_) {
+	  BOOST_FOREACH(client_connection::ptr& c, connections_) {
 		if(c != from)
-		  c->send_message(message);
+		  deliver_to(c, message);
 	  }
 	}
   } catch(const std::exception& e) {
@@ -61,12 +61,31 @@ void server::handle_message(const std::string& message,
   }
 }
 
+void server::handle_lost_connection(const std::string& reason, 
+							const client_connection::ptr& from) {
+  std::clog << "Client lost connection. Reason: " << reason << std::endl;
+  
+  //Remove that client from the list
+  connections_.remove(from);
+
+  //Inform all clients that a client lost its connection
+  json::Value root;
+  root["type"] = "connection-lost";
+  root["destination"] = "client";
+  root["reason"] = reason;
+  root["player"] = "NONAME";
+  
+  json::FastWriter writer;
+  deliver_to_all(writer.write(root));
+}
+
 void server::handle_accept(client_connection::ptr new_connection,
 						   const boost::system::error_code& error) {
   if (!error) {
 	std::clog << "Got a new client" << std::endl;
-	conections_.push_back(new_connection);
+	connections_.push_back(new_connection);
 	new_connection->deliver_callback().connect(boost::bind(&server::handle_message,this,_1,_2));
+	new_connection->connection_lost_callback().connect(boost::bind(&server::handle_lost_connection,this,_1,_2));
 	new_connection->start();
 	start_accept();
   }
