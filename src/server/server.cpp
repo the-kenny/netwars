@@ -242,6 +242,9 @@ void server::handle_server_message(const json::Value& root,
 	  
 		std::string old_color = get_color_string(from->color);
 		from->color = get_color_from_string(color);
+
+		//He has a color now, he isn't a spectator anymore
+		from->is_spectator = false;
 		
 		json::Value root;
 		root["destination"] = "client";
