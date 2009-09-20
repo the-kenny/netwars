@@ -21,4 +21,13 @@ def build(bld):
 	json.includes = 'lib .'
 	json.find_sources_in_dirs('json')
 	json.install_path = '../src'
+
+	base64 = bld.new_task_gen('cxx', 'staticlib')
+	base64.target = 'base64'
+	base64.defines = ''
+	base64.includes = 'lib .'
+	base64.find_sources_in_dirs('base64')
+	base64.install_path = '../src'
+	
+
 	
