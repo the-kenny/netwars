@@ -4,6 +4,26 @@
 
 namespace json = Json;
 
+//Some convenience-methods
+namespace {
+  std::string get_color_string(aw::player::colors c) {
+	switch(c) {
+	case aw::player::RED:
+	  return "red";
+	case aw::player::BLUE:
+	  return "blue";
+	case aw::player::GREEN:
+	  return "green";
+	case aw::player::YELLOW:
+	  return "yellow";
+	case aw::player::BLACK:
+	  return "black";
+	default:
+	  return "FAIL";
+	}
+  }
+}
+
 server::server(asio::io_service& io)
   : io_service_(io), acceptor_(io, tcp::endpoint(tcp::v4(), 4242)) {
 
@@ -116,6 +136,11 @@ void server::handle_accept(client_connection::ptr new_connection,
 
 	root["players"] = players;
 
+	json::Value available_colors(json::arrayValue);
+	BOOST_FOREACH(const std::string& c, get_available_colors())
+	  available_colors.append(c);
+	root["available-colors"] = available_colors;
+
 	deliver_to(new_connection, write_json(root));
 	
 	start_accept();
@@ -164,40 +189,29 @@ json::Value server::serialize_client_connection(const client_connection::ptr& pt
   if(ptr->is_spectator) {
 	root["color"] = json::Value();
   } else {
-	switch(ptr->color) {
-	case aw::player::RED:
-	  root["color"] = "red";
-	  break;
-	case aw::player::BLUE:
-	  root["color"] = "blue";
-	  break;
-	case aw::player::GREEN:
-	  root["color"] = "green";
-	  break;
-	case aw::player::YELLOW:
-	  root["color"] = "yellow";
-	  break;
-	case aw::player::BLACK:
-	  root["color"] = "black";
-	  break;
-	}
+	root["color"] = get_color_string(ptr->color);
   }
 
   return root;
 }
 
-std::list<aw::player::colors> server::get_free_colors() {
-  std::list<aw::player::colors> colors;
-  colors.push_back(aw::player::RED);
-  colors.push_back(aw::player::BLUE);
-  colors.push_back(aw::player::GREEN);
-  colors.push_back(aw::player::YELLOW);
-  colors.push_back(aw::player::BLACK);
+std::list<std::string> server::get_available_colors() {
+  static aw::player::colors colors[] = { aw::player::RED, 
+										 aw::player::BLUE,
+										 aw::player::GREEN,
+										 aw::player::YELLOW,
+										 aw::player::BLACK };
+  
+  std::list<aw::player::colors> coltemp(colors, colors+5);
 
   BOOST_FOREACH(client_connection::ptr& c, connections_) {
 	if(!c->is_spectator)
-	  colors.remove(c->color);
+	  coltemp.remove(c->color);
   }
 
-  return colors;
+  std::list<std::string> ret;
+  BOOST_FOREACH(aw::player::colors c, coltemp)
+	ret.push_back(get_color_string(c));
+
+  return ret;
 }

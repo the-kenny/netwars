@@ -38,7 +38,7 @@ private:
   //Convenience-method
   std::string write_json(const Json::Value& v);
   Json::Value serialize_client_connection(const client_connection::ptr& ptr);
-  std::list<aw::player::colors> get_free_colors();
+  std::list<std::string> get_available_colors();
 
 private:
   asio::io_service& io_service_;
