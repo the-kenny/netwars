@@ -170,6 +170,14 @@ void server::handle_accept(client_connection::ptr new_connection,
 	root["available-colors"] = available_colors;
 
 	deliver_to(new_connection, write_json(root));
+
+	//Inform other players that there is a new client
+	json::Value new_client;
+	new_client["destination"] = "client";
+	new_client["type"] = "new-player";
+	new_client["player"] = serialize_client_connection(new_connection);
+
+	deliver_to_all_except(new_connection, write_json(new_client));
 	
 	start_accept();
   }
