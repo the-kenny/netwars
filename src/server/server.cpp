@@ -283,10 +283,7 @@ void server::handle_server_message(const json::Value& root,
 	  map_filename_ = root.get("map-file", 
 							   "UNDEFINED").asString();
 
-	  
-	  //TODO: Check if the md5sum matches
-
-	  //When the file can't be found, ask the host for the data
+   	  //When the file can't be found, ask the host for the data
 	  if(!boost::filesystem::exists(map_dir + map_filename_)) {
 		std::clog << map_dir + map_filename_
 				  << " doesn't exists. Asking host for data" << std::endl;
@@ -334,7 +331,7 @@ void server::handle_server_message(const json::Value& root,
 												"No map was loaded by the host");
 	  deliver_to(from, write_json(error));
 	}
-  } else if(type == "map-data") {
+  } else if(type == "map-data") { //MAP-DATA
 	try {
 	  std::string filename = root.get("filename", "UNDEFINED").asString();
 	  std::string md5sum = root.get("md5sum", "UNDEFINED").asString();
