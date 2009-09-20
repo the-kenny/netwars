@@ -1,5 +1,5 @@
 TARGET  := server
-SRCS    := server.cpp main.cpp
+SRCS    := server.cpp main.cpp client_connection.cpp
 OBJS    := ${SRCS:.cpp=.o} 
 DEPS    := ${SRCS:.cpp=.dep} 
 XDEPS   := $(wildcard ${DEPS}) 

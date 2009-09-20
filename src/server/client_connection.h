@@ -28,27 +28,8 @@ public:
   }
 
 protected:
-  void on_line_received(const std::string& line) {
-	//We simply deliver all messages unchanged to the other clients
-   
-	if(!deliver_callback_.empty()) {
-	  deliver_callback_(line, shared_from_this());
-	  receive_line();
-	} else {
-	  throw std::logic_error("No deliver-callback defined.");
-	}
-  }
-
-  void on_connection_closed(const std::string& reason) {
-	if(!connection_lost_callback_.empty()) {
-	  connection_lost_callback_(reason, shared_from_this());
-
-	  //Call super (to close socket)
-	  aw::connection::on_connection_closed(reason);
-	} else {
-	  throw std::logic_error("No connection-lost-callback defined.");
-	}
-  }
+  void on_line_received(const std::string& line);
+  void on_connection_closed(const std::string& reason);
 
 private:
   client_connection(asio::io_service& io)
