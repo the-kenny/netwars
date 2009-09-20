@@ -82,7 +82,7 @@ void connection::handle_connect(const boost::system::error_code& error,
 
 
 void connection::do_write(std::string message) {
-  std::cout << "do_write called" << std::endl;
+  //std::cout << "do_write called" << std::endl;
 
   bool write_in_progress = !send_queue_.empty();
   send_queue_.push_back(message);
