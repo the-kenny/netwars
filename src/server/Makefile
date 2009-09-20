@@ -7,6 +7,7 @@ CCFLAGS = -Wall -ggdb -I.. -I../lib
 LDFLAGS = -L.. -lnetwars -ljson -lboost_system -lboost_signals
 LIBS    =
 CC 	    = g++
+DEFINES = -DTIXML_USE_TICPP=1 -DTIXML_USE_STL=1
 
 .PHONY: all clean distclean 
 all:: ${TARGET} 
@@ -16,13 +17,13 @@ include ${XDEPS}
 endif 
 
 ${TARGET}: ${OBJS} 
-	${CC} ${LDFLAGS} -o $@ $^ ${LIBS} 
+	${CC} ${DEFINES} ${LDFLAGS} -o $@ $^ ${LIBS} 
 
 ${OBJS}: %.o: %.cpp %.dep 
-	${CC} ${CCFLAGS} -o $@ -c $< 
+	${CC} ${DEFINES} ${CCFLAGS} -o $@ -c $< 
 
 ${DEPS}: %.dep: %.cpp Makefile 
-	${CC} ${CCFLAGS} -MM $< > $@ 
+	${CC} ${DEFINES} ${CCFLAGS} -MM $< > $@ 
 
 clean:: 
 	rm -f *~ *.o ${TARGET} 

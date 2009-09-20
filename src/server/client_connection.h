@@ -7,6 +7,8 @@
 #include <boost/asio.hpp>
 #include <boost/shared_ptr.hpp>
 
+#include "game/player.h"
+
 using namespace boost;
 
 class client_connection: public aw::connection, public boost::enable_shared_from_this<client_connection> {
@@ -33,6 +35,7 @@ public:
   bool is_host;
   bool is_spectator;
   std::string username;
+  aw::player::colors color;
 
 protected:
   void on_line_received(const std::string& line);
@@ -40,8 +43,12 @@ protected:
 
 private:
   client_connection(asio::io_service& io)
-	: connection(io) {
+	: connection(io),
+	  is_host(false),
+	  is_spectator(true),
+	  username("") {
   }
+
   boost::signal<void(const std::string&,
 					 const client_connection::ptr&)> deliver_callback_;
   boost::signal<void(const std::string&,

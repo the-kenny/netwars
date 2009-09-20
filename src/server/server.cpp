@@ -80,7 +80,7 @@ void server::handle_lost_connection(const std::string& reason,
   root["type"] = "connection-lost";
   root["destination"] = "client";
   root["reason"] = reason;
-  root["player"] = "NONAME";
+  root["player"] = serialize_client_connection(from);
   
   deliver_to_all(write_json(root));
 }
@@ -107,6 +107,14 @@ void server::handle_accept(client_connection::ptr new_connection,
 	root["type"] = "server-status";
 	root["host"] = new_connection->is_host;
 	root["map"] = json::Value();
+
+	json::Value players(json::arrayValue);
+	BOOST_FOREACH(client_connection::ptr& c, connections_) {
+	  if(c != new_connection)
+		players.append(serialize_client_connection(c));
+	}
+
+	root["players"] = players;
 
 	deliver_to(new_connection, write_json(root));
 	
@@ -145,4 +153,51 @@ void server::handle_server_message(const json::Value& root,
 	  deliver_to_all_except(from, write_json(notify));
 	}
   }
+}
+
+json::Value server::serialize_client_connection(const client_connection::ptr& ptr) {
+  json::Value root;
+  root["name"] = ptr->username;
+  root["is-host"] = ptr->is_host;
+  root["is-spectator"] = ptr->is_spectator;
+
+  if(ptr->is_spectator) {
+	root["color"] = json::Value();
+  } else {
+	switch(ptr->color) {
+	case aw::player::RED:
+	  root["color"] = "red";
+	  break;
+	case aw::player::BLUE:
+	  root["color"] = "blue";
+	  break;
+	case aw::player::GREEN:
+	  root["color"] = "green";
+	  break;
+	case aw::player::YELLOW:
+	  root["color"] = "yellow";
+	  break;
+	case aw::player::BLACK:
+	  root["color"] = "black";
+	  break;
+	}
+  }
+
+  return root;
+}
+
+std::list<aw::player::colors> server::get_free_colors() {
+  std::list<aw::player::colors> colors;
+  colors.push_back(aw::player::RED);
+  colors.push_back(aw::player::BLUE);
+  colors.push_back(aw::player::GREEN);
+  colors.push_back(aw::player::YELLOW);
+  colors.push_back(aw::player::BLACK);
+
+  BOOST_FOREACH(client_connection::ptr& c, connections_) {
+	if(!c->is_spectator)
+	  colors.remove(c->color);
+  }
+
+  return colors;
 }
