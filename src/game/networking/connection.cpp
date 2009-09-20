@@ -107,7 +107,7 @@ void connection::handle_write(const boost::system::error_code& error) {
 										   boost::asio::placeholders::error));
 	}
   } else {
-	on_connection_closed(boost::lexical_cast<std::string>(error));
+	on_connection_closed(error.message());
   }
 }
 
@@ -126,6 +126,6 @@ void connection::handle_read(const boost::system::error_code& error) {
 											  this,
 											  boost::asio::placeholders::error));
   }  else {
-	on_connection_closed(boost::lexical_cast<std::string>(error));
+	on_connection_closed(error.message());
   }
 }
