@@ -6,42 +6,44 @@
 #include <boost/filesystem.hpp>
 
 #include "game/map_loader/map_loader.h"
+#include "game/game_mechanics/player_utilities.h"
 
 #include "md5/md5.h"
 #include "base64/base64.h"
 
 namespace json = Json;
+using namespace aw;
 
 //Some convenience-methods
 namespace {
-  std::string get_color_string(aw::player::colors c) {
+  std::string get_color_string(player::colors c) {
 	switch(c) {
-	case aw::player::RED:
+	case player::RED:
 	  return "red";
-	case aw::player::BLUE:
+	case player::BLUE:
 	  return "blue";
-	case aw::player::GREEN:
+	case player::GREEN:
 	  return "green";
-	case aw::player::YELLOW:
+	case player::YELLOW:
 	  return "yellow";
-	case aw::player::BLACK:
+	case player::BLACK:
 	  return "black";
 	default:
 	  return "FAIL";
 	}
   }
 
-  aw::player::colors get_color_from_string(const std::string& c) {
+  player::colors get_color_from_string(const std::string& c) {
 	if(c == "red")
-	  return aw::player::RED;
+	  return player::RED;
 	else if(c == "blue")
-	  return aw::player::BLUE;
+	  return player::BLUE;
 	else if(c == "greeen")
-	  return aw::player::GREEN;
+	  return player::GREEN;
 	else if(c == "yellow")
-	  return aw::player::YELLOW;
+	  return player::YELLOW;
 	else if(c == "black")
-	  return aw::player::BLACK;
+	  return player::BLACK;
 	else
 	  throw std::runtime_error("wrong color-string");
   }
@@ -182,7 +184,7 @@ void server::handle_server_message(const json::Value& root,
 								   client_connection::ptr from) {
   const std::string type = root.get("type", "UNDEFINED").asString();
   
-  if(type == "UNDEFINED") {
+  if(type == "UNDEFINED") { //UNDEFINED
 	throw std::runtime_error("Type for a server-message is undefined");
 
   } else if(type == "set-username") {
@@ -204,7 +206,23 @@ void server::handle_server_message(const json::Value& root,
 
 	  deliver_to_all_except(from, write_json(notify));
 	}
-  } else if(type == "choose-color") {
+  } else if(type == "get-available-colors") { //GET-AVAILABLE-COLORS
+	json::Value root;
+	root["destination"] = "client";
+	root["type"] = "available-colors";
+	root["request"] = "get-available-colors";
+
+	if(map_) {
+	  json::Value available_colors(json::arrayValue);
+	  BOOST_FOREACH(const std::string& c, get_available_colors())
+		available_colors.append(c);
+	  root["available-colors"] = available_colors;
+	} else {
+	  root["available-colors"] = json::Value();
+	}
+
+	deliver_to(from, write_json(root));
+  } else if(type == "choose-color") { //CHOOSE-COLOR
 	try {
 	  std::string color = root.get("chosen-color", "UNDEFINED").asString();
 
@@ -246,7 +264,7 @@ void server::handle_server_message(const json::Value& root,
 		
 	  deliver_to(from, write_json(error));
 	}
-  } else if(type == "load-map") {
+  } else if(type == "load-map") { //LOAD-MAP
 	try {
 	  if(!from->is_host)
 		throw std::runtime_error("Only hosts can load maps");
@@ -274,9 +292,9 @@ void server::handle_server_message(const json::Value& root,
 	  }
 
 	  //Load map
-	  aw::map_loader loader;
-	  aw::map_loader::loaded_map::ptr loaded_map = loader.load(map_dir + map_filename_);
-	  map_ = aw::map::ptr(new aw::map(loaded_map->m_terrain, 
+	  map_loader loader;
+	  map_loader::loaded_map::ptr loaded_map = loader.load(map_dir + map_filename_);
+	  map_ = map::ptr(new map(loaded_map->m_terrain, 
 									  loaded_map->m_unit));
 
 	  //Load map-data
@@ -297,7 +315,7 @@ void server::handle_server_message(const json::Value& root,
 	  //Deliver an errror-message to the sender
 	  deliver_to(from, write_json(create_error_response(type, e.what())));
 	}
-  } else if(type == "get-map") {
+  } else if(type == "get-map") { //GET-MAP
 	if(map_ != NULL) {
 	  deliver_to(from, write_json(create_map_data_response()));
 	} else {
@@ -324,13 +342,38 @@ json::Value server::serialize_client_connection(const client_connection::ptr& pt
 }
 
 std::list<std::string> server::get_available_colors() {
-  static aw::player::colors colors[] = { aw::player::RED, 
-										 aw::player::BLUE,
-										 aw::player::GREEN,
-										 aw::player::YELLOW,
-										 aw::player::BLACK };
+  static player::colors colors[] = { player::RED, 
+										 player::BLUE,
+										 player::GREEN,
+										 player::YELLOW,
+										 player::BLACK };
   
-  std::list<aw::player::colors> coltemp(colors, colors+5);
+  if(!map_) {
+	return std::list<std::string>();
+  } else {
+	std::list<std::string> ret;
+	
+	if(game_mechanics::participates(map_, player::RED))
+	  ret.push_back(get_color_string(player::RED));
+	if(game_mechanics::participates(map_, player::BLUE))
+	  ret.push_back(get_color_string(player::BLUE));
+	if(game_mechanics::participates(map_, player::GREEN))
+	  ret.push_back(get_color_string(player::GREEN));
+	if(game_mechanics::participates(map_, player::YELLOW))
+	  ret.push_back(get_color_string(player::YELLOW));
+	if(game_mechanics::participates(map_, player::BLACK))
+	  ret.push_back(get_color_string(player::BLACK));
+
+	BOOST_FOREACH(client_connection::ptr& c, connections_) {
+	  if(!c->is_spectator)
+		ret.remove(get_color_string(c->color));
+	}
+
+	return ret;
+  }
+  
+/*
+  std::list<player::colors> coltemp(colors, colors+5);
 
   BOOST_FOREACH(client_connection::ptr& c, connections_) {
 	if(!c->is_spectator)
@@ -338,15 +381,16 @@ std::list<std::string> server::get_available_colors() {
   }
 
   std::list<std::string> ret;
-  BOOST_FOREACH(aw::player::colors c, coltemp)
+  BOOST_FOREACH(player::colors c, coltemp)
 	ret.push_back(get_color_string(c));
 
   return ret;
+  */
 }
 
  json::Value server::create_error_response(const std::string& request,
 										   const std::string& reason) {
-   json::Value root;
+   Json::Value root;
    root["destination"] = "client";
    root["type"] = "error";
    root["request"] = request;
