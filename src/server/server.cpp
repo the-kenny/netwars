@@ -7,6 +7,7 @@
 
 #include "game/map_loader/map_loader.h"
 #include "game/game_mechanics/player_utilities.h"
+#include "game/config.h"
 
 #include "md5/md5.h"
 #include "base64/base64.h"
@@ -47,14 +48,11 @@ namespace {
 	else
 	  throw std::runtime_error("wrong color-string");
   }
-
-  //Needs to be configurable
-  const std::string map_dir = "maps/";
 }
 
 server::server(asio::io_service& io)
   : io_service_(io), acceptor_(io, tcp::endpoint(tcp::v4(), 4242)) {
-
+  map_dir = config::instance().get<std::string>("/config/server/map-directory");
 }
 
 void server::start_accept() {

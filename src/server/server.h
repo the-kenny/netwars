@@ -58,6 +58,8 @@ private:
   std::string map_filename_;
   boost::shared_array<unsigned char> map_data_;
   std::size_t map_data_size_;
+
+  std::string map_dir;
 };
 
 #endif
