@@ -5,6 +5,7 @@
 #include "terrain.h"
 #include "player.h"
 #include "coord.h"
+#include "map_loader/map_loader.h"
 
 #include <boost/multi_array.hpp>
 #include <boost/shared_ptr.hpp>
@@ -21,20 +22,26 @@ namespace aw
 			typedef boost::shared_ptr<map> ptr;
 
 			map();
-			map(const boost::multi_array<terrain::ptr, 2> &terrain, const boost::multi_array<unit::ptr, 2> &units);
+			map(const boost::multi_array<terrain::ptr, 2> &terrain, 
+				const boost::multi_array<unit::ptr, 2> &units);
 
-			const unit::ptr &get_unit(const coord& c) const { return m_units[c.x][c.y]; }
-			const terrain::ptr &get_terrain(const coord& c) const { return m_terrain[c.x][c.y]; }
+	  map(const map_loader::loaded_map::ptr& lmap);
+
+			const unit::ptr &get_unit(const coord& c) const { 
+			  return m_units[c.x][c.y]; 
+			}
+			const terrain::ptr &get_terrain(const coord& c) const { 
+			  return m_terrain[c.x][c.y]; 
+			}
 
 			void add_unit(const coord& c, const unit::ptr &u);
 			void delete_unit(const coord& c);
 			unit::ptr detach_unit(const coord& c);
 
 			void move_unit(const coord& from, const coord& to);
-			void change_building_color(const coord& c, const player::ptr &player);
+			void change_building_color(const coord& c, 
+									   const player::ptr &player);
 
-//			unsigned int get_player_count(); //Haesslich implentiert
-//			bool participates(player::colors color); //Nun im namespace game_mechanics::participates()
 			unsigned int num_buildings(player::colors c);
 
 			bool valid();
@@ -42,19 +49,24 @@ namespace aw
 			int width() const { return 30; }
 			int height() const { return 20; }
 
-			bool on_map(const coord& c) const
-			{
+			bool on_map(const coord& c) const {
 				return (c.x < 30 && c.x > -1 && c.y < 20 && c.y > -1);
 			}
 			
 
-//			display::scene::ptr scene();
-
 		private:
 			void init();
+	  void fill_arrays(const boost::multi_array<terrain::ptr, 2> &terrain, 
+					   const boost::multi_array<unit::ptr, 2> &units);
 
 			boost::multi_array<terrain::ptr, 2> m_terrain;
 			boost::multi_array<unit::ptr, 2> m_units;
+
+	  //Some metadata
+	  std::string name;
+	  std::string author;
+	  std::string description;
+	  std::string filename;
 	};
 }
 

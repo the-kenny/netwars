@@ -386,7 +386,7 @@ void game::load_map(const std::string &file)
 	aw::map_loader map_loader(file);
 	aw::map_loader::loaded_map::ptr loaded_map = map_loader.load();
 
-	aw::map::ptr map(new aw::map(loaded_map->m_terrain, loaded_map->m_unit));
+	aw::map::ptr map(new aw::map(loaded_map));
 
 	if(!map->valid())
 		throw std::runtime_error("[game::load_map] " + file + " isn't valid.");
