@@ -39,6 +39,8 @@ private:
   //Convenience-method
   std::string write_json(const Json::Value& v);
   Json::Value serialize_client_connection(const client_connection::ptr& ptr);
+  Json::Value serialize_map_metadata(const aw::map::ptr& map);
+  
   std::list<std::string> get_available_colors();
 
   Json::Value create_error_response(const std::string& request,

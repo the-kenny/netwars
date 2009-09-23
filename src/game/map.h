@@ -52,6 +52,10 @@ namespace aw
 			bool on_map(const coord& c) const {
 				return (c.x < 30 && c.x > -1 && c.y < 20 && c.y > -1);
 			}
+
+	  std::string get_title() const { return title; }
+	  std::string get_author() const { return author; }
+	  std::string get_description() const { return description; }
 			
 
 		private:
@@ -66,7 +70,6 @@ namespace aw
 	  std::string title;
 	  std::string author;
 	  std::string description;
-	  std::string filename;
 	};
 }
 

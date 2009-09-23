@@ -149,12 +149,16 @@ void server::handle_accept(client_connection::ptr new_connection,
 	new_connection->connection_lost_callback().connect(boost::bind(&server::handle_lost_connection,this,_1,_2));
 	new_connection->start();
 
-	//Inform the client that he is the host now
+	//Send the client some informations about the game
 	json::Value root;
 	root["destination"] = "client";
 	root["type"] = "server-status";
 	root["host"] = new_connection->is_host;
-	root["map"] = json::Value();
+
+	if(map_)
+	  root["map"] = serialize_map_metadata(map_);
+	else
+	  root["map"] = Json::Value();
 
 	json::Value players(json::arrayValue);
 	BOOST_FOREACH(client_connection::ptr& c, connections_) {
@@ -199,8 +203,6 @@ void server::handle_server_message(const json::Value& root,
 	std::string old_username = from->username;
 	std::string new_username = root.get("new-username", 
 										old_username).asString();
-
-
 	  
 	if(old_username != new_username) {
 	  from->username = new_username;
@@ -302,8 +304,7 @@ void server::handle_server_message(const json::Value& root,
 	  //Load map
 	  map_loader loader;
 	  map_loader::loaded_map::ptr loaded_map = loader.load(map_dir + map_filename_);
-	  map_ = map::ptr(new map(loaded_map->m_terrain, 
-									  loaded_map->m_unit));
+	  map_ = map::ptr(new map(loaded_map));
 
 	  //Load map-data
 	  std::ifstream is(std::string(map_dir + map_filename_).c_str());
@@ -385,6 +386,21 @@ json::Value server::serialize_client_connection(const client_connection::ptr& pt
   return root;
 }
 
+Json::Value server::serialize_map_metadata(const aw::map::ptr& map) {
+  Json::Value root;
+  root["title"] = map->get_title();
+  root["author"] = map->get_author();
+  root["description"] = map->get_description();
+  root["filename"] = map_filename_;
+  
+  MD5 md5;
+  md5.update(reinterpret_cast<char*>(map_data_.get()), map_data_size_);
+  md5.finalize();
+  root["md5sum"] = md5.hexdigest();
+  
+  return root;
+}
+
 std::list<std::string> server::get_available_colors() {
   /*
 	static player::colors colors[] = { player::RED, 
@@ -446,15 +462,10 @@ std::list<std::string> server::get_available_colors() {
  }
 
 Json::Value server::create_map_data_response() {
-  json::Value root;
+  json::Value root = serialize_map_metadata(map_);
   root["destination"] = "server";
   root["type"] = "map-loaded";
-  root["filename"] = map_filename_;
-  
-  MD5 md5;
-  md5.update(reinterpret_cast<char*>(map_data_.get()), map_data_size_);
-  md5.finalize();
-  root["md5sum"] = md5.hexdigest();
+
   root["data"] = base64_encode(reinterpret_cast<unsigned char*>(map_data_.get()),
 							   map_data_size_);
 
