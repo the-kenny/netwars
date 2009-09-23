@@ -108,10 +108,10 @@ void server::handle_message(const std::string& message,
 	  //Just pass it to all other clients
 	  deliver_to_all_except(from, message);
 	} else {
-	  std::clog << "Destionation unknown (" << dest 
+	  std::clog << "Destination unknown (" << dest 
 				<< "), discarding it" << std::endl;
 	}
-  } catch(const std::exception& e) {
+  } catch(const std::runtime_error& e) {
 	std::clog << "Got invalid json: " << message << std::endl;
   }
 }
