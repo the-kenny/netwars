@@ -63,7 +63,7 @@ namespace aw
 			boost::multi_array<unit::ptr, 2> m_units;
 
 	  //Some metadata
-	  std::string name;
+	  std::string title;
 	  std::string author;
 	  std::string description;
 	  std::string filename;

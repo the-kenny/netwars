@@ -203,6 +203,10 @@ namespace aw
 		position += sizeof(uint32_t);
 		if(desc_length > 0)
 			m_description.assign(&m_data.at(position), desc_length);
+
+		m_map->title = m_name;
+		m_map->description = m_description;
+		m_map->author = m_author;
 	  }
 	}
 

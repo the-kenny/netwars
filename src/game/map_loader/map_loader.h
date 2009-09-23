@@ -26,6 +26,10 @@ namespace aw
 
 				boost::multi_array<terrain::ptr, 2> terrain;
 				boost::multi_array<unit::ptr, 2> unit;
+
+			  std::string title;
+			  std::string author;
+			  std::string description;
 			};
 
 			map_loader(const std::string &filename = "");

@@ -23,6 +23,10 @@ map::map(const boost::multi_array<terrain::ptr, 2> &terrain,
 map::map(const map_loader::loaded_map::ptr& lmap) {
   this->init();
   this->fill_arrays(lmap->terrain, lmap->unit);
+
+  title = lmap->title;
+  author = lmap->author;
+  description = lmap->description;
 }
 
 void map::add_unit(const coord& c, const unit::ptr &u)
