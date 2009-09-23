@@ -11,7 +11,7 @@ void game_settings::load_map(const std::string &filename)
 	map_loader m;
 	map_loader::loaded_map::ptr loaded_map = m.load(filename);
 
-	m_map = map::ptr(new map(loaded_map->m_terrain, loaded_map->m_unit));
+	m_map = map::ptr(new map(loaded_map));
 
 	if(game_mechanics::participates(m_map, player::RED))
 	{

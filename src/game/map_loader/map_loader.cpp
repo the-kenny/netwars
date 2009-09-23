@@ -212,19 +212,19 @@ namespace aw
 		{
 			const terrain::types terrain_t = convert_to_terrain_type(data);
 
-			m_map->m_terrain[x][y]->type(terrain_t);
-			m_map->m_terrain[x][y]->extra(convert_to_terrain_extra(data));
+			m_map->terrain[x][y]->type(terrain_t);
+			m_map->terrain[x][y]->extra(convert_to_terrain_extra(data));
 
 			if(terrain_t == terrain::SEGMENT_PIPE)
 			{
-				m_map->m_unit[x][y] = unit::ptr(new dummy_unit("segment_pipe"));
+				m_map->unit[x][y] = unit::ptr(new dummy_unit("segment_pipe"));
 
 				return;
 			}
 		}
 		else if(data >= 500 && data <= 899)
 		{
-			m_map->m_unit[x][y] = unit::ptr(new unit(convert_to_unit_type(data), convert_to_unit_color(data)));
+			m_map->unit[x][y] = unit::ptr(new unit(convert_to_unit_type(data), convert_to_unit_color(data)));
 		}
 		else if(data >= 900 && data <= 1299)
 		{
