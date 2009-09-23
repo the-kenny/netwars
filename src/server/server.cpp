@@ -463,7 +463,7 @@ std::list<std::string> server::get_available_colors() {
 
 Json::Value server::create_map_data_response() {
   json::Value root = serialize_map_metadata(map_);
-  root["destination"] = "server";
+  root["destination"] = "client";
   root["type"] = "map-loaded";
 
   root["data"] = base64_encode(reinterpret_cast<unsigned char*>(map_data_.get()),
