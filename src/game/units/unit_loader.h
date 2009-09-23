@@ -38,7 +38,7 @@ namespace aw
 			class loaded_unit
 			{
 				public:
-					unit::ptr unit;
+					aw::unit::ptr unit;
 
 					std::string name;
 					std::string internal_name;

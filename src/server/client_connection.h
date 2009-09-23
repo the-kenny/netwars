@@ -12,6 +12,7 @@
 using namespace boost;
 
 class client_connection: public aw::connection, public boost::enable_shared_from_this<client_connection> {
+
 public:
   typedef boost::shared_ptr<client_connection> ptr;
 

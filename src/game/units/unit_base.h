@@ -328,8 +328,21 @@ namespace aw
 					return false;
 			}
 
-			void fire()
+			void fire(int weapon)
 			{
+			  if(weapon == 0) {
+				assert(main_weapon_useable());
+
+				if(main_weapon.ammo > 0)
+				  main_weapon.ammo--;
+			  } else if(weapon == 1) {
+				assert(alt_weapon_useable());
+				
+				if(alt_weapon.ammo > 0)
+				  alt_weapon.ammo--;
+			  }
+			  
+			  /*
 				if(main_weapon_useable())
 				{
 					if(main_weapon.ammo > 0)
@@ -344,6 +357,7 @@ namespace aw
 				{
 					throw;
 				}
+			  */
 
 				m_has_shot = true;
 			}

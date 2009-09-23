@@ -2,6 +2,7 @@
 	#define AW_MAP_LOADER_H
 
 #include <boost/multi_array.hpp>
+#include <boost/cstdint.hpp>
 #include "game/units/unit_base.h"
 #include "game/terrain.h"
 
@@ -51,13 +52,13 @@ namespace aw
 
 			void read_metadata(std::size_t position);
 
-			void process_data(uint16_t data, unsigned int x, unsigned int y);
+			void process_data(boost::uint16_t data, unsigned int x, unsigned int y);
 
-			terrain::types convert_to_terrain_type(uint16_t value);
-			terrain::extras convert_to_terrain_extra(uint16_t value);
+			terrain::types convert_to_terrain_type(boost::uint16_t value);
+			terrain::extras convert_to_terrain_extra(boost::uint16_t value);
 
-			unit::types convert_to_unit_type(uint16_t value);
-			unit::colors convert_to_unit_color(uint16_t value);
+			unit::types convert_to_unit_type(boost::uint16_t value);
+			unit::colors convert_to_unit_color(boost::uint16_t value);
 
 //			display::scene::ptr m_scene;
 			loaded_map::ptr m_map;
@@ -68,9 +69,9 @@ namespace aw
 
 			map_type m_map_type;
 			std::string m_header;
-			uint8_t m_tileset;
-			uint8_t m_size_x;
-			uint8_t m_size_y;
+			boost::uint8_t m_tileset;
+			boost::uint8_t m_size_x;
+			boost::uint8_t m_size_y;
 
 			std::string m_name;
 			std::string m_author;

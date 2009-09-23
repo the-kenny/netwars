@@ -43,7 +43,7 @@ class GameScene: public QGraphicsScene {
 		void reset();
 
 		signalClickedT &signalClicked() { return _signalClicked; }
-		signalFocusChangedT &signalFocusChanged() { return _signalFocusChanged; }
+  		signalFocusChangedT &signalFocusChanged() { return _signalFocusChanged; }
 
 	protected:
         virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);

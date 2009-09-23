@@ -20,6 +20,7 @@ public:
   void start_accept();
 
   void deliver_to_all(const std::string& message);
+
   void deliver_to_all_except(const client_connection::ptr& except, 
 							 const std::string& message);
   void deliver_to(client_connection::ptr& to, const std::string& message);
@@ -46,8 +47,7 @@ private:
   Json::Value create_error_response(const std::string& request,
 									const std::string& reason);
   Json::Value create_map_data_response();
-						   
-
+						  
 private:
   asio::io_service& io_service_;
   asio::ip::tcp::acceptor acceptor_;

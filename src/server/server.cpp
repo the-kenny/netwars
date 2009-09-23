@@ -68,6 +68,7 @@ void server::start_accept() {
 
 void server::deliver_to_all(const std::string& message) {
   std::clog << "Delivering message to all clients" << std::endl;
+
   BOOST_FOREACH(client_connection::ptr& c, connections_) {
 	c->send_message(message);
   }
@@ -180,7 +181,7 @@ void server::handle_accept(client_connection::ptr new_connection,
 	new_client["player"] = serialize_client_connection(new_connection);
 
 	deliver_to_all_except(new_connection, write_json(new_client));
-	
+
 	start_accept();
   }
 }

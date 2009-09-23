@@ -137,6 +137,7 @@ void GameScene::drawItems(QPainter *painter,
 	switch(a.action) {
 	case UnitActions::MOVED:
 	  getUnitGraphicsItem(a.unit)->moveTo(mapToSceneCoord(a.position));
+	  getUnitGraphicsItem(a.unit)->setCurrentTerrain(currentScene->get_terrain(a.position));
 	  break;
 
 	  //The next two things are handled directly by processNewScene().
@@ -207,6 +208,7 @@ void GameScene::addUnitForDrawing(const aw::unit::ptr &u, const aw::coord& c) {
 void GameScene::removeUnitFromDrawing(const aw::unit::ptr &u) {
   UnitGraphicsItem* ugi = getUnitGraphicsItem(u);
 
+  ugi->stop();
   this->removeItem(ugi);
   managedUnits.erase(u);
 
@@ -219,7 +221,7 @@ void GameScene::processNewScene(const scene::ptr& newScene) {
 	std::map<aw::unit::ptr, aw::coord> newUnits;
 	typedef std::map<aw::unit::ptr, aw::coord>::iterator iterator;
 
-	//Cycle through the old scene and collect all units
+	//Cycle through the scenes and collect all units
 	for(int x = 0; x < 30; ++x) {
 	  for(int y = 0; y < 20; ++y) {
 		const unit::ptr &oldUnit = currentScene->get_unit(x, y);
@@ -269,7 +271,7 @@ void GameScene::processNewScene(const scene::ptr& newScene) {
 		*/
 	  }
 
-	  BOOST_FOREACH(pair oldPair, oldUnits) {
+	  BOOST_FOREACH(const pair& oldPair, oldUnits) {
 		iterator it = newUnits.find(oldPair.first);
 		
 		//Unit isn't in the new scene - it is gone.
