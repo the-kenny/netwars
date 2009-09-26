@@ -38,8 +38,9 @@ void GameDialog::mapFileChanged(QString newValue) {
 	_mapFile = newValue.toStdString();
 
 	if(minimapThread != NULL) {
-	  minimapThread->terminate();
-	  disconnect(minimapThread, SIGNAL(minimapReady(QImage)), this, SLOT(setMinimapImage(QImage)));
+	  //minimapThread->terminate();
+	  //disconnect(minimapThread, SIGNAL(minimapReady(QImage)), this, SLOT(setMinimapImage(QImage)));
+	  //delete minimapThread;
 	  minimapThread = NULL;
 	}
 
