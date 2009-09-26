@@ -46,7 +46,7 @@ void MinimapDrawingThread::run() {
 		  terrainColor = QColor(50, 110, 250);
 		  break;
 		case aw::terrain::MOUNTAIN:
-		  terrainColor = QColor(255.0, 230, 230);
+		  terrainColor = QColor(235.0, 210, 210);
 		  break;
 		case aw::terrain::PIPE:
 		case aw::terrain::SEGMENT_PIPE:
@@ -60,7 +60,7 @@ void MinimapDrawingThread::run() {
 		  terrainColor = QColor(80, 130, 255);
 		  break;
 		case aw::terrain::BEACH:
-		  terrainColor = QColor(255.0, 240, 80);
+		  terrainColor = QColor(245.0, 230, 70);
 		  break;
 		  
 		default:
