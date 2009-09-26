@@ -18,7 +18,10 @@ namespace aw
 				typedef boost::shared_ptr<loaded_map> ptr;
 
 				loaded_map()
-				: m_terrain(boost::extents[30][20]), m_unit(boost::extents[30][20])
+				: m_terrain(boost::extents[30][20]),
+				  m_unit(boost::extents[30][20]),
+				  width(30),
+				  height(20)
 				{
 					for(std::size_t i = 0; i < 30; i++)
 						for(std::size_t j = 0; j < 20; j++)
@@ -28,6 +31,9 @@ namespace aw
 
 				boost::multi_array<terrain::ptr, 2> m_terrain;
 				boost::multi_array<unit::ptr, 2> m_unit;
+
+			  unsigned int width;
+			  unsigned int height;
 			};
 
 			map_loader(const std::string &filename = "");
