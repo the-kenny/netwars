@@ -53,13 +53,11 @@ void MinimapDrawingThread::run() {
 		  terrainColor = QColor(200, 110, 130);
 		  break;
 		case aw::terrain::BRIDGE:
-		  terrainColor = QColor(1/2.0, 1/2.0, 1/2.0);
-		  break;
 		case aw::terrain::STREET:
 		  terrainColor = Qt::gray;
 		  break;
 		case aw::terrain::RIVER:
-		  terrainColor = QColor(80, 130, 70);
+		  terrainColor = QColor(80, 130, 255);
 		  break;
 		case aw::terrain::BEACH:
 		  terrainColor = QColor(255.0, 240, 80);
