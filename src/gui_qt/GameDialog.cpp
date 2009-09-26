@@ -43,7 +43,8 @@ void GameDialog::mapFileChanged(QString newValue) {
 	  minimapThread = NULL;
 	}
 
-	minimapThread = new MinimapDrawingThread;
+	minimapThread = new MinimapDrawingThread(_mapFile,
+											 imageLabel);
 
 	//Minimap
 	connect(minimapThread, SIGNAL(minimapReady(QImage)), this, SLOT(setMinimapImage(QImage)), Qt::QueuedConnection);
