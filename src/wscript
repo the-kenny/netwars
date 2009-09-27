@@ -13,6 +13,7 @@ def set_options(opt):
 
 def configure(conf):
 	windows = sys.platform.startswith('win')
+	darwin = sys.platform.startswith('darwin')
 	conf.env['GUI'] = Options.options.gui
 	conf.env['DEBUG'] = Options.options.debug
 
@@ -27,6 +28,17 @@ def configure(conf):
 	else:
 		conf.env.append_value('CXXFLAGS', '-O2')
 		conf.env.append_value('LINKFLAGS', '-O2')
+
+	if darwin:
+		conf.env.append_value('CXXFLAGS', '-arch')
+		conf.env.append_value('CXXFLAGS', 'i386')
+		conf.env.append_value('CXXFLAGS', '-arch')
+		conf.env.append_value('CXXFLAGS', 'ppc')
+		
+		conf.env.append_value('LINKFLAGS', '-arch')
+		conf.env.append_value('LINKFLAGS', 'i386')
+		conf.env.append_value('LINKFLAGS', '-arch')
+		conf.env.append_value('LINKFLAGS', 'ppc')
 
 	if conf.env['GUI'] == 'QT':
 		conf.check_tool('qt4')
