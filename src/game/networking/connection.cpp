@@ -125,7 +125,7 @@ void connection::handle_read(const boost::system::error_code& error) {
 								  boost::bind(&connection::handle_read,
 											  this,
 											  boost::asio::placeholders::error));
-  }  else {
+  } else {
 	on_connection_closed(error.message());
   }
 }
