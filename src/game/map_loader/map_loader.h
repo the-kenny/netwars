@@ -18,8 +18,8 @@ namespace aw
 				typedef boost::shared_ptr<loaded_map> ptr;
 
 				loaded_map()
-				: m_terrain(boost::extents[30][20]),
-				  m_unit(boost::extents[30][20]),
+				: terrain(boost::extents[30][20]),
+				  unit(boost::extents[30][20]),
 				  width(30),
 				  height(20)
 				{
@@ -28,8 +28,8 @@ namespace aw
 							terrain[i][j] = terrain::create();
 				}
 
-				boost::multi_array<terrain::ptr, 2> m_terrain;
-				boost::multi_array<unit::ptr, 2> m_unit;
+				boost::multi_array<terrain::ptr, 2> terrain;
+				boost::multi_array<unit::ptr, 2> unit;
 
 			  unsigned int width;
 			  unsigned int height;
