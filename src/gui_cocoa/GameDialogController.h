@@ -5,6 +5,8 @@
 	
 	bool startGame;
 	
+	bool mapIsValid;
+	
 	int initialFunds;
 	int fundsPerBuilding;
 	NSString* mapFile;
@@ -13,6 +15,7 @@
 @property int initialFunds;
 @property int fundsPerBuilding;
 @property(retain) NSString* mapFile;
+@property bool mapIsValid;
 
 -(GameDialogController*)init;
 - (bool)run;

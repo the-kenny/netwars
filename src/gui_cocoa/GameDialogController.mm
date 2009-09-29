@@ -10,11 +10,13 @@
 @synthesize initialFunds;
 @synthesize fundsPerBuilding;
 @synthesize mapFile;
+@synthesize mapIsValid;
 
 -(GameDialogController*)init {
 	self = [super initWithWindowNibName:@"GameDialog"];
 
 	startGame = false;
+	[self setMapIsValid:false];
 	
 	[self setInitialFunds:aw::config().get<int>("/config/defaults/initial-funds")];
 	[self setFundsPerBuilding:aw::config().get<int>("/config/defaults/funds-per-building")];
@@ -60,9 +62,11 @@
 	
 	[panel setTitle:@"Select a map to open"]; // Display the dialog. If the OK button was pressed, // process the files. 
 	if ([panel runModalForDirectory:nil file:nil types:fileTypes] == NSOKButton) { 
+		//Set mapIsValid to false until it's corrected
+		[self setMapIsValid:false];
+		
 		self.mapFile = [[panel filenames] objectAtIndex:0];
 
-		
 		[NSThread detachNewThreadSelector:@selector(createMapPreviewThreaded) toTarget:self withObject:nil];
 		//[thread start];
 		//[self createMapPreview];
@@ -76,17 +80,21 @@
 
 - (void)createMapPreviewThreaded {
 	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-	
+
+	//Use this as a small hack to check if the map is valid	
 	try {
 		[mapPreview performSelectorOnMainThread:@selector(setImage:) 
 									 withObject:[self createMapPreview] 
 								  waitUntilDone:NO];
+		
+		[self setMapIsValid:true];
 	} catch(const std::exception& e) {
 		NSImage* failImg = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"loading-map-error" 
 																								   ofType:@"png"]];
 		[mapPreview performSelectorOnMainThread:@selector(setImage:) 
 									 withObject:failImg
 								  waitUntilDone:NO];
+		[self setMapIsValid:false];
 	}
 	
 	[pool release];
