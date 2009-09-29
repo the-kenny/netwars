@@ -65,7 +65,7 @@
 }
 
 - (NSPoint)toLayerCoordinates:(NSPoint)pos rect:(NSSize)size {	
-	NSSize viewSize = [layer bounds].size;
+	CGSize viewSize = [layer bounds].size;
 	
 	int unflippedX = pos.x*16;
 	int unflippedY = pos.y*16;

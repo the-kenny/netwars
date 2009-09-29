@@ -77,9 +77,17 @@
 - (void)createMapPreviewThreaded {
 	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 	
-	[mapPreview performSelectorOnMainThread:@selector(setImage:) 
-								 withObject:[self createMapPreview] 
-							  waitUntilDone:NO];
+	try {
+		[mapPreview performSelectorOnMainThread:@selector(setImage:) 
+									 withObject:[self createMapPreview] 
+								  waitUntilDone:NO];
+	} catch(const std::exception& e) {
+		NSImage* failImg = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"loading-map-error" 
+																								   ofType:@"png"]];
+		[mapPreview performSelectorOnMainThread:@selector(setImage:) 
+									 withObject:failImg
+								  waitUntilDone:NO];
+	}
 	
 	[pool release];
 }
