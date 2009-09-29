@@ -86,15 +86,15 @@ namespace aw
 			
 	//Menu-Callbacks
 	typedef boost::signals2::signal<units::actions 
-(const std::list<units::actions>&)> unit_action_menu_callback_t;
+									(const std::list<units::actions>&)> unit_action_menu_callback_t;
 	typedef boost::signals2::signal<unit::types (unit::workshops, const player::ptr&)> unit_buy_menu_callback_t;
 	typedef boost::signals2::signal<int (const std::list<unit::ptr> &)> unit_unload_menu_callback_t;
 
 	//Misc callbacks
 	typedef boost::signals2::signal<void 
-						  (const unit::ptr&)> unit_clicked_callback_t;
+									(const unit::ptr&)> unit_clicked_callback_t;
 	typedef boost::signals2::signal<void 
-						  (const terrain::ptr&)> terrain_clicked_callback_t;
+									(const terrain::ptr&)> terrain_clicked_callback_t;
 
 	enum gamestate { IDLE, DISPLAYING, 
 					 MOVING, ATTACKING, 
@@ -129,27 +129,32 @@ namespace aw
 	terrain_clicked_callback_t &signal_terrain_clicked() { 
 	  return m_signal_terrain_clicked; 
 	}
-			
-  private:
-	void on_unit_click(const coord &pos, int key);
-	void on_building_click(const coord &pos, int key);
-	void on_free_click(const coord &pos, int key);
 
-	units::actions show_actions(const coord &pos);
-	void process_action(units::actions action, const coord &pos);
+  protected:
+	virtual void on_unit_click(const coord &pos, int key);
+	virtual void on_building_click(const coord &pos, int key);
+	virtual void on_free_click(const coord &pos, int key);
 
 	scene_changed_t m_signal_scene_changed;
 	void update_display();
 
-	gamestate m_gamestate;
 	coord m_selection;
+	area m_highlighted_area;
+	
+	game::ptr m_game;
+
+			
+  private:
+	units::actions show_actions(const coord &pos);
+	void process_action(units::actions action, const coord &pos);
+
+	
+	gamestate m_gamestate;
+	
 	std::size_t m_unload_index;
 
 	game_mechanics::traverse::ptr m_traverse;
 	game_mechanics::path::ptr m_path;
-	area m_highlighted_area;
-
-	game::ptr m_game;
 			
 	unit_action_menu_callback_t m_unit_action_menu_callback;
 	unit_buy_menu_callback_t m_unit_buy_menu_callback;
