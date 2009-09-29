@@ -12,7 +12,7 @@ CONFIG += no_keywords
 
 DEFINES += TIXML_USE_TICPP TIXML_USE_STL
 LIBS += ../*.a
-LIBS += -lboost_signals
+LIBS +=
 
 # Input
 HEADERS +=	BuyMenu.h \
