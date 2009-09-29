@@ -1,5 +1,5 @@
 #ifndef AW_QT_MAP_WIDGET_H 
-	#define AW_QT_MAP_WIDGET_H
+#define AW_QT_MAP_WIDGET_H
 
 #include <QWidget>
 #include <QImage>
@@ -14,7 +14,7 @@
 #include "UnitGraphicsItem.h"
 #include "PathGraphicsItem.h"
 
-#include <boost/signals.hpp>
+#include <boost/signals2/signal.hpp>
 
 class UnitActions {
 public:
@@ -27,29 +27,31 @@ public:
 };
 
 class GameScene: public QGraphicsScene {
-	Q_OBJECT
+  Q_OBJECT
 
-	public:
-		typedef boost::signal<void (const aw::coord &, int)> signalClickedT;
-		typedef boost::signal<void (const aw::coord &)> signalFocusChangedT;
+  public:
+  typedef boost::signals2::signal<void
+								  (const aw::coord &, int)> signalClickedT;
+  typedef boost::signals2::signal<void
+								  (const aw::coord &)> signalFocusChangedT;
 
-		GameScene(QWidget* parent);
+  GameScene(QWidget* parent);
 
-		aw::scene::ptr scene() const { return currentScene; }
-        void setScene(aw::scene::ptr scene);
+  aw::scene::ptr scene() const { return currentScene; }
+  void setScene(aw::scene::ptr scene);
 
 
-		// Resets all signals and makes the View ready for a new game
-		void reset();
+  // Resets all signals and makes the View ready for a new game
+  void reset();
 
-		signalClickedT &signalClicked() { return _signalClicked; }
-  		signalFocusChangedT &signalFocusChanged() { return _signalFocusChanged; }
+  signalClickedT &signalClicked() { return _signalClicked; }
+  signalFocusChangedT &signalFocusChanged() { return _signalFocusChanged; }
 
-	protected:
-        virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
+protected:
+  virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
   //To resend a single click if thr user clicks too fast
-        virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
-		virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
+  virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
+  virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
 
   virtual void drawBackground(QPainter* painter, const QRectF& rect);
   virtual void drawItems(QPainter *painter,
@@ -57,17 +59,17 @@ class GameScene: public QGraphicsScene {
 						 const QStyleOptionGraphicsItem options[],
 						 QWidget *widget);
 
-	private:
+private:
   //void drawUnits(QPainter& painter);
   //	void drawHighlightedArea(QPainter& painter, const aw::area& area, const std::string& pixmap);
 
-		QImage backgroundImage;
+  QImage backgroundImage;
 
-		aw::scene::ptr currentScene;
+  aw::scene::ptr currentScene;
 	
-		//Boost signals:
-		signalClickedT _signalClicked;
-		signalFocusChangedT _signalFocusChanged;
+  //Boost signals:
+  signalClickedT _signalClicked;
+  signalFocusChangedT _signalFocusChanged;
 
   QPointF mapToSceneCoord(const aw::coord& c) {
 	return QPointF(c.x*16,c.y*16);

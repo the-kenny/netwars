@@ -1,7 +1,7 @@
 #ifndef AW_BUY_MENU_H
 	#define AW_BUY_MENU_H
 
-#include <boost/signals.hpp>
+#include <boost/signals2/signal.hpp>
 
 #include "game/units/unit_base.h"
 #include "game/player.h"

@@ -7,12 +7,12 @@ TARGET = netwars
 DEPENDPATH += . ../ ../lib
 INCLUDEPATH += . ../ ../lib
 
-CONFIG += debug
+CONFIG += qt debug
 CONFIG += no_keywords
 
 DEFINES += TIXML_USE_TICPP TIXML_USE_STL
 LIBS += ../*.a
-LIBS += -lboost_signals-mt
+LIBS +=
 
 # Input
 HEADERS +=	BuyMenu.h \

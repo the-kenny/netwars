@@ -1,5 +1,5 @@
 #ifndef AW_MAIN_WINDOW_H
-	#define AW_MAIN_WINDOW_H
+#define AW_MAIN_WINDOW_H
 
 #include "map_widget.h"
 
@@ -7,39 +7,41 @@
 #include "game/units/unit_base.h"
 #include "game/terrain.h"
 
+#include <boost/signals2/signal.hpp>
+
 namespace aw
 {
-	namespace gui
+  namespace gui
+  {
+	class main_window
 	{
-		class main_window
-		{
-			public:
-				virtual ~main_window() {}
+	public:
+	  virtual ~main_window() {}
 
-				typedef boost::signal<void ()> general_signal_t;
+	  typedef boost::signals2::signal<void ()> general_signal_t;
 
-				virtual void start_new_game(const aw::game::ptr &game);
-				virtual void quit_game();
+	  virtual void start_new_game(const aw::game::ptr &game);
+	  virtual void quit_game();
 				
-				virtual void connect_game_controller(const game_controller::ptr &ptr);
+	  virtual void connect_game_controller(const game_controller::ptr &ptr);
 				
-				virtual void lock_game() = 0;
-				virtual void unlock_game() = 0;
+	  virtual void lock_game() = 0;
+	  virtual void unlock_game() = 0;
 				
-				general_signal_t& signal_new_game() { return m_signal_new_game; }
-				general_signal_t& signal_end_turn() { return m_signal_end_turn; }
+	  general_signal_t& signal_new_game() { return m_signal_new_game; }
+	  general_signal_t& signal_end_turn() { return m_signal_end_turn; }
 				
-			protected:
-				typedef aw::gui::map_widget map_widget;
-				map_widget::ptr m_map_widget;
+	protected:
+	  typedef aw::gui::map_widget map_widget;
+	  map_widget::ptr m_map_widget;
 				
-				general_signal_t m_signal_new_game;
-				general_signal_t m_signal_end_turn;
+	  general_signal_t m_signal_new_game;
+	  general_signal_t m_signal_end_turn;
 				
-				void trigger_new_game() { m_signal_new_game(); } //UGLY
-				void trigger_end_turn()  { m_signal_end_turn(); }
-		};
-	}
+	  void trigger_new_game() { m_signal_new_game(); } //UGLY
+	  void trigger_end_turn()  { m_signal_end_turn(); }
+	};
+  }
 }
 
 #endif

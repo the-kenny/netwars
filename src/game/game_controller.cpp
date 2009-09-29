@@ -195,7 +195,7 @@ void game_controller::on_unit_click(const coord &pos, int key)
 					{
 						std::list<units::actions> action;
 						action.push_back(units::LOAD);
-						units::actions ret = m_unit_action_menu_callback(action);
+						units::actions ret = *m_unit_action_menu_callback(action);
 
 						if(ret == units::LOAD)
 						{
@@ -222,7 +222,7 @@ void game_controller::on_unit_click(const coord &pos, int key)
 					{
 						std::list<units::actions> action;
 						action.push_back(units::JOIN);
-						units::actions ret = m_unit_action_menu_callback(action);
+						units::actions ret = *m_unit_action_menu_callback(action);
 						
 						if(ret == units::JOIN)
 						{
@@ -240,7 +240,7 @@ void game_controller::on_unit_click(const coord &pos, int key)
 				{
 					std::list<units::actions> action;
 					action.push_back(units::ATTACK);
-					units::actions ret = m_unit_action_menu_callback(action);
+					units::actions ret = *m_unit_action_menu_callback(action);
 
 					if(ret == units::ATTACK)
 					{
@@ -348,7 +348,7 @@ void game_controller::on_building_click(const coord &pos, int key)
 				d->run();
 */
 
-				unit::types unit = m_unit_buy_menu_callback(shop, m_game->get_active_player());
+				unit::types unit = *m_unit_buy_menu_callback(shop, m_game->get_active_player());
 				if(unit != unit::TYPE_NONE)
 					m_game->buy_unit(pos, unit);
 			}
@@ -581,7 +581,7 @@ units::actions game_controller::show_actions(const coord &pos)
 
 	actions.push_back(units::WAIT);
 	
-	return m_unit_action_menu_callback(actions);
+	return *m_unit_action_menu_callback(actions);
 	
 	/*
 	gui::unit_action_menu *menu = gui::create_unit_action_menu();
@@ -677,7 +677,7 @@ void game_controller::process_action(units::actions action, const coord &pos)
 		int ret = um->run();
 	*/
 	
-		int ret = m_unit_unload_menu_callback(unloadable_units);
+		int ret = *m_unit_unload_menu_callback(unloadable_units);
 	
 		m_highlighted_area.clear();
 
