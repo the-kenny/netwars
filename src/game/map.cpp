@@ -13,21 +13,20 @@ map::map()
 	this->init();
 }
 
-map::map(const boost::multi_array<terrain::ptr, 2> &terrain, const boost::multi_array<unit::ptr, 2> &units)
+map::map(const boost::multi_array<terrain::ptr, 2> &terrain, 
+		 const boost::multi_array<unit::ptr, 2> &units)
 {
-	this->init();
+  this->init();
+  this->fill_arrays(terrain, units);
+}
 
-	for(int x = 0; x < 30; x++)
-	{
-		for(int y = 0; y < 20; y++)
-		{
-			if(units[x][y])
-				m_units[x][y] = units::create(units[x][y]->type(), units[x][y]->color());
+map::map(const map_loader::loaded_map::ptr& lmap) {
+  this->init();
+  this->fill_arrays(lmap->terrain, lmap->unit);
 
-//				m_terrain[x][y] = terrain::ptr(new aw::terrain(terrain[x][y]->type(), terrain[x][y]->extra()));
-			m_terrain[x][y] = terrain::create(terrain[x][y]->type(), terrain[x][y]->extra());
-		}
-	}
+  title = lmap->title;
+  author = lmap->author;
+  description = lmap->description;
 }
 
 void map::add_unit(const coord& c, const unit::ptr &u)
@@ -96,11 +95,16 @@ unsigned int map::num_buildings(player::colors c)
 bool map::valid()
 {
 	bool participators[5] = { false };
-	participators[0] = game_mechanics::participates(shared_from_this(), player::RED);
-	participators[1] = game_mechanics::participates(shared_from_this(), player::BLUE);
-	participators[2] = game_mechanics::participates(shared_from_this(), player::GREEN);
-	participators[3] = game_mechanics::participates(shared_from_this(), player::YELLOW);
-	participators[4] = game_mechanics::participates(shared_from_this(), player::BLACK);
+	participators[0] = game_mechanics::participates(shared_from_this(),
+													player::RED);
+	participators[1] = game_mechanics::participates(shared_from_this(), 
+													player::BLUE);
+	participators[2] = game_mechanics::participates(shared_from_this(), 
+													player::GREEN);
+	participators[3] = game_mechanics::participates(shared_from_this(), 
+													player::YELLOW);
+	participators[4] = game_mechanics::participates(shared_from_this(), 
+													player::BLACK);
 
 	if(std::count(participators, participators+5, true) < 2)
 		return false;
@@ -123,3 +127,18 @@ void map::init()
 	m_units.resize(ua);
 }
 
+void map::fill_arrays(const boost::multi_array<terrain::ptr, 2> &terrain, 
+					  const boost::multi_array<unit::ptr, 2> &units) {
+  this->init();
+  
+  for(int x = 0; x < 30; x++) {
+	for(int y = 0; y < 20; y++) {
+	  if(units[x][y])
+		m_units[x][y] = units::create(units[x][y]->type(), 
+									  units[x][y]->color());
+	  
+	  m_terrain[x][y] = terrain::create(terrain[x][y]->type(), 
+										terrain[x][y]->extra());
+	}
+  }
+}

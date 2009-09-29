@@ -13,4 +13,8 @@
 	  <initial-funds>0</initial-funds>
 	  <funds-per-building>1000</funds-per-building>
 	</defaults>
+
+	<server>
+	  <map-directory>maps/</map-directory>
+	</server>
 </config>

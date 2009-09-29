@@ -25,8 +25,7 @@ namespace aw
 				{
 					for(std::size_t i = 0; i < 30; i++)
 						for(std::size_t j = 0; j < 20; j++)
-							m_terrain[i][j] = terrain::create();
-//							m_terrain[i][j] = terrain::ptr(new terrain);
+							terrain[i][j] = terrain::create();
 				}
 
 				boost::multi_array<terrain::ptr, 2> m_terrain;
@@ -34,6 +33,10 @@ namespace aw
 
 			  unsigned int width;
 			  unsigned int height;
+
+			  std::string title;
+			  std::string author;
+			  std::string description;
 			};
 
 			map_loader(const std::string &filename = "");

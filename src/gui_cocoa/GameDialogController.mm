@@ -109,8 +109,8 @@
 	
 	for(int x = 0; x < 30; ++x) {
 		for(int y = 0; y < 20; ++y) {
-			const aw::terrain::ptr& terrain = loadedMap->m_terrain[x][y];
-			const aw::unit::ptr& unit = loadedMap->m_unit[x][y];
+			const aw::terrain::ptr& terrain = loadedMap->terrain[x][y];
+			const aw::unit::ptr& unit = loadedMap->unit[x][y];
 
 			if(terrain) {
 				switch(terrain->type()) {

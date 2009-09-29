@@ -13,6 +13,7 @@ def set_options(opt):
 
 def configure(conf):
 	windows = sys.platform.startswith('win')
+	darwin = sys.platform.startswith('darwin')
 	conf.env['GUI'] = Options.options.gui
 	conf.env['DEBUG'] = Options.options.debug
 
@@ -28,6 +29,17 @@ def configure(conf):
 		conf.env.append_value('CXXFLAGS', '-O2')
 		conf.env.append_value('LINKFLAGS', '-O2')
 
+	if darwin:
+		conf.env.append_value('CXXFLAGS', '-arch')
+		conf.env.append_value('CXXFLAGS', 'i386')
+		conf.env.append_value('CXXFLAGS', '-arch')
+		conf.env.append_value('CXXFLAGS', 'ppc')
+		
+		conf.env.append_value('LINKFLAGS', '-arch')
+		conf.env.append_value('LINKFLAGS', 'i386')
+		conf.env.append_value('LINKFLAGS', '-arch')
+		conf.env.append_value('LINKFLAGS', 'ppc')
+
 	if conf.env['GUI'] == 'QT':
 		conf.check_tool('qt4')
 	elif conf.env['GUI'] == "COCOA":
@@ -36,9 +48,11 @@ def configure(conf):
 		warning("WARNING: Building just the static library.")
 
 	conf.sub_config('lib')
+	#conf.sub_config('server')
 
 def build(bld):
 	bld.add_subdirs('lib')
+	#bld.add_subdirs('server');
 
 	netwars = bld.new_task_gen('cxx', 'staticlib')
 	netwars.target = 'netwars'
@@ -46,6 +60,6 @@ def build(bld):
 	netwars.uselib_local = 'tinyxml'
 	netwars.includes = '. lib'
 	netwars.defines = 'TIXML_USE_TICPP=1 TIXML_USE_STL=1'
-	netwars.find_sources_in_dirs('game game/game_mechanics game/map_loader game/units game/gui')
+	netwars.find_sources_in_dirs('game game/game_mechanics game/map_loader game/units game/gui game/networking')
 	netwars.install_path = '../src'
 

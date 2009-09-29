@@ -7,12 +7,12 @@
 #include <boost/asio.hpp>
 #include <boost/shared_ptr.hpp>
 
-#include "json/json_spirit.h"
+#include "game/player.h"
 
 using namespace boost;
-namespace json = json_spirit;
 
-class client_connection: public connection, public boost::enable_shared_from_this<client_connection> {
+class client_connection: public aw::connection, public boost::enable_shared_from_this<client_connection> {
+
 public:
   typedef boost::shared_ptr<client_connection> ptr;
 
@@ -25,37 +25,35 @@ public:
 	return deliver_callback_;
   }
 
-  template<typename T>
-  T get_property(const std::string& name) {
-	
+  boost::signal<void(const std::string&,
+					 const client_connection::ptr&)> &connection_lost_callback() {
+	return connection_lost_callback_;
   }
 
-  template<typename T>
-  void set_property(const T& name) {
 
-  }
+  //Game-Specific things
+  //I know this is ugly, but I'm to lazy for all these accessor-methods
+  bool is_host;
+  bool is_spectator;
+  std::string username;
+  aw::player::colors color;
 
 protected:
-  void on_line_received(const std::string& line) {
-	//We simply deliver all messages unchanged to the other clients
-   
-	if(!deliver_callback_.empty()) {
-	  deliver_callback_(line, shared_from_this());
-	  receive_line();
-	} else {
-	  throw std::logic_error("No deliver-callback defined.");
-	}
-  }
+  void on_line_received(const std::string& line);
+  void on_connection_closed(const std::string& reason);
 
 private:
   client_connection(asio::io_service& io)
-	: connection(io) {
+	: connection(io),
+	  is_host(false),
+	  is_spectator(true),
+	  username("") {
   }
+
   boost::signal<void(const std::string&,
 					 const client_connection::ptr&)> deliver_callback_;
-
-
-  json::mValue properties_;
+  boost::signal<void(const std::string&,
+					 const client_connection::ptr&)> connection_lost_callback_;
 };
 
 #endif
