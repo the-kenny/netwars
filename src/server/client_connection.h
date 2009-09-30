@@ -3,7 +3,7 @@
 
 #include "game/networking/connection.h"
 
-#include <boost/signals.hpp>
+#include <boost/signals2/signal.hpp>
 #include <boost/asio.hpp>
 #include <boost/shared_ptr.hpp>
 
@@ -15,18 +15,19 @@ class client_connection: public aw::connection, public boost::enable_shared_from
 
 public:
   typedef boost::shared_ptr<client_connection> ptr;
+  typedef signals2::signal<void
+						   (const std::string&,
+							const client_connection::ptr&)> general_signal_t;
 
   static ptr create(asio::io_service& io) {
 	return ptr(new client_connection(io));
   }
 
-  boost::signal<void(const std::string&,
-					 const client_connection::ptr&)> &deliver_callback() {
+  general_signal_t &deliver_callback() {
 	return deliver_callback_;
   }
 
-  boost::signal<void(const std::string&,
-					 const client_connection::ptr&)> &connection_lost_callback() {
+  general_signal_t &connection_lost_callback() {
 	return connection_lost_callback_;
   }
 
@@ -50,10 +51,8 @@ private:
 	  username("") {
   }
 
-  boost::signal<void(const std::string&,
-					 const client_connection::ptr&)> deliver_callback_;
-  boost::signal<void(const std::string&,
-					 const client_connection::ptr&)> connection_lost_callback_;
+  general_signal_t deliver_callback_;
+  general_signal_t connection_lost_callback_;
 };
 
 #endif

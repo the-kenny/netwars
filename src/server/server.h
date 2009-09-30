@@ -3,6 +3,7 @@
 
 #include <boost/asio.hpp>
 #include <boost/foreach.hpp>
+#include <boost/shared_array.hpp>
 
 #include "client_connection.h"
 
