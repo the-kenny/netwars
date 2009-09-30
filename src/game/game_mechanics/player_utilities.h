@@ -4,6 +4,8 @@
 #include "game/map.h"
 #include "game/player.h"
 
+#include <string>
+
 namespace aw
 {
 	namespace game_mechanics
@@ -12,6 +14,9 @@ namespace aw
 		defeat_type beaten(const map::ptr &map, const player::ptr &player);
 
 		bool participates(const map::ptr &map, player::colors c);
+
+	  player::colors color_from_string(const std::string& c);
+	  std::string color_to_string(player::colors c);
 	}
 }
 

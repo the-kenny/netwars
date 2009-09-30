@@ -64,3 +64,34 @@ bool game_mechanics::participates(const map::ptr &map, player::colors c)
 	return (has_hq && (has_base || has_units));
 }
 
+player::colors game_mechanics::color_from_string(const std::string& c) {
+  if(c == "red")
+	return player::RED;
+  else if(c == "blue")
+	return player::BLUE;
+  else if(c == "greeen")
+	return player::GREEN;
+  else if(c == "yellow")
+	return player::YELLOW;
+  else if(c == "black")
+	return player::BLACK;
+  else
+	throw std::runtime_error("Unknown color: " + c);
+}
+
+std::string game_mechanics::color_to_string(player::colors c) {
+  switch(c) {
+  case player::RED:
+	  return "red";
+  case player::BLUE:
+	return "blue";
+  case player::GREEN:
+	return "green";
+  case player::YELLOW:
+	return "yellow";
+  case player::BLACK:
+	return "black";
+  default:
+	return "UNDEFINED";
+  }
+}

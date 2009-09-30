@@ -15,41 +15,6 @@
 namespace json = Json;
 using namespace aw;
 
-//Some convenience-methods
-namespace {
-  std::string get_color_string(player::colors c) {
-	switch(c) {
-	case player::RED:
-	  return "red";
-	case player::BLUE:
-	  return "blue";
-	case player::GREEN:
-	  return "green";
-	case player::YELLOW:
-	  return "yellow";
-	case player::BLACK:
-	  return "black";
-	default:
-	  return "FAIL";
-	}
-  }
-
-  player::colors get_color_from_string(const std::string& c) {
-	if(c == "red")
-	  return player::RED;
-	else if(c == "blue")
-	  return player::BLUE;
-	else if(c == "greeen")
-	  return player::GREEN;
-	else if(c == "yellow")
-	  return player::YELLOW;
-	else if(c == "black")
-	  return player::BLACK;
-	else
-	  throw std::runtime_error("wrong color-string");
-  }
-}
-
 server::server(asio::io_service& io)
   : io_service_(io), acceptor_(io, tcp::endpoint(tcp::v4(), 4242)) {
   map_dir = config::instance().get<std::string>("/config/server/map-directory");
@@ -250,8 +215,8 @@ void server::handle_server_message(const json::Value& root,
 	  } else {
 		//Everything is fine. Set the new color and inform other clients
 	  
-		std::string old_color = get_color_string(from->color);
-		from->color = get_color_from_string(color);
+		std::string old_color = game_mechanics::color_to_string(from->color);
+		from->color = game_mechanics::color_from_string(color);
 
 		//He has a color now, he isn't a spectator anymore
 		from->is_spectator = false;
@@ -380,7 +345,7 @@ json::Value server::serialize_client_connection(const client_connection::ptr& pt
   if(ptr->is_spectator) {
 	root["color"] = json::Value();
   } else {
-	root["color"] = get_color_string(ptr->color);
+	root["color"] = game_mechanics::color_to_string(ptr->color);
   }
 
   return root;
@@ -416,19 +381,19 @@ std::list<std::string> server::get_available_colors() {
 	std::list<std::string> ret;
 	
 	if(game_mechanics::participates(map_, player::RED))
-	  ret.push_back(get_color_string(player::RED));
+	  ret.push_back(game_mechanics::color_to_string(player::RED));
 	if(game_mechanics::participates(map_, player::BLUE))
-	  ret.push_back(get_color_string(player::BLUE));
+	  ret.push_back(game_mechanics::color_to_string(player::BLUE));
 	if(game_mechanics::participates(map_, player::GREEN))
-	  ret.push_back(get_color_string(player::GREEN));
+	  ret.push_back(game_mechanics::color_to_string(player::GREEN));
 	if(game_mechanics::participates(map_, player::YELLOW))
-	  ret.push_back(get_color_string(player::YELLOW));
+	  ret.push_back(game_mechanics::color_to_string(player::YELLOW));
 	if(game_mechanics::participates(map_, player::BLACK))
-	  ret.push_back(get_color_string(player::BLACK));
+	  ret.push_back(game_mechanics::color_to_string(player::BLACK));
 
 	BOOST_FOREACH(client_connection::ptr& c, connections_) {
 	  if(!c->is_spectator)
-		ret.remove(get_color_string(c->color));
+		ret.remove(game_mechanics::color_to_string(c->color));
 	}
 
 	return ret;
@@ -444,7 +409,7 @@ std::list<std::string> server::get_available_colors() {
 
   std::list<std::string> ret;
   BOOST_FOREACH(player::colors c, coltemp)
-	ret.push_back(get_color_string(c));
+	ret.push_back(game_mechanics::color_to_string(c));
 
   return ret;
   */
