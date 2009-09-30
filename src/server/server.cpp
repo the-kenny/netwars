@@ -159,6 +159,7 @@ void server::handle_accept(client_connection::ptr new_connection,
 	else
 	  root["map"] = Json::Value();
 
+	//Append the players-array
 	json::Value players(json::arrayValue);
 	BOOST_FOREACH(client_connection::ptr& c, connections_) {
 	  if(c != new_connection)

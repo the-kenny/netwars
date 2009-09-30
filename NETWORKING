@@ -12,7 +12,8 @@
 	"type": "server-status", 
 	"destination": "client",
 	"host": true/false //If the new connection is host
-	"map": map //Needs to be serialized
+	"map": map
+	"players": player-array
 	}
 	
 *** To all other clients
