@@ -39,7 +39,7 @@ void connection::start() {
 }
 
 
-bool connection::has_line() const {
+bool connection::has_line() {
   return !receive_queue_.empty();
 }
 
