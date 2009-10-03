@@ -41,6 +41,7 @@ namespace aw
 			void move_unit(const coord& from, const coord& to);
 			void change_building_color(const coord& c, 
 									   const player::ptr &player);
+	  void neutralize_building(const coord& c);
 
 			unsigned int num_buildings(player::colors c);
 

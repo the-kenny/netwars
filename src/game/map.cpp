@@ -75,6 +75,19 @@ void map::change_building_color(const coord& c, const player::ptr &player)
 	p->extra(player->get_building_color());
 }
 
+void map::neutralize_building(const coord& c) {
+  assert(on_map(c));
+  
+  terrain::ptr p = m_terrain[c.x][c.y];
+  
+  assert(p->is_building());
+  
+  std::clog << "Changing color of building at " << c 
+			<< " to white" << std::endl;
+  p->extra(terrain::WHITE);
+  p->reset_capture_points();
+}
+
 unsigned int map::num_buildings(player::colors c)
 {
 	unsigned int count = 0;
