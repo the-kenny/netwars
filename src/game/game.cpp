@@ -546,6 +546,35 @@ void game::end_turn()
 	m_active_move.reset();
 }
 
+void game::remove_player(const player::ptr &player) {
+  for(int x = 0; x < 30; x++) {
+	for(int y = 0; y < 20; y++) {
+	  
+	  coord c(x, y);
+	  unit::ptr u = m_map->get_unit(c);
+	  terrain::ptr t = m_map->get_terrain(c);
+
+	  if(u && u->color() == player->get_unit_color())
+		m_map->delete_unit(c);
+
+	  if(t && t->is_building() && t->extra() == player->get_building_color()) {
+		building::ptr b = boost::dynamic_pointer_cast<building>(t);
+		assert(b != NULL);
+
+		if(m_map->get_unit(c) && 
+		   m_map->get_unit(c)->color() == player->get_unit_color()) {
+		  m_map->neutralize_building(c);
+		} 
+	  } 
+	}
+  }
+
+  if(get_active_player() == player)
+	end_turn();
+  
+  m_players.erase(player);
+}
+
 
 //display::scene::ptr game::get_prepared_scene()
 //{

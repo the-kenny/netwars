@@ -78,6 +78,9 @@ namespace aw
 	inline signal_player_defeated_t &signal_player_defeated() { return m_signal_player_defeated; }
 	inline signal_game_finished_t &signal_game_finished() { return m_signal_game_finished; }
 
+	void remove_player(const player::ptr &player);
+	player_manager &get_player_manager() { return m_players; }
+
   protected:
 	void supply_unit_from_building(const coord &support_building);
 	void check_for_defeat();
