@@ -73,6 +73,7 @@ void map::change_building_color(const coord& c, const player::ptr &player)
 
 	std::clog << "[map::change_building_color] Übernehme Gebäude" << std::endl;
 	p->extra(player->get_building_color());
+	p->reset_capture_points();
 }
 
 void map::neutralize_building(const coord& c) {
