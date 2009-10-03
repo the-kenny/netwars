@@ -67,9 +67,11 @@ void map::change_building_color(const coord& c, const player::ptr &player) {
   if(!p->is_building())
 	throw std::runtime_error("[map::change_building_color] Auf gegebener Position ist kein Gebäude.");
 
+  building::ptr b = boost::dynamic_pointer_cast<building>(p);
+
   std::clog << "[map::change_building_color] Übernehme Gebäude" << std::endl;
-  p->extra(player->get_building_color());
-  p->reset_capture_points();
+  b->extra(player->get_building_color());
+  b->reset_capture_points();
 }
 
 void map::neutralize_building(const coord& c) {
@@ -78,11 +80,13 @@ void map::neutralize_building(const coord& c) {
   terrain::ptr p = m_terrain[c.x][c.y];
   
   assert(p->is_building());
+
+  building::ptr b = boost::dynamic_pointer_cast<building>(p);
   
   std::clog << "Changing color of building at " << c 
 			<< " to white" << std::endl;
-  p->extra(terrain::WHITE);
-  p->reset_capture_points();
+  b->extra(terrain::WHITE);
+  b->reset_capture_points();
 }
 
 unsigned int map::num_buildings(player::colors c)
