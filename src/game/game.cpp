@@ -569,8 +569,8 @@ void game::remove_player(const player::ptr &player) {
 	}
   }
 
-  if(get_active_player() == player)
-	end_turn();
+  //if(get_active_player() == player)
+  //end_turn();
   
   m_players.erase(player);
 }
