@@ -58,22 +58,18 @@ void map::move_unit(const coord& from, const coord& to)
 	m_units[from.x][from.y].reset();
 }
 
-void map::change_building_color(const coord& c, const player::ptr &player)
-{
-	terrain::ptr p = m_terrain[c.x][c.y];
+void map::change_building_color(const coord& c, const player::ptr &player) {
+  if(!on_map(c))
+	throw std::runtime_error("[map::change_building_color] Gegebene Koordinaten sind nicht auf der Karte.");
 
-	if(!on_map(c))
-		throw std::runtime_error("[map::change_building_color] Gegebene Koordinaten sind nicht auf der Karte.");
+  terrain::ptr p = m_terrain[c.x][c.y];
 
-	if(!p->is_building())
-		throw std::runtime_error("[map::change_building_color] Auf gegebener Position ist kein Gebäude.");
+  if(!p->is_building())
+	throw std::runtime_error("[map::change_building_color] Auf gegebener Position ist kein Gebäude.");
 
-//		if(p->capture_points() > 0)
-//			std::clog << "[map::change_building_color] WARNUNG: Ändere die Farbe eines Gebäudes dessen Capture-Points > 0 sind." << std::endl;
-
-	std::clog << "[map::change_building_color] Übernehme Gebäude" << std::endl;
-	p->extra(player->get_building_color());
-	p->reset_capture_points();
+  std::clog << "[map::change_building_color] Übernehme Gebäude" << std::endl;
+  p->extra(player->get_building_color());
+  p->reset_capture_points();
 }
 
 void map::neutralize_building(const coord& c) {
