@@ -419,31 +419,31 @@ void game::start_game()
 	if(participates_red)
 	{
 		player::ptr p(new player(player::RED));
-		m_players.push_back(p);
+		m_players.add(p);
 	}
 
 	if(participates_blue)
 	{
 		player::ptr p(new player(player::BLUE));
-		m_players.push_back(p);
+		m_players.add(p);
 	}
 
 	if(participates_green)
 	{
 		player::ptr p(new player(player::GREEN));
-		m_players.push_back(p);
+		m_players.add(p);
 	}
 
 	if(participates_yellow)
 	{
 		player::ptr p(new player(player::YELLOW));
-		m_players.push_back(p);
+		m_players.add(p);
 	}
 
 	if(participates_black)
 	{
 		player::ptr p(new player(player::BLACK));
-		m_players.push_back(p);
+		m_players.add(p);
 	}
 
 	BOOST_FOREACH(player::ptr &p, m_players.get_players())

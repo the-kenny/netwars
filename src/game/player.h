@@ -79,42 +79,43 @@ namespace aw
   public:
 	typedef std::vector<player::ptr> container_t;
 
-	void assign(std::size_t number, const player::ptr &player)
-	{
-	  m_players[number] = player;
-	}
-
-	void push_back(const player::ptr &p) { 
+	void add(const player::ptr &p) { 
 	  m_players.push_back(p); 
 	}
 
+	void erase(const player::ptr &p) {
+	  container_t::iterator it = std::find(m_players.begin(),
+										   m_players.end(), 
+										   p);
+	  assert(it != m_players.end());
+	  m_players.erase(it);
+	}
+
 	void set_first_player(std::size_t index) {
-	  m_active_player = index;
+	  m_active_player = m_players.begin()+index;
+	}
+
+	void set_first_player(const player::ptr& p) {
+	  container_t::iterator it = std::find(m_players.begin(), 
+										   m_players.end(),
+										   p);
+	  assert(it != m_players.end());
+	  m_active_player = it;
 	}
 
 	player::ptr &get_active_player() {
-	  return m_players[m_active_player];
+	  return *m_active_player;
 	}
 
 	void next() {
-	  if(m_active_player+1 < m_players.size())
+	  if(m_active_player+1 != m_players.end())
 		m_active_player++;
 	  else
-		m_active_player = 0;
+		m_active_player = m_players.begin();
 	}
 
-	player::ptr &operator[](std::size_t index) {
+	player::ptr at(std::size_t index) {
 	  return m_players[index];
-	}
-
-	player::ptr &active_player() {
-	  return m_players[m_active_player];
-	}
-
-	void erase(const player::ptr &p) {
-	  container_t::iterator it = std::find(m_players.begin(), m_players.end(), p);
-	  assert(it != m_players.end());
-	  m_players.erase(it);
 	}
 
 	container_t &get_players() { 
@@ -127,7 +128,7 @@ namespace aw
 
   private:
 	container_t m_players;
-	std::size_t m_active_player;
+	container_t::iterator m_active_player;
   };
 
   std::ostream &operator<<(std::ostream &o, const player &p);

@@ -16,31 +16,31 @@ void game_settings::load_map(const std::string &filename)
 	if(game_mechanics::participates(m_map, player::RED))
 	{
 		player::ptr p(new player(player::RED));
-		m_players.push_back(p);
+		m_players.add(p);
 	}
 
 	if(game_mechanics::participates(m_map, player::BLUE))
 	{
 		player::ptr p(new player(player::BLUE));
-		m_players.push_back(p);
+		m_players.add(p);
 	}
 
 	if(game_mechanics::participates(m_map, player::GREEN))
 	{
 		player::ptr p(new player(player::GREEN));
-		m_players.push_back(p);
+		m_players.add(p);
 	}
 
 	if(game_mechanics::participates(m_map, player::YELLOW))
 	{
 		player::ptr p(new player(player::YELLOW));
-		m_players.push_back(p);
+		m_players.add(p);
 	}
 
 	if(game_mechanics::participates(m_map, player::BLACK))
 	{
 		player::ptr p(new player(player::BLACK));
-		m_players.push_back(p);
+		m_players.add(p);
 	}
 
 	m_players.set_first_player(0);
