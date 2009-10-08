@@ -569,12 +569,18 @@ void game::remove_player(const player::ptr &player) {
 	}
   }
 
-  //if(get_active_player() == player)
-  //end_turn();
-  
-  m_players.erase(player);
-}
+  //Code stolen from end_turn
+  if(get_active_player() == player) {
+	if(this->move_active())
+	  this->cancel_unit_move();
+	
+	m_players.next();
+	
+	m_active_move.reset();
+  }
 
+  m_players.erase(player);	
+}
 
 //display::scene::ptr game::get_prepared_scene()
 //{
