@@ -43,5 +43,7 @@ extern NSString* rightMouseClickNotification;
 - (void)queueDraw;
 
 - (void)processScene:(aw::scene::ptr&)newScene;
+
+- (void)flashWithColor:(NSColor*)color;
 @end
 

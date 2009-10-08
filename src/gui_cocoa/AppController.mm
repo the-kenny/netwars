@@ -195,5 +195,24 @@ void postTerrainClickedNotification(const aw::terrain::ptr terrain, id sender) {
 - (IBAction)endTurn:(id)sender {
 	gameController->end_turn();
 	gameController->start_turn();
+	
+	switch(gameController->game()->get_active_player()->get_color()) {
+		case aw::player::RED:
+			[mapView flashWithColor:[NSColor redColor]];
+			break;
+		case aw::player::GREEN:
+			[mapView flashWithColor:[NSColor greenColor]];
+			break;
+		case aw::player::BLUE:
+			[mapView flashWithColor:[NSColor blueColor]];
+			break;
+		case aw::player::YELLOW:
+			[mapView flashWithColor:[NSColor yellowColor]];
+			break;
+		case aw::player::BLACK:
+			[mapView flashWithColor:[NSColor blackColor]];
+			break;
+	}
+
 }
 @end

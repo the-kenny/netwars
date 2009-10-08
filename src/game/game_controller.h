@@ -130,6 +130,10 @@ namespace aw
 	  return m_signal_terrain_clicked; 
 	}
 
+	game::ptr game() { 
+	  return m_game;
+	}
+
   protected:
 	virtual void on_unit_click(const coord &pos, int key);
 	virtual void on_building_click(const coord &pos, int key);

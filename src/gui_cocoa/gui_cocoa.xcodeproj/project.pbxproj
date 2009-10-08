@@ -51,6 +51,7 @@
 		8E8C41260F13A73400F1E03A /* MapViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E8C41250F13A73400F1E03A /* MapViewController.mm */; };
 		8EBFF0800F39FC9400FFFE14 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8EBFF07F0F39FC9400FFFE14 /* Icon.icns */; };
 		8EF8D4880F76EB28000F6F9C /* 7330.aws in Resources */ = {isa = PBXBuildFile; fileRef = 8EF8D4870F76EB28000F6F9C /* 7330.aws */; };
+		8EFB8489107E9AA30039BAA8 /* FlashingColorLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EFB8488107E9AA30039BAA8 /* FlashingColorLayer.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -126,6 +127,8 @@
 		8E8C41250F13A73400F1E03A /* MapViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MapViewController.mm; sourceTree = "<group>"; };
 		8EBFF07F0F39FC9400FFFE14 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		8EF8D4870F76EB28000F6F9C /* 7330.aws */ = {isa = PBXFileReference; lastKnownFileType = file; name = 7330.aws; path = ../../maps/7330.aws; sourceTree = SOURCE_ROOT; };
+		8EFB8487107E9AA30039BAA8 /* FlashingColorLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashingColorLayer.h; sourceTree = "<group>"; };
+		8EFB8488107E9AA30039BAA8 /* FlashingColorLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FlashingColorLayer.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +155,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				8EFB8487107E9AA30039BAA8 /* FlashingColorLayer.h */,
+				8EFB8488107E9AA30039BAA8 /* FlashingColorLayer.mm */,
 				8E26CF980ED851F300704923 /* Sprites.h */,
 				8E26CF990ED851F300704923 /* Sprites.mm */,
 				8E26C4C70ED488A700704923 /* MapView.h */,
@@ -412,6 +417,7 @@
 				8E8A54560F3FB8420084E240 /* NotificationNames.mm in Sources */,
 				8E8A545D0F3FB90E0084E240 /* CocoaUnit.mm in Sources */,
 				8E8A54920F3FBB310084E240 /* CocoaTerrain.mm in Sources */,
+				8EFB8489107E9AA30039BAA8 /* FlashingColorLayer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

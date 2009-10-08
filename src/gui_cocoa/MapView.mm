@@ -1,6 +1,7 @@
 #import "MapView.h"
 #import "Coordinate.h"
 #import "Sprites.h"
+#import "FlashingColorLayer.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -423,6 +424,21 @@ NSString* rightMouseClickNotification = @"rightMouseClickOnMap";
 
 - (void)queueDraw {
 	[self setNeedsDisplay:true];
+}
+
+- (void)flashWithColor:(NSColor*)color {
+	CALayer* layer = [CALayer layer];
+	[layer setAnchorPoint:CGPointMake(.0, .0)];
+	[layer setFrame:*(CGRect*)&[self frame]];
+	
+	[[self layer] insertSublayer:layer above:[highlightedArea layer]];
+	
+	FlashingColorLayer* l = [[FlashingColorLayer alloc] init];
+	[l setColor:color];
+	[l setLayer:layer];
+
+	[l flash];
+	[l autorelease];
 }
 
 @end
