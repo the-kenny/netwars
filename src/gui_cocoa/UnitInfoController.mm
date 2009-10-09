@@ -105,6 +105,13 @@
 	}
 }
 
+-(IBAction)toggleWindow:(id)sender {
+	if(![self isWindowLoaded] || ![[self window] isVisible])
+		[self showWindow:sender];		
+	else
+		[self close];
+}
+
 #pragma mark Notification Callbacks
 
 -(void)showUnitNotificationCallback:(NSNotification*)notification {
